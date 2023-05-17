@@ -1,13 +1,13 @@
 import * as React from "react";
-// import * as ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
+import { RouterProvider } from "react-router-dom";
+
+import appRouter from "./routes/appRouter.js";
+
+import "normalize.css";
 
 const App = () => {
-	return (
-		<div>
-			<h1>Start App!</h1>
-		</div>
-	);
+	return <RouterProvider router={appRouter} />;
 };
 
 const root = createRoot(document.getElementById("root"));
