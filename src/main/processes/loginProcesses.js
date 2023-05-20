@@ -5,8 +5,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const { User } = require("../models/auth");
-const { LOGIN_PAGE } = require("../constants/index");
-const { CHANNELS } = require("../constants/channels");
+const { LOGIN_PAGE } = require("../../common/constants/index.js");
+const { CHANNELS } = require("../../common/constants/channels");
 
 const { SECRET_KEY } = process.env;
 
