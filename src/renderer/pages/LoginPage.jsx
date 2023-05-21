@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { token } from "../redux/auth/authSlice.js";
+import { setToken } from "../redux/auth/authSlice.js";
 
 import LoginScreen from "../components/LoginScreen";
 
@@ -33,7 +33,9 @@ const LoginPage = () => {
 				return;
 			}
 
-			dispatch(token(arg?.token));
+			ipcRenderer.send(CHANNELS.STORAGE.SET_TOKEN, arg?.token);
+
+			dispatch(setToken(arg?.token));
 			setLogError(false);
 		});
 		// Clean the listener after the component is dismounted

@@ -6,7 +6,6 @@ import { getToken } from "../redux/auth/authSelector.js";
 
 const PublicRoute = () => {
 	const token = useSelector(getToken);
-
 	return token ? <Navigate to="/" replace /> : <Outlet />;
 };
 
