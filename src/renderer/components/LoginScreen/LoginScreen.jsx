@@ -7,8 +7,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
-import { LOGIN_PAGE } from "../../../common/constants/index";
-import s from "./styles";
+import { LOGIN_PAGE } from "../../../common/constants/index.js";
+import s from "./styles.js";
 
 const LoginScreen = ({ logError, handleSubmit, setLogError }) => {
 	return (

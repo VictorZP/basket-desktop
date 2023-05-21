@@ -1,15 +1,20 @@
 import * as React from "react";
 const { useState, useEffect } = React;
+import { useDispatch } from "react-redux";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
+import { token } from "../redux/auth/authSlice.js";
+
 import LoginScreen from "../components/LoginScreen";
 
-import { LOGIN_PAGE } from "../../common/constants/index";
-import { CHANNELS } from "../../common/constants/channels";
+import { LOGIN_PAGE } from "../../common/constants/index.js";
+import { CHANNELS } from "../../common/constants/channels.js";
 
 const LoginPage = () => {
 	const [logError, setLogError] = useState(false);
+	const dispatch = useDispatch();
+
 	const handleSubmit = async (e) => {
 		e?.preventDefault();
 		const data = new FormData(e.currentTarget);
@@ -27,6 +32,8 @@ const LoginPage = () => {
 				setLogError(true);
 				return;
 			}
+
+			dispatch(token(arg?.token));
 			setLogError(false);
 		});
 		// Clean the listener after the component is dismounted
