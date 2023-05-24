@@ -16,29 +16,27 @@ const AppNavBar = ({ mainTitle, isOpen, handleSMOpen, theme }) => {
 	const NavBar = setNavBar(theme, isOpen);
 
 	return (
-		<Box sx={{ flexGrow: 1 }}>
-			<NavBar position="fixed" open={isOpen}>
-				<Toolbar>
-					<Tooltip title={TOOLTIPS.NAVBAR_MENU} placement="right">
-						<IconButton
-							color="inherit"
-							aria-label="open drawer"
-							onClick={handleSMOpen}
-							edge="start"
-							sx={{
-								marginRight: 5,
-								...(isOpen && { display: "none" }),
-							}}
-						>
-							<MenuIcon />
-						</IconButton>
-					</Tooltip>
-					<Typography variant="h6" noWrap component="div">
-						{mainTitle}
-					</Typography>
-				</Toolbar>
-			</NavBar>
-		</Box>
+		<NavBar position="fixed" open={isOpen}>
+			<Toolbar>
+				<Tooltip title={TOOLTIPS.NAVBAR_MENU} placement="right">
+					<IconButton
+						color="inherit"
+						aria-label="open application navigation"
+						onClick={handleSMOpen}
+						edge="start"
+						sx={{
+							marginRight: 5,
+							...(isOpen && { display: "none" }),
+						}}
+					>
+						<MenuIcon />
+					</IconButton>
+				</Tooltip>
+				<Typography variant="h6" noWrap component="div">
+					{mainTitle}
+				</Typography>
+			</Toolbar>
+		</NavBar>
 	);
 };
 

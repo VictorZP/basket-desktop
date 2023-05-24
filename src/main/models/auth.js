@@ -10,10 +10,6 @@ const CODE_REGEXP = {
 
 const userSchema = Schema(
 	{
-		nickname: {
-			type: String,
-			match: CODE_REGEXP.NAME,
-		},
 		email: {
 			type: String,
 			match: CODE_REGEXP.EMAIL,

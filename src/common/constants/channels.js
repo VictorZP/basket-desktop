@@ -6,4 +6,7 @@ export const CHANNELS = {
 		GET_TOKEN: "get-token",
 		SET_TOKEN: "set-token",
 	},
+	CYBER: {
+		ADD_CYBER: "add-cyber",
+	},
 };

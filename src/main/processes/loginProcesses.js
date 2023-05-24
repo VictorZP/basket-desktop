@@ -1,4 +1,5 @@
 const { ipcMain } = require("electron");
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -6,7 +7,7 @@ const { User } = require("../models/auth.js");
 const { LOGIN_PAGE } = require("../../common/constants/index.js");
 const { CHANNELS } = require("../../common/constants/channels.js");
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY } = require("../helpers/variables.js");
 
 ipcMain.on(CHANNELS.AUTH.LOGIN, async (event, arg) => {
 	try {

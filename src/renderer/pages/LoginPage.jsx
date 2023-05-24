@@ -26,7 +26,6 @@ const LoginPage = () => {
 	};
 
 	useEffect(() => {
-		// Listen for the event
 		ipcRenderer.on(CHANNELS.AUTH.LOGIN, (event, arg) => {
 			if (arg === LOGIN_PAGE.ERR_MESSAGES.ON_LOGIN) {
 				setLogError(true);
@@ -38,7 +37,7 @@ const LoginPage = () => {
 			dispatch(setToken(arg?.token));
 			setLogError(false);
 		});
-		// Clean the listener after the component is dismounted
+
 		return () => {
 			ipcRenderer.removeAllListeners();
 		};

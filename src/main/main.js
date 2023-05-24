@@ -1,7 +1,7 @@
 const { app, BrowserWindow, session } = require("electron");
 const path = require("path");
 
-import "./database/database.js";
+require("dotenv").config();
 
 const { REDUX_EXT_PATH } = process.env;
 
@@ -63,5 +63,7 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+import "./database/database.js";
 import "./processes/loginProcesses.js";
 import "./processes/storeProcesses.js";
+import "./processes/cyberProcesses.js";

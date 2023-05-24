@@ -19,6 +19,27 @@ export const SIDE_MENU = {
 	],
 };
 
+export const MATCHES_SETTINGS = {
+	TITLE: "Настройка данных для анализа матчей",
+	CYBER_FORM: {
+		TITLE: "Редактирование Cyber",
+		NAME_LABEL: "Название",
+		BTN_ADD: "Добавить",
+		BTN_UPD: "Обновить",
+		BTN_DEL: "Удалить",
+		MS_ADD: "Добавлено",
+		MS_UPD: "Обновлено",
+		MS_DEL: "Удалено",
+	},
+	SUCCESS_MESSAGES: {
+		CREATE: "Создано успешно",
+	},
+	ERR_MESSAGES: {
+		EXIST: "Такое навание уже имеется в базе",
+		ON_ERROR: "Произошла ошибка. Обратитесь в тех. поддержку.",
+	},
+};
+
 export const TOOLTIPS = {
 	NAVBAR_MENU: "Показать меню",
 	NAVBAR_MENU_MIN: "Свернуть меню",

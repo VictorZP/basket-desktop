@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const { DB_HOST } = process.env;
+const { DB_HOST } = require("../helpers/variables.js");
 
 mongoose
 	.connect(DB_HOST)

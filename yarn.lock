@@ -756,6 +756,20 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
+"@mui/base@5.0.0-beta.2":
+  version "5.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-beta.2.tgz#d7216897c8e523c4bd26d8d292cac1bcf156dc87"
+  integrity sha512-R9R+aqrl1QhZJaO05rhvooqxOaf7SKpQ+EjW80sbP3ticTVmLmrn4YBLQS7/ML+WXdrkrPtqSmKFdSE5Ik3gBQ==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@emotion/is-prop-valid" "^1.2.1"
+    "@mui/types" "^7.2.4"
+    "@mui/utils" "^5.13.1"
+    "@popperjs/core" "^2.11.7"
+    clsx "^1.2.1"
+    prop-types "^15.8.1"
+    react-is "^18.2.0"
+
 "@mui/core-downloads-tracker@^5.13.1":
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.13.1.tgz#ccfc3fd659c48379cec14cc60fb00bb711777d8f"
@@ -767,6 +781,20 @@
   integrity sha512-oKkx9z9Kwg40NtcIajF9uOXhxiyTZrrm9nmIJ4UjkU2IdHpd4QVLbCc/5hZN/y0C6qzi2Zlxyr9TGddQx2vx2A==
   dependencies:
     "@babel/runtime" "^7.21.0"
+
+"@mui/lab@^5.0.0-alpha.131":
+  version "5.0.0-alpha.131"
+  resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-5.0.0-alpha.131.tgz#adf523555a4bb97725de760ef3d55e9e17f42c13"
+  integrity sha512-NVC5ZqC0iJ1Cn6VMxyazB1EPhWKztLnKXXtFO0/nZaFuADu1BlLHg+0eTMKZwEXFbJybcAopCkA5hmuk/R7INA==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@mui/base" "5.0.0-beta.2"
+    "@mui/system" "^5.13.2"
+    "@mui/types" "^7.2.4"
+    "@mui/utils" "^5.13.1"
+    clsx "^1.2.1"
+    prop-types "^15.8.1"
+    react-is "^18.2.0"
 
 "@mui/material@^5.13.1":
   version "5.13.1"
@@ -805,6 +833,16 @@
     csstype "^3.1.2"
     prop-types "^15.8.1"
 
+"@mui/styled-engine@^5.13.2":
+  version "5.13.2"
+  resolved "https://registry.yarnpkg.com/@mui/styled-engine/-/styled-engine-5.13.2.tgz#c87bd61c0ab8086d34828b6defe97c02bcd642ef"
+  integrity sha512-VCYCU6xVtXOrIN8lcbuPmoG+u7FYuOERG++fpY74hPpEWkyFQG97F+/XfTQVYzlR2m7nPjnwVUgATcTCMEaMvw==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@emotion/cache" "^11.11.0"
+    csstype "^3.1.2"
+    prop-types "^15.8.1"
+
 "@mui/system@^5.13.1":
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.13.1.tgz#2296e3269dc6baa5914ea28d0cc9534f7b03a7b5"
@@ -813,6 +851,20 @@
     "@babel/runtime" "^7.21.0"
     "@mui/private-theming" "^5.13.1"
     "@mui/styled-engine" "^5.12.3"
+    "@mui/types" "^7.2.4"
+    "@mui/utils" "^5.13.1"
+    clsx "^1.2.1"
+    csstype "^3.1.2"
+    prop-types "^15.8.1"
+
+"@mui/system@^5.13.2":
+  version "5.13.2"
+  resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.13.2.tgz#c9aa821049fc75d8ade1c0646dc4d2b67605b8fc"
+  integrity sha512-TPyWmRJPt0JPVxacZISI4o070xEJ7ftxpVtu6LWuYVOUOINlhoGOclam4iV8PDT3EMQEHuUrwU49po34UdWLlw==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
+    "@mui/private-theming" "^5.13.1"
+    "@mui/styled-engine" "^5.13.2"
     "@mui/types" "^7.2.4"
     "@mui/utils" "^5.13.1"
     clsx "^1.2.1"
@@ -1898,7 +1950,7 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
 
-clsx@^1.2.1:
+clsx@^1.1.0, clsx@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
   integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
@@ -3064,6 +3116,11 @@ globalthis@^1.0.1:
   dependencies:
     define-properties "^1.1.3"
 
+goober@^2.0.33:
+  version "2.1.13"
+  resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.13.tgz#e3c06d5578486212a76c9eba860cbc3232ff6d7c"
+  integrity sha512-jFj3BQeleOoy7t93E9rZ2de+ScC4lQICLwiAQmKMg9F6roKGaLSHoCDYKkWlSafg138jejvq/mTdvmnwDQgqoQ==
+
 got@^11.7.0, got@^11.8.5:
   version "11.8.6"
   resolved "https://registry.yarnpkg.com/got/-/got-11.8.6.tgz#276e827ead8772eddbcfc97170590b841823233a"
@@ -4217,6 +4274,14 @@ normalize.css@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-8.0.1.tgz#9b98a208738b9cc2634caacbc42d131c97487bf3"
   integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
+
+notistack@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/notistack/-/notistack-3.0.1.tgz#daf59888ab7e2c30a1fa8f71f9cba2978773236e"
+  integrity sha512-ntVZXXgSQH5WYfyU+3HfcXuKaapzAJ8fBLQ/G618rn3yvSzEbnOB8ZSOwhX+dAORy/lw+GC2N061JA0+gYWTVA==
+  dependencies:
+    clsx "^1.1.0"
+    goober "^2.0.33"
 
 npm-run-path@^2.0.0:
   version "2.0.2"
