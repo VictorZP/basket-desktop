@@ -3,7 +3,6 @@ const path = require("path");
 
 import "./database/database.js";
 
-require("dotenv").config();
 const { REDUX_EXT_PATH } = process.env;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.

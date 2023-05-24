@@ -2,8 +2,6 @@ const { ipcMain } = require("electron");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-require("dotenv").config();
-
 const { User } = require("../models/auth.js");
 const { LOGIN_PAGE } = require("../../common/constants/index.js");
 const { CHANNELS } = require("../../common/constants/channels.js");
