@@ -18,13 +18,12 @@ import { SIDE_MENU, TOOLTIPS } from "../../../common/constants/index.js";
 
 import { setDrawer, setDrawerHeader } from "./functions.js";
 
-const SideMenu = ({ isOpen, theme, handleSMClose, setMainTitle }) => {
+const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 	const navigate = useNavigate();
 	const Drawer = setDrawer(theme);
 	const DrawerHeader = setDrawerHeader(theme);
 
-	const handleClick = (title, pName) => {
-		setMainTitle(title);
+	const handleClick = (pName) => {
 		navigate(`/${pName}`);
 	};
 
@@ -48,7 +47,7 @@ const SideMenu = ({ isOpen, theme, handleSMClose, setMainTitle }) => {
 									justifyContent: isOpen ? "initial" : "center",
 									px: 2.5,
 								}}
-								onClick={() => handleClick(TITLE, PAGE_NAME)}
+								onClick={() => handleClick(PAGE_NAME)}
 							>
 								<ListItemIcon
 									sx={{
@@ -77,7 +76,6 @@ SideMenu.propTypes = {
 	isOpen: PropTypes.bool.isRequired,
 	theme: PropTypes.object.isRequired,
 	handleSMClose: PropTypes.func.isRequired,
-	setMainTitle: PropTypes.func.isRequired,
 };
 
 export default SideMenu;
