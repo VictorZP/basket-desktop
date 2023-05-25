@@ -12,6 +12,7 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 		fontSize: 16,
 	},
 	[`&.${tableCellClasses.body}`]: {
+		padding: "8px 10px",
 		fontSize: 14,
 	},
 }));
@@ -20,7 +21,6 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	"&:nth-of-type(odd)": {
 		backgroundColor: theme.palette.action.hover,
 	},
-	// hide last border
 	"&:last-child td, &:last-child th": {
 		border: 0,
 	},

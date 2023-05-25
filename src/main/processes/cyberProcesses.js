@@ -10,13 +10,11 @@ ipcMain.on(CHANNELS.CYBER.ADD_CYBER, async (event, arg) => {
 		const { cyberName, token } = arg;
 
 		const user = await authenticate(token);
-
 		if (user?.code === 401) {
 			throw user?.message;
 		}
 
 		const isCyberExist = await Cyber.findOne({ cyberName });
-
 		if (isCyberExist) {
 			event.sender.send(
 				CHANNELS.CYBER.ADD_CYBER,
@@ -59,7 +57,6 @@ ipcMain.on(CHANNELS.CYBER.GET_ALL_CYBER, async (event, arg) => {
 		const { token } = arg;
 
 		const user = await authenticate(token);
-
 		if (user?.code === 401) {
 			throw user?.message;
 		}
@@ -78,9 +75,41 @@ ipcMain.on(CHANNELS.CYBER.GET_ALL_CYBER, async (event, arg) => {
 			};
 		});
 
-		console.log(res?.[0]._id?.toString());
-
 		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, { list });
+	} catch (err) {
+		const res = {
+			error: "",
+			message: "",
+		};
+		if (err.coder === 401) {
+			res.error = err.code;
+			res.message = err.message;
+		} else {
+			res.error = err;
+			res.message = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR + err;
+		}
+
+		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, res);
+	}
+});
+
+ipcMain.on(CHANNELS.CYBER.DEL_CYBER, async (event, arg) => {
+	try {
+		const { token, id } = arg;
+
+		const user = await authenticate(token);
+		if (user?.code === 401) {
+			throw user?.message;
+		}
+
+		const res = await Cyber.findByIdAndDelete({ _id: id });
+		if (res?._id?.toString() !== id) {
+			const err = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR_C_DEL;
+			throw err;
+		}
+
+		const resMessage = `${MATCHES_SETTINGS.SUCCESS_MESSAGES.DELETED}${res?.cyberName}`;
+		event.sender.send(CHANNELS.CYBER.DEL_CYBER, resMessage);
 	} catch (err) {
 		const res = {
 			error: "",

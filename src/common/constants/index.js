@@ -31,16 +31,33 @@ export const MATCHES_SETTINGS = {
 		MS_UPD: "Обновлено",
 		MS_DEL: "Удалено",
 	},
+	CYBER_TABLE: {
+		CELL_T: "название",
+		DEL_BTN_N: "delCyber",
+		EDIT_BTN_N: "editCyber",
+	},
 	SUCCESS_MESSAGES: {
 		CREATE: "Создано успешно",
+		DELETED: "Удалено: ",
 	},
 	ERR_MESSAGES: {
 		EXIST: "Такое навание уже имеется в базе",
 		ON_ERROR: "Произошла ошибка. Обратитесь в тех. поддержку.",
+		ON_ERROR_C_DEL: "Ошибка при удаление cyber. ",
 	},
 };
 
 export const TOOLTIPS = {
 	NAVBAR_MENU: "Показать меню",
 	NAVBAR_MENU_MIN: "Свернуть меню",
+	T_BTN_STACK_EDIT: "редактировать",
+	T_BTN_STACK_DEL: "удалить",
+};
+
+export const MODAL_DEL = {
+	TITLE: "Удалить?",
+	CONFIRM_TEXT: "Подтверждаете удаление ",
+	YES: "Да",
+	NO: "Нет",
+	PAGE_TYPE_C: "delCyber",
 };

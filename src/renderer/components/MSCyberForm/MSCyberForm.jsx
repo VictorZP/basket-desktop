@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
-
-const ipcRenderer = window.require("electron").ipcRenderer;
-
-import { getToken } from "../../redux/auth/authSelector.js";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
+
+const ipcRenderer = window.require("electron").ipcRenderer;
+
+import { getToken } from "../../redux/auth/authSelector.js";
+import { onAdd } from "../../redux/matchSettings/matchSettingsSlice.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
@@ -18,6 +19,7 @@ const MSCyberForm = () => {
 	const [cyberName, setCyberName] = useState("");
 	const [loading, setLoading] = useState(false);
 	const token = useSelector(getToken);
+	const dispatch = useDispatch();
 	const { CYBER_FORM } = MATCHES_SETTINGS;
 
 	const handleNameChange = (e) => {
@@ -61,14 +63,11 @@ const MSCyberForm = () => {
 				return;
 			}
 
+			dispatch(onAdd(true));
 			enqueueSnackbar(CYBER_FORM.MS_ADD, { variant: "success" });
 			setCyberName("");
 			setLoading(false);
 		});
-
-		return () => {
-			ipcRenderer.removeAllListeners();
-		};
 	}, []);
 
 	return (

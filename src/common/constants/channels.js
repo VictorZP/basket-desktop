@@ -9,5 +9,6 @@ export const CHANNELS = {
 	CYBER: {
 		ADD_CYBER: "add-cyber",
 		GET_ALL_CYBER: "get-all-cyber",
+		DEL_CYBER: "del-cyber",
 	},
 };
