@@ -53,3 +53,47 @@ ipcMain.on(CHANNELS.CYBER.ADD_CYBER, async (event, arg) => {
 		event.sender.send(CHANNELS.CYBER.ADD_CYBER, res);
 	}
 });
+
+ipcMain.on(CHANNELS.CYBER.GET_ALL_CYBER, async (event, arg) => {
+	try {
+		const { token } = arg;
+
+		const user = await authenticate(token);
+
+		if (user?.code === 401) {
+			throw user?.message;
+		}
+
+		const res = await Cyber.find(
+			{ owner: user },
+			{ createdAt: 0, updatedAt: 0, owner: 0 }
+		)
+			.sort("cyberName")
+			.lean();
+
+		const list = [...res].map((el) => {
+			return {
+				id: el?._id?.toString(),
+				cyberName: el?.cyberName,
+			};
+		});
+
+		console.log(res?.[0]._id?.toString());
+
+		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, { list });
+	} catch (err) {
+		const res = {
+			error: "",
+			message: "",
+		};
+		if (err.coder === 401) {
+			res.error = err.code;
+			res.message = err.message;
+		} else {
+			res.error = err;
+			res.message = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR + err;
+		}
+
+		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, res);
+	}
+});
