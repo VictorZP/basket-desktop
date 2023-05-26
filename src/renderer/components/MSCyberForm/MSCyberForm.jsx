@@ -10,15 +10,26 @@ import LoadingButton from "@mui/lab/LoadingButton";
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { getToken } from "../../redux/auth/authSelector.js";
-import { onAdd } from "../../redux/matchSettings/matchSettingsSlice.js";
+import {
+	handleAddCyber,
+	handleEditCyber,
+	refreshCyberData,
+} from "../../redux/matchSettings/matchSettingsSlice.js";
+import {
+	getCyberEditStatus,
+	getCyberData,
+} from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
 const MSCyberForm = () => {
-	const [cyberName, setCyberName] = useState("");
-	const [loading, setLoading] = useState(false);
 	const token = useSelector(getToken);
+	const onEdit = useSelector(getCyberEditStatus);
+	const cyberData = useSelector(getCyberData);
+
+	const [cyberName, setCyberName] = useState(onEdit ? cyberData.cyberName : "");
+	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 	const { CYBER_FORM } = MATCHES_SETTINGS;
 
@@ -35,7 +46,17 @@ const MSCyberForm = () => {
 			cyberName,
 			token,
 		};
-		ipcRenderer.send(CHANNELS.CYBER.ADD_CYBER, reqData);
+		const updateData = {
+			id: cyberData?.cyberId ?? "",
+			newName: cyberName,
+			token,
+		};
+
+		if (onEdit) {
+			ipcRenderer.send(CHANNELS.CYBER.EDIT_CYBER, updateData);
+		} else {
+			ipcRenderer.send(CHANNELS.CYBER.ADD_CYBER, reqData);
+		}
 	};
 
 	useEffect(() => {
@@ -63,12 +84,54 @@ const MSCyberForm = () => {
 				return;
 			}
 
-			dispatch(onAdd(true));
+			dispatch(handleAddCyber(true));
+
 			enqueueSnackbar(CYBER_FORM.MS_ADD, { variant: "success" });
 			setCyberName("");
 			setLoading(false);
 		});
 	}, []);
+
+	useEffect(() => {
+		ipcRenderer.on(CHANNELS.CYBER.EDIT_CYBER, (event, arg) => {
+			if (arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST) {
+				enqueueSnackbar(MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
+					variant: "warning",
+				});
+				setLoading(false);
+				return;
+			} else if (
+				arg?.message === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR ||
+				arg?.error === "ReferenceError"
+			) {
+				enqueueSnackbar(arg?.message, {
+					variant: "error",
+				});
+				setLoading(false);
+				return;
+			} else if (arg.error) {
+				enqueueSnackbar(arg?.message, {
+					variant: "error",
+				});
+				setLoading(false);
+				return;
+			}
+
+			dispatch(handleAddCyber(true));
+			dispatch(handleEditCyber(false));
+			dispatch(refreshCyberData());
+
+			enqueueSnackbar(CYBER_FORM.MS_UPD, { variant: "success" });
+			setCyberName("");
+			setLoading(false);
+		});
+	}, []);
+
+	useEffect(() => {
+		if (onEdit) {
+			setCyberName(cyberData.cyberName);
+		}
+	}, [onEdit, cyberData.cyberName]);
 
 	return (
 		<Box sx={{ width: "full", paddingX: 3 }}>
@@ -101,7 +164,7 @@ const MSCyberForm = () => {
 					variant="outlined"
 					disabled={!cyberName}
 				>
-					{CYBER_FORM.BTN_ADD}
+					{!onEdit ? CYBER_FORM.BTN_ADD : CYBER_FORM.BTN_UPD}
 				</LoadingButton>
 			</Box>
 		</Box>

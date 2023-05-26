@@ -93,6 +93,55 @@ ipcMain.on(CHANNELS.CYBER.GET_ALL_CYBER, async (event, arg) => {
 	}
 });
 
+ipcMain.on(CHANNELS.CYBER.EDIT_CYBER, async (event, arg) => {
+	try {
+		const { id, newName, token } = arg;
+
+		const user = await authenticate(token);
+		if (user?.code === 401) {
+			throw user?.message;
+		}
+
+		const isCyberExist = await Cyber.findOne({
+			cyberName: newName,
+			owner: user,
+		});
+		if (isCyberExist) {
+			event.sender.send(
+				CHANNELS.CYBER.EDIT_CYBER,
+				MATCHES_SETTINGS.ERR_MESSAGES.EXIST
+			);
+			return;
+		}
+
+		await Cyber.findByIdAndUpdate(
+			{ _id: id },
+			{
+				$set: { cyberName: newName },
+			}
+		);
+
+		event.sender.send(
+			CHANNELS.CYBER.EDIT_CYBER,
+			MATCHES_SETTINGS.SUCCESS_MESSAGES.UPD_SUCCESS
+		);
+	} catch (err) {
+		const res = {
+			error: "",
+			message: "",
+		};
+		if (err.coder === 401) {
+			res.error = err.code;
+			res.message = err.message;
+		} else {
+			res.error = err;
+			res.message = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR + err;
+		}
+
+		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, res);
+	}
+});
+
 ipcMain.on(CHANNELS.CYBER.DEL_CYBER, async (event, arg) => {
 	try {
 		const { token, id } = arg;

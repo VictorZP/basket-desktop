@@ -39,10 +39,12 @@ export const MATCHES_SETTINGS = {
 	},
 	SUCCESS_MESSAGES: {
 		CREATE: "Создано успешно",
+		UPD_SUCCESS: "Успешно изменено.",
 		DELETED: "Удалено: ",
 	},
 	ERR_MESSAGES: {
 		EXIST: "Такое навание уже имеется в базе",
+
 		ON_ERROR: "Произошла ошибка. Обратитесь в тех. поддержку.",
 		ON_ERROR_C_DEL: "Ошибка при удаление cyber. ",
 	},
