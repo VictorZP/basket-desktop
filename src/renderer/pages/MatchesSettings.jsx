@@ -48,7 +48,6 @@ const MatchesSettings = () => {
 				});
 				return;
 			}
-
 			setCyberList(arg.list);
 		});
 		dispatch(onAdd(false));
@@ -56,7 +55,7 @@ const MatchesSettings = () => {
 
 	useEffect(() => {
 		if (isModalDLoading) {
-			ipcRenderer.on(CHANNELS.CYBER.DEL_CYBER, (event, arg) => {
+			ipcRenderer.once(CHANNELS.CYBER.DEL_CYBER, (event, arg) => {
 				if (arg.error || arg === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR) {
 					enqueueSnackbar(arg?.message, {
 						variant: "error",
@@ -130,9 +129,15 @@ const MatchesSettings = () => {
 
 	return (
 		<Box component="section">
-			<MSCyberForm />
-			<MSCyberTable {...cyberTableProps} />
-			<Divider sx={{ width: "100w" }} />
+			<Box>
+				<MSCyberForm />
+				<MSCyberTable {...cyberTableProps} />
+			</Box>
+
+			<Divider />
+			<Box>Championships</Box>
+			<Divider />
+			<Box>Teams names</Box>
 			<DelModal {...delModalProps} />
 		</Box>
 	);

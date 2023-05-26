@@ -32,6 +32,7 @@ export const MATCHES_SETTINGS = {
 		MS_DEL: "Удалено",
 	},
 	CYBER_TABLE: {
+		ACCORD_TITLE: "Список 'Cyber'",
 		CELL_T: "название",
 		DEL_BTN_N: "delCyber",
 		EDIT_BTN_N: "editCyber",
