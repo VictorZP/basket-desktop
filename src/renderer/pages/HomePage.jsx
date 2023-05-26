@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import Box from "@mui/material/Box";
@@ -7,6 +7,7 @@ import { useTheme } from "@mui/material/styles";
 
 import AppNavBar from "../components/AppNavBar";
 import SideMenu from "../components/SideMenu";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { SIDE_MENU } from "../../common/constants/index.js";
 import { setDrawerHeader } from "../components/SideMenu/functions.js";
 
@@ -63,7 +64,9 @@ const HomePage = () => {
 			<SideMenu {...sideMenuProps} />
 			<Box component="main" sx={{ flexGrow: 1, paddingY: 3 }}>
 				<DrawerHeader />
-				<Outlet />
+				<Suspense fallback={<LoadingSpinner />}>
+					<Outlet />
+				</Suspense>
 			</Box>
 		</Box>
 	);

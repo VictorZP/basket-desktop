@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import Box from "@mui/material/Box";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 import { CHANNELS } from "../../common/constants/channels.js";
 import { getToken } from "../redux/auth/authSelector.js";
@@ -40,19 +40,7 @@ const PrivateRoute = () => {
 	}, []);
 
 	if (isLoading && !isLoggedIn) {
-		//Loading spinner in future
-		return (
-			<Box
-				sx={{
-					display: "flex",
-					justifyContent: "center",
-					alignItems: "center",
-					height: "100vh",
-				}}
-			>
-				<p>loading</p>
-			</Box>
-		);
+		return <LoadingSpinner />;
 	} else if (!isLoading && isLoggedIn) {
 		return <Outlet />;
 	} else if (!isLoading && !isLoggedIn) {

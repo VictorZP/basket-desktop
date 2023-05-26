@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { lazy } from "react";
 
 import {
 	createHashRouter,
@@ -8,10 +8,11 @@ import {
 
 import PrivateRoute from "./PrivateRoute.jsx";
 import PublicRoute from "./PublicRoute.jsx";
-import LoginPage from "../pages/LoginPage.jsx";
-import HomePage from "../pages/HomePage.jsx";
-import Matches from "../pages/Matches.jsx";
-import MatchesSettings from "../pages/MatchesSettings.jsx";
+
+const LoginPage = lazy(() => import("../pages/LoginPage.jsx"));
+const HomePage = lazy(() => import("../pages/HomePage.jsx"));
+const Matches = lazy(() => import("../pages/Matches.jsx"));
+const MatchesSettings = lazy(() => import("../pages/MatchesSettings.jsx"));
 
 const appRouter = createHashRouter(
 	createRoutesFromElements(
