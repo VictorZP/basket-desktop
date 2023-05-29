@@ -67,3 +67,4 @@ import "./database/database.js";
 import "./processes/loginProcesses.js";
 import "./processes/storeProcesses.js";
 import "./processes/cyberProcesses.js";
+import "./processes/appChampProcesses.js";

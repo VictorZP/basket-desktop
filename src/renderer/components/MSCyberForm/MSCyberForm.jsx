@@ -163,6 +163,7 @@ const MSCyberForm = () => {
 					loading={loading}
 					variant="outlined"
 					disabled={!cyberName}
+					sx={{ width: 110 }}
 				>
 					{!onEdit ? CYBER_FORM.BTN_ADD : CYBER_FORM.BTN_UPD}
 				</LoadingButton>

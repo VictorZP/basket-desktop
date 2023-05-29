@@ -37,14 +37,32 @@ export const MATCHES_SETTINGS = {
 		DEL_BTN_N: "delCyber",
 		EDIT_BTN_N: "editCyber",
 	},
+	CHAMPIONSHIP_FORM: {
+		TITLE: "Названия чемпионатов",
+		SELECT_LABEL: "Cyber",
+		CHAMP_NAME_INPUT: "Название чемпионата",
+		FIBALIVE_NAME_INPUT: "Название fibalive",
+		BETSAPI_NAME_INPUT: "Название betsApi",
+		OTHER_SITE_NAME_INPUT: "Название с сайта",
+		BTN_ADD: "Добавить",
+		BTN_UPD: "Обновить",
+		CHAMP_ADDED: "Чемпионат добавлен.",
+	},
+
 	SUCCESS_MESSAGES: {
 		CREATE: "Создано успешно",
 		UPD_SUCCESS: "Успешно изменено.",
 		DELETED: "Удалено: ",
 	},
 	ERR_MESSAGES: {
-		EXIST: "Такое навание уже имеется в базе",
-
+		EXIST: "Такое навание уже имеется в базе.",
+		EXIST_CHAMP_NAME: "Чемпионат с таким названием уже существует.",
+		EXIST_CHAMP_FIB_NAME:
+			"Чемпионат с таким названием с fibalive уже существует.",
+		EXIST_CHAMP_BETS_NAME:
+			"Чемпионат с таким названием с betsApi уже существует.",
+		EXIST_CHAMP_OTHER_NAME:
+			"Чемпионат с таким названием с сайта уже существует.",
 		ON_ERROR: "Произошла ошибка. Обратитесь в тех. поддержку.",
 		ON_ERROR_C_DEL: "Ошибка при удаление cyber. ",
 	},

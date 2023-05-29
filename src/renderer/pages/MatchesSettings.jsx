@@ -8,6 +8,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import MSCyberForm from "../components/MSCyberForm/MSCyberForm.jsx";
 import MSCyberTable from "../components/MSCyberTable/MSCyberTable.jsx";
+import MSChampionshipForm from "../components/MSChampionshipForm";
 import DelModal from "../components/DelModal";
 
 import { getToken } from "../redux/auth/authSelector.js";
@@ -123,6 +124,9 @@ const MatchesSettings = () => {
 		handleClose,
 		handleDelete,
 	};
+	const championshipProps = {
+		cyberList,
+	};
 
 	return (
 		<Box component="section">
@@ -132,7 +136,9 @@ const MatchesSettings = () => {
 			</Box>
 
 			<Divider />
-			<Box>Championships</Box>
+			<Box>
+				<MSChampionshipForm {...championshipProps} />
+			</Box>
 			<Divider />
 			<Box>Teams names</Box>
 			<DelModal {...delModalProps} />
