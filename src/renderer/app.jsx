@@ -5,6 +5,9 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store.js";
 import { SnackbarProvider } from "notistack";
 
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ruRU } from "@mui/material/locale";
+
 import appRouter from "./routes/appRouter.js";
 import DismissAction from "./components/DismissAction/DismissAction.jsx";
 
@@ -13,6 +16,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "normalize.css";
+
+const theme = createTheme(ruRU);
 
 const App = () => {
 	return (
@@ -34,7 +39,9 @@ const root = createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<App />
+			<ThemeProvider theme={theme}>
+				<App />
+			</ThemeProvider>
 		</Provider>
 	</React.StrictMode>
 );
