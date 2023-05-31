@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import { Box, Typography, TextField, IconButton } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
@@ -133,6 +132,14 @@ const MSCyberForm = () => {
 		}
 	}, [onEdit, cyberData.cyberName]);
 
+	const onClearBtn = () => {
+		setCyberName("");
+		if (onEdit) {
+			dispatch(handleEditCyber(false));
+			dispatch(refreshCyberData());
+		}
+	};
+
 	return (
 		<Box sx={{ width: "full", paddingX: 3 }}>
 			<Typography variant="h5" sx={{ marginBottom: 1 }}>
@@ -163,10 +170,19 @@ const MSCyberForm = () => {
 					loading={loading}
 					variant="outlined"
 					disabled={!cyberName}
-					sx={{ width: 110 }}
+					sx={{ mr: 2, width: 110 }}
 				>
 					{!onEdit ? CYBER_FORM.BTN_ADD : CYBER_FORM.BTN_UPD}
 				</LoadingButton>
+				<IconButton
+					size="small"
+					sx={{ width: 35 }}
+					color="error"
+					disabled={!cyberName}
+					onClick={onClearBtn}
+				>
+					<ClearIcon />
+				</IconButton>
 			</Box>
 		</Box>
 	);
