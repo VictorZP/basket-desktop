@@ -42,10 +42,13 @@ const MSCyberTable = ({ cyberList, handleDelete, handleEdit }) => {
 					aria-controls="cyber-table-content"
 					id="cyber-table-header"
 				>
-					<Typography>{MATCHES_SETTINGS.CYBER_TABLE.ACCORD_TITLE}</Typography>
+					<Typography>{CYBER_TABLE.ACCORD_TITLE}</Typography>
 				</AccordionSummary>
 				<AccordionDetails sx={{ p: 0 }}>
-					<TableContainer component={Paper}>
+					<TableContainer
+						component={Paper}
+						sx={{ borderTopRightRadius: 0, borderTopLeftRadius: 0 }}
+					>
 						<Table sx={{ minWidth: 300 }} aria-label="cyber table">
 							<TableHead>
 								<TableRow>
@@ -56,7 +59,7 @@ const MSCyberTable = ({ cyberList, handleDelete, handleEdit }) => {
 							<TableBody>
 								{cyberList.map((row) => (
 									<StyledTableRow key={row.id}>
-										<StyledTableCell component="th" scope="row">
+										<StyledTableCell scope="row">
 											{row.cyberName}
 										</StyledTableCell>
 										<StyledTableCell>

@@ -15,6 +15,13 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 		padding: "8px 10px",
 		fontSize: 14,
 	},
+	"&:first-of-type": {
+		width: 170,
+	},
+
+	"&:last-of-type": {
+		width: 105,
+	},
 }));
 
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({

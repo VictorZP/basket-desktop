@@ -36,6 +36,7 @@ export const MATCHES_SETTINGS = {
 		CELL_T: "название",
 		DEL_BTN_N: "delCyber",
 		EDIT_BTN_N: "editCyber",
+		ACCORDION_NAME: "",
 	},
 	CHAMPIONSHIP_FORM: {
 		TITLE: "Названия чемпионатов",
@@ -47,6 +48,18 @@ export const MATCHES_SETTINGS = {
 		BTN_ADD: "Добавить",
 		BTN_UPD: "Обновить",
 		CHAMP_ADDED: "Чемпионат добавлен.",
+		CHAMP_UPDATED: "Обновлено",
+	},
+	CHAMPIONSHIP_TABLE: {
+		ACCORDION_TITLE: "Список чемпионатов",
+		CELL_CYBER: "Cyber",
+		CELL_CHAMP_NAME: "Название чемпионата",
+		CELL_FIBALIVE_NAME: "Название fibalive",
+		CELL_BETSAPI_NAME: "Название betsapi",
+		CELL_OTHER_NAME: "Название с сайта",
+		DEL_BTN_NAME: "delChampionship",
+		EDIT_BTN_NAME: "editChampionship",
+		ACCORDION_NAME: "champTableAccordion",
 	},
 
 	SUCCESS_MESSAGES: {
@@ -65,6 +78,7 @@ export const MATCHES_SETTINGS = {
 			"Чемпионат с таким названием с сайта уже существует.",
 		ON_ERROR: "Произошла ошибка. Обратитесь в тех. поддержку.",
 		ON_ERROR_C_DEL: "Ошибка при удаление cyber. ",
+		ON_ERROR_CHAMP_DEL: "Ошибка при удаление чемпионата. ",
 	},
 };
 
@@ -81,4 +95,5 @@ export const MODAL_DEL = {
 	YES: "Да",
 	NO: "Нет",
 	PAGE_TYPE_C: "delCyber",
+	PAGE_TYPE_CHAMP: "delChampionship",
 };

@@ -10,8 +10,10 @@ import {
 	Select,
 	MenuItem,
 	TextField,
+	IconButton,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import {
 	StyledChampSettingsBox,
@@ -47,20 +49,10 @@ const MSChampionshipForm = ({ cyberList }) => {
 	const token = useSelector(getToken);
 	const onEdit = useSelector(getChampEditStatus);
 	const champData = useSelector(getChampData);
-	const dispatch = useDispatch();
 
-	const [champ, setChamp] = useState(
-		onEdit
-			? {
-					championshipName: champData?.championshipName ?? "",
-					fibaliveName: champData?.fibaliveName ?? "",
-					betsapiName: champData?.betsapiName ?? "",
-					otherSiteName: champData?.otherSiteName ?? "",
-					cyberName: champData?.cyberName ?? "",
-			  }
-			: initialData
-	);
+	const [champ, setChamp] = useState(initialData);
 	const [isLoading, setIsLoading] = useState(false);
+	const dispatch = useDispatch();
 	const { CHAMPIONSHIP_FORM } = MATCHES_SETTINGS;
 
 	const options = cyberList?.map((el) => {
@@ -70,6 +62,12 @@ const MSChampionshipForm = ({ cyberList }) => {
 			id: el?.id,
 		};
 	});
+
+	useEffect(() => {
+		if (champData?.champId) {
+			setChamp({ ...champData });
+		}
+	}, [onEdit, champData]);
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, (event, arg) => {
@@ -105,6 +103,46 @@ const MSChampionshipForm = ({ cyberList }) => {
 			enqueueSnackbar(CHAMPIONSHIP_FORM.CHAMP_ADDED, {
 				variant: "success",
 			});
+			setChamp(initialData);
+			setIsLoading(false);
+		});
+	}, []);
+
+	useEffect(() => {
+		ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_EDIT, (event, arg) => {
+			console.log("🚀 ~ arg:", arg);
+			if (
+				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_NAME ||
+				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_FIB_NAME ||
+				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_BETS_NAME ||
+				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_OTHER_NAME
+			) {
+				enqueueSnackbar(arg, {
+					variant: "warning",
+				}),
+					setIsLoading(false);
+				return;
+			} else if (
+				arg?.message === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR ||
+				arg?.error === "referenceError"
+			) {
+				enqueueSnackbar(arg?.message, {
+					variant: "error",
+				});
+				setIsLoading(false);
+				return;
+			} else if (arg?.error) {
+				enqueueSnackbar(arg?.message, {
+					variant: "error",
+				});
+				setIsLoading(false);
+				return;
+			}
+			dispatch(handleAddChamp(true));
+			dispatch(handleEditChamp(false));
+			dispatch(refreshChampData());
+
+			enqueueSnackbar(CHAMPIONSHIP_FORM.CHAMP_UPDATED, { variant: "success" });
 			setChamp(initialData);
 			setIsLoading(false);
 		});
@@ -158,7 +196,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 		};
 
 		const updateData = {
-			id: champData?.id,
+			id: champData?.champId,
 			champ,
 			token,
 		};
@@ -167,6 +205,14 @@ const MSChampionshipForm = ({ cyberList }) => {
 			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_EDIT, updateData);
 		} else {
 			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, reqData);
+		}
+	};
+
+	const onClearBtn = () => {
+		setChamp(initialData);
+		if (onEdit) {
+			dispatch(handleEditChamp(false));
+			dispatch(refreshChampData());
 		}
 	};
 
@@ -241,10 +287,18 @@ const MSChampionshipForm = ({ cyberList }) => {
 					loading={isLoading}
 					variant="outlined"
 					disabled={!champ?.cyberName || !champ?.championshipName}
-					sx={{ width: 110 }}
 				>
 					{!onEdit ? CHAMPIONSHIP_FORM.BTN_ADD : CHAMPIONSHIP_FORM.BTN_UPD}
 				</LoadingButton>
+				<IconButton
+					size="small"
+					sx={{ width: 35 }}
+					color="error"
+					disabled={!champ?.cyberName || !champ?.championshipName}
+					onClick={onClearBtn}
+				>
+					<ClearIcon />
+				</IconButton>
 			</StyledChampSettingsBox>
 		</Box>
 	);

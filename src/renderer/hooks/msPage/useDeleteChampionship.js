@@ -21,15 +21,15 @@ import {
 } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
-export const useDeleteCyber = () => {
+export const useDeleteChampionship = () => {
 	const token = useSelector(getToken);
 	const pageType = useSelector(getMDPageType);
 	const isModalDLoading = useSelector(isMDLoading);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (isModalDLoading && pageType === MODAL_DEL.PAGE_TYPE_C) {
-			ipcRenderer.once(CHANNELS.CYBER.DEL_CYBER, (event, arg) => {
+		if (isModalDLoading && pageType === MODAL_DEL.PAGE_TYPE_CHAMP) {
+			ipcRenderer.once(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, (event, arg) => {
 				if (arg.error || arg === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR) {
 					enqueueSnackbar(arg?.message, {
 						variant: "error",
@@ -41,7 +41,7 @@ export const useDeleteCyber = () => {
 				enqueueSnackbar(arg, {
 					variant: "success",
 				});
-				ipcRenderer.send(CHANNELS.CYBER.GET_ALL_CYBER, { token });
+				ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL, { token });
 			});
 		}
 	}, [isModalDLoading]);

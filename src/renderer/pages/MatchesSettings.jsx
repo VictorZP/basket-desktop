@@ -9,12 +9,15 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import MSCyberForm from "../components/MSCyberForm/MSCyberForm.jsx";
 import MSCyberTable from "../components/MSCyberTable/MSCyberTable.jsx";
 import MSChampionshipForm from "../components/MSChampionshipForm";
+import MSChampionships from "../components/MSChampionships/index.js";
 import DelModal from "../components/DelModal";
 
 import { getToken } from "../redux/auth/authSelector.js";
 import {
 	handleEditCyber,
+	handleEditChamp,
 	setCyberData,
+	setChampData,
 	refreshCyberData,
 } from "../redux/matchSettings/matchSettingsSlice.js";
 import {
@@ -25,24 +28,34 @@ import {
 	refreshModalDel,
 } from "../redux/modalDelete/modalDelSlice.js";
 import {
+	getMDPageType,
 	isMDOpen,
 	getMDElemId,
 } from "../redux/modalDelete/modalDelSelector.js";
 
-import { useGetAllCyber, useDeleteCyber } from "../hooks/msPage";
+import {
+	useGetAllCyber,
+	useDeleteCyber,
+	useGetChampionships,
+	useDeleteChampionship,
+} from "../hooks/msPage";
 
 import { MATCHES_SETTINGS, MODAL_DEL } from "../../common/constants/index.js";
 import { CHANNELS } from "../../common/constants/channels.js";
 
 const MatchesSettings = () => {
 	const [cyberList, setCyberList] = useState([]);
+	const [champList, setChampList] = useState([]);
 	const token = useSelector(getToken);
 	const isOpen = useSelector(isMDOpen);
 	const id = useSelector(getMDElemId);
+	const pageType = useSelector(getMDPageType);
 	const dispatch = useDispatch();
 
 	useGetAllCyber(setCyberList);
+	useGetChampionships(setChampList);
 	useDeleteCyber();
+	useDeleteChampionship();
 
 	useEffect(() => {
 		return () => {
@@ -71,6 +84,20 @@ const MatchesSettings = () => {
 				payload.descriptionExtend = cyberName;
 				payload.elemId = id;
 				break;
+			case MATCHES_SETTINGS.CHAMPIONSHIP_TABLE.DEL_BTN_NAME:
+				const selectedChampionship = champList.find((champ) => {
+					return champ?.id === id;
+				});
+				payload.pageType = MODAL_DEL.PAGE_TYPE_CHAMP;
+				payload.descriptionExtend = {
+					championshipName: selectedChampionship?.championshipName,
+					fibaliveName: selectedChampionship?.fibaliveName,
+					betsapiName: selectedChampionship?.betsapiName,
+					otherSiteName: selectedChampionship?.otherSiteName,
+					cyberName: selectedChampionship?.cyberName,
+				};
+				payload.elemId = id;
+				break;
 
 			default:
 				break;
@@ -84,11 +111,17 @@ const MatchesSettings = () => {
 
 	const handleDelete = async (e) => {
 		dispatch(setLoading());
-		ipcRenderer.send(CHANNELS.CYBER.DEL_CYBER, { token, id });
+
+		if (pageType === MODAL_DEL.PAGE_TYPE_C) {
+			ipcRenderer.send(CHANNELS.CYBER.DEL_CYBER, { token, id });
+		} else if (pageType === MODAL_DEL.PAGE_TYPE_CHAMP) {
+			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, { token, id });
+		}
 	};
 
 	const handleEdit = (e) => {
 		const id = e?.currentTarget?.id?.split("_")[1];
+		console.log("🚀 ~ id:", id);
 		const btnName = e?.currentTarget?.name;
 
 		switch (btnName) {
@@ -96,13 +129,29 @@ const MatchesSettings = () => {
 				const cyberName = cyberList.find((el) => {
 					return el?.id === id;
 				})?.cyberName;
-				const payload = {
+				const cyberPayload = {
 					id,
 					name: cyberName,
 				};
 
-				dispatch(setCyberData(payload));
+				dispatch(setCyberData(cyberPayload));
 				dispatch(handleEditCyber(true));
+				break;
+
+			case MATCHES_SETTINGS.CHAMPIONSHIP_TABLE.EDIT_BTN_NAME:
+				const championship = champList?.find((champ) => {
+					return champ?.id === id;
+				});
+				const champPayload = {
+					champId: id,
+					championshipName: championship?.championshipName ?? "",
+					fibaliveName: championship?.fibaliveName ?? "",
+					betsapiName: championship?.betsapiName ?? "",
+					otherSiteName: championship?.otherSiteName ?? "",
+					cyberName: championship?.cyberName ?? "",
+				};
+				dispatch(setChampData(champPayload));
+				dispatch(handleEditChamp(true));
 				break;
 
 			default:
@@ -127,6 +176,12 @@ const MatchesSettings = () => {
 	const championshipProps = {
 		cyberList,
 	};
+	const championshipsProps = {
+		champList,
+		setChampList,
+		handleDelete: openModalDel,
+		handleEdit,
+	};
 
 	return (
 		<Box component="section">
@@ -134,10 +189,10 @@ const MatchesSettings = () => {
 				<MSCyberForm />
 				<MSCyberTable {...cyberTableProps} />
 			</Box>
-
 			<Divider />
 			<Box>
 				<MSChampionshipForm {...championshipProps} />
+				<MSChampionships {...championshipsProps} />
 			</Box>
 			<Divider />
 			<Box>Teams names</Box>
