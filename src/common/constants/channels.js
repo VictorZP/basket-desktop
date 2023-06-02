@@ -1,10 +1,12 @@
 export const CHANNELS = {
 	AUTH: {
 		LOGIN: "login",
+		CHECK_TOKEN: "check-token",
 	},
 	STORAGE: {
 		GET_TOKEN: "get-token",
 		SET_TOKEN: "set-token",
+		CLEAR_TOKEN: "clear-token",
 	},
 	CYBER: {
 		ADD_CYBER: "add-cyber",

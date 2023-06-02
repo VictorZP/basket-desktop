@@ -10,8 +10,12 @@ const STORAGE_KEY = {
 
 let store = new Store();
 
-ipcMain.on(CHANNELS.STORAGE.SET_TOKEN, (event, arg) => {
-	store.set(STORAGE_KEY.TOKEN, arg);
+ipcMain.on(CHANNELS.STORAGE.SET_TOKEN, async (event, arg) => {
+	try {
+		store.set(STORAGE_KEY.TOKEN, arg);
+	} catch (err) {
+		console.log(err);
+	}
 });
 
 ipcMain.handle(CHANNELS.STORAGE.GET_TOKEN, async (event, arg) => {

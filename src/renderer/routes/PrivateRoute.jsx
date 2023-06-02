@@ -12,7 +12,7 @@ import { setToken } from "../redux/auth/authSlice.js";
 
 const PrivateRoute = () => {
 	const token = useSelector(getToken);
-	const [isLoggedIn, setIsLoggedIn] = useState("");
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const dispatch = useDispatch();
 
@@ -20,11 +20,25 @@ const PrivateRoute = () => {
 		const getTokenStorage = async () => {
 			try {
 				const res = await ipcRenderer.invoke(CHANNELS.STORAGE.GET_TOKEN);
-				if (res?.token) {
-					setIsLoggedIn(res?.token);
-					dispatch(setToken(res?.token));
+
+				if (!res?.token) {
 					setIsLoading(false);
+					return;
 				}
+
+				const tokenVerified = await ipcRenderer.invoke(
+					CHANNELS.AUTH.CHECK_TOKEN,
+					{ token: res?.token }
+				);
+
+				if (tokenVerified !== "verified") {
+					setIsLoading(false);
+					return;
+				}
+
+				setIsLoggedIn(res?.token);
+				dispatch(setToken(res?.token));
+				setIsLoading(false);
 			} catch (error) {
 				console.log("error: ", error);
 				return;

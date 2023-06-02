@@ -22,7 +22,7 @@ const LoginPage = () => {
 			email: data.get("email"),
 			password: data.get("password"),
 		};
-		await ipcRenderer.send(CHANNELS.AUTH.LOGIN, reqData);
+		ipcRenderer.send(CHANNELS.AUTH.LOGIN, reqData);
 	};
 
 	useEffect(() => {
@@ -31,8 +31,6 @@ const LoginPage = () => {
 				setLogError(true);
 				return;
 			}
-
-			ipcRenderer.send(CHANNELS.STORAGE.SET_TOKEN, arg?.token);
 
 			dispatch(setToken(arg?.token));
 			setLogError(false);
