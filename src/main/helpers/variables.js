@@ -1,7 +1,7 @@
-const DB_HOST = process.env.DB_HOST;
-const SECRET_KEY = process.env.SECRET_KEY;
+const ADDRESS = process.env.ADDRESS;
+const PORT = process.env.PORT;
 
 module.exports = {
-	SECRET_KEY,
-	DB_HOST,
+	ADDRESS,
+	PORT,
 };

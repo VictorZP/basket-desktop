@@ -62,9 +62,8 @@ app.on("activate", () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-
-import "./database/database.js";
-import "./processes/loginProcesses.js";
 import "./processes/storeProcesses.js";
+
+import "./processes/loginProcesses.js";
 import "./processes/cyberProcesses.js";
 import "./processes/appChampProcesses.js";

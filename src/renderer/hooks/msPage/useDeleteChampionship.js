@@ -4,8 +4,6 @@ import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { getToken } from "../../redux/auth/authSelector.js";
-
 import {
 	handleModalDelClose,
 	refreshModalDel,
@@ -22,7 +20,6 @@ import {
 import { CHANNELS } from "../../../common/constants/channels.js";
 
 export const useDeleteChampionship = () => {
-	const token = useSelector(getToken);
 	const pageType = useSelector(getMDPageType);
 	const isModalDLoading = useSelector(isMDLoading);
 	const dispatch = useDispatch();
@@ -30,18 +27,25 @@ export const useDeleteChampionship = () => {
 	useEffect(() => {
 		if (isModalDLoading && pageType === MODAL_DEL.PAGE_TYPE_CHAMP) {
 			ipcRenderer.once(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, (event, arg) => {
-				if (arg.error || arg === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR) {
-					enqueueSnackbar(arg?.message, {
-						variant: "error",
-					});
+				if (arg?.statusText !== "OK") {
+					enqueueSnackbar(
+						arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR_CHAMP_DEL,
+						{
+							variant: "error",
+						}
+					);
 					return;
 				}
+
 				dispatch(handleModalDelClose());
 				dispatch(refreshModalDel());
-				enqueueSnackbar(arg, {
-					variant: "success",
-				});
-				ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL, { token });
+				enqueueSnackbar(
+					arg?.message ?? MATCHES_SETTINGS.SUCCESS_MESSAGES.DELETED,
+					{
+						variant: "success",
+					}
+				);
+				ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL);
 			});
 		}
 	}, [isModalDLoading]);

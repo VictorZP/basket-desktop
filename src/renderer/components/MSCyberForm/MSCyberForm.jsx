@@ -8,7 +8,6 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { getToken } from "../../redux/auth/authSelector.js";
 import {
 	handleAddCyber,
 	handleEditCyber,
@@ -23,7 +22,6 @@ import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
 const MSCyberForm = () => {
-	const token = useSelector(getToken);
 	const onEdit = useSelector(getCyberEditStatus);
 	const cyberData = useSelector(getCyberData);
 
@@ -43,12 +41,10 @@ const MSCyberForm = () => {
 		setLoading(true);
 		const reqData = {
 			cyberName,
-			token,
 		};
 		const updateData = {
 			id: cyberData?.cyberId ?? "",
 			newName: cyberName,
-			token,
 		};
 
 		if (onEdit) {
@@ -60,25 +56,19 @@ const MSCyberForm = () => {
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.CYBER.ADD_CYBER, (event, arg) => {
-			if (arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST) {
-				enqueueSnackbar(MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
+			if (arg?.statusCode === 409) {
+				enqueueSnackbar(arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
 					variant: "warning",
 				});
 				setLoading(false);
 				return;
-			} else if (
-				arg?.message === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR ||
-				arg?.error === "ReferenceError"
-			) {
-				enqueueSnackbar(arg?.message, {
-					variant: "error",
-				});
-				setLoading(false);
-				return;
-			} else if (arg.error) {
-				enqueueSnackbar(arg?.message, {
-					variant: "error",
-				});
+			} else if (arg?.statusCode !== 201 && arg?.statusText !== "Created") {
+				enqueueSnackbar(
+					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
+					{
+						variant: "error",
+					}
+				);
 				setLoading(false);
 				return;
 			}
@@ -93,25 +83,19 @@ const MSCyberForm = () => {
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.CYBER.EDIT_CYBER, (event, arg) => {
-			if (arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST) {
-				enqueueSnackbar(MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
+			if (arg?.statusCode === 409) {
+				enqueueSnackbar(arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
 					variant: "warning",
 				});
 				setLoading(false);
 				return;
-			} else if (
-				arg?.message === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR ||
-				arg?.error === "ReferenceError"
-			) {
-				enqueueSnackbar(arg?.message, {
-					variant: "error",
-				});
-				setLoading(false);
-				return;
-			} else if (arg.error) {
-				enqueueSnackbar(arg?.message, {
-					variant: "error",
-				});
+			} else if (arg?.statusCode !== 201 && arg?.statusText !== "Created") {
+				enqueueSnackbar(
+					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
+					{
+						variant: "error",
+					}
+				);
 				setLoading(false);
 				return;
 			}
@@ -120,7 +104,9 @@ const MSCyberForm = () => {
 			dispatch(handleEditCyber(false));
 			dispatch(refreshCyberData());
 
-			enqueueSnackbar(CYBER_FORM.MS_UPD, { variant: "success" });
+			enqueueSnackbar(arg?.message ?? CYBER_FORM.MS_UPD, {
+				variant: "success",
+			});
 			setCyberName("");
 			setLoading(false);
 		});

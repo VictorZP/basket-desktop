@@ -15,14 +15,9 @@ import {
 import LoadingButton from "@mui/lab/LoadingButton";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import {
-	StyledChampSettingsBox,
-	StyledChampSettingsMenuItem,
-} from "../../helpers/reusableComponents/addChampionships.js";
+import { StyledChampSettingsBox } from "../../helpers/reusableComponents/addChampionships.js";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
-
-import { getToken } from "../../redux/auth/authSelector.js";
 
 import {
 	handleAddChamp,
@@ -46,7 +41,6 @@ const initialData = {
 };
 
 const MSChampionshipForm = ({ cyberList }) => {
-	const token = useSelector(getToken);
 	const onEdit = useSelector(getChampEditStatus);
 	const champData = useSelector(getChampData);
 
@@ -65,36 +59,25 @@ const MSChampionshipForm = ({ cyberList }) => {
 
 	useEffect(() => {
 		if (champData?.champId) {
-			setChamp({ ...champData });
+			setChamp({
+				championshipName: champData?.championshipName,
+				fibaliveName: champData?.fibaliveName,
+				betsapiName: champData?.betsapiName,
+				otherSiteName: champData?.otherSiteName,
+				cyberName: champData?.cyberName,
+			});
 		}
 	}, [onEdit, champData]);
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, (event, arg) => {
-			if (
-				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_NAME ||
-				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_FIB_NAME ||
-				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_BETS_NAME ||
-				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_OTHER_NAME
-			) {
-				enqueueSnackbar(arg, {
-					variant: "warning",
-				}),
-					setIsLoading(false);
-				return;
-			} else if (
-				arg?.message === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR ||
-				arg?.error === "referenceError"
-			) {
-				enqueueSnackbar(arg?.message, {
-					variant: "error",
-				});
-				setIsLoading(false);
-				return;
-			} else if (arg?.error) {
-				enqueueSnackbar(arg?.message, {
-					variant: "error",
-				});
+			if (arg?.statusText !== "Created") {
+				enqueueSnackbar(
+					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
+					{
+						variant: "error",
+					}
+				);
 				setIsLoading(false);
 				return;
 			}
@@ -110,31 +93,19 @@ const MSChampionshipForm = ({ cyberList }) => {
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_EDIT, (event, arg) => {
-			console.log("🚀 ~ arg:", arg);
-			if (
-				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_NAME ||
-				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_FIB_NAME ||
-				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_BETS_NAME ||
-				arg === MATCHES_SETTINGS.ERR_MESSAGES.EXIST_CHAMP_OTHER_NAME
-			) {
-				enqueueSnackbar(arg, {
+			if (arg?.statusCode === 409) {
+				enqueueSnackbar(arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
 					variant: "warning",
-				}),
-					setIsLoading(false);
-				return;
-			} else if (
-				arg?.message === MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR ||
-				arg?.error === "referenceError"
-			) {
-				enqueueSnackbar(arg?.message, {
-					variant: "error",
 				});
 				setIsLoading(false);
 				return;
-			} else if (arg?.error) {
-				enqueueSnackbar(arg?.message, {
-					variant: "error",
-				});
+			} else if (arg?.statusCode !== 201 && arg?.statusText !== "Created") {
+				enqueueSnackbar(
+					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
+					{
+						variant: "error",
+					}
+				);
 				setIsLoading(false);
 				return;
 			}
@@ -149,7 +120,6 @@ const MSChampionshipForm = ({ cyberList }) => {
 	}, []);
 
 	const handleChange = (e) => {
-		const id = e?.target?.id;
 		const name = e?.target?.name;
 		const inputValue = e?.target?.value;
 
@@ -192,13 +162,11 @@ const MSChampionshipForm = ({ cyberList }) => {
 
 		const reqData = {
 			champ,
-			token,
 		};
 
 		const updateData = {
 			id: champData?.champId,
 			champ,
-			token,
 		};
 
 		if (onEdit) {

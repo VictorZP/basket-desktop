@@ -1,52 +1,31 @@
+const axios = require("axios");
 const { ipcMain } = require("electron");
 
-const { Cyber } = require("../models/cyber.js");
-const authenticate = require("../helpers/authenticate.js");
+const endPoint = "/desktop/cyber";
+
 const { CHANNELS } = require("../../common/constants/channels.js");
-const { MATCHES_SETTINGS } = require("../../common/constants/index.js");
 
 ipcMain.on(CHANNELS.CYBER.ADD_CYBER, async (event, arg) => {
 	try {
-		const { cyberName, token } = arg;
+		const { cyberName } = arg;
 
-		const user = await authenticate(token);
-		if (user?.code === 401) {
-			throw user?.message;
-		}
-
-		const isCyberExist = await Cyber.findOne({ cyberName });
-		if (isCyberExist) {
-			event.sender.send(
-				CHANNELS.CYBER.ADD_CYBER,
-				MATCHES_SETTINGS.ERR_MESSAGES.EXIST
-			);
-			return;
-		}
-
-		await Cyber.create({
+		const res = await axios.post(`${endPoint}/add`, {
 			cyberName,
-			owner: user,
 		});
 
-		event.sender.send(
-			CHANNELS.CYBER.ADD_CYBER,
-			MATCHES_SETTINGS.SUCCESS_MESSAGES.CREATE
-		);
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.CYBER.ADD_CYBER, resData);
 	} catch (err) {
 		const res = {
-			error: "",
-			message: "",
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
 		};
-		if (err.coder === 401) {
-			res.error = err.code;
-			res.message = err.message;
-		} else if (err instanceof ReferenceError) {
-			res.error = err.name;
-			res.message = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR + " " + err.message;
-		} else {
-			res.error = err;
-			res.message = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR + err;
-		}
 
 		event.sender.send(CHANNELS.CYBER.ADD_CYBER, res);
 	}
@@ -54,40 +33,22 @@ ipcMain.on(CHANNELS.CYBER.ADD_CYBER, async (event, arg) => {
 
 ipcMain.on(CHANNELS.CYBER.GET_ALL_CYBER, async (event, arg) => {
 	try {
-		const { token } = arg;
+		const res = await axios.get(`${endPoint}/list`);
+		const list = res?.data?.list;
 
-		const user = await authenticate(token);
-		if (user?.code === 401) {
-			throw user?.message;
-		}
+		const resData = {
+			statusCode: res?.status,
+			statusText: res?.statusText,
+			list,
+		};
 
-		const res = await Cyber.find(
-			{ owner: user },
-			{ createdAt: 0, updatedAt: 0, owner: 0 }
-		)
-			.sort("cyberName")
-			.lean();
-
-		const list = [...res].map((el) => {
-			return {
-				id: el?._id?.toString(),
-				cyberName: el?.cyberName,
-			};
-		});
-
-		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, { list });
+		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, resData);
 	} catch (err) {
 		const res = {
-			error: "",
-			message: "",
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
 		};
-		if (err.coder === 401) {
-			res.error = err.code;
-			res.message = err.message;
-		} else {
-			res.error = err;
-			res.message = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR + err;
-		}
 
 		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, res);
 	}
@@ -95,83 +56,47 @@ ipcMain.on(CHANNELS.CYBER.GET_ALL_CYBER, async (event, arg) => {
 
 ipcMain.on(CHANNELS.CYBER.EDIT_CYBER, async (event, arg) => {
 	try {
-		const { id, newName, token } = arg;
+		const { id, newName } = arg;
 
-		const user = await authenticate(token);
-		if (user?.code === 401) {
-			throw user?.message;
-		}
+		const res = await axios.put(`${endPoint}/${id}`, { newName });
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
 
-		const isCyberExist = await Cyber.findOne({
-			cyberName: newName,
-			owner: user,
-		});
-		if (isCyberExist) {
-			event.sender.send(
-				CHANNELS.CYBER.EDIT_CYBER,
-				MATCHES_SETTINGS.ERR_MESSAGES.EXIST
-			);
-			return;
-		}
-
-		await Cyber.findByIdAndUpdate(
-			{ _id: id },
-			{
-				$set: { cyberName: newName },
-			}
-		);
-
-		event.sender.send(
-			CHANNELS.CYBER.EDIT_CYBER,
-			MATCHES_SETTINGS.SUCCESS_MESSAGES.UPD_SUCCESS
-		);
+		event.sender.send(CHANNELS.CYBER.EDIT_CYBER, resData);
 	} catch (err) {
 		const res = {
-			error: "",
-			message: "",
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
 		};
-		if (err.coder === 401) {
-			res.error = err.code;
-			res.message = err.message;
-		} else {
-			res.error = err;
-			res.message = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR + err;
-		}
 
-		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, res);
+		event.sender.send(CHANNELS.CYBER.EDIT_CYBER, res);
 	}
 });
 
 ipcMain.on(CHANNELS.CYBER.DEL_CYBER, async (event, arg) => {
 	try {
-		const { token, id } = arg;
+		const { id } = arg;
 
-		const user = await authenticate(token);
-		if (user?.code === 401) {
-			throw user?.message;
-		}
+		const res = await axios.delete(`${endPoint}/${id}`);
 
-		const res = await Cyber.findByIdAndDelete({ _id: id });
-		if (res?._id?.toString() !== id) {
-			const err = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR_C_DEL;
-			throw err;
-		}
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
 
-		const resMessage = `${MATCHES_SETTINGS.SUCCESS_MESSAGES.DELETED}${res?.cyberName}`;
-		event.sender.send(CHANNELS.CYBER.DEL_CYBER, resMessage);
+		event.sender.send(CHANNELS.CYBER.DEL_CYBER, resData);
 	} catch (err) {
 		const res = {
-			error: "",
-			message: "",
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
 		};
-		if (err.coder === 401) {
-			res.error = err.code;
-			res.message = err.message;
-		} else {
-			res.error = err;
-			res.message = MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR + err;
-		}
 
-		event.sender.send(CHANNELS.CYBER.GET_ALL_CYBER, res);
+		event.sender.send(CHANNELS.CYBER.DEL_CYBER, res);
 	}
 });

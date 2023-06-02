@@ -1,45 +1,36 @@
+const axios = require("axios");
 const { ipcMain } = require("electron");
+const { api } = require("./api.js");
+const { handleToken } = require("../helpers/handleToken.js");
+const endPoint = "/auth";
 
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+api();
 
-const { User } = require("../models/auth.js");
 const { LOGIN_PAGE } = require("../../common/constants/index.js");
 const { CHANNELS } = require("../../common/constants/channels.js");
 
-const { SECRET_KEY } = require("../helpers/variables.js");
-
 ipcMain.on(CHANNELS.AUTH.LOGIN, async (event, arg) => {
 	try {
-		const { email, password } = arg;
-		const user = await User.findOne({ email });
+		const res = await axios.post(`${endPoint}/desktop/login"`, arg);
+		handleToken.set(res?.data?.token);
 
-		if (!user) {
-			event.sender.send(CHANNELS.AUTH.LOGIN, LOGIN_PAGE.ERR_MESSAGES.ON_LOGIN);
-			return;
+		event.sender.send(CHANNELS.AUTH.LOGIN, res?.data);
+	} catch (e) {
+		const err = {};
+		if (e.response) {
+			console.log("🚀 ~ e.response:", e.response);
+			err.message = e.response.data.message;
+			err.statusCode = e.response.status;
+		} else if (e.request) {
+			console.log("🚀 ~ e.request:", e.request);
+			err.statusCode = 500;
+			err.message = "Что-то пошло не так. Попробуйте ще раз.";
+		} else {
+			err.message =
+				"Прозошла ошибка. Попробуйте еще раз или перезагрузите приложение.";
 		}
 
-		const comparePassword = await bcrypt.compare(password, user.password);
-
-		if (!comparePassword) {
-			event.sender.send(CHANNELS.AUTH.LOGIN, LOGIN_PAGE.ERR_MESSAGES.ON_LOGIN);
-			return;
-		}
-
-		const payload = {
-			id: user.id,
-		};
-
-		const token = jwt.sign(payload, SECRET_KEY);
-		await User.findByIdAndUpdate(user.id, { token });
-
-		const res = {
-			message: "OK",
-			token: token,
-		};
-
-		event.sender.send(CHANNELS.AUTH.LOGIN, res);
-	} catch (error) {
-		console.log(error);
+		console.log(e.config);
+		event.sender.send(CHANNELS.AUTH.LOGIN, err);
 	}
 });

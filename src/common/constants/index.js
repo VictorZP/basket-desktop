@@ -69,13 +69,7 @@ export const MATCHES_SETTINGS = {
 	},
 	ERR_MESSAGES: {
 		EXIST: "Такое навание уже имеется в базе.",
-		EXIST_CHAMP_NAME: "Чемпионат с таким названием уже существует.",
-		EXIST_CHAMP_FIB_NAME:
-			"Чемпионат с таким названием с fibalive уже существует.",
-		EXIST_CHAMP_BETS_NAME:
-			"Чемпионат с таким названием с betsApi уже существует.",
-		EXIST_CHAMP_OTHER_NAME:
-			"Чемпионат с таким названием с сайта уже существует.",
+		ON_ERROR_CYBER_LIST: "Ошибка при запросе спика Cyber",
 		ON_ERROR: "Произошла ошибка. Обратитесь в тех. поддержку.",
 		ON_ERROR_C_DEL: "Ошибка при удаление cyber. ",
 		ON_ERROR_CHAMP_DEL: "Ошибка при удаление чемпионата. ",

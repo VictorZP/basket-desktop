@@ -12,7 +12,6 @@ import MSChampionshipForm from "../components/MSChampionshipForm";
 import MSChampionships from "../components/MSChampionships/index.js";
 import DelModal from "../components/DelModal";
 
-import { getToken } from "../redux/auth/authSelector.js";
 import {
 	handleEditCyber,
 	handleEditChamp,
@@ -46,7 +45,7 @@ import { CHANNELS } from "../../common/constants/channels.js";
 const MatchesSettings = () => {
 	const [cyberList, setCyberList] = useState([]);
 	const [champList, setChampList] = useState([]);
-	const token = useSelector(getToken);
+
 	const isOpen = useSelector(isMDOpen);
 	const id = useSelector(getMDElemId);
 	const pageType = useSelector(getMDPageType);
@@ -113,15 +112,14 @@ const MatchesSettings = () => {
 		dispatch(setLoading());
 
 		if (pageType === MODAL_DEL.PAGE_TYPE_C) {
-			ipcRenderer.send(CHANNELS.CYBER.DEL_CYBER, { token, id });
+			ipcRenderer.send(CHANNELS.CYBER.DEL_CYBER, { id });
 		} else if (pageType === MODAL_DEL.PAGE_TYPE_CHAMP) {
-			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, { token, id });
+			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, { id });
 		}
 	};
 
 	const handleEdit = (e) => {
 		const id = e?.currentTarget?.id?.split("_")[1];
-		console.log("🚀 ~ id:", id);
 		const btnName = e?.currentTarget?.name;
 
 		switch (btnName) {
