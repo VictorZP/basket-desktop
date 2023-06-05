@@ -17,6 +17,7 @@ export const CHANNELS = {
 	APP_CHAMP: {
 		APP_CHAMP_ADD: "appChamp-add",
 		APP_CHAMP_GET_ALL: "appChamp-get-all",
+		APP_CHAMP_GET_SHORT: "appChamp-get-short",
 		APP_CHAMP_EDIT: "appChamp-edit",
 		APP_CHAMP_DEL: "appChamp-del",
 	},

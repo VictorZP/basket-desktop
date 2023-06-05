@@ -30,7 +30,6 @@ export const useGetChampionships = (setList) => {
 				dispatch(setChampLoadingStatus(false));
 
 				if (arg?.statusText !== "OK") {
-					console.log(arg?.message);
 					enqueueSnackbar(
 						arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
 						{

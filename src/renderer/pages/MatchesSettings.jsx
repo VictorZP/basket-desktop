@@ -10,6 +10,7 @@ import MSCyberForm from "../components/MSCyberForm/MSCyberForm.jsx";
 import MSCyberTable from "../components/MSCyberTable/MSCyberTable.jsx";
 import MSChampionshipForm from "../components/MSChampionshipForm";
 import MSChampionships from "../components/MSChampionships/index.js";
+import MSTeamNameForm from "../components/MSTeamNameForm/MSTeamNameForm.jsx";
 import DelModal from "../components/DelModal";
 
 import {
@@ -181,6 +182,10 @@ const MatchesSettings = () => {
 		handleEdit,
 	};
 
+	const teamNameFormProps = {
+		cyberList,
+	};
+
 	return (
 		<Box component="section">
 			<Box>
@@ -193,7 +198,9 @@ const MatchesSettings = () => {
 				<MSChampionships {...championshipsProps} />
 			</Box>
 			<Divider />
-			<Box>Teams names</Box>
+			<Box>
+				<MSTeamNameForm {...teamNameFormProps} />
+			</Box>
 			<DelModal {...delModalProps} />
 		</Box>
 	);

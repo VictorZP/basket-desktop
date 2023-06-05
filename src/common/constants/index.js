@@ -61,7 +61,17 @@ export const MATCHES_SETTINGS = {
 		EDIT_BTN_NAME: "editChampionship",
 		ACCORDION_NAME: "champTableAccordion",
 	},
-
+	TEAM_NAMES_FORM: {
+		TITLE: "Навзвания команд",
+		CYBER_LABEL: "Выбор Cyber",
+		CHAMP_LABEL: "Выбор чемпионата",
+		CUSTOM_TEAM_NAME_LABEL: "Название команды",
+		FIBALIVE_TEAM_NAME_LABEL: "Название fibalive",
+		BETSAPI_TEAM_NAME_LABEL: "Название betsapi",
+		OTHER_SITE_TEAM_NAME_LABEL: "Название с сайта",
+		BTN_ADD: "Добавить",
+		BTN_UPD: "Обновить",
+	},
 	SUCCESS_MESSAGES: {
 		CREATE: "Создано успешно",
 		UPD_SUCCESS: "Успешно изменено.",

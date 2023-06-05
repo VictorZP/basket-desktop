@@ -29,7 +29,7 @@ ipcMain.on(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, async (event, arg) => {
 	}
 });
 
-ipcMain.on(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL, async (event, arg) => {
+ipcMain.on(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL, async (event) => {
 	try {
 		const res = await axios.get(`${endPoint}/list`);
 
@@ -48,6 +48,27 @@ ipcMain.on(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL, async (event, arg) => {
 		};
 
 		event.sender.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL, res);
+	}
+});
+
+ipcMain.on(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT, async (event) => {
+	try {
+		const res = await axios.get(`${endPoint}/short_list`);
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			list: res?.data?.list,
+		};
+
+		event.sender.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT, resData);
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT, res);
 	}
 });
 
