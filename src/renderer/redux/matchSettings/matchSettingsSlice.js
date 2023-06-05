@@ -3,10 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	addCyber: false,
 	addChamp: false,
+	addTeam: false,
 	editCyber: false,
 	editChamp: false,
+	editTeam: false,
 	isChampLoading: false,
+	isTeamLoading: false,
 	expanded: false,
+	teamExpanded: false,
 	cyberData: {
 		cyberId: "",
 		cyberName: "",
@@ -18,6 +22,14 @@ const initialState = {
 		betsapiName: "",
 		otherSiteName: "",
 		cyberName: "",
+	},
+	teamData: {
+		champId: "",
+		customName: "",
+		fibaliveTeamName: "",
+		betsapiTeamName: "",
+		otherSiteTeamName: "",
+		cyberTeamName: "",
 	},
 };
 
@@ -31,11 +43,17 @@ const matchSettingsSlice = createSlice({
 		handleAddChamp(state, { payload }) {
 			state.addChamp = payload;
 		},
+		handleAddTeam(state, { payload }) {
+			state.addTeam = payload;
+		},
 		handleEditCyber(state, { payload }) {
 			state.editCyber = payload;
 		},
 		handleEditChamp(state, { payload }) {
 			state.editChamp = payload;
+		},
+		handleEditTeam(state, { payload }) {
+			state.editTeam = payload;
 		},
 		setCyberData(state, { payload }) {
 			state.cyberData.cyberId = payload.id;
@@ -49,11 +67,25 @@ const matchSettingsSlice = createSlice({
 			state.champData.otherSiteName = payload.otherSiteName ?? "";
 			state.champData.cyberName = payload.cyberName ?? "";
 		},
+		setTeamData(state, { payload }) {
+			state.champId = payload.champId ?? "";
+			state.customName = payload.customName ?? "";
+			state.fibaliveTeamName = payload.fibaliveTeamName ?? "";
+			state.betsapiTeamName = payload.betsapiTeamName ?? "";
+			state.otherSiteTeamName = payload.otherSiteTeamName ?? "";
+			state.cyberTeamName = payload.cyberTeamName ?? "";
+		},
 		setExpanded(state, { payload }) {
 			state.expanded = payload ?? "";
 		},
+		setTeamExpanded(state, { payload }) {
+			state.teamExpanded = payload;
+		},
 		setChampLoadingStatus(state, { payload }) {
 			state.isChampLoading = payload ?? false;
+		},
+		setTeamLoadingStatus(state, { payload }) {
+			state.isTeamLoading = payload;
 		},
 		refreshCyberData(state) {
 			state.cyberData.cyberId = initialState.cyberData.cyberId;
@@ -68,6 +100,14 @@ const matchSettingsSlice = createSlice({
 			state.champData.otherSiteName = initialState.champData.otherSiteName;
 			state.champData.cyberName = initialState.champData.cyberName;
 		},
+		refreshTeamData(state) {
+			state.champId = initialState.teamData.champId;
+			state.customName = initialState.teamData.customName;
+			state.fibaliveTeamName = initialState.teamData.fibaliveTeamName;
+			state.betsapiTeamName = initialState.teamData.betsapiTeamName;
+			state.otherSiteTeamName = initialState.teamData.otherSiteTeamName;
+			state.cyberTeamName = initialState.teamData.cyberTeamName;
+		},
 		refreshMS: () => initialState,
 	},
 });
@@ -75,14 +115,19 @@ const matchSettingsSlice = createSlice({
 export const {
 	handleAddCyber,
 	handleAddChamp,
+	handleAddTeam,
 	handleEditCyber,
 	handleEditChamp,
 	setCyberData,
 	setChampData,
+	setTeamData,
 	setExpanded,
+	setTeamExpanded,
 	setChampLoadingStatus,
+	setTeamLoadingStatus,
 	refreshCyberData,
 	refreshChampData,
+	refreshTeamData,
 	refreshMS,
 } = matchSettingsSlice.actions;
 export const matchSettingsReducer = matchSettingsSlice.reducer;
