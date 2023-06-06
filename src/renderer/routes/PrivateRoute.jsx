@@ -54,7 +54,7 @@ const PrivateRoute = () => {
 	}, []);
 
 	if (isLoading && !isLoggedIn) {
-		return <LoadingSpinner />;
+		return <LoadingSpinner height={"100vh"} />;
 	} else if (!isLoading && isLoggedIn) {
 		return <Outlet />;
 	} else if (!isLoading && !isLoggedIn) {

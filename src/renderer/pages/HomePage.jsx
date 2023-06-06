@@ -58,13 +58,13 @@ const HomePage = () => {
 	};
 
 	return (
-		<Box sx={{ display: "flex" }}>
+		<Box sx={{ display: "flex", height: "100%" }}>
 			<CssBaseline />
 			<AppNavBar {...appNavBarProps} />
 			<SideMenu {...sideMenuProps} />
 			<Box component="main" sx={{ flexGrow: 1, paddingY: 3 }}>
 				<DrawerHeader />
-				<Suspense fallback={<LoadingSpinner />}>
+				<Suspense fallback={<LoadingSpinner height={"calc(100vh - 128px)"} />}>
 					<Outlet />
 				</Suspense>
 			</Box>

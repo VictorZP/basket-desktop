@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { enqueueSnackbar } from "notistack";
 import PropTypes from "prop-types";
-
-const ipcRenderer = window.require("electron").ipcRenderer;
 
 import {
 	Accordion,
@@ -14,7 +11,6 @@ import {
 	TableContainer,
 	Paper,
 	Typography,
-	CircularProgress,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -23,24 +19,15 @@ import { grey } from "@mui/material/colors";
 import MSChampionshipsTable from "../MSChampionshipsTable";
 import LoadingSpinner from "../LoadingSpinner";
 
-import { getToken } from "../../redux/auth/authSelector.js";
-
+import { setExpanded } from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
-	handleAddChamp,
-	setExpanded,
-} from "../../redux/matchSettings/matchSettingsSlice.js";
-import {
-	getChampAddStatus,
 	getExpandedVal,
 	getChampionshipsLoadingStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
-import { CHANNELS } from "../../../common/constants/channels.js";
 
 const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
-	const token = useSelector(getToken);
-	const isChampAdd = useSelector(getChampAddStatus);
 	const expanded = useSelector(getExpandedVal);
 	const isLoading = useSelector(getChampionshipsLoadingStatus);
 
@@ -106,16 +93,7 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 				<AccordionDetails sx={{ p: 0 }}>
 					<TableContainer component={Paper} sx={{ borderRadius: 0 }}>
 						{isLoading ? (
-							<Box
-								sx={{
-									display: "flex",
-									justifyContent: "center",
-									alignItems: "center",
-									height: 500,
-								}}
-							>
-								<CircularProgress />
-							</Box>
+							<LoadingSpinner height={"500px"} />
 						) : (
 							<MSChampionshipsTable {...tableProps} />
 						)}
@@ -143,3 +121,13 @@ MSChampionships.propTypes = {
 };
 
 export default MSChampionships;
+
+{
+	/* <Box
+								sx={{
+									height: 500,
+								}}
+							>
+								<CircularProgress />
+							</Box> */
+}
