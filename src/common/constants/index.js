@@ -71,6 +71,10 @@ export const MATCHES_SETTINGS = {
 		OTHER_SITE_TEAM_NAME_LABEL: "Название с сайта",
 		BTN_ADD: "Добавить",
 		BTN_UPD: "Обновить",
+		ADDED: "Команда добавлена",
+	},
+	TEAM_NAMES_TABLE: {
+		ACCORDION_NAME: "teamNameAccordion",
 	},
 	SUCCESS_MESSAGES: {
 		CREATE: "Создано успешно",

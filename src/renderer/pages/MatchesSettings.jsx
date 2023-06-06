@@ -38,6 +38,7 @@ import {
 	useDeleteCyber,
 	useGetChampionships,
 	useDeleteChampionship,
+	useGetAllTeamNames,
 } from "../hooks/msPage";
 
 import { MATCHES_SETTINGS, MODAL_DEL } from "../../common/constants/index.js";
@@ -46,6 +47,7 @@ import { CHANNELS } from "../../common/constants/channels.js";
 const MatchesSettings = () => {
 	const [cyberList, setCyberList] = useState([]);
 	const [champList, setChampList] = useState([]);
+	const [teamNamesList, setTeamNamesList] = useState([]);
 
 	const isOpen = useSelector(isMDOpen);
 	const id = useSelector(getMDElemId);
@@ -54,6 +56,8 @@ const MatchesSettings = () => {
 
 	useGetAllCyber(setCyberList);
 	useGetChampionships(setChampList);
+	useGetAllTeamNames(setTeamNamesList);
+
 	useDeleteCyber();
 	useDeleteChampionship();
 

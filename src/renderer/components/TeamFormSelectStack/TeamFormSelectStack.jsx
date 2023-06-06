@@ -6,6 +6,16 @@ import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CONSTANTS } from "../MSTeamNameForm/constants.js";
 
+const ITEM_HEIGHT = 50;
+const ITEM_PADDING_TOP = 15;
+const MenuProps = {
+	PaperProps: {
+		style: {
+			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+		},
+	},
+};
+
 const TeamFormSelectStack = ({
 	cyberName,
 	champValue,
@@ -14,6 +24,7 @@ const TeamFormSelectStack = ({
 	handleChange,
 }) => {
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
+
 	return (
 		<Box
 			sx={{
@@ -56,6 +67,8 @@ const TeamFormSelectStack = ({
 					value={champValue}
 					onChange={handleChange}
 					name={CONSTANTS.CHAMP_SELECT_NAME}
+					MenuProps={MenuProps}
+					disabled={!cyberName}
 				>
 					{champOptions?.map((opt) => {
 						return (

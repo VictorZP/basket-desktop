@@ -6,14 +6,20 @@ import { Box, FormControl, TextField, IconButton } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import {} from "../../redux/matchSettings/matchSettingSelector.js";
+import { getTeamEditStatus } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CONSTANTS } from "../MSTeamNameForm/constants.js";
 
-const TeamFormInputStack = ({ teamNames, selectedId, handleTeamNames }) => {
-	// const onEdit = useSelector();
-	let onEdit = false;
+const TeamFormInputStack = ({
+	teamNames,
+	cyberName,
+	selectedId,
+	isLoading,
+	handleTeamNames,
+	onClearBtn,
+}) => {
+	const onEdit = useSelector(getTeamEditStatus);
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
 
 	const isAddBtnDisabled =
@@ -24,11 +30,14 @@ const TeamFormInputStack = ({ teamNames, selectedId, handleTeamNames }) => {
 			teamNames.otherSiteName?.length > 0);
 
 	const isClearBtnDisabled =
+		cyberName?.length > 0 ||
 		selectedId?.length > 0 ||
 		teamNames.customName?.length > 0 ||
 		teamNames.fibaliveTeamName?.length > 0 ||
 		teamNames.betsapiTeamName?.length > 0 ||
 		teamNames.otherSiteName?.length > 0;
+
+	const isInputDisabled = selectedId;
 
 	return (
 		<Box
@@ -49,6 +58,7 @@ const TeamFormInputStack = ({ teamNames, selectedId, handleTeamNames }) => {
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
+					disabled={!isInputDisabled}
 				/>
 			</FormControl>
 			<FormControl>
@@ -59,6 +69,7 @@ const TeamFormInputStack = ({ teamNames, selectedId, handleTeamNames }) => {
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
+					disabled={!isInputDisabled}
 				/>
 			</FormControl>
 			<FormControl>
@@ -69,6 +80,7 @@ const TeamFormInputStack = ({ teamNames, selectedId, handleTeamNames }) => {
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
+					disabled={!isInputDisabled}
 				/>
 			</FormControl>
 			<FormControl>
@@ -79,11 +91,12 @@ const TeamFormInputStack = ({ teamNames, selectedId, handleTeamNames }) => {
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
+					disabled={!isInputDisabled}
 				/>
 			</FormControl>
 			<LoadingButton
 				type="submit"
-				// loading={isLoading}
+				loading={isLoading}
 				variant="outlined"
 				disabled={!isAddBtnDisabled}
 			>
@@ -94,7 +107,7 @@ const TeamFormInputStack = ({ teamNames, selectedId, handleTeamNames }) => {
 				sx={{ width: 35 }}
 				color="error"
 				disabled={!isClearBtnDisabled}
-				// onClick={onClearBtn}
+				onClick={onClearBtn}
 			>
 				<ClearIcon />
 			</IconButton>
@@ -104,8 +117,11 @@ const TeamFormInputStack = ({ teamNames, selectedId, handleTeamNames }) => {
 
 TeamFormInputStack.propTypes = {
 	teamNames: PropTypes.objectOf(PropTypes.string),
+	cyberName: PropTypes.string,
 	selectedId: PropTypes.string,
+	isLoading: PropTypes.bool,
 	handleTeamNames: PropTypes.func.isRequired,
+	onClearBtn: PropTypes.func.isRequired,
 };
 
 export default TeamFormInputStack;

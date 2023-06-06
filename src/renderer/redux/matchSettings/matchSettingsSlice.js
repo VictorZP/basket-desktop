@@ -118,6 +118,7 @@ export const {
 	handleAddTeam,
 	handleEditCyber,
 	handleEditChamp,
+	handleEditTeam,
 	setCyberData,
 	setChampData,
 	setTeamData,

@@ -10,8 +10,15 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import TeamFormSelectStack from "../TeamFormSelectStack";
 import TeamFormInputStack from "../TeamFormInputStack";
 
-import {} from "../../redux/matchSettings/matchSettingsSlice.js";
-import { getChampAddStatus } from "../../redux/matchSettings/matchSettingSelector.js";
+import {
+	handleAddTeam,
+	handleEditTeam,
+	refreshTeamData,
+} from "../../redux/matchSettings/matchSettingsSlice.js";
+import {
+	getChampAddStatus,
+	getTeamEditStatus,
+} from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
@@ -23,18 +30,23 @@ const initialData = {
 	betsapiTeamName: "",
 	otherSiteName: "",
 };
+const initialChamp = {
+	id: "",
+	value: "",
+	label: "",
+};
 
 const MSTeamNameForm = ({ cyberList }) => {
 	const [cyberName, setCyberName] = useState("");
-	const [selectedChamp, setSelectedChamp] = useState({
-		id: "",
-		value: "",
-		label: "",
-	});
+	const [selectedChamp, setSelectedChamp] = useState(initialChamp);
 	const [champShortList, setChampShortList] = useState([]);
 	const [champOptions, setChampOptions] = useState([]);
 	const [teamNames, setTeamNames] = useState(initialData);
+	const [isLoading, setIsLoading] = useState(false);
 	const champAddStatus = useSelector(getChampAddStatus);
+	const onEdit = useSelector(getTeamEditStatus);
+	const dispatch = useDispatch();
+
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
 
 	useEffect(() => {
@@ -58,6 +70,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 		champAddStatus,
 	]);
 
+	//формирование опций для выбора чампионата
 	useEffect(() => {
 		if (cyberName) {
 			const list = [...champShortList]?.filter((el) => {
@@ -75,6 +88,30 @@ const MSTeamNameForm = ({ cyberList }) => {
 		}
 	}, [cyberName]);
 
+	// получение ответа при добавление команды
+	useEffect(() => {
+		ipcRenderer.on(CHANNELS.TEAM_NAME.ADD_NAME, (e, arg) => {
+			if (arg?.statusText !== "Created") {
+				enqueueSnackbar(
+					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
+					{
+						variant: "error",
+					}
+				);
+				setIsLoading(false);
+				return;
+			}
+			dispatch(handleAddTeam(true));
+			enqueueSnackbar(arg?.message ?? TEAM_NAMES_FORM.ADDED, {
+				variant: "success",
+			});
+			setCyberName("");
+			setSelectedChamp(initialChamp);
+			setTeamNames(initialData);
+			setIsLoading(false);
+		});
+	}, []);
+
 	const options = cyberList?.map((el) => {
 		return {
 			value: el?.cyberName,
@@ -90,14 +127,16 @@ const MSTeamNameForm = ({ cyberList }) => {
 		switch (name) {
 			case CONSTANTS.CYBER_SELECT_NAME:
 				setCyberName(inputValue);
+				if (selectedChamp?.value) {
+					setSelectedChamp(initialChamp);
+				}
 				break;
 			case CONSTANTS.CHAMP_SELECT_NAME:
-				const selectedChamp = champOptions?.find(({ label }) => {
-					console.log(label);
+				const champ = champOptions?.find(({ label }) => {
 					return label === inputValue;
 				});
 				setSelectedChamp({
-					id: selectedChamp?.id,
+					id: champ?.id,
 					value: inputValue,
 					label: inputValue,
 				});
@@ -113,6 +152,42 @@ const MSTeamNameForm = ({ cyberList }) => {
 		}
 	};
 
+	const onClearBtn = () => {
+		setCyberName("");
+		setSelectedChamp(initialChamp);
+		setTeamNames(initialData);
+		if (onEdit) {
+			dispatch(handleEditTeam(false));
+			dispatch(refreshTeamData());
+		}
+	};
+
+	const handleSubmit = async (e) => {
+		e?.preventDefault();
+		try {
+			setIsLoading(true);
+			const reqData = {
+				champId: selectedChamp?.id,
+				team: {
+					customName: teamNames?.customName,
+					fibaliveTeamName: teamNames?.fibaliveTeamName,
+					betsapiTeamName: teamNames?.betsapiTeamName,
+					otherSiteName: teamNames?.otherSiteName,
+				},
+			};
+
+			if (onEdit) {
+				ipcRenderer.send(CHANNELS.TEAM_NAME, {});
+			} else {
+				ipcRenderer.send(CHANNELS.TEAM_NAME.ADD_NAME, reqData);
+			}
+		} catch (err) {
+			enqueueSnackbar(err?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR, {
+				variant: "error",
+			});
+		}
+	};
+
 	const formSelectStackProps = {
 		cyberName,
 		champValue: selectedChamp?.value,
@@ -123,19 +198,26 @@ const MSTeamNameForm = ({ cyberList }) => {
 
 	const formInputStackProps = {
 		teamNames,
+		cyberName,
 		selectedId: selectedChamp.id,
+		isLoading,
 		handleTeamNames: handleChange,
+		onClearBtn,
 	};
 
 	return (
 		<Box sx={{ paddingX: 3, paddingY: 1 }}>
 			<Typography variant="h5">{TEAM_NAMES_FORM.TITLE}</Typography>
-			<Box component={"form"}>
+			<Box component={"form"} onSubmit={handleSubmit}>
 				<TeamFormSelectStack {...formSelectStackProps} />
 				<TeamFormInputStack {...formInputStackProps} />
 			</Box>
 		</Box>
 	);
+};
+
+MSTeamNameForm.propTypes = {
+	cyberList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 };
 
 export default MSTeamNameForm;
