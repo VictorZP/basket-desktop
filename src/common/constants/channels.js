@@ -21,4 +21,8 @@ export const CHANNELS = {
 		APP_CHAMP_EDIT: "appChamp-edit",
 		APP_CHAMP_DEL: "appChamp-del",
 	},
+	TEAM_NAME: {
+		ADD_NAME: "team-name-add",
+		GET_ALL_NAMES: "team-name-all-get",
+	},
 };
