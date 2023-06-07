@@ -11,6 +11,7 @@ import MSCyberTable from "../components/MSCyberTable/MSCyberTable.jsx";
 import MSChampionshipForm from "../components/MSChampionshipForm";
 import MSChampionships from "../components/MSChampionships/index.js";
 import MSTeamNameForm from "../components/MSTeamNameForm/MSTeamNameForm.jsx";
+import MSTeamNames from "../components/MSTeamNames/MSTeamNames.jsx";
 import DelModal from "../components/DelModal";
 
 import {
@@ -39,6 +40,7 @@ import {
 	useGetChampionships,
 	useDeleteChampionship,
 	useGetAllTeamNames,
+	useDeleteTeamName,
 } from "../hooks/msPage";
 
 import { MATCHES_SETTINGS, MODAL_DEL } from "../../common/constants/index.js";
@@ -60,6 +62,7 @@ const MatchesSettings = () => {
 
 	useDeleteCyber();
 	useDeleteChampionship();
+	useDeleteTeamName();
 
 	useEffect(() => {
 		return () => {
@@ -102,7 +105,14 @@ const MatchesSettings = () => {
 				};
 				payload.elemId = id;
 				break;
-
+			case MATCHES_SETTINGS.TEAM_NAMES_TABLE.DEL_TEAM_NAME:
+				const selectedTeam = teamNamesList.find((team) => {
+					return team?.id === id;
+				});
+				payload.pageType = MODAL_DEL.PAGE_TYPE_TEAM_NAME;
+				payload.descriptionExtend = selectedTeam?.customName;
+				payload.elemId = id;
+				break;
 			default:
 				break;
 		}
@@ -120,6 +130,8 @@ const MatchesSettings = () => {
 			ipcRenderer.send(CHANNELS.CYBER.DEL_CYBER, { id });
 		} else if (pageType === MODAL_DEL.PAGE_TYPE_CHAMP) {
 			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, { id });
+		} else if (pageType === MODAL_DEL.PAGE_TYPE_TEAM_NAME) {
+			ipcRenderer.send(CHANNELS.TEAM_NAME.DEL_NAME, { id });
 		}
 	};
 
@@ -181,13 +193,19 @@ const MatchesSettings = () => {
 	};
 	const championshipsProps = {
 		champList,
-		setChampList,
 		handleDelete: openModalDel,
 		handleEdit,
 	};
 
 	const teamNameFormProps = {
 		cyberList,
+	};
+
+	const teamNamesProps = {
+		teamNamesList,
+		setTeamNamesList,
+		handleDelete: openModalDel,
+		handleEdit,
 	};
 
 	return (
@@ -204,6 +222,7 @@ const MatchesSettings = () => {
 			<Divider />
 			<Box>
 				<MSTeamNameForm {...teamNameFormProps} />
+				<MSTeamNames {...teamNamesProps} />
 			</Box>
 			<DelModal {...delModalProps} />
 		</Box>

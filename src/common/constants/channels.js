@@ -24,5 +24,7 @@ export const CHANNELS = {
 	TEAM_NAME: {
 		ADD_NAME: "team-name-add",
 		GET_ALL_NAMES: "team-name-all-get",
+		EDIT_NAME: "team-name-edit",
+		DEL_NAME: "team-name-del",
 	},
 };

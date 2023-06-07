@@ -47,3 +47,25 @@ ipcMain.on(CHANNELS.TEAM_NAME.GET_ALL_NAMES, async (event) => {
 		event.sender.send(CHANNELS.TEAM_NAME.GET_ALL_NAMES, res);
 	}
 });
+
+ipcMain.on(CHANNELS.TEAM_NAME.DEL_NAME, async (event, arg) => {
+	try {
+		const { id } = arg;
+
+		const res = await axios.delete(`${endPoint}/team_name/${id}`);
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.TEAM_NAME.DEL_NAME, resData);
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+		event.sender.send(CHANNELS.TEAM_NAME.DEL_NAME, res);
+	}
+});

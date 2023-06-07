@@ -74,7 +74,16 @@ export const MATCHES_SETTINGS = {
 		ADDED: "Команда добавлена",
 	},
 	TEAM_NAMES_TABLE: {
+		ACCORDION_TITLE: "Список команд",
 		ACCORDION_NAME: "teamNameAccordion",
+		CELL_CYBER: "Cyber",
+		CELL_CHAMP_NAME: "Название чемпионата",
+		CELL_TEAM_NAME: "Название команды",
+		CELL_FIBALIVE_NAME: "Название с fibalive",
+		CELL_BETSAPI_NAME: "Название с betsapi",
+		CELL_OTHER_NAME: "Название с сайта",
+		DEL_TEAM_NAME: "delTeamName",
+		EDIT_TEAM_NAME: "editTeamName",
 	},
 	SUCCESS_MESSAGES: {
 		CREATE: "Создано успешно",
@@ -87,6 +96,7 @@ export const MATCHES_SETTINGS = {
 		ON_ERROR: "Произошла ошибка. Обратитесь в тех. поддержку.",
 		ON_ERROR_C_DEL: "Ошибка при удаление cyber. ",
 		ON_ERROR_CHAMP_DEL: "Ошибка при удаление чемпионата. ",
+		ON_ERROR_TEAM_NAME_DEL: "Ошибка при удалении названия команды.",
 	},
 };
 
@@ -104,4 +114,5 @@ export const MODAL_DEL = {
 	NO: "Нет",
 	PAGE_TYPE_C: "delCyber",
 	PAGE_TYPE_CHAMP: "delChampionship",
+	PAGE_TYPE_TEAM_NAME: "delTeamName",
 };

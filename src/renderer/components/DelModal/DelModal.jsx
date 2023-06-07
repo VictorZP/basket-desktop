@@ -30,6 +30,8 @@ const DelModal = ({ handleClose, handleDelete }) => {
 			case MODAL_DEL.PAGE_TYPE_CHAMP:
 				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend?.championshipName}? `;
 				break;
+			case MODAL_DEL.PAGE_TYPE_TEAM_NAME:
+				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}`;
 
 			default:
 				break;
