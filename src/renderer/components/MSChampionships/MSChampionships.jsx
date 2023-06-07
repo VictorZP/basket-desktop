@@ -115,19 +115,9 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 };
 
 MSChampionships.propTypes = {
-	champList: PropTypes.arrayOf(PropTypes.object),
+	champList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	handleDelete: PropTypes.func.isRequired,
 	handleEdit: PropTypes.func.isRequired,
 };
 
 export default MSChampionships;
-
-{
-	/* <Box
-								sx={{
-									height: 500,
-								}}
-							>
-								<CircularProgress />
-							</Box> */
-}
