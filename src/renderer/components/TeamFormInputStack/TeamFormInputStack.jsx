@@ -100,7 +100,7 @@ const TeamFormInputStack = ({
 				variant="outlined"
 				disabled={!isAddBtnDisabled}
 			>
-				{!onEdit ? TEAM_NAMES_FORM.BTN_ADD : CHAMPIONSHIP_FORM.BTN_UPD}
+				{!onEdit ? TEAM_NAMES_FORM.BTN_ADD : TEAM_NAMES_FORM.BTN_UPD}
 			</LoadingButton>
 			<IconButton
 				size="small"

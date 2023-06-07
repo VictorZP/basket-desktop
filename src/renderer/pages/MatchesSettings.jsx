@@ -17,9 +17,11 @@ import DelModal from "../components/DelModal";
 import {
 	handleEditCyber,
 	handleEditChamp,
+	handleEditTeam,
 	setCyberData,
 	setChampData,
 	refreshCyberData,
+	setTeamData,
 } from "../redux/matchSettings/matchSettingsSlice.js";
 import {
 	handleModalDelOpen,
@@ -167,6 +169,24 @@ const MatchesSettings = () => {
 				};
 				dispatch(setChampData(champPayload));
 				dispatch(handleEditChamp(true));
+				break;
+
+			case MATCHES_SETTINGS.TEAM_NAMES_TABLE.EDIT_TEAM_NAME:
+				const team = teamNamesList?.find((team) => {
+					return team.id === id;
+				});
+
+				const payload = {
+					teamId: id,
+					cyberTeamName: team?.cyberName ?? "",
+					championshipName: team?.championshipName ?? "",
+					customName: team?.customName ?? "",
+					fibaliveTeamName: team?.fibaliveTeamName ?? "",
+					betsapiTeamName: team?.betsapiTeamName ?? "",
+					otherSiteTeamName: team?.otherSiteName ?? "",
+				};
+				dispatch(setTeamData(payload));
+				dispatch(handleEditTeam(true));
 				break;
 
 			default:

@@ -18,6 +18,7 @@ import {
 import {
 	getChampAddStatus,
 	getTeamEditStatus,
+	getTeamData,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
@@ -43,14 +44,32 @@ const MSTeamNameForm = ({ cyberList }) => {
 	const [champOptions, setChampOptions] = useState([]);
 	const [teamNames, setTeamNames] = useState(initialData);
 	const [isLoading, setIsLoading] = useState(false);
+
 	const champAddStatus = useSelector(getChampAddStatus);
+	const teamData = useSelector(getTeamData);
 	const onEdit = useSelector(getTeamEditStatus);
 	const dispatch = useDispatch();
 
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
 
+	const generateChampOptions = () => {
+		const list = [...champShortList]?.filter((el) => {
+			return el?.cyberName === cyberName;
+		});
+
+		const filteredOptions = list?.map((champ) => {
+			return {
+				value: champ?.championshipName,
+				label: champ?.championshipName,
+				id: champ?.id,
+			};
+		});
+
+		setChampOptions(filteredOptions);
+	};
+
+	//загрузка списка
 	useEffect(() => {
-		//загрузка списка
 		ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT);
 
 		ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT, (e, arg) => {
@@ -65,26 +84,12 @@ const MSTeamNameForm = ({ cyberList }) => {
 			}
 			setChampShortList(arg?.list);
 		});
-	}, [
-		// Обновление запроса при открытии страницы и добаление нового чемпионата
-		champAddStatus,
-	]);
+	}, [champAddStatus]);
 
-	//формирование опций для выбора чампионата
+	// формирование опций для выбора чампионата
 	useEffect(() => {
 		if (cyberName) {
-			const list = [...champShortList]?.filter((el) => {
-				return el?.cyberName === cyberName;
-			});
-
-			const filteredOptions = list?.map((champ) => {
-				return {
-					value: champ?.championshipName,
-					label: champ?.championshipName,
-					id: champ?.id,
-				};
-			});
-			setChampOptions(filteredOptions);
+			generateChampOptions();
 		}
 	}, [cyberName]);
 
@@ -111,6 +116,37 @@ const MSTeamNameForm = ({ cyberList }) => {
 			setIsLoading(false);
 		});
 	}, []);
+
+	//редактирование команды
+	useEffect(() => {
+		if (teamData?.teamId) {
+			setCyberName(teamData?.cyberTeamName);
+		}
+	}, [onEdit, teamData]);
+	useEffect(() => {
+		if (teamData?.teamId && cyberName) {
+			const champ = champShortList?.find(({ championshipName }) => {
+				return championshipName === teamData?.championshipName;
+			});
+
+			const champData = {
+				id: champ?.id,
+				value: teamData?.championshipName,
+				label: teamData?.championshipName,
+			};
+
+			const teamEditData = {
+				customName: teamData?.customName,
+				fibaliveTeamName: teamData?.fibaliveTeamName,
+				betsapiTeamName: teamData?.betsapiTeamName,
+				otherSiteName: teamData?.otherSiteTeamName,
+			};
+
+			generateChampOptions();
+			setSelectedChamp(champData);
+			setTeamNames(teamEditData);
+		}
+	}, [cyberName]);
 
 	const options = cyberList?.map((el) => {
 		return {

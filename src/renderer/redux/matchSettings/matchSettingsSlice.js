@@ -24,12 +24,13 @@ const initialState = {
 		cyberName: "",
 	},
 	teamData: {
-		champId: "",
+		teamId: "",
 		customName: "",
 		fibaliveTeamName: "",
 		betsapiTeamName: "",
 		otherSiteTeamName: "",
 		cyberTeamName: "",
+		championshipName: "",
 	},
 };
 
@@ -68,12 +69,13 @@ const matchSettingsSlice = createSlice({
 			state.champData.cyberName = payload.cyberName ?? "";
 		},
 		setTeamData(state, { payload }) {
-			state.champId = payload.champId ?? "";
-			state.customName = payload.customName ?? "";
-			state.fibaliveTeamName = payload.fibaliveTeamName ?? "";
-			state.betsapiTeamName = payload.betsapiTeamName ?? "";
-			state.otherSiteTeamName = payload.otherSiteTeamName ?? "";
-			state.cyberTeamName = payload.cyberTeamName ?? "";
+			state.teamData.teamId = payload.teamId ?? "";
+			state.teamData.customName = payload.customName ?? "";
+			state.teamData.fibaliveTeamName = payload.fibaliveTeamName ?? "";
+			state.teamData.betsapiTeamName = payload.betsapiTeamName ?? "";
+			state.teamData.otherSiteTeamName = payload.otherSiteTeamName ?? "";
+			state.teamData.cyberTeamName = payload.cyberTeamName ?? "";
+			state.teamData.championshipName = payload.championshipName ?? "";
 		},
 		setExpanded(state, { payload }) {
 			state.expanded = payload ?? "";
@@ -101,12 +103,14 @@ const matchSettingsSlice = createSlice({
 			state.champData.cyberName = initialState.champData.cyberName;
 		},
 		refreshTeamData(state) {
-			state.champId = initialState.teamData.champId;
-			state.customName = initialState.teamData.customName;
-			state.fibaliveTeamName = initialState.teamData.fibaliveTeamName;
-			state.betsapiTeamName = initialState.teamData.betsapiTeamName;
-			state.otherSiteTeamName = initialState.teamData.otherSiteTeamName;
-			state.cyberTeamName = initialState.teamData.cyberTeamName;
+			state.teamData.teamId = initialState.teamData.teamId;
+			state.teamData.customName = initialState.teamData.customName;
+			state.teamData.fibaliveTeamName = initialState.teamData.fibaliveTeamName;
+			state.teamData.betsapiTeamName = initialState.teamData.betsapiTeamName;
+			state.teamData.otherSiteTeamName =
+				initialState.teamData.otherSiteTeamName;
+			state.teamData.cyberTeamName = initialState.teamData.cyberTeamName;
+			state.teamData.championshipName = initialState.teamData.championshipName;
 		},
 		refreshMS: () => initialState,
 	},
