@@ -10,7 +10,7 @@ import { CONSTANTS } from "../constants/matchesPage.js";
 const Matches = () => {
 	return (
 		<Box sx={{ outline: "1px solid red" }}>
-			<Box>
+			<Box component="section">
 				<Typography variant="h5">{CONSTANTS.ADD_URL.TITLE}</Typography>
 				<Button variant="outlined" size="small">
 					{CONSTANTS.ADD_URL.BTN_OPEN}
