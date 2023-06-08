@@ -76,7 +76,7 @@ ipcMain.on(CHANNELS.APP_CHAMP.APP_CHAMP_EDIT, async (event, arg) => {
 	try {
 		const { id, champ } = arg;
 
-		const res = await axios.put(`${endPoint}/${id}`, champ);
+		const res = await axios.put(`${endPoint}/update/${id}`, champ);
 
 		const resData = {
 			status: res?.status,
@@ -89,7 +89,7 @@ ipcMain.on(CHANNELS.APP_CHAMP.APP_CHAMP_EDIT, async (event, arg) => {
 		const res = {
 			statusCode: err?.response?.status,
 			statusText: err?.response?.statusText,
-			message: err?.response?.data,
+			message: err?.response?.data?.message,
 		};
 
 		event.sender.send(CHANNELS.APP_CHAMP.APP_CHAMP_EDIT, res);
@@ -112,7 +112,7 @@ ipcMain.on(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, async (event, arg) => {
 		const res = {
 			statusCode: err?.response?.status,
 			statusText: err?.response?.statusText,
-			message: err?.response?.data,
+			message: err?.response?.data?.message,
 		};
 		event.sender.send(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, res);
 	}

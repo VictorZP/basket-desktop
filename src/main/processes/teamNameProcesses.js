@@ -48,6 +48,29 @@ ipcMain.on(CHANNELS.TEAM_NAME.GET_ALL_NAMES, async (event) => {
 	}
 });
 
+ipcMain.on(CHANNELS.TEAM_NAME.EDIT_NAME, async (event, arg) => {
+	try {
+		const updateData = arg;
+		const res = await axios.put(`${endPoint}/team`, updateData);
+
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.TEAM_NAME.EDIT_NAME, resData);
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.TEAM_NAME.EDIT_NAME, res);
+	}
+});
+
 ipcMain.on(CHANNELS.TEAM_NAME.DEL_NAME, async (event, arg) => {
 	try {
 		const { id } = arg;

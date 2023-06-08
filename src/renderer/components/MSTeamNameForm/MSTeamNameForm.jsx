@@ -147,6 +147,36 @@ const MSTeamNameForm = ({ cyberList }) => {
 			setTeamNames(teamEditData);
 		}
 	}, [cyberName]);
+	useEffect(() => {
+		ipcRenderer.on(CHANNELS.TEAM_NAME.EDIT_NAME, (event, arg) => {
+			if (arg?.statusCode === 409) {
+				enqueueSnackbar(arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
+					variant: "warning",
+				});
+				setIsLoading(false);
+				return;
+			}
+			if (arg?.statusText !== "OK") {
+				enqueueSnackbar(
+					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
+					{
+						variant: "error",
+					}
+				);
+				setIsLoading(false);
+				return;
+			}
+			dispatch(handleAddTeam(true));
+			dispatch(handleEditTeam(false));
+			dispatch(refreshTeamData());
+
+			enqueueSnackbar(TEAM_NAMES_FORM.UPDATED, { variant: "success" });
+			setTeamNames(initialData);
+			setSelectedChamp(initialChamp);
+			setCyberName("");
+			setIsLoading(false);
+		});
+	}, []);
 
 	const options = cyberList?.map((el) => {
 		return {
@@ -213,7 +243,11 @@ const MSTeamNameForm = ({ cyberList }) => {
 			};
 
 			if (onEdit) {
-				ipcRenderer.send(CHANNELS.TEAM_NAME, {});
+				const updateData = {
+					...reqData,
+					teamId: teamData?.teamId,
+				};
+				ipcRenderer.send(CHANNELS.TEAM_NAME.EDIT_NAME, updateData);
 			} else {
 				ipcRenderer.send(CHANNELS.TEAM_NAME.ADD_NAME, reqData);
 			}

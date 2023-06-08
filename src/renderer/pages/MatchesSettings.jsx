@@ -8,11 +8,11 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import MSCyberForm from "../components/MSCyberForm/MSCyberForm.jsx";
 import MSCyberTable from "../components/MSCyberTable/MSCyberTable.jsx";
-import MSChampionshipForm from "../components/MSChampionshipForm";
+import MSChampionshipForm from "../components/MSChampionshipForm/MSChampionshipForm.jsx";
 import MSChampionships from "../components/MSChampionships/index.js";
 import MSTeamNameForm from "../components/MSTeamNameForm/MSTeamNameForm.jsx";
 import MSTeamNames from "../components/MSTeamNames/MSTeamNames.jsx";
-import DelModal from "../components/DelModal";
+import DelModal from "../components/DelModal/DelModal.jsx";
 
 import {
 	handleEditCyber,
@@ -241,7 +241,7 @@ const MatchesSettings = () => {
 			</Box>
 			<Divider />
 			<Box>
-				<MSTeamNameForm {...teamNameFormProps} />
+				<MSTeamName Form {...teamNameFormProps} />
 				<MSTeamNames {...teamNamesProps} />
 			</Box>
 			<DelModal {...delModalProps} />

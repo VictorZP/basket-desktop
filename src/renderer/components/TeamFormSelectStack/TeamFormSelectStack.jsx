@@ -1,7 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+
+import { getTeamEditStatus } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CONSTANTS } from "../MSTeamNameForm/constants.js";
@@ -23,6 +26,7 @@ const TeamFormSelectStack = ({
 	champOptions,
 	handleChange,
 }) => {
+	const onEdit = useSelector(getTeamEditStatus);
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
 
 	return (
@@ -46,6 +50,7 @@ const TeamFormSelectStack = ({
 					value={cyberName}
 					onChange={handleChange}
 					name={CONSTANTS.CYBER_SELECT_NAME}
+					disabled={onEdit}
 				>
 					{cyberOptions?.map((opt) => {
 						return (
@@ -68,7 +73,7 @@ const TeamFormSelectStack = ({
 					onChange={handleChange}
 					name={CONSTANTS.CHAMP_SELECT_NAME}
 					MenuProps={MenuProps}
-					disabled={!cyberName}
+					disabled={!cyberName || onEdit}
 				>
 					{champOptions?.map((opt) => {
 						return (
