@@ -2,17 +2,22 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
+import {
+	Box,
+	IconButton,
+	List,
+	ListItem,
+	ListItemButton,
+	ListItemIcon,
+	ListItemText,
+	Divider,
+	Tooltip,
+} from "@mui/material";
+
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import HomeIcon from "@mui/icons-material/Home";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import Tooltip from "@mui/material/Tooltip";
 
 import { SIDE_MENU, TOOLTIPS } from "../../../common/constants/index.js";
 
@@ -26,6 +31,8 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 	const handleClick = (pName) => {
 		navigate(`/${pName}`);
 	};
+
+	const iconsArr = [<HomeIcon />, <BarChartIcon />, <EditNoteIcon />];
 
 	return (
 		<Drawer variant="permanent" open={isOpen}>
@@ -56,7 +63,7 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 										justifyContent: "center",
 									}}
 								>
-									{index % 2 === 0 ? <BarChartIcon /> : <EditNoteIcon />}
+									{iconsArr[index]}
 								</ListItemIcon>
 								<ListItemText
 									primary={TITLE}

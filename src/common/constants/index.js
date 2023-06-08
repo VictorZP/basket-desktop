@@ -13,7 +13,9 @@ export const LOGIN_PAGE = {
 };
 
 export const SIDE_MENU = {
+	HOME_PAGE: { TITLE: "Начальная страница", PAGE_NAME: "" },
 	MATCH_LIST: [
+		{ TITLE: "Начальная страница", PAGE_NAME: "" },
 		{ TITLE: "Матчи", PAGE_NAME: "matches" },
 		{ TITLE: "Настройка матчей", PAGE_NAME: "matches_setting" },
 	],
