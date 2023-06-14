@@ -68,3 +68,4 @@ import "./processes/loginProcesses.js";
 import "./processes/cyberProcesses.js";
 import "./processes/appChampProcesses.js";
 import "./processes/teamNameProcesses.js";
+import "./processes/urlFormProcesses.js";

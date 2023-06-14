@@ -27,4 +27,7 @@ export const CHANNELS = {
 		EDIT_NAME: "team-name-edit",
 		DEL_NAME: "team-name-del",
 	},
+	ANALYZE: {
+		ADD_URL: "add-url",
+	},
 };

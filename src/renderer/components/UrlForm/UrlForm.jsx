@@ -1,19 +1,27 @@
-import React, { useState, forwardRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect, forwardRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { enqueueSnackbar } from "notistack";
+
+const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { Box, TextField, Button } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
 
+import FileModal from "../FileModal";
+
+import { handleFileModalOpen } from "../../redux/modal/modalSlice.js";
 import { getIsUrlFormOpen } from "../../redux/urlForm/urlFormSelector.js";
 
 import { TEXT } from "./text.js";
 import { handleFile } from "./functions.js";
+import { CHANNELS } from "../../../common/constants/channels.js";
 
 const UrlForm = forwardRef((props, ref) => {
 	const [urlList, setUrlList] = useState([]);
 	const [file, setFile] = useState(null);
 
 	const isShown = useSelector(getIsUrlFormOpen);
+	const dispatch = useDispatch();
 
 	const onUrlAdd = (e) => {
 		const value = e?.target?.value;
@@ -40,12 +48,40 @@ const UrlForm = forwardRef((props, ref) => {
 
 	const submitData = async () => {
 		try {
+			dispatch(handleFileModalOpen(true));
+
 			const fileData = await handleFile(file);
-			console.log("🚀 ~ fileData:", fileData);
+
+			const reqData = {
+				urlList,
+				fileData,
+			};
+			ipcRenderer.send(CHANNELS.ANALYZE.ADD_URL, reqData);
+			dispatch(handleFileModalOpen(false));
 		} catch (error) {
-			console.log("🚀 ~ error:", error);
+			enqueueSnackbar(error?.message ?? TEXT.ERROR.ON_SUBMIT_DATA, {
+				variant: "error",
+			});
 		}
 	};
+
+	useEffect(() => {
+		ipcRenderer.on(CHANNELS.ANALYZE.ADD_URL, (event, arg) => {
+			if (arg?.statusText !== "OK") {
+				enqueueSnackbar(arg?.message ?? TEXT.ERROR.ON_URL_ADD, {
+					variant: "error",
+				});
+				return;
+			}
+			enqueueSnackbar(arg?.message ?? TEXT.SUCCESS, {
+				variant: "success",
+			});
+		});
+
+		return () => {
+			ipcRenderer.removeAllListeners();
+		};
+	}, []);
 
 	return (
 		<Box sx={{ mt: 2, display: !isShown ? "none" : "inline-block" }} ref={ref}>
@@ -95,6 +131,7 @@ const UrlForm = forwardRef((props, ref) => {
 					</Button>
 				</Box>
 			</Box>
+			<FileModal />
 		</Box>
 	);
 });
