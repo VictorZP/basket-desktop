@@ -19,7 +19,13 @@ ipcMain.on(CHANNELS.AUTH.LOGIN, async (event, arg) => {
 		const res = await axios.post(`${endPoint}/desktop/login`, arg);
 		store.set(STORAGE_KEY.TOKEN, res?.data?.token);
 
-		event.sender.send(CHANNELS.AUTH.LOGIN, res?.data);
+		const resData = {
+			statusCode: res?.status,
+			statusText: res.statusText,
+			token: res?.data?.token,
+		};
+
+		event.sender.send(CHANNELS.AUTH.LOGIN, resData);
 	} catch (err) {
 		const res = {
 			statusCode: err?.response?.status,
