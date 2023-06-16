@@ -7,10 +7,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
-import { LOGIN_PAGE } from "../../../common/constants/index.js";
+import { LOGIN_PAGE } from "../../constants/loginPage.js";
 import s from "./styles.js";
 
-const LoginScreen = ({ logError, handleSubmit, setLogError }) => {
+const LoginScreen = ({ errorMessage, logError, handleSubmit, setLogError }) => {
 	return (
 		<Container component="section" maxWidth="xs" sx={s.section}>
 			<Box sx={s.box}>
@@ -28,7 +28,7 @@ const LoginScreen = ({ logError, handleSubmit, setLogError }) => {
 						name="email"
 						autoComplete="email"
 						autoFocus
-						helperText={logError && LOGIN_PAGE.ERR_MESSAGES.ON_LOGIN}
+						helperText={logError && errorMessage.email}
 					/>
 
 					<TextField
@@ -41,7 +41,7 @@ const LoginScreen = ({ logError, handleSubmit, setLogError }) => {
 						type="password"
 						id="password"
 						autoComplete="current-password"
-						helperText={logError && LOGIN_PAGE.ERR_MESSAGES.ON_LOGIN}
+						helperText={logError && errorMessage.password}
 						onBlur={() => {
 							setLogError(false);
 						}}
@@ -57,6 +57,10 @@ const LoginScreen = ({ logError, handleSubmit, setLogError }) => {
 };
 
 LoginScreen.propTypes = {
+	errorMessage: PropTypes.shape({
+		email: PropTypes.string,
+		password: PropTypes.string,
+	}),
 	logError: PropTypes.bool.isRequired,
 	handleSubmit: PropTypes.func.isRequired,
 	setLogError: PropTypes.func.isRequired,

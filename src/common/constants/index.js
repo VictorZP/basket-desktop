@@ -1,17 +1,3 @@
-export const LOGIN_PAGE = {
-	TITLE: "Войти",
-	LABEL: {
-		EMAIL: "Почта",
-		PASSWORD: "Пароль",
-	},
-	BUTTON: {
-		LOGIN: "Войти",
-	},
-	ERR_MESSAGES: {
-		ON_LOGIN: "Почта и/или пароль не совпадают",
-	},
-};
-
 export const SIDE_MENU = {
 	HOME_PAGE: { TITLE: "Начальная страница", PAGE_NAME: "" },
 	MATCH_LIST: [
