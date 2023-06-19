@@ -41,12 +41,22 @@ ipcMain.handle(CHANNELS.AUTH.CHECK_TOKEN, async (event, arg) => {
 	try {
 		const { token } = arg;
 
-		await axios.post(`${endPoint}/desktop/auth`, {
+		const res = await axios.post(`${endPoint}/desktop/auth`, {
 			token,
 		});
 
-		return "verified";
+		const resData = {
+			statusCode: res?.status,
+			statusText: res?.statusText,
+			message: "verified",
+		};
+		return resData;
 	} catch (err) {
-		return err?.response?.data?.message;
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+		return res;
 	}
 });

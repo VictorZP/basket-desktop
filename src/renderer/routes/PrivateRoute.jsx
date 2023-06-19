@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
@@ -31,7 +32,14 @@ const PrivateRoute = () => {
 					{ token: res?.token }
 				);
 
-				if (tokenVerified !== "verified") {
+				if (
+					tokenVerified?.statusCode !== 200 &&
+					tokenVerified?.statusText !== "OK"
+				) {
+					const message = `${tokenVerified?.message} Код: ${tokenVerified?.statusCode}`;
+					enqueueSnackbar(message, {
+						variant: "error",
+					});
 					setIsLoading(false);
 					return;
 				}
@@ -40,7 +48,9 @@ const PrivateRoute = () => {
 				dispatch(setToken(res?.token));
 				setIsLoading(false);
 			} catch (error) {
-				console.log("error: ", error);
+				enqueueSnackbar(error?.message, {
+					variant: "error",
+				});
 				return;
 			}
 		};
