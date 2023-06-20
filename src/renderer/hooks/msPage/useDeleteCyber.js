@@ -27,7 +27,7 @@ export const useDeleteCyber = () => {
 	useEffect(() => {
 		if (isModalDLoading && pageType === MODAL_DEL.PAGE_TYPE_C) {
 			ipcRenderer.on(CHANNELS.CYBER.DEL_CYBER, (event, arg) => {
-				if (arg?.statusText !== "OK") {
+				if (arg?.statusText !== "OK" && arg?.statusCode !== 409) {
 					enqueueSnackbar(
 						arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR_C_DEL,
 						{
@@ -35,8 +35,12 @@ export const useDeleteCyber = () => {
 						}
 					);
 					return;
+				} else if (arg?.statusText !== "OK" && arg?.statusCode === 409) {
+					enqueueSnackbar(arg?.message, {
+						variant: "warning",
+					});
+					return;
 				}
-
 				dispatch(handleModalDelClose());
 				dispatch(refreshModalDel());
 				enqueueSnackbar(
