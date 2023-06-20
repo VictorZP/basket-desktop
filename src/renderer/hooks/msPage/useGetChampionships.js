@@ -41,6 +41,10 @@ export const useGetChampionships = (setList) => {
 				setList(arg?.list);
 				dispatch(handleAddChamp(false));
 			});
+
+			return () => {
+				ipcRenderer.removeAllListeners(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL);
+			};
 		}
 	}, [expanded, isChampAdd]);
 };

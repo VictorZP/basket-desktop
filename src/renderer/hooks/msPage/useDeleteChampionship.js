@@ -26,7 +26,7 @@ export const useDeleteChampionship = () => {
 
 	useEffect(() => {
 		if (isModalDLoading && pageType === MODAL_DEL.PAGE_TYPE_CHAMP) {
-			ipcRenderer.once(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, (event, arg) => {
+			ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_DEL, (event, arg) => {
 				if (arg?.statusText !== "OK") {
 					enqueueSnackbar(
 						arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR_CHAMP_DEL,
@@ -47,6 +47,9 @@ export const useDeleteChampionship = () => {
 				);
 				ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL);
 			});
+			return () => {
+				ipcRenderer.removeAllListeners(CHANNELS.APP_CHAMP.APP_CHAMP_DEL);
+			};
 		}
 	}, [isModalDLoading]);
 };

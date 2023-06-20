@@ -37,6 +37,9 @@ export const useGetAllTeamNames = (setList) => {
 				}
 				setList(arg?.list);
 			});
+			return () => {
+				ipcRenderer.removeAllListeners(CHANNELS.TEAM_NAME.GET_ALL_NAMES);
+			};
 		}
 		dispatch(handleAddTeam(false));
 	}, [expanded, isTeamAdd]);

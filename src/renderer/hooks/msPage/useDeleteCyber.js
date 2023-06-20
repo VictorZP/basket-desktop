@@ -47,10 +47,9 @@ export const useDeleteCyber = () => {
 				);
 				ipcRenderer.send(CHANNELS.CYBER.GET_ALL_CYBER);
 			});
+			return () => {
+				ipcRenderer.removeAllListeners(CHANNELS.CYBER.DEL_CYBER);
+			};
 		}
-
-		return () => {
-			ipcRenderer.removeAllListeners(CHANNELS.CYBER.DEL_CYBER);
-		};
 	}, [isModalDLoading]);
 };

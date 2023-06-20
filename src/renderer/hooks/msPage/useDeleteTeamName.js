@@ -26,7 +26,7 @@ export const useDeleteTeamName = () => {
 
 	useEffect(() => {
 		if (isModalDLoading && pageType === MODAL_DEL.PAGE_TYPE_TEAM_NAME) {
-			ipcRenderer.once(CHANNELS.TEAM_NAME.DEL_NAME, (event, arg) => {
+			ipcRenderer.on(CHANNELS.TEAM_NAME.DEL_NAME, (event, arg) => {
 				if (arg?.statusText !== "OK") {
 					enqueueSnackbar(
 						arg?.message ??
@@ -46,6 +46,10 @@ export const useDeleteTeamName = () => {
 				);
 				ipcRenderer.send(CHANNELS.TEAM_NAME.GET_ALL_NAMES);
 			});
+
+			return () => {
+				ipcRenderer.removeAllListeners(CHANNELS.TEAM_NAME.DEL_NAME);
+			};
 		}
 	}, [isModalDLoading]);
 };

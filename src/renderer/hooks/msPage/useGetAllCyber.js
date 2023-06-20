@@ -26,6 +26,9 @@ export const useGetAllCyber = (setList) => {
 			}
 
 			setList(arg?.list);
+			return () => {
+				ipcRenderer.removeAllListeners(CHANNELS.CYBER.GET_ALL_CYBER);
+			};
 		});
 
 		dispatch(handleAddCyber(false));
