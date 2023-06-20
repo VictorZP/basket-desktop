@@ -26,7 +26,7 @@ export const useDeleteCyber = () => {
 
 	useEffect(() => {
 		if (isModalDLoading && pageType === MODAL_DEL.PAGE_TYPE_C) {
-			ipcRenderer.once(CHANNELS.CYBER.DEL_CYBER, (event, arg) => {
+			ipcRenderer.on(CHANNELS.CYBER.DEL_CYBER, (event, arg) => {
 				if (arg?.statusText !== "OK") {
 					enqueueSnackbar(
 						arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR_C_DEL,
@@ -48,5 +48,9 @@ export const useDeleteCyber = () => {
 				ipcRenderer.send(CHANNELS.CYBER.GET_ALL_CYBER);
 			});
 		}
+
+		return () => {
+			ipcRenderer.removeAllListeners(CHANNELS.CYBER.DEL_CYBER);
+		};
 	}, [isModalDLoading]);
 };
