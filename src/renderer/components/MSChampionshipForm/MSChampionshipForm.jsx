@@ -37,7 +37,7 @@ const initialData = {
 	fibaliveName: "",
 	betsapiName: "",
 	otherSiteName: "",
-	cyberName: "",
+	cyberId: "",
 };
 
 const MSChampionshipForm = ({ cyberList }) => {
@@ -51,7 +51,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 
 	const options = cyberList?.map((el) => {
 		return {
-			value: el?.cyberName,
+			value: el?.id,
 			label: el?.cyberName,
 			id: el?.id,
 		};
@@ -64,7 +64,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 				fibaliveName: champData?.fibaliveName,
 				betsapiName: champData?.betsapiName,
 				otherSiteName: champData?.otherSiteName,
-				cyberName: champData?.cyberName,
+				cyberId: champData?.cyberId,
 			});
 		}
 	}, [onEdit, champData]);
@@ -125,7 +125,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 
 		switch (name) {
 			case "cyberSelect":
-				setChamp((prevState) => ({ ...prevState, cyberName: inputValue }));
+				setChamp((prevState) => ({ ...prevState, cyberId: inputValue }));
 				break;
 			case "championshipNameInput":
 				setChamp((prevState) => ({
@@ -196,7 +196,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 						labelId="cyber-select-label"
 						id="cyber-select"
 						label={CHAMPIONSHIP_FORM.SELECT_LABEL}
-						value={champ?.cyberName}
+						value={champ?.cyberId}
 						onChange={handleChange}
 						name={"cyberSelect"}
 					>
@@ -254,7 +254,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 					type="submit"
 					loading={isLoading}
 					variant="outlined"
-					disabled={!champ?.cyberName || !champ?.championshipName}
+					disabled={!champ?.cyberId || !champ?.championshipName}
 				>
 					{!onEdit ? CHAMPIONSHIP_FORM.BTN_ADD : CHAMPIONSHIP_FORM.BTN_UPD}
 				</LoadingButton>
@@ -262,7 +262,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 					size="small"
 					sx={{ width: 35 }}
 					color="error"
-					disabled={!champ?.cyberName || !champ?.championshipName}
+					disabled={!champ?.cyberId || !champ?.championshipName}
 					onClick={onClearBtn}
 				>
 					<ClearIcon />
