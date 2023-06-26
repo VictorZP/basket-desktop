@@ -115,7 +115,18 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 };
 
 MSChampionships.propTypes = {
-	champList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+	champList: PropTypes.arrayOf(
+		PropTypes.shape({
+			cyber: PropTypes.objectOf(PropTypes.string),
+			cyberUuid: PropTypes.string,
+			championshipId: PropTypes.string,
+			championshipName: PropTypes.string,
+			fibaliveName: PropTypes.string,
+			betsapiName: PropTypes.string,
+			otherSiteName: PropTypes.string,
+			owner: PropTypes.string,
+		})
+	),
 	handleDelete: PropTypes.func.isRequired,
 	handleEdit: PropTypes.func.isRequired,
 };

@@ -25,14 +25,14 @@ const MSChampionshipsTable = ({
 			</TableHead>
 			<TableBody>
 				{dataList?.map((row) => (
-					<StyledTableRow key={row?.id}>
-						<StyledTableCell>{row?.cyberName ?? ""}</StyledTableCell>
+					<StyledTableRow key={row?.championshipId}>
+						<StyledTableCell>{row?.cyber?.name ?? ""}</StyledTableCell>
 						<StyledTableCell>{row?.championshipName ?? ""}</StyledTableCell>
 						<StyledTableCell>{row?.fibaliveName ?? ""}</StyledTableCell>
 						<StyledTableCell>{row?.betsapiName ?? ""}</StyledTableCell>
 						<StyledTableCell>{row?.otherSiteName ?? ""}</StyledTableCell>
 						<StyledTableCell>
-							<TableBtnStack {...btnStackProps} btnId={row?.id} />
+							<TableBtnStack {...btnStackProps} btnId={row?.championshipId} />
 						</StyledTableCell>
 					</StyledTableRow>
 				))}
