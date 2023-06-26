@@ -22,6 +22,7 @@ const initialState = {
 		betsapiName: "",
 		otherSiteName: "",
 		cyberName: "",
+		cyberId: "",
 	},
 	teamData: {
 		teamId: "",
@@ -67,6 +68,7 @@ const matchSettingsSlice = createSlice({
 			state.champData.betsapiName = payload.betsapiName ?? "";
 			state.champData.otherSiteName = payload.otherSiteName ?? "";
 			state.champData.cyberName = payload.cyberName ?? "";
+			state.champData.cyberId = payload.cyberId ?? "";
 		},
 		setTeamData(state, { payload }) {
 			state.teamData.teamId = payload.teamId ?? "";

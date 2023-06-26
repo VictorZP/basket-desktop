@@ -146,6 +146,7 @@ const MatchesSettings = () => {
 				const cyberName = cyberList.find((el) => {
 					return el?.id === id;
 				})?.cyberName;
+
 				const cyberPayload = {
 					id,
 					name: cyberName,
@@ -157,7 +158,7 @@ const MatchesSettings = () => {
 
 			case MATCHES_SETTINGS.CHAMPIONSHIP_TABLE.EDIT_BTN_NAME:
 				const championship = champList?.find((champ) => {
-					return champ?.id === id;
+					return champ?.championshipId === id;
 				});
 				const champPayload = {
 					champId: id,
@@ -165,7 +166,8 @@ const MatchesSettings = () => {
 					fibaliveName: championship?.fibaliveName ?? "",
 					betsapiName: championship?.betsapiName ?? "",
 					otherSiteName: championship?.otherSiteName ?? "",
-					cyberName: championship?.cyberName ?? "",
+					cyberName: championship?.cyber?.name ?? "",
+					cyberId: championship?.cyberId ?? "",
 				};
 				dispatch(setChampData(champPayload));
 				dispatch(handleEditChamp(true));
