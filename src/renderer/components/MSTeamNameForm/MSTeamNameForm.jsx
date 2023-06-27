@@ -54,14 +54,14 @@ const MSTeamNameForm = ({ cyberList }) => {
 
 	const generateChampOptions = () => {
 		const list = [...champShortList]?.filter((el) => {
-			return el?.cyberName === cyberName;
+			return el?.cyber?.name === cyberName;
 		});
 
 		const filteredOptions = list?.map((champ) => {
 			return {
 				value: champ?.championshipName,
 				label: champ?.championshipName,
-				id: champ?.id,
+				id: champ?.championshipId,
 			};
 		});
 
