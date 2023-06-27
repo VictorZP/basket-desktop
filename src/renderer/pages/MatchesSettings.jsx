@@ -95,7 +95,7 @@ const MatchesSettings = () => {
 				break;
 			case MATCHES_SETTINGS.CHAMPIONSHIP_TABLE.DEL_BTN_NAME:
 				const selectedChampionship = champList.find((champ) => {
-					return champ?.id === id;
+					return champ?.championshipId === id;
 				});
 				payload.pageType = MODAL_DEL.PAGE_TYPE_CHAMP;
 				payload.descriptionExtend = {
@@ -103,7 +103,7 @@ const MatchesSettings = () => {
 					fibaliveName: selectedChampionship?.fibaliveName,
 					betsapiName: selectedChampionship?.betsapiName,
 					otherSiteName: selectedChampionship?.otherSiteName,
-					cyberName: selectedChampionship?.cyberName,
+					cyberName: selectedChampionship?.cyber.name,
 				};
 				payload.elemId = id;
 				break;

@@ -84,6 +84,9 @@ const MSTeamNameForm = ({ cyberList }) => {
 			}
 			setChampShortList(arg?.list);
 		});
+		return () => {
+			ipcRenderer.removeAllListeners(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT);
+		};
 	}, [champAddStatus]);
 
 	// формирование опций для выбора чампионата
