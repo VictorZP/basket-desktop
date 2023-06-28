@@ -26,7 +26,7 @@ const initialState = {
 	},
 	teamData: {
 		teamId: "",
-		customName: "",
+		teamName: "",
 		fibaliveTeamName: "",
 		betsapiTeamName: "",
 		otherSiteTeamName: "",
@@ -72,7 +72,7 @@ const matchSettingsSlice = createSlice({
 		},
 		setTeamData(state, { payload }) {
 			state.teamData.teamId = payload.teamId ?? "";
-			state.teamData.customName = payload.customName ?? "";
+			state.teamData.teamName = payload.teamName ?? "";
 			state.teamData.fibaliveTeamName = payload.fibaliveTeamName ?? "";
 			state.teamData.betsapiTeamName = payload.betsapiTeamName ?? "";
 			state.teamData.otherSiteTeamName = payload.otherSiteTeamName ?? "";
@@ -106,7 +106,7 @@ const matchSettingsSlice = createSlice({
 		},
 		refreshTeamData(state) {
 			state.teamData.teamId = initialState.teamData.teamId;
-			state.teamData.customName = initialState.teamData.customName;
+			state.teamData.teamName = initialState.teamData.teamName;
 			state.teamData.fibaliveTeamName = initialState.teamData.fibaliveTeamName;
 			state.teamData.betsapiTeamName = initialState.teamData.betsapiTeamName;
 			state.teamData.otherSiteTeamName =

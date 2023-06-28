@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { ipcMain } = require("electron");
 
-const endPoint = "/desktop/championship";
+const endPoint = "/desktop/team";
 
 const { CHANNELS } = require("../../common/constants/channels.js");
 
@@ -9,7 +9,7 @@ ipcMain.on(CHANNELS.TEAM_NAME.ADD_NAME, async (event, arg) => {
 	try {
 		const reqData = arg;
 
-		const res = await axios.post(`${endPoint}/team_add`, reqData);
+		const res = await axios.post(`${endPoint}/add`, reqData);
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,

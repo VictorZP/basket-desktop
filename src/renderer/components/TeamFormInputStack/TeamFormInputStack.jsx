@@ -13,7 +13,7 @@ import { CONSTANTS } from "../MSTeamNameForm/constants.js";
 
 const TeamFormInputStack = ({
 	teamNames,
-	cyberName,
+	cyberId,
 	selectedId,
 	isLoading,
 	handleTeamNames,
@@ -24,18 +24,18 @@ const TeamFormInputStack = ({
 
 	const isAddBtnDisabled =
 		selectedId?.length > 0 &&
-		teamNames.customName?.length > 0 &&
+		teamNames.teamName?.length > 0 &&
 		(teamNames.fibaliveTeamName?.length > 0 ||
 			teamNames.betsapiTeamName?.length > 0 ||
-			teamNames.otherSiteName?.length > 0);
+			teamNames.otherSiteTeamName?.length > 0);
 
 	const isClearBtnDisabled =
-		cyberName?.length > 0 ||
+		cyberId?.length > 0 ||
 		selectedId?.length > 0 ||
 		teamNames.customName?.length > 0 ||
 		teamNames.fibaliveTeamName?.length > 0 ||
 		teamNames.betsapiTeamName?.length > 0 ||
-		teamNames.otherSiteName?.length > 0;
+		teamNames.otherSiteTeamName?.length > 0;
 
 	const isInputDisabled = selectedId;
 
@@ -52,9 +52,9 @@ const TeamFormInputStack = ({
 			<FormControl>
 				<TextField
 					required
-					name={CONSTANTS.CUSTOM_NAME_INP}
+					name={CONSTANTS.TEAM_NAME_INP}
 					label={TEAM_NAMES_FORM.CUSTOM_TEAM_NAME_LABEL}
-					value={teamNames?.customName}
+					value={teamNames?.teamName}
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
@@ -87,7 +87,7 @@ const TeamFormInputStack = ({
 				<TextField
 					name={CONSTANTS.OTHER_SITE_INP}
 					label={TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_LABEL}
-					value={teamNames?.otherSiteName}
+					value={teamNames?.otherSiteTeamName}
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
@@ -117,7 +117,7 @@ const TeamFormInputStack = ({
 
 TeamFormInputStack.propTypes = {
 	teamNames: PropTypes.objectOf(PropTypes.string),
-	cyberName: PropTypes.string,
+	cyberId: PropTypes.string,
 	selectedId: PropTypes.string,
 	isLoading: PropTypes.bool,
 	handleTeamNames: PropTypes.func.isRequired,

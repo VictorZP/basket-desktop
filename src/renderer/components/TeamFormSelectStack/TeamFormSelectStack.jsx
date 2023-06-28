@@ -20,7 +20,7 @@ const MenuProps = {
 };
 
 const TeamFormSelectStack = ({
-	cyberName,
+	cyberId,
 	champValue,
 	cyberOptions,
 	champOptions,
@@ -47,7 +47,7 @@ const TeamFormSelectStack = ({
 					labelId={CONSTANTS.CYBER_SELECT_LABEL_ID}
 					id={CONSTANTS.CYBER_SELECT_ID}
 					label={TEAM_NAMES_FORM.CYBER_LABEL}
-					value={cyberName}
+					value={cyberId}
 					onChange={handleChange}
 					name={CONSTANTS.CYBER_SELECT_NAME}
 					disabled={onEdit}
@@ -73,7 +73,7 @@ const TeamFormSelectStack = ({
 					onChange={handleChange}
 					name={CONSTANTS.CHAMP_SELECT_NAME}
 					MenuProps={MenuProps}
-					disabled={!cyberName || onEdit}
+					disabled={!cyberId || onEdit}
 				>
 					{champOptions?.map((opt) => {
 						return (
@@ -89,7 +89,7 @@ const TeamFormSelectStack = ({
 };
 
 TeamFormSelectStack.propTypes = {
-	cyberName: PropTypes.string,
+	cyberId: PropTypes.string,
 	champValue: PropTypes.string,
 	cyberOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	champOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),

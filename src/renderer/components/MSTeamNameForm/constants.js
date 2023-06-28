@@ -5,8 +5,8 @@ export const CONSTANTS = {
 	CHAMP_SELECT_LABEL_ID: "champ-select-team-name-label",
 	CHAMP_SELECT_ID: "champ-select-team-name",
 	CHAMP_SELECT_NAME: "champSelectTeamName",
-	CUSTOM_NAME_INP: "customName",
+	TEAM_NAME_INP: "teamName",
 	FIBALIVE_NAME_INP: "fibaliveTeamName",
 	BETSAPI_NAME_INP: "betsapiTeamName",
-	OTHER_SITE_INP: "otherSiteName",
+	OTHER_SITE_INP: "otherSiteTeamName",
 };
