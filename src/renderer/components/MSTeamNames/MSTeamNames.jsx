@@ -115,7 +115,17 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 };
 
 MSTeamNames.propTypes = {
-	teamNamesList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+	teamNamesList: PropTypes.arrayOf(
+		PropTypes.shape({
+			teamId: PropTypes.string.isRequired,
+			teamName: PropTypes.string.isRequired,
+			fibaliveTeamName: PropTypes.string,
+			betsapiTeamName: PropTypes.string,
+			otherSiteTeamName: PropTypes.string,
+			teamCyber: PropTypes.objectOf(PropTypes.string),
+			teamChamp: PropTypes.objectOf(PropTypes.string),
+		})
+	),
 	handleDelete: PropTypes.func.isRequired,
 	handleEdit: PropTypes.func.isRequired,
 };

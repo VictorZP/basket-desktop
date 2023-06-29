@@ -30,7 +30,7 @@ ipcMain.on(CHANNELS.TEAM_NAME.ADD_NAME, async (event, arg) => {
 
 ipcMain.on(CHANNELS.TEAM_NAME.GET_ALL_NAMES, async (event) => {
 	try {
-		const res = await axios.get(`${endPoint}/team_list`);
+		const res = await axios.get(`${endPoint}/list`);
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,
