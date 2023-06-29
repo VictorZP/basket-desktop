@@ -30,8 +30,8 @@ const initialState = {
 		fibaliveTeamName: "",
 		betsapiTeamName: "",
 		otherSiteTeamName: "",
-		cyberTeamName: "",
-		championshipName: "",
+		cyberId: "",
+		championshipId: "",
 	},
 };
 
@@ -76,8 +76,8 @@ const matchSettingsSlice = createSlice({
 			state.teamData.fibaliveTeamName = payload.fibaliveTeamName ?? "";
 			state.teamData.betsapiTeamName = payload.betsapiTeamName ?? "";
 			state.teamData.otherSiteTeamName = payload.otherSiteTeamName ?? "";
-			state.teamData.cyberTeamName = payload.cyberTeamName ?? "";
-			state.teamData.championshipName = payload.championshipName ?? "";
+			state.teamData.cyberId = payload.cyberId ?? "";
+			state.teamData.championshipId = payload.championshipId ?? "";
 		},
 		setExpanded(state, { payload }) {
 			state.expanded = payload ?? "";
@@ -111,8 +111,8 @@ const matchSettingsSlice = createSlice({
 			state.teamData.betsapiTeamName = initialState.teamData.betsapiTeamName;
 			state.teamData.otherSiteTeamName =
 				initialState.teamData.otherSiteTeamName;
-			state.teamData.cyberTeamName = initialState.teamData.cyberTeamName;
-			state.teamData.championshipName = initialState.teamData.championshipName;
+			state.teamData.cyberId = initialState.teamData.cyberId;
+			state.teamData.championshipId = initialState.teamData.championshipId;
 		},
 		refreshMS: () => initialState,
 	},
