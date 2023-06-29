@@ -58,7 +58,7 @@ const TeamFormInputStack = ({
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
-					disabled={!isInputDisabled}
+					disabled={!isInputDisabled && !onEdit}
 				/>
 			</FormControl>
 			<FormControl>
@@ -69,7 +69,7 @@ const TeamFormInputStack = ({
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
-					disabled={!isInputDisabled}
+					disabled={!isInputDisabled && !onEdit}
 				/>
 			</FormControl>
 			<FormControl>
@@ -80,7 +80,7 @@ const TeamFormInputStack = ({
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
-					disabled={!isInputDisabled}
+					disabled={!isInputDisabled && !onEdit}
 				/>
 			</FormControl>
 			<FormControl>
@@ -91,7 +91,7 @@ const TeamFormInputStack = ({
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
-					disabled={!isInputDisabled}
+					disabled={!isInputDisabled && !onEdit}
 				/>
 			</FormControl>
 			<LoadingButton

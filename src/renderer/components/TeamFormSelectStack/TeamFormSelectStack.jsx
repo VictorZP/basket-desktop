@@ -1,10 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-
-import { getTeamEditStatus } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CONSTANTS } from "../MSTeamNameForm/constants.js";
@@ -21,12 +18,11 @@ const MenuProps = {
 
 const TeamFormSelectStack = ({
 	cyberId,
-	champValue,
+	champId,
 	cyberOptions,
 	champOptions,
 	handleChange,
 }) => {
-	const onEdit = useSelector(getTeamEditStatus);
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
 
 	return (
@@ -50,7 +46,6 @@ const TeamFormSelectStack = ({
 					value={cyberId}
 					onChange={handleChange}
 					name={CONSTANTS.CYBER_SELECT_NAME}
-					disabled={onEdit}
 				>
 					{cyberOptions?.map((opt) => {
 						return (
@@ -69,11 +64,11 @@ const TeamFormSelectStack = ({
 					labelId={CONSTANTS.CHAMP_SELECT_LABEL_ID}
 					id={CONSTANTS.CHAMP_SELECT_ID}
 					label={TEAM_NAMES_FORM.CHAMP_LABEL}
-					value={champValue}
+					value={champId}
 					onChange={handleChange}
 					name={CONSTANTS.CHAMP_SELECT_NAME}
 					MenuProps={MenuProps}
-					disabled={!cyberId || onEdit}
+					disabled={!cyberId}
 				>
 					{champOptions?.map((opt) => {
 						return (
@@ -90,7 +85,7 @@ const TeamFormSelectStack = ({
 
 TeamFormSelectStack.propTypes = {
 	cyberId: PropTypes.string,
-	champValue: PropTypes.string,
+	champId: PropTypes.string,
 	cyberOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	champOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	handleChange: PropTypes.func.isRequired,

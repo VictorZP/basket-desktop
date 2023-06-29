@@ -13,6 +13,7 @@ import TeamFormInputStack from "../TeamFormInputStack";
 import {
 	handleAddTeam,
 	handleEditTeam,
+	setTeamData,
 	refreshTeamData,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
@@ -59,7 +60,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 
 		const filteredOptions = list?.map((champ) => {
 			return {
-				value: champ?.championshipName,
+				value: champ?.championshipId,
 				label: champ?.championshipName,
 				id: champ?.championshipId,
 			};
@@ -128,14 +129,14 @@ const MSTeamNameForm = ({ cyberList }) => {
 	}, [onEdit, teamData]);
 	useEffect(() => {
 		if (teamData?.teamId && cyberId) {
-			const champ = champShortList?.find(({ championshipName }) => {
-				return championshipName === teamData?.championshipName;
+			const champ = champShortList?.find(({ championshipId }) => {
+				return championshipId === teamData?.championshipId;
 			});
 
 			const champData = {
-				id: champ?.id,
-				value: teamData?.championshipName,
-				label: teamData?.championshipName,
+				id: champ?.championshipId ?? "",
+				value: champ?.championshipId ?? "",
+				label: champ?.championshipName ?? "",
 			};
 
 			const teamEditData = {
@@ -196,13 +197,21 @@ const MSTeamNameForm = ({ cyberList }) => {
 		switch (name) {
 			case CONSTANTS.CYBER_SELECT_NAME:
 				setCyberId(inputValue);
+
 				if (selectedChamp?.value) {
 					setSelectedChamp(initialChamp);
+					dispatch(
+						setTeamData({
+							...teamData,
+							cyberId: inputValue,
+							championshipId: "",
+						})
+					);
 				}
 				break;
 			case CONSTANTS.CHAMP_SELECT_NAME:
-				const champ = champOptions?.find(({ label }) => {
-					return label === inputValue;
+				const champ = champOptions?.find(({ value }) => {
+					return value === inputValue;
 				});
 				setSelectedChamp({
 					id: champ?.id,
@@ -247,7 +256,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 
 			if (onEdit) {
 				const updateData = {
-					...reqData,
+					data: { ...reqData },
 					teamId: teamData?.teamId,
 				};
 				ipcRenderer.send(CHANNELS.TEAM_NAME.EDIT_NAME, updateData);
@@ -263,7 +272,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 
 	const formSelectStackProps = {
 		cyberId,
-		champValue: selectedChamp?.value,
+		champId: selectedChamp?.value,
 		cyberOptions: options,
 		champOptions,
 		handleChange,

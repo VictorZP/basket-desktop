@@ -20,8 +20,8 @@ import {
 	handleEditTeam,
 	setCyberData,
 	setChampData,
-	refreshCyberData,
 	setTeamData,
+	refreshMS,
 } from "../redux/matchSettings/matchSettingsSlice.js";
 import {
 	handleModalDelOpen,
@@ -69,7 +69,7 @@ const MatchesSettings = () => {
 	useEffect(() => {
 		return () => {
 			ipcRenderer.removeAllListeners();
-			dispatch(refreshCyberData());
+			dispatch(refreshMS());
 			dispatch(handleEditCyber(false));
 		};
 	}, []);
@@ -175,17 +175,17 @@ const MatchesSettings = () => {
 
 			case MATCHES_SETTINGS.TEAM_NAMES_TABLE.EDIT_TEAM_NAME:
 				const team = teamNamesList?.find((team) => {
-					return team.id === id;
+					return team.teamId === id;
 				});
 
 				const payload = {
 					teamId: id,
-					cyberTeamName: team?.cyberName ?? "",
-					championshipName: team?.championshipName ?? "",
-					customName: team?.customName ?? "",
+					cyberId: team?.teamCyber?.cyberId ?? "",
+					championshipId: team?.teamChamp?.championshipId ?? "",
+					teamName: team?.teamName ?? "",
 					fibaliveTeamName: team?.fibaliveTeamName ?? "",
 					betsapiTeamName: team?.betsapiTeamName ?? "",
-					otherSiteTeamName: team?.otherSiteName ?? "",
+					otherSiteTeamName: team?.otherSiteTeamName ?? "",
 				};
 				dispatch(setTeamData(payload));
 				dispatch(handleEditTeam(true));

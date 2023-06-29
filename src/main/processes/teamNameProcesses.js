@@ -50,8 +50,8 @@ ipcMain.on(CHANNELS.TEAM_NAME.GET_ALL_NAMES, async (event) => {
 
 ipcMain.on(CHANNELS.TEAM_NAME.EDIT_NAME, async (event, arg) => {
 	try {
-		const updateData = arg;
-		const res = await axios.put(`${endPoint}/team`, updateData);
+		const { data, teamId } = arg;
+		const res = await axios.put(`${endPoint}/update/${teamId}`, data);
 
 		const resData = {
 			status: res?.status,
