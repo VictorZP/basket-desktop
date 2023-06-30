@@ -45,7 +45,8 @@ import {
 	useDeleteTeamName,
 } from "../hooks/msPage";
 
-import { MATCHES_SETTINGS, MODAL_DEL } from "../../common/constants/index.js";
+import { MATCHES_SETTINGS } from "../../common/constants/index.js";
+import { MODAL_DEL } from "../constants/modaldel.js";
 import { CHANNELS } from "../../common/constants/channels.js";
 
 const MatchesSettings = () => {

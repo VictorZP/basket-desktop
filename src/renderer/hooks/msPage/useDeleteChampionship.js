@@ -13,10 +13,8 @@ import {
 	isMDLoading,
 } from "../../redux/modalDelete/modalDelSelector.js";
 
-import {
-	MATCHES_SETTINGS,
-	MODAL_DEL,
-} from "../../../common/constants/index.js";
+import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { MODAL_DEL } from "../../constants/modaldel";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
 export const useDeleteChampionship = () => {
@@ -46,6 +44,7 @@ export const useDeleteChampionship = () => {
 					}
 				);
 				ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_ALL);
+				ipcRenderer.send(CHANNELS.TEAM_NAME.GET_ALL_NAMES);
 			});
 			return () => {
 				ipcRenderer.removeAllListeners(CHANNELS.APP_CHAMP.APP_CHAMP_DEL);

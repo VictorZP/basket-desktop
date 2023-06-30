@@ -95,13 +95,3 @@ export const TOOLTIPS = {
 	T_BTN_STACK_EDIT: "редактировать",
 	T_BTN_STACK_DEL: "удалить",
 };
-
-export const MODAL_DEL = {
-	TITLE: "Удалить?",
-	CONFIRM_TEXT: "Подтверждаете удаление ",
-	YES: "Да",
-	NO: "Нет",
-	PAGE_TYPE_C: "delCyber",
-	PAGE_TYPE_CHAMP: "delChampionship",
-	PAGE_TYPE_TEAM_NAME: "delTeamName",
-};

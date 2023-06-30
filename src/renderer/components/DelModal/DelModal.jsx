@@ -14,7 +14,7 @@ import {
 	getMDDescriptionExtend,
 	isMDOpen,
 } from "../../redux/modalDelete/modalDelSelector.js";
-import { MODAL_DEL } from "../../../common/constants/index.js";
+import { MODAL_DEL } from "../../constants/modaldel.js";
 
 const DelModal = ({ handleClose, handleDelete }) => {
 	const isOpen = useSelector(isMDOpen);
@@ -28,7 +28,7 @@ const DelModal = ({ handleClose, handleDelete }) => {
 				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}? `;
 				break;
 			case MODAL_DEL.PAGE_TYPE_CHAMP:
-				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend?.championshipName}? `;
+				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend?.championshipName}? ${MODAL_DEL.CHAMP_TEXT}`;
 				break;
 			case MODAL_DEL.PAGE_TYPE_TEAM_NAME:
 				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}`;
