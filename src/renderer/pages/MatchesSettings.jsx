@@ -110,10 +110,10 @@ const MatchesSettings = () => {
 				break;
 			case MATCHES_SETTINGS.TEAM_NAMES_TABLE.DEL_TEAM_NAME:
 				const selectedTeam = teamNamesList.find((team) => {
-					return team?.id === id;
+					return team?.teamId === id;
 				});
 				payload.pageType = MODAL_DEL.PAGE_TYPE_TEAM_NAME;
-				payload.descriptionExtend = selectedTeam?.customName;
+				payload.descriptionExtend = selectedTeam?.teamName;
 				payload.elemId = id;
 				break;
 			default:

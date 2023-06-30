@@ -75,7 +75,7 @@ ipcMain.on(CHANNELS.TEAM_NAME.DEL_NAME, async (event, arg) => {
 	try {
 		const { id } = arg;
 
-		const res = await axios.delete(`${endPoint}/team_name/${id}`);
+		const res = await axios.delete(`${endPoint}/delete/${id}`);
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,
