@@ -11,7 +11,7 @@ import PublicRoute from "./PublicRoute.jsx";
 
 const LoginPage = lazy(() => import("../pages/LoginPage.jsx"));
 const HomePage = lazy(() => import("../pages/HomePage.jsx"));
-const Matches = lazy(() => import("../pages/Matches.jsx"));
+const GamesSettings = lazy(() => import("../pages/GamesSettings.jsx"));
 const MatchesSettings = lazy(() => import("../pages/MatchesSettings.jsx"));
 
 const appRouter = createHashRouter(
@@ -19,7 +19,7 @@ const appRouter = createHashRouter(
 		<>
 			<Route element={<PrivateRoute />}>
 				<Route path="/" element={<HomePage />}>
-					<Route path="matches" element={<Matches />} />
+					<Route path="matches" element={<GamesSettings />} />
 					<Route path="matches_setting" element={<MatchesSettings />} />
 				</Route>
 			</Route>

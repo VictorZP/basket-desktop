@@ -10,6 +10,7 @@ import { MuiFileInput } from "mui-file-input";
 import FileModal from "../FileModal";
 
 import { handleFileModalOpen } from "../../redux/modal/modalSlice.js";
+import { handleUrlAdded } from "../../redux/urlForm/urlFormSlice.js";
 import { getIsUrlFormOpen } from "../../redux/urlForm/urlFormSelector.js";
 
 import { TEXT } from "./text.js";
@@ -52,8 +53,11 @@ const UrlForm = forwardRef((props, ref) => {
 
 			const fileData = await handleFile(file);
 
+			const urlArray = urlList
+				.split("\n")
+				?.filter((string) => string?.length > 0);
 			const reqData = {
-				urlList,
+				urlArray,
 				fileData,
 			};
 			ipcRenderer.send(CHANNELS.ANALYZE.ADD_URL, reqData);
@@ -76,6 +80,7 @@ const UrlForm = forwardRef((props, ref) => {
 			enqueueSnackbar(arg?.message ?? TEXT.SUCCESS, {
 				variant: "success",
 			});
+			dispatch(handleUrlAdded(true));
 		});
 
 		return () => {
@@ -106,7 +111,7 @@ const UrlForm = forwardRef((props, ref) => {
 				>
 					<Box>
 						<MuiFileInput
-							id="exelLoadFile"
+							id="excelLoadFile"
 							placeholder={TEXT.PLACEHOLDER_FILE}
 							value={file}
 							onChange={onFileAdd}
