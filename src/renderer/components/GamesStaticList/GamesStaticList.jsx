@@ -21,7 +21,7 @@ import { getIsUrlAdded } from "../../redux/urlForm/urlFormSelector.js";
 
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
-import { TEXT } from "./text";
+import { TEXT } from "./text.js";
 
 const GamesStaticList = () => {
 	const [cyberList, setCyberList] = useState([]);
