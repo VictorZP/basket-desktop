@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { List, InputBase, Typography } from "@mui/material";
 
@@ -85,6 +86,12 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 			})}
 		</List>
 	);
+};
+
+GamesStaticDetailsList.propTypes = {
+	handleTemp: PropTypes.func.isRequired,
+	games: PropTypes.array,
+	cyber: PropTypes.string,
 };
 
 export default GamesStaticDetailsList;

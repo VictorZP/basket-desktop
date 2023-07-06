@@ -13,6 +13,7 @@ import { handleFileModalOpen } from "../../redux/modal/modalSlice.js";
 import { handleUrlAdded } from "../../redux/urlForm/urlFormSlice.js";
 import { getIsUrlFormOpen } from "../../redux/urlForm/urlFormSelector.js";
 
+import { styles } from "./styles.js";
 import { TEXT } from "./text.js";
 import { handleFile } from "./functions.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
@@ -89,8 +90,8 @@ const UrlForm = forwardRef((props, ref) => {
 	}, []);
 
 	return (
-		<Box sx={{ mt: 2, display: !isShown ? "none" : "inline-block" }} ref={ref}>
-			<Box sx={{ display: "flex", width: "968px" }}>
+		<Box sx={styles.mainBox(isShown)} ref={ref}>
+			<Box sx={styles.formBox}>
 				<TextField
 					id="urlTextField"
 					placeholder={TEXT.PLACEHOLDER_URL}
@@ -101,14 +102,7 @@ const UrlForm = forwardRef((props, ref) => {
 					onChange={onUrlAdd}
 					value={urlList}
 				/>
-				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "column",
-						justifyContent: "space-between",
-						ml: 2,
-					}}
-				>
+				<Box sx={styles.formInnerBox}>
 					<Box>
 						<MuiFileInput
 							id="excelLoadFile"
@@ -116,7 +110,7 @@ const UrlForm = forwardRef((props, ref) => {
 							value={file}
 							onChange={onFileAdd}
 							size="small"
-							sx={{ mb: 1, width: "280px" }}
+							sx={styles.fileInput}
 						/>
 						<Button
 							disabled={isBtnDisabled(urlList, file)}
@@ -126,7 +120,7 @@ const UrlForm = forwardRef((props, ref) => {
 						</Button>
 					</Box>
 					<Button
-						sx={{ alignSelf: "start" }}
+						sx={styles.button}
 						size="small"
 						color="error"
 						disabled={urlList?.length === 0}
