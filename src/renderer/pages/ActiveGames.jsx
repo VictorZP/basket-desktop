@@ -6,11 +6,16 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { Box, Typography, Button, Divider, Slide } from "@mui/material";
 
 import { CHANNELS } from "../../common/constants/channels.js";
+import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
 
 const ActiveGames = () => {
 	const [dataList, setDataList] = useState({});
+	// статус отслеживания
 	const [isOn, setIsOn] = useState(false);
+	// для таймера
 	const [onCheck, setOnCheck] = useState(false);
+	// матчи, которые прошли проверку
+	const [matches, setMatches] = useState([]);
 
 	const handleStart = async () => {
 		if (!isOn) {
@@ -25,6 +30,7 @@ const ActiveGames = () => {
 
 	useEffect(() => {
 		let timerId;
+
 		if (onCheck && isOn) {
 			timerId = setTimeout(() => {
 				ipcRenderer.send(CHANNELS.ANALYZE.ACTIVE, dataList);
@@ -37,7 +43,7 @@ const ActiveGames = () => {
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.ANALYZE.ACTIVE, (event, arg) => {
-			console.log("in response analyze");
+			setMatches(arg.data);
 			setOnCheck(true);
 		});
 	}, []);
@@ -65,10 +71,17 @@ const ActiveGames = () => {
 	}, []);
 
 	return (
-		<Box>
-			<Button variant="outlined" onClick={handleStart}>
-				{isOn ? "STOP" : "ON"}
-			</Button>
+		<Box component="section">
+			<Box px={3} mb={2}>
+				<Button
+					variant="contained"
+					onClick={handleStart}
+					color={`${isOn ? "error" : "success"}`}
+				>
+					{isOn ? ACTIVE_PAGE.BTN.END : ACTIVE_PAGE.BTN.START}
+				</Button>
+			</Box>
+			<Divider />
 		</Box>
 	);
 };

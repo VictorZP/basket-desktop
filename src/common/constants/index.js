@@ -4,6 +4,7 @@ export const SIDE_MENU = {
 		{ TITLE: "Начальная страница", PAGE_NAME: "" },
 		{ TITLE: "Матчи", PAGE_NAME: "matches" },
 		{ TITLE: "Настройка матчей", PAGE_NAME: "matches_setting" },
+		{ TITLE: "Отслеживание матчей", PAGE_NAME: "active_games" },
 	],
 };
 
