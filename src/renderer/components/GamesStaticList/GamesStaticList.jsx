@@ -88,12 +88,20 @@ const GamesStaticList = () => {
 		};
 	}, []);
 
-	const handleTemp = (e) => {
-		const id = e.target.id;
+	const handleInput = (e) => {
+		const elemID = e.target.id;
+		const id = elemID?.split("_")[1];
+		const name = elemID?.split("_")[0];
+
 		const value = e?.target?.value;
 		const index = games?.findIndex((game) => game?.eventId === id);
 		const updatedDataList = games;
-		updatedDataList[index].temp = value;
+		if (name === "temp") {
+			updatedDataList[index].temp = value;
+		} else {
+			updatedDataList[index].predict = value;
+		}
+
 		setGames([...updatedDataList]);
 	};
 
@@ -128,7 +136,7 @@ const GamesStaticList = () => {
 									</AccordionSummary>
 									<AccordionDetails>
 										<GamesStaticDetailsList
-											handleTemp={handleTemp}
+											handleTemp={handleInput}
 											games={games}
 											cyber={cyber?.cyberName}
 										/>

@@ -13,6 +13,7 @@ const LoginPage = lazy(() => import("../pages/LoginPage.jsx"));
 const HomePage = lazy(() => import("../pages/HomePage.jsx"));
 const GamesSettings = lazy(() => import("../pages/GamesSettings.jsx"));
 const MatchesSettings = lazy(() => import("../pages/MatchesSettings.jsx"));
+const ActiveGames = lazy(() => import("../pages/ActiveGames.jsx"));
 
 const appRouter = createHashRouter(
 	createRoutesFromElements(
@@ -21,6 +22,7 @@ const appRouter = createHashRouter(
 				<Route path="/" element={<HomePage />}>
 					<Route path="matches" element={<GamesSettings />} />
 					<Route path="matches_setting" element={<MatchesSettings />} />
+					<Route path="active_games" element={<ActiveGames />} />
 				</Route>
 			</Route>
 

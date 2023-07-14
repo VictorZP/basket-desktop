@@ -31,5 +31,6 @@ export const CHANNELS = {
 		ADD_URL: "add-url",
 		GET_STATIC_LIST: "get-static-list",
 		UPD_TEMP: "update-temp",
+		ACTIVE: "active",
 	},
 };

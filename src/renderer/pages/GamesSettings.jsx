@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { Box, Typography, Button, Divider, Slide } from "@mui/material";
 
@@ -13,9 +14,11 @@ import { CONSTANTS } from "../constants/matchesPage.js";
 
 const TEXT = {
 	NEXT_BTN: "Отслеживание матчей",
+	PATH: "active_games",
 };
 
 const GamesSettings = () => {
+	const navigate = useNavigate();
 	const containerRef = useRef(null);
 
 	const isFormOpen = useSelector(getIsUrlFormOpen);
@@ -25,8 +28,8 @@ const GamesSettings = () => {
 		dispatch(handleOpenState(!isFormOpen));
 	};
 
-	const urlFormProps = {
-		handleOpenUrlForm,
+	const handleNavigate = () => {
+		navigate(`/${TEXT.PATH}`);
 	};
 
 	return (
@@ -53,7 +56,7 @@ const GamesSettings = () => {
 			<GamesStaticList />
 			<Divider />
 			<Box sx={{ px: 3, py: 1, overflow: "hidden" }}>
-				<Button variant="outlined" size="small">
+				<Button variant="outlined" size="small" onClick={handleNavigate}>
 					{TEXT.NEXT_BTN}
 				</Button>
 			</Box>

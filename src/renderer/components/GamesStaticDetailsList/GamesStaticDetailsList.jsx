@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { List, InputBase, Typography } from "@mui/material";
+import { List, InputBase, Typography, Paper } from "@mui/material";
+import MuiBox from "@mui/material/Box";
 
 import {
 	ListItem,
@@ -55,7 +56,7 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={item?.eventId}
+								id={`temp_${item?.eventId}`}
 								onChange={handleTemp}
 								value={item?.temp}
 								size="small"
@@ -80,6 +81,19 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<Typography>-</Typography>
+						</Box>
+						<Box sx={{ width: "6%" }}>
+							<InputBase
+								id={`predict_${item?.eventId}`}
+								onChange={handleTemp}
+								value={item?.predict}
+								size="small"
+								sx={{
+									"&.MuiInputBase-root > input": {
+										padding: 0,
+									},
+								}}
+							/>
 						</Box>
 					</ListItem>
 				);
