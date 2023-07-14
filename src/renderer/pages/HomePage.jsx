@@ -58,7 +58,14 @@ const HomePage = () => {
 	};
 
 	return (
-		<Box sx={{ display: "flex", height: "100%" }}>
+		<Box
+			sx={{
+				display: "flex",
+				height: "100vh",
+				minWidth: "1200px",
+				overflow: "auto",
+			}}
+		>
 			<CssBaseline />
 			<AppNavBar {...appNavBarProps} />
 			<SideMenu {...sideMenuProps} />

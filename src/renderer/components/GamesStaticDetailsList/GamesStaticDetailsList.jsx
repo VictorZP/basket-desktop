@@ -45,14 +45,16 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 								{item?.homeTeam?.teamChamp?.championshipName}
 							</Typography>
 						</Box>
-						<Box sx={{ width: "15%" }}>
+						<Box sx={{ width: "14%" }}>
 							<Typography>{item?.homeTeam?.teamName}</Typography>
 						</Box>
-						<Box sx={{ width: "15%" }}>
+						<Box sx={{ width: "14%" }}>
 							<Typography>{item?.awayTeam?.teamName}</Typography>
 						</Box>
-						<Box sx={{ width: "6%" }}>
-							<Typography>{item?.total}</Typography>
+						<Box sx={{ width: "7%" }}>
+							<Typography sx={{ display: "inline-block", overflow: "hidden" }}>
+								{item?.total}
+							</Typography>
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase

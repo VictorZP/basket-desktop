@@ -45,34 +45,41 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 			</DrawerHeader>
 			<Divider />
 			<List>
-				{SIDE_MENU.MATCH_LIST.map(({ TITLE, PAGE_NAME }, index) => (
-					<ListItem key={PAGE_NAME} disablePadding sx={{ display: "block" }}>
-						<Tooltip title={isOpen ? "" : TITLE} placement="right">
-							<ListItemButton
-								sx={{
-									minHeight: 48,
-									justifyContent: isOpen ? "initial" : "center",
-									px: 2.5,
-								}}
-								onClick={() => handleClick(PAGE_NAME)}
+				{SIDE_MENU.MATCH_LIST.map(({ TITLE, PAGE_NAME }, index) => {
+					if (PAGE_NAME !== "active_games")
+						return (
+							<ListItem
+								key={PAGE_NAME}
+								disablePadding
+								sx={{ display: "block" }}
 							>
-								<ListItemIcon
-									sx={{
-										minWidth: 0,
-										mr: isOpen ? 3 : "auto",
-										justifyContent: "center",
-									}}
-								>
-									{iconsArr[index]}
-								</ListItemIcon>
-								<ListItemText
-									primary={TITLE}
-									sx={{ opacity: isOpen ? 1 : 0 }}
-								/>
-							</ListItemButton>
-						</Tooltip>
-					</ListItem>
-				))}
+								<Tooltip title={isOpen ? "" : TITLE} placement="right">
+									<ListItemButton
+										sx={{
+											minHeight: 48,
+											justifyContent: isOpen ? "initial" : "center",
+											px: 2.5,
+										}}
+										onClick={() => handleClick(PAGE_NAME)}
+									>
+										<ListItemIcon
+											sx={{
+												minWidth: 0,
+												mr: isOpen ? 3 : "auto",
+												justifyContent: "center",
+											}}
+										>
+											{iconsArr[index]}
+										</ListItemIcon>
+										<ListItemText
+											primary={TITLE}
+											sx={{ opacity: isOpen ? 1 : 0 }}
+										/>
+									</ListItemButton>
+								</Tooltip>
+							</ListItem>
+						);
+				})}
 			</List>
 			<Divider />
 		</Drawer>

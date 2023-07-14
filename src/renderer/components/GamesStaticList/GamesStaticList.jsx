@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { useGetAllCyber } from "../../hooks/msPage";
 import {
 	Accordion,
 	AccordionSummary,
@@ -22,9 +21,9 @@ import { getIsUrlAdded } from "../../redux/urlForm/urlFormSelector.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { TEXT } from "./text.js";
+import { CYBER_LIST } from "../../constants/cyberList.js";
 
 const GamesStaticList = () => {
-	const [cyberList, setCyberList] = useState([]);
 	const [dataList, setDataList] = useState([]);
 	const [games, setGames] = useState([]);
 	const [tempUpdated, setTempUpdated] = useState(false);
@@ -32,7 +31,14 @@ const GamesStaticList = () => {
 	const isUrlAdded = useSelector(getIsUrlAdded);
 	const dispatch = useDispatch();
 
-	useGetAllCyber(setCyberList);
+	// const cyberList = [
+	// 	"Cyber N",
+	// 	"Cyber G",
+	// 	"Cyber New",
+	// 	"Cyber V",
+	// 	"Cyber LA",
+	// 	"Cyber Summer",
+	// ];
 
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST);
@@ -82,7 +88,6 @@ const GamesStaticList = () => {
 
 	useEffect(() => {
 		return () => {
-			setCyberList([]);
 			setDataList({});
 			setGames([]);
 		};
@@ -108,6 +113,7 @@ const GamesStaticList = () => {
 	const handleSaveTemp = () => {
 		const updatedGames = games?.map((game) => {
 			game.temp = Number.parseFloat(game.temp);
+			game.predict = Number.parseFloat(game.predict);
 			return game;
 		});
 		const data = { ...dataList, games: updatedGames };
@@ -125,20 +131,18 @@ const GamesStaticList = () => {
 				</Typography>
 			</Box>
 			<Box sx={{ py: 1 }}>
-				{cyberList
-					? cyberList.map((cyber) => {
+				{CYBER_LIST
+					? CYBER_LIST.map((cyber) => {
 							return (
-								<Accordion key={cyber.id}>
+								<Accordion key={cyber}>
 									<AccordionSummary>
-										<Typography variant="subtitle1">
-											{cyber.cyberName}
-										</Typography>
+										<Typography variant="subtitle1">{cyber}</Typography>
 									</AccordionSummary>
 									<AccordionDetails>
 										<GamesStaticDetailsList
 											handleTemp={handleInput}
 											games={games}
-											cyber={cyber?.cyberName}
+											cyber={cyber}
 										/>
 									</AccordionDetails>
 								</Accordion>

@@ -62,6 +62,7 @@ const ListItem = styled(MuiListItem)(({ theme }) => ({
 const Box = styled(MuiBox)(({ theme }) => ({
 	display: "flex",
 	alignItems: "center",
+	overflow: "hidden",
 	width: "8%",
 	padding: 8,
 	flexGrow: 1,

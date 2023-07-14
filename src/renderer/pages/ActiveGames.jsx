@@ -5,6 +5,8 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { Box, Typography, Button, Divider, Slide } from "@mui/material";
 
+import ActiveGamesList from "../components/ActiveGamesList/ActiveGamesList.jsx";
+
 import { CHANNELS } from "../../common/constants/channels.js";
 import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
 
@@ -72,8 +74,9 @@ const ActiveGames = () => {
 
 	return (
 		<Box component="section">
-			<Box px={3} mb={2}>
+			<Box px={3} mb={2} sx={{ height: "40px" }}>
 				<Button
+					sx={{ position: "absolute", top: "90px" }}
 					variant="contained"
 					onClick={handleStart}
 					color={`${isOn ? "error" : "success"}`}
@@ -82,6 +85,7 @@ const ActiveGames = () => {
 				</Button>
 			</Box>
 			<Divider />
+			<ActiveGamesList matches={matches} />
 		</Box>
 	);
 };
