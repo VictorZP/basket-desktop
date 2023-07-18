@@ -62,8 +62,6 @@ const HomePage = () => {
 			sx={{
 				display: "flex",
 				height: "100vh",
-				minWidth: "1200px",
-				overflow: "auto",
 			}}
 		>
 			<CssBaseline />

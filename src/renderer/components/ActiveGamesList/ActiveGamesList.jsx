@@ -1,27 +1,35 @@
 import React from "react";
+import "./styles.css";
 
-import {
-	Box,
-	Typography,
-	List,
-	ListItem,
-	Button,
-	Divider,
-	Slide,
-} from "@mui/material";
+const { shell } = window.require("electron");
+
+import { Box, Typography, Tooltip, IconButton } from "@mui/material";
+import LanguageIcon from "@mui/icons-material/Language";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { CYBER_LIST } from "../../constants/cyberList.js";
+import { ACTIVE_PAGE } from "../../constants/activeGamesPage.js";
 
-const ActiveGamesList = ({ matches }) => {
+const ActiveGamesList = ({ matches, hideMatch }) => {
 	const gamesByCyber = (cyber) => {
 		return matches?.filter((item) => {
 			return item?.cyber === cyber;
 		});
 	};
 
+	const openBrowser = (url) => {
+		shell.openExternal(url);
+	};
+
 	return (
 		<Box p={3}>
-			<Box>
+			<Box
+				sx={{
+					position: "relative",
+					overflow: "auto",
+					width: "1100px",
+				}}
+			>
 				{CYBER_LIST.map((cyber) => {
 					return (
 						<Box key={cyber}>
@@ -36,16 +44,78 @@ const ActiveGamesList = ({ matches }) => {
 							>
 								<Typography variant="subtitle1">{cyber}</Typography>
 							</Box>
-							<List>
+							<ul>
 								{gamesByCyber(cyber).map((match) => {
 									return (
-										<ListItem key={match.eventId} sx={{ minWidth: "1300px" }}>
-											<span>{match.cyber}</span>
-											<span>{match.champ}</span>
-										</ListItem>
+										<li
+											key={match.eventId}
+											className={`active-list__item ${
+												match.difRes === "less"
+													? "active-list__item-less"
+													: "active-list__item-more"
+											}`}
+										>
+											<div className="active-list__row">
+												<span className="active-list__deviation">
+													{match.deviation}
+												</span>
+												<span className="active-list__deviation"></span>
+												<span className="active-list__championship">
+													{match.champ}
+												</span>
+												<span className="active-list__team">
+													{match.teamHome}
+												</span>
+												<span className="active-list__team">
+													{match.teamAway}
+												</span>
+												<span className="active-list__total">
+													{match.total}
+												</span>
+												<span className="active-list__total">{match.temp}</span>
+												<span className="active-list__attackKEF">
+													{match.attackKEF}
+												</span>
+												<span className="active-list__calcTemp">
+													{match.calcTemp}
+												</span>
+												<span className="active-list__total2ndHALF">
+													{match.total2ndHALF}
+												</span>
+												<span className="active-list__totalInMoment">
+													{match.totalInMoment}
+												</span>
+												<span className="active-list__predict">
+													{match.predict}
+												</span>
+												<span className="active-list__url">
+													<Tooltip
+														title={ACTIVE_PAGE.URL.TITLE}
+														placement="right"
+													>
+														<IconButton
+															color="primary"
+															onClick={() => openBrowser(match.url)}
+														>
+															<LanguageIcon />
+														</IconButton>
+													</Tooltip>
+												</span>
+												<span className="active-list__close">
+													<Tooltip title={ACTIVE_PAGE.CLOSE} placement="top">
+														<IconButton
+															color="error"
+															onClick={() => hideMatch(match.eventId)}
+														>
+															<CloseIcon />
+														</IconButton>
+													</Tooltip>
+												</span>
+											</div>
+										</li>
 									);
 								})}
-							</List>
+							</ul>
 						</Box>
 					);
 				})}

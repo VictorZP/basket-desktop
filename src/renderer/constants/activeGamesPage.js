@@ -3,4 +3,9 @@ export const ACTIVE_PAGE = {
 		START: "Начать отслеживать",
 		END: "Остановить",
 	},
+	URL: {
+		TITLE: "открыть браузер",
+	},
+	CLOSE: "скрыть",
+	STATUS: "checked",
 };

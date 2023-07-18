@@ -3,7 +3,7 @@ import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { Box, Typography, Button, Divider, Slide } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
 
 import ActiveGamesList from "../components/ActiveGamesList/ActiveGamesList.jsx";
 
@@ -18,6 +18,8 @@ const ActiveGames = () => {
 	const [onCheck, setOnCheck] = useState(false);
 	// матчи, которые прошли проверку
 	const [matches, setMatches] = useState([]);
+	// таймер
+	const [timerId, setTimerId] = useState(0);
 
 	const handleStart = async () => {
 		if (!isOn) {
@@ -25,30 +27,50 @@ const ActiveGames = () => {
 		}
 		setIsOn(!isOn);
 		if (isOn) {
+			clearInterval(timerId);
 			setIsOn(!isOn);
 			setOnCheck(false);
 		}
 	};
 
 	useEffect(() => {
-		let timerId;
-
 		if (onCheck && isOn) {
-			timerId = setTimeout(() => {
+			const timer = setTimeout(() => {
 				ipcRenderer.send(CHANNELS.ANALYZE.ACTIVE, dataList);
 			}, 10000);
-		} else if (!onCheck && isOn) {
-			clearInterval(timerId);
+			setTimerId(timer);
 		}
 		setOnCheck(false);
-	});
+	}, [matches]);
 
-	useEffect(() => {
-		ipcRenderer.on(CHANNELS.ANALYZE.ACTIVE, (event, arg) => {
-			setMatches(arg.data);
-			setOnCheck(true);
+	ipcRenderer.once(CHANNELS.ANALYZE.ACTIVE, (event, arg) => {
+		const matchesData = [...matches];
+
+		arg.data?.forEach((item) => {
+			const ndx = matchesData.findIndex(
+				(match) => match.eventId === item.eventId
+			);
+
+			// Проверка на наличие матча в масиве, а также проверка статуса матча(отображать или нет)
+			if (ndx < 0) {
+				matchesData.push(item);
+				return;
+			}
+
+			if (matches[ndx]?.statusFront === ACTIVE_PAGE.STATUS) {
+				return;
+			}
+
+			if (matches[ndx]?.statusFront !== ACTIVE_PAGE.STATUS) {
+				matchesData.splice(ndx, 1, item);
+
+				return;
+			}
 		});
-	}, []);
+
+		setMatches(matchesData);
+		setOnCheck(true);
+	});
 
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST);
@@ -69,14 +91,33 @@ const ActiveGames = () => {
 	useEffect(() => {
 		return () => {
 			ipcRenderer.removeAllListeners();
+			clearInterval(timerId);
 		};
 	}, []);
 
+	const hideMatch = (id) => {
+		const ndx = matches.findIndex((match) => match.eventId === id);
+		const matchesArr = [...matches];
+
+		matchesArr[ndx].statusFront = ACTIVE_PAGE.STATUS;
+
+		setMatches(matchesArr);
+	};
+
+	const filteredMatches = matches.filter((match) => {
+		return match.statusFront !== ACTIVE_PAGE.STATUS;
+	});
+
 	return (
 		<Box component="section">
-			<Box px={3} mb={2} sx={{ height: "40px" }}>
+			<Box
+				px={3}
+				mb={2}
+				sx={{
+					height: "40px",
+				}}
+			>
 				<Button
-					sx={{ position: "absolute", top: "90px" }}
 					variant="contained"
 					onClick={handleStart}
 					color={`${isOn ? "error" : "success"}`}
@@ -85,7 +126,7 @@ const ActiveGames = () => {
 				</Button>
 			</Box>
 			<Divider />
-			<ActiveGamesList matches={matches} />
+			<ActiveGamesList matches={filteredMatches} hideMatch={hideMatch} />
 		</Box>
 	);
 };

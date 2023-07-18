@@ -15,7 +15,6 @@ ipcMain.on(CHANNELS.ANALYZE.ACTIVE, async (event, arg) => {
 		};
 		event.sender.send(CHANNELS.ANALYZE.ACTIVE, resData);
 	} catch (err) {
-		console.log("🚀 ~ err:", err);
 		const res = {
 			statusCode: err?.response?.status,
 			statusText: err?.response?.statusText,
