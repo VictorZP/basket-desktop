@@ -48,7 +48,7 @@ const ActiveGames = () => {
 
 		arg.data?.forEach((item) => {
 			const ndx = matchesData.findIndex(
-				(match) => match.eventId === item.eventId
+				(match) => match?.eventId === item?.eventId
 			);
 
 			// Проверка на наличие матча в масиве, а также проверка статуса матча(отображать или нет)
@@ -105,7 +105,7 @@ const ActiveGames = () => {
 	};
 
 	const filteredMatches = matches.filter((match) => {
-		return match.statusFront !== ACTIVE_PAGE.STATUS;
+		return match?.statusFront !== ACTIVE_PAGE.STATUS;
 	});
 
 	return (

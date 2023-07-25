@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+import PropTypes from "prop-types";
 import "./styles.css";
 
 const { shell } = window.require("electron");
@@ -70,7 +71,22 @@ const ActiveGamesList = ({ matches, hideMatch }) => {
 													{match.teamAway}
 												</span>
 												<span className="active-list__total">
-													{match.total}
+													<Tooltip
+														title={
+															<>
+																<div className="active-list__tooltip">
+																	<span className="active-list__tooltip-span">
+																		{match.overOd}
+																	</span>
+																	<span className="active-list__tooltip-span">
+																		{match.underOd}
+																	</span>
+																</div>
+															</>
+														}
+													>
+														<Typography>{match.kickOFF}</Typography>
+													</Tooltip>
 												</span>
 												<span className="active-list__total">{match.temp}</span>
 												<span className="active-list__attackKEF">
@@ -122,6 +138,11 @@ const ActiveGamesList = ({ matches, hideMatch }) => {
 			</Box>
 		</Box>
 	);
+};
+
+ActiveGamesList.propTypes = {
+	matches: PropTypes.array,
+	hideMatch: PropTypes.func,
 };
 
 export default ActiveGamesList;

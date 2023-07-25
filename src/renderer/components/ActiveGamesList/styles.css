@@ -81,3 +81,21 @@
 .active-list__close {
 	width: 80px;
 }
+
+.active-list__tooltip {
+	display: flex;
+	justify-content: space-evenly;
+	width: 100px;
+	height: 30px;
+}
+
+.active-list__tooltip-span {
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+}
+
+.active-list__tooltip-span + span {
+	border-left: 1px solid #fff;
+	padding-left: 5px;
+}
