@@ -21,6 +21,7 @@ import { CHANNELS } from "../../../common/constants/channels.js";
 const UrlForm = forwardRef((props, ref) => {
 	const [urlList, setUrlList] = useState([]);
 	const [file, setFile] = useState(null);
+	const [isAdd, setIsAdd] = useState(false);
 
 	const isShown = useSelector(getIsUrlFormOpen);
 	const dispatch = useDispatch();
@@ -61,8 +62,9 @@ const UrlForm = forwardRef((props, ref) => {
 				urlArray,
 				fileData,
 			};
+
+			setIsAdd(true);
 			ipcRenderer.send(CHANNELS.ANALYZE.ADD_URL, reqData);
-			dispatch(handleFileModalOpen(false));
 		} catch (error) {
 			enqueueSnackbar(error?.message ?? TEXT.ERROR.ON_SUBMIT_DATA, {
 				variant: "error",
@@ -71,19 +73,26 @@ const UrlForm = forwardRef((props, ref) => {
 	};
 
 	useEffect(() => {
-		ipcRenderer.on(CHANNELS.ANALYZE.ADD_URL, (event, arg) => {
-			if (arg?.statusText !== "OK") {
-				enqueueSnackbar(arg?.message ?? TEXT.ERROR.ON_URL_ADD, {
-					variant: "error",
+		if (isAdd) {
+			ipcRenderer.once(CHANNELS.ANALYZE.ADD_URL, (event, arg) => {
+				if (arg?.statusText !== "OK") {
+					enqueueSnackbar(arg?.message ?? TEXT.ERROR.ON_URL_ADD, {
+						variant: "error",
+					});
+					dispatch(handleFileModalOpen(false));
+					return;
+				}
+				enqueueSnackbar(arg?.message ?? TEXT.SUCCESS, {
+					variant: "success",
 				});
-				return;
-			}
-			enqueueSnackbar(arg?.message ?? TEXT.SUCCESS, {
-				variant: "success",
+				dispatch(handleFileModalOpen(false));
+				dispatch(handleUrlAdded(true));
+				setIsAdd(false);
 			});
-			dispatch(handleUrlAdded(true));
-		});
+		}
+	}, [isAdd]);
 
+	useEffect(() => {
 		return () => {
 			ipcRenderer.removeAllListeners();
 		};

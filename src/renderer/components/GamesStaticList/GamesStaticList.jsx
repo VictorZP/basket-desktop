@@ -31,15 +31,6 @@ const GamesStaticList = () => {
 	const isUrlAdded = useSelector(getIsUrlAdded);
 	const dispatch = useDispatch();
 
-	// const cyberList = [
-	// 	"Cyber N",
-	// 	"Cyber G",
-	// 	"Cyber New",
-	// 	"Cyber V",
-	// 	"Cyber LA",
-	// 	"Cyber Summer",
-	// ];
-
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST);
 		ipcRenderer.on(CHANNELS.ANALYZE.GET_STATIC_LIST, (event, arg) => {
