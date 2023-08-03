@@ -8,4 +8,5 @@ export const MODAL_DEL = {
 	PAGE_TYPE_C: "delCyber",
 	PAGE_TYPE_CHAMP: "delChampionship",
 	PAGE_TYPE_TEAM_NAME: "delTeamName",
+	PAGE_TYPE_PARCER_URL: "delParcerUrl",
 };

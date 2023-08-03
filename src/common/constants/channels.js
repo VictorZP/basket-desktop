@@ -35,5 +35,8 @@ export const CHANNELS = {
 	},
 	PARSER: {
 		ADD_URL: "parser-add-url",
+		GET_URL: "parser-get-utl-list",
+		UPD_URL: "parser-upd-url",
+		DELETE_URLS: "parser-delete-all-url",
 	},
 };

@@ -25,6 +25,7 @@ const DelModal = ({ handleClose, handleDelete }) => {
 		let descriptionText = "";
 		switch (pType) {
 			case MODAL_DEL.PAGE_TYPE_C:
+			case MODAL_DEL.PAGE_TYPE_PARCER_URL:
 				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}? `;
 				break;
 			case MODAL_DEL.PAGE_TYPE_CHAMP:

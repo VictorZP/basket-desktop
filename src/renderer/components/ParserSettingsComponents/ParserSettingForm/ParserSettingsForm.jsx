@@ -25,7 +25,11 @@ const ParserSettingForm = () => {
 		const finalArr = [];
 
 		urlArr?.forEach((el) => {
-			let check = el?.replaceAll(",", " ")?.trim()?.split(" ");
+			let check = el
+				?.replaceAll(",", " ")
+				?.replaceAll(";", "")
+				?.trim()
+				?.split(" ");
 			if (check.length > 1) {
 				const afterCheck = check.filter((item) => {
 					return item.length > 0;
@@ -43,7 +47,6 @@ const ParserSettingForm = () => {
 			return;
 		}
 
-		console.log(finalArr);
 		ipcRenderer.send(CHANNELS.PARSER.ADD_URL, finalArr);
 	};
 
@@ -59,6 +62,7 @@ const ParserSettingForm = () => {
 				variant: "success",
 			});
 			clearUrlList();
+			ipcRenderer.send(CHANNELS.PARSER.GET_URL);
 		});
 	}, []);
 
@@ -69,16 +73,16 @@ const ParserSettingForm = () => {
 	}, []);
 
 	return (
-		<Box sx={{ px: 3, py: 1 }}>
+		<Box sx={{ px: 3, py: 1, mb: 2 }}>
 			<Typography variant="h5">{TEXT.TITLE}</Typography>
 			<Box
-				sx={{ width: "968px", mt: 2, display: "flex" }}
+				sx={{ mt: 2, display: "flex" }}
 				component="form"
 				onSubmit={handleFormSubmit}
 			>
 				<TextField
 					id="linksTextField"
-					fullWidth
+					sx={{ width: "768px" }}
 					multiline
 					size="small"
 					rows={10}
@@ -86,7 +90,11 @@ const ParserSettingForm = () => {
 					onChange={handleInput}
 				/>
 				<Box sx={{ ml: 3, display: "flex", flexDirection: "column" }}>
-					<Button type="submit" variant="outlined" sx={{ mb: 3 }}>
+					<Button
+						type="submit"
+						variant="outlined"
+						sx={{ mb: 3, width: "160px" }}
+					>
 						{TEXT.BTN_ADD}
 					</Button>
 					<Button
