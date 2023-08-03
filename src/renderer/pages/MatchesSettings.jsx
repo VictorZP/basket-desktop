@@ -244,7 +244,7 @@ const MatchesSettings = () => {
 			</Box>
 			<Divider />
 			<Box sx={{ pb: 3 }}>
-				<MSTeamNameForm Form {...teamNameFormProps} />
+				<MSTeamNameForm {...teamNameFormProps} />
 				<MSTeamNames {...teamNamesProps} />
 			</Box>
 			<DelModal {...delModalProps} />
