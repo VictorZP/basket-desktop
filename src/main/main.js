@@ -1,5 +1,5 @@
 const { app, BrowserWindow, session } = require("electron");
-const path = require("path");
+// const path = require("path");
 
 require("dotenv").config();
 
@@ -63,10 +63,10 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 import "./processes/storeProcesses.js";
-
 import "./processes/loginProcesses.js";
 import "./processes/cyberProcesses.js";
 import "./processes/appChampProcesses.js";
 import "./processes/teamNameProcesses.js";
 import "./processes/urlFormProcesses.js";
 import "./processes/activeGamesProcesses.js";
+import "./processes/parcerProcesses.js";

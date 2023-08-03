@@ -33,4 +33,7 @@ export const CHANNELS = {
 		UPD_TEMP: "update-temp",
 		ACTIVE: "active",
 	},
+	PARSER: {
+		ADD_URL: "parser-add-url",
+	},
 };
