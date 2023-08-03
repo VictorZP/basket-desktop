@@ -243,7 +243,7 @@ const MatchesSettings = () => {
 				<MSChampionships {...championshipsProps} />
 			</Box>
 			<Divider />
-			<Box>
+			<Box sx={{ pb: 3 }}>
 				<MSTeamNameForm Form {...teamNameFormProps} />
 				<MSTeamNames {...teamNamesProps} />
 			</Box>

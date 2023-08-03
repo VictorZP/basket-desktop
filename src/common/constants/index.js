@@ -6,6 +6,10 @@ export const SIDE_MENU = {
 		{ TITLE: "Настройка матчей", PAGE_NAME: "matches_setting" },
 		{ TITLE: "Отслеживание матчей", PAGE_NAME: "active_games" },
 	],
+	PARSER_LIST: [
+		{ TITLE: "Парсинг данных", PAGE_NAME: "parcer" },
+		{ TITLE: "Настройка парсера", PAGE_NAME: "parcer_settings" },
+	],
 };
 
 export const MATCHES_SETTINGS = {

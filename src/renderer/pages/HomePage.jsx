@@ -23,9 +23,15 @@ const HomePage = () => {
 		let title = "";
 		if (location.pathname !== "/") {
 			const currentPage = location.pathname?.split("/")[1] ?? "";
-			const page = SIDE_MENU.MATCH_LIST?.find((el) => {
-				return el?.PAGE_NAME === currentPage;
-			});
+			let page = "";
+
+			page =
+				SIDE_MENU.MATCH_LIST?.find((el) => {
+					return el?.PAGE_NAME === currentPage;
+				}) ||
+				SIDE_MENU.PARSER_LIST?.find((el) => {
+					return el?.PAGE_NAME === currentPage;
+				});
 
 			title = page?.TITLE ?? initTitle;
 		} else {

@@ -18,6 +18,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
 
 import { SIDE_MENU, TOOLTIPS } from "../../../common/constants/index.js";
 
@@ -33,6 +34,7 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 	};
 
 	const iconsArr = [<HomeIcon />, <BarChartIcon />, <EditNoteIcon />];
+	const parserIconsArr = [<ScreenSearchDesktopIcon />, <EditNoteIcon />];
 
 	return (
 		<Drawer variant="permanent" open={isOpen}>
@@ -82,6 +84,38 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 				})}
 			</List>
 			<Divider />
+			<List>
+				{SIDE_MENU.PARSER_LIST.map(({ TITLE, PAGE_NAME }, index) => {
+					return (
+						<ListItem key={PAGE_NAME} disablePadding sx={{ display: "block" }}>
+							<Tooltip title={isOpen ? "" : TITLE} placement="right">
+								<ListItemButton
+									sx={{
+										minHeight: 48,
+										justifyContent: isOpen ? "initial" : "center",
+										px: 2.5,
+									}}
+									onClick={() => handleClick(PAGE_NAME)}
+								>
+									<ListItemIcon
+										sx={{
+											minWidth: 0,
+											mr: isOpen ? 3 : "auto",
+											justifyContent: "center",
+										}}
+									>
+										{parserIconsArr[index]}
+									</ListItemIcon>
+									<ListItemText
+										primary={TITLE}
+										sx={{ opacity: isOpen ? 1 : 0 }}
+									/>
+								</ListItemButton>
+							</Tooltip>
+						</ListItem>
+					);
+				})}
+			</List>
 		</Drawer>
 	);
 };
