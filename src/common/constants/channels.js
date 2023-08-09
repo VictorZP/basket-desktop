@@ -38,5 +38,9 @@ export const CHANNELS = {
 		GET_URL: "parser-get-utl-list",
 		UPD_URL: "parser-upd-url",
 		DELETE_URLS: "parser-delete-all-url",
+		ANALYZE: "parser-analyze",
+	},
+	DIALOG: {
+		SAVE_FILE: "dialog-save-file",
 	},
 };

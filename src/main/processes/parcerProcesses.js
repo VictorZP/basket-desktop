@@ -91,3 +91,24 @@ ipcMain.on(CHANNELS.PARSER.DELETE_URLS, async (event, arg) => {
 		event.sender.send(CHANNELS.PARSER.DELETE_URLS, res);
 	}
 });
+
+ipcMain.on(CHANNELS.PARSER.ANALYZE, async (event, arg) => {
+	try {
+		const res = await axios.get(`${endPoint}/analyze`);
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			data: res?.data,
+		};
+
+		event.sender.send(CHANNELS.PARSER.ANALYZE, resData);
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.PARSER.ANALYZE, res);
+	}
+});
