@@ -5,7 +5,9 @@ import { List, ListItem, IconButton, ListItemText } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const FilterLeagueList = ({ filterChampList, handleClickOpen, listStyle }) => {
+import { BTN_NAME } from "../../../constants/parcer.js";
+
+const FilterLeagueList = ({ filterChampList, openModalDel, listStyle }) => {
 	return (
 		<List sx={{ ...listStyle, minWidth: "20%" }}>
 			{filterChampList?.map(({ id, champName }) => (
@@ -13,7 +15,11 @@ const FilterLeagueList = ({ filterChampList, handleClickOpen, listStyle }) => {
 					key={id}
 					disableGutters
 					secondaryAction={
-						<IconButton id={id} onClick={(e) => handleClickOpen(e)}>
+						<IconButton
+							id={`${BTN_NAME.DEL_CHAMP}_${id}`}
+							name={BTN_NAME.DEL_CHAMP}
+							onClick={openModalDel}
+						>
 							<DeleteIcon />
 						</IconButton>
 					}
@@ -33,7 +39,7 @@ const FilterLeagueList = ({ filterChampList, handleClickOpen, listStyle }) => {
 
 FilterLeagueList.propTypes = {
 	filterChampList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-	handleClickOpen: PropTypes.func,
+	openModalDel: PropTypes.func,
 	listStyle: PropTypes.object,
 };
 

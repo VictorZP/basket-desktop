@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { TEXT } from "./text.js";
+import { BTN_NAME } from "../../../constants/parcer.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
 
 const ParserSettingsUrlList = ({
@@ -149,6 +150,8 @@ const ParserSettingsUrlList = ({
 							<LoadingButton
 								size="small"
 								color="error"
+								id={BTN_NAME.DEL_URL}
+								name={BTN_NAME.DEL_URL}
 								onClick={openModalDel}
 								disabled={loadingSave}
 								loading={isOnDelete}

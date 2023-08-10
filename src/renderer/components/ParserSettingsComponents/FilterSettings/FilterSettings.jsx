@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { enqueueSnackbar } from "notistack";
+import PropTypes from "prop-types";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
@@ -14,15 +15,13 @@ import { FILTER_LIST } from "../filterList.js";
 import { listStyle } from "./style.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
 
-const FilterSettings = () => {
+const FilterSettings = ({ isFilterDel, openModalDel }) => {
 	const [selectedBaseIndex, setSelectedBaseIndex] = useState(null);
 	const [selectedGroupIndex, setSelectedGroupIndex] = useState(null);
 	const [selectedChamp, setSelectedChamp] = useState(INITIAL_CHAMP);
 	const [filterList, setFilterList] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
-	const [filterChampId, setFilterChampId] = useState("");
 	const [isUpdated, setIsUpdated] = useState(false);
-	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		setSelectedGroupIndex(null);
@@ -41,16 +40,11 @@ const FilterSettings = () => {
 			}
 		};
 		getList();
-	}, []);
+	}, [isFilterDel]);
 
 	const handleListItemClick = (index, type) => {
 		if (type === "base") setSelectedBaseIndex(index);
 		if (type === "group") setSelectedGroupIndex(index);
-	};
-
-	const handleClickOpen = (e) => {
-		setFilterChampId(e?.currentTarget?.id);
-		setOpen(true);
 	};
 
 	const handleSubmit = async (e) => {
@@ -97,7 +91,7 @@ const FilterSettings = () => {
 			setSelectedChamp(INITIAL_CHAMP);
 		} catch (err) {
 			enqueueSnackbar(err?.message, {
-				variant: "success",
+				variant: "error",
 				autoHideDuration: 3000,
 			});
 		} finally {
@@ -141,20 +135,20 @@ const FilterSettings = () => {
 					<>
 						<FilterLeagueList
 							filterChampList={filterChampList}
-							handleClickOpen={handleClickOpen}
+							openModalDel={openModalDel}
 							listStyle={listStyle}
 						/>
-						<AddFilterLeague
-							{...addFilterProps}
-							// groupId={filterChampList?._id}
-							// isUpdated={isUpdated}
-							// setIsUpdated={setIsUpdated}
-						/>
+						<AddFilterLeague {...addFilterProps} />
 					</>
 				) : null}
 			</Box>
 		</Box>
 	);
+};
+
+FilterSettings.propTypes = {
+	isFilterDel: PropTypes.bool,
+	openModalDel: PropTypes.func.isRequired,
 };
 
 export default FilterSettings;

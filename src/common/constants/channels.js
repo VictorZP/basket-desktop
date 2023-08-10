@@ -41,6 +41,7 @@ export const CHANNELS = {
 		ANALYZE: "parser-analyze",
 		FILTER_LIST: "filter-list",
 		FILTER_ADD_CHAMP: "filter-add-championship",
+		FILTER_DELETE_CHAMP: "filter-delete-champ",
 	},
 	DIALOG: {
 		SAVE_FILE: "dialog-save-file",

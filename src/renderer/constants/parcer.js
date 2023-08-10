@@ -10,3 +10,8 @@ export const PARCER_TEXT = {
 	},
 	SAVE_TITLE: "Сохранить как",
 };
+
+export const BTN_NAME = {
+	DEL_URL: "deleteUrl",
+	DEL_CHAMP: "delChamp",
+};

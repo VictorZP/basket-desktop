@@ -157,3 +157,25 @@ ipcMain.handle(CHANNELS.PARSER.FILTER_LIST, async (event) => {
 		event.sender.send(CHANNELS.PARSER.FILTER_LIST, res);
 	}
 });
+
+ipcMain.on(CHANNELS.PARSER.FILTER_DELETE_CHAMP, async (event, arg) => {
+	try {
+		const { id } = arg;
+		const res = await axios.delete(`${filterEndPoint}/filter_league/${id}`);
+
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.PARSER.FILTER_DELETE_CHAMP, resData);
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+		event.sender.send(CHANNELS.PARSER.FILTER_DELETE_CHAMP, res);
+	}
+});
