@@ -135,3 +135,25 @@ ipcMain.handle(CHANNELS.PARSER.FILTER_ADD_CHAMP, async (event, arg) => {
 		event.sender.send(CHANNELS.PARSER.FILTER_ADD_CHAMP, res);
 	}
 });
+
+ipcMain.handle(CHANNELS.PARSER.FILTER_LIST, async (event) => {
+	try {
+		const res = await axios.get(`${filterEndPoint}/list`);
+
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			list: res?.data,
+		};
+
+		return resData;
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.PARSER.FILTER_LIST, res);
+	}
+});

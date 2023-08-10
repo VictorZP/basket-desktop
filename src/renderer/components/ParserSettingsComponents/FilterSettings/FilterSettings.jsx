@@ -3,7 +3,7 @@ import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import FilterLeagueComponent from "../FilterLeagueComponent";
 import FilterLeagueList from "../FilterLeagueList";
@@ -18,6 +18,7 @@ const FilterSettings = () => {
 	const [selectedBaseIndex, setSelectedBaseIndex] = useState(null);
 	const [selectedGroupIndex, setSelectedGroupIndex] = useState(null);
 	const [selectedChamp, setSelectedChamp] = useState(INITIAL_CHAMP);
+	const [filterList, setFilterList] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [filterChampId, setFilterChampId] = useState("");
 	const [isUpdated, setIsUpdated] = useState(false);
@@ -26,6 +27,21 @@ const FilterSettings = () => {
 	useEffect(() => {
 		setSelectedGroupIndex(null);
 	}, [selectedBaseIndex]);
+
+	useEffect(() => {
+		const getList = async () => {
+			try {
+				const res = await ipcRenderer.invoke(CHANNELS.PARSER.FILTER_LIST);
+				setFilterList(res.list);
+			} catch (err) {
+				enqueueSnackbar(err?.message, {
+					variant: "error",
+					autoHideDuration: 3000,
+				});
+			}
+		};
+		getList();
+	}, []);
 
 	const handleListItemClick = (index, type) => {
 		if (type === "base") setSelectedBaseIndex(index);
@@ -47,28 +63,53 @@ const FilterSettings = () => {
 			group: FILTER_LIST.group[selectedGroupIndex - 1],
 			champName: selectedChamp.label,
 		};
-		const res = await ipcRenderer.invoke(
-			CHANNELS.PARSER.FILTER_ADD_CHAMP,
-			data
-		);
 
-		if (res.status !== 201) {
+		try {
+			const res = await ipcRenderer.invoke(
+				CHANNELS.PARSER.FILTER_ADD_CHAMP,
+				data
+			);
+			if (res.status !== 201) {
+				enqueueSnackbar(res?.message, {
+					variant: "error",
+					autoHideDuration: 3000,
+				});
+				return;
+			}
+
+			const addRes = await ipcRenderer.invoke(CHANNELS.PARSER.FILTER_LIST);
+			if (addRes.statusText !== "OK") {
+				enqueueSnackbar(addRes?.message, {
+					variant: "error",
+					autoHideDuration: 3000,
+				});
+				return;
+			}
+
+			setFilterList(addRes.list);
+
 			enqueueSnackbar(res?.message, {
-				variant: "error",
+				variant: "success",
 				autoHideDuration: 3000,
 			});
-			return;
+
+			setIsUpdated((prev) => !prev);
+			setSelectedChamp(INITIAL_CHAMP);
+		} catch (err) {
+			enqueueSnackbar(err?.message, {
+				variant: "success",
+				autoHideDuration: 3000,
+			});
+		} finally {
+			setIsLoading((prev) => !prev);
 		}
-
-		enqueueSnackbar(res?.message, {
-			variant: "success",
-			autoHideDuration: 3000,
-		});
-
-		setIsUpdated((prev) => !prev);
-		setSelectedChamp(INITIAL_CHAMP);
-		setIsLoading((prev) => !prev);
 	};
+
+	const filterChampList = filterList?.filter(
+		(item) =>
+			item?.baseName === FILTER_LIST.base[selectedBaseIndex - 1] &&
+			item?.group === FILTER_LIST.group[selectedGroupIndex - 1]
+	);
 
 	const addFilterProps = {
 		selectedChamp,
@@ -99,7 +140,7 @@ const FilterSettings = () => {
 				{selectedBaseIndex && selectedGroupIndex ? (
 					<>
 						<FilterLeagueList
-							// filterChampList={filterChampList}
+							filterChampList={filterChampList}
 							handleClickOpen={handleClickOpen}
 							listStyle={listStyle}
 						/>

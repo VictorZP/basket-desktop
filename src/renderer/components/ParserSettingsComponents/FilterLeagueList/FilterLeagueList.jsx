@@ -8,12 +8,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const FilterLeagueList = ({ filterChampList, handleClickOpen, listStyle }) => {
 	return (
 		<List sx={{ ...listStyle, minWidth: "20%" }}>
-			{filterChampList?.leagueNames?.map(({ league, _id }) => (
+			{filterChampList?.map(({ id, champName }) => (
 				<ListItem
-					key={_id}
+					key={id}
 					disableGutters
 					secondaryAction={
-						<IconButton id={_id} onClick={(e) => handleClickOpen(e)}>
+						<IconButton id={id} onClick={(e) => handleClickOpen(e)}>
 							<DeleteIcon />
 						</IconButton>
 					}
@@ -24,7 +24,7 @@ const FilterLeagueList = ({ filterChampList, handleClickOpen, listStyle }) => {
 						paddingLeft: 2,
 					}}
 				>
-					<ListItemText primary={league} />
+					<ListItemText primary={champName} />
 				</ListItem>
 			))}
 		</List>
@@ -32,7 +32,7 @@ const FilterLeagueList = ({ filterChampList, handleClickOpen, listStyle }) => {
 };
 
 FilterLeagueList.propTypes = {
-	filterChampList: PropTypes.object,
+	filterChampList: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	handleClickOpen: PropTypes.func,
 	listStyle: PropTypes.object,
 };
