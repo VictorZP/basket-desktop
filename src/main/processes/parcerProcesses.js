@@ -2,6 +2,7 @@ const axios = require("axios");
 const { ipcMain } = require("electron");
 
 const endPoint = "/parcer";
+const filterEndPoint = "/filter";
 
 const { CHANNELS } = require("../../common/constants/channels.js");
 
@@ -110,5 +111,27 @@ ipcMain.on(CHANNELS.PARSER.ANALYZE, async (event, arg) => {
 		};
 
 		event.sender.send(CHANNELS.PARSER.ANALYZE, res);
+	}
+});
+
+ipcMain.handle(CHANNELS.PARSER.FILTER_ADD_CHAMP, async (event, arg) => {
+	try {
+		const res = await axios.post(`${filterEndPoint}/add`, arg);
+
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
+
+		return resData;
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		event.sender.send(CHANNELS.PARSER.FILTER_ADD_CHAMP, res);
 	}
 });

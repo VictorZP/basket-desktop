@@ -273,6 +273,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 	const formSelectStackProps = {
 		cyberId,
 		champId: selectedChamp?.value,
+		pageType: CONSTANTS.PAGE_TYPE.MS,
 		cyberOptions: options,
 		champOptions,
 		handleChange,

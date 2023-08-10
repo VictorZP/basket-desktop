@@ -9,4 +9,8 @@ export const CONSTANTS = {
 	FIBALIVE_NAME_INP: "fibaliveTeamName",
 	BETSAPI_NAME_INP: "betsapiTeamName",
 	OTHER_SITE_INP: "otherSiteTeamName",
+	PAGE_TYPE: {
+		MS: "match settings",
+		FP: "filter page",
+	},
 };

@@ -5,6 +5,7 @@ import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CONSTANTS } from "../MSTeamNameForm/constants.js";
+import { STYLES } from "./style.js";
 
 const ITEM_HEIGHT = 50;
 const ITEM_PADDING_TOP = 15;
@@ -19,6 +20,7 @@ const MenuProps = {
 const TeamFormSelectStack = ({
 	cyberId,
 	champId,
+	pageType,
 	cyberOptions,
 	champOptions,
 	handleChange,
@@ -27,13 +29,11 @@ const TeamFormSelectStack = ({
 
 	return (
 		<Box
-			sx={{
-				display: "grid",
-				gridTemplateColumns: "repeat(2, minmax(150px, 210px))",
-				columnGap: "10px",
-				alignItems: "center",
-				padding: "10px 0px",
-			}}
+			sx={
+				pageType === CONSTANTS.PAGE_TYPE.MS
+					? STYLES.MS_PAGE
+					: STYLES.FILTER_PAGE
+			}
 		>
 			<FormControl required size="small">
 				<InputLabel id={CONSTANTS.CYBER_SELECT_LABEL_ID}>
@@ -86,6 +86,7 @@ const TeamFormSelectStack = ({
 TeamFormSelectStack.propTypes = {
 	cyberId: PropTypes.string,
 	champId: PropTypes.string,
+	pageType: PropTypes.string.isRequired,
 	cyberOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	champOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	handleChange: PropTypes.func.isRequired,

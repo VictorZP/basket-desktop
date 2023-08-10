@@ -8,6 +8,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import ParserSettingForm from "../components/ParserSettingsComponents/ParserSettingForm";
 import ParserSettingsUrlList from "../components/ParserSettingsComponents/ParserSettingsUrlList";
+import FilterSettings from "../components/ParserSettingsComponents/FilterSettings";
 import DelModal from "../components/DelModal/DelModal.jsx";
 
 import {
@@ -100,6 +101,8 @@ const ParserSettings = () => {
 			<ParserSettingForm />
 			<Divider />
 			<ParserSettingsUrlList {...urlListProps} />
+			<Divider />
+			<FilterSettings />
 			<DelModal {...delModalProps} />
 		</Box>
 	);
