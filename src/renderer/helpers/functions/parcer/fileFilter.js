@@ -38,8 +38,7 @@ const fileFilter = async (file, filterArr = []) => {
 			});
 
 			if (sortedArr.length === 0) {
-				const emptyArr = [FILTER_TEXT.NO_CHAMPIONSHIPS];
-				filteredMatches.push(emptyArr);
+				return;
 			} else {
 				sortedArr?.forEach((sortGroup) => {
 					// отфильрованные с файла матчи

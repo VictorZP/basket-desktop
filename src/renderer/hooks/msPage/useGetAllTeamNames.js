@@ -14,6 +14,7 @@ import {
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { CYBER_LIST } from "../../constants/cyberList.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
 export const useGetAllTeamNames = (setList) => {
@@ -35,7 +36,16 @@ export const useGetAllTeamNames = (setList) => {
 					);
 					return;
 				}
-				setList(arg?.list);
+
+				const sortedList = [];
+
+				CYBER_LIST.forEach((cyber) => {
+					const filteredByChamps = arg?.list?.filter(
+						(item) => item.teamCyber.cyberName === cyber
+					);
+					sortedList.push(...filteredByChamps);
+				});
+				setList(sortedList);
 			});
 		}
 		dispatch(handleAddTeam(false));
