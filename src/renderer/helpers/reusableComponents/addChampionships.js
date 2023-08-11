@@ -7,4 +7,5 @@ export const StyledChampSettingsBox = styled(Box)(({ theme }) => ({
 	columnGap: 10,
 	alignItems: "center",
 	padding: "10px 0px",
+	maxWidth: "1300px",
 }));

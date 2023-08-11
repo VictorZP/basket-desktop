@@ -291,7 +291,11 @@ const MSTeamNameForm = ({ cyberList }) => {
 	return (
 		<Box sx={{ paddingX: 3, paddingY: 1 }}>
 			<Typography variant="h5">{TEAM_NAMES_FORM.TITLE}</Typography>
-			<Box component={"form"} onSubmit={handleSubmit}>
+			<Box
+				component={"form"}
+				onSubmit={handleSubmit}
+				sx={{ maxWidth: "1300px" }}
+			>
 				<TeamFormSelectStack {...formSelectStackProps} />
 				<TeamFormInputStack {...formInputStackProps} />
 			</Box>
