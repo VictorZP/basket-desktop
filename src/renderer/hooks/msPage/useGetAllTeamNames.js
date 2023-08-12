@@ -41,7 +41,8 @@ export const useGetAllTeamNames = (setList) => {
 
 				CYBER_LIST.forEach((cyber) => {
 					const filteredByChamps = arg?.list?.filter(
-						(item) => item.teamCyber.cyberName === cyber
+						(item) =>
+							item.teamCyber.cyberName.toLowerCase() === cyber.toLowerCase()
 					);
 					sortedList.push(...filteredByChamps);
 				});

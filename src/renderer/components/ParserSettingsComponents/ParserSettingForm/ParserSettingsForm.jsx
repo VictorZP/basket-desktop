@@ -27,7 +27,7 @@ const ParserSettingForm = () => {
 		urlArr?.forEach((el) => {
 			let check = el
 				?.replaceAll(",", " ")
-				?.replaceAll(";", "")
+				?.replaceAll(";", " ")
 				?.trim()
 				?.split(" ");
 			if (check.length > 1) {
@@ -46,7 +46,6 @@ const ParserSettingForm = () => {
 			});
 			return;
 		}
-
 		ipcRenderer.send(CHANNELS.PARSER.ADD_URL, finalArr);
 	};
 

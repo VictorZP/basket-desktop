@@ -145,7 +145,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 			setSelectedChamp(champData);
 			setTeamNames(teamEditData);
 		}
-		console.log("first");
 	}, [cyberId, onEdit, teamData]);
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.TEAM_NAME.EDIT_NAME, (event, arg) => {

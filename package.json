@@ -1,7 +1,7 @@
 {
 	"name": "basket-desktop",
 	"productName": "Who wins",
-	"version": "1.0.1-a",
+	"version": "1.0.2-a",
 	"description": "Application for tracking matches scores",
 	"main": ".webpack/main",
 	"scripts": {

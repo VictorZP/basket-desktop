@@ -44,7 +44,7 @@ export const useGetChampionships = (setList) => {
 
 				CYBER_LIST.forEach((cyber) => {
 					const filteredChamps = arg?.list?.filter(
-						(item) => item.cyber.name === cyber
+						(item) => item.cyber.name.toLowerCase() === cyber.toLowerCase()
 					);
 					sortedList.push(...filteredChamps);
 				});
