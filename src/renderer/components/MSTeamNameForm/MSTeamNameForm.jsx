@@ -114,8 +114,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 			enqueueSnackbar(arg?.message ?? TEAM_NAMES_FORM.ADDED, {
 				variant: "success",
 			});
-			setCyberId("");
-			setSelectedChamp(initialChamp);
 			setTeamNames(initialData);
 			setIsLoading(false);
 		});
@@ -125,10 +123,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 	useEffect(() => {
 		if (teamData?.teamId) {
 			setCyberId(teamData?.cyberId);
-		}
-	}, [onEdit, teamData]);
-	useEffect(() => {
-		if (teamData?.teamId && cyberId) {
+			setSelectedChamp(initialChamp);
 			const champ = champShortList?.find(({ championshipId }) => {
 				return championshipId === teamData?.championshipId;
 			});
@@ -150,7 +145,8 @@ const MSTeamNameForm = ({ cyberList }) => {
 			setSelectedChamp(champData);
 			setTeamNames(teamEditData);
 		}
-	}, [cyberId]);
+		console.log("first");
+	}, [cyberId, onEdit, teamData]);
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.TEAM_NAME.EDIT_NAME, (event, arg) => {
 			if (arg?.statusCode === 409) {
