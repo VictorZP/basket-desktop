@@ -65,9 +65,12 @@ const Parser = () => {
 					await createWarningFile(warningResponse);
 				}
 			} catch (err) {
-				enqueueSnackbar(arg?.message ?? TEXT.ERR_ANALYZE, {
-					variant: "error",
-				});
+				enqueueSnackbar(
+					arg?.message ?? `${TEXT.ERR_ANALYZE_CREATE_DOC} ${err?.message}`,
+					{
+						variant: "error",
+					}
+				);
 				setIsLoading(false);
 				return;
 			}

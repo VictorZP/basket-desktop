@@ -13,8 +13,8 @@ export const createXlsxDoc = async (data) => {
 
 	data.forEach((match) => {
 		const dateForTable = `${match?.matchDate?.day}.${match?.matchDate?.month}.${match?.matchDate?.year}`;
-		const team1 = match?.matchResult[0];
-		const team2 = match?.matchResult[1];
+		const team1 = match?.matchResults[0];
+		const team2 = match?.matchResults[1];
 		const quartersResult = (index) => {
 			return match?.quarters
 				?.map((quarter) => quarter?.split("-")[index])
