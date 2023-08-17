@@ -1,11 +1,12 @@
 {
 	"name": "basket-desktop",
 	"productName": "Who wins",
-	"version": "1.0.3-a",
+	"version": "1.1.4",
 	"description": "Application for tracking matches scores",
 	"main": ".webpack/main",
+	"repository": "https://github.com/VictorZP/basket-desktop.git",
 	"scripts": {
-		"start": "env-cmd electron-forge start",
+		"dev": "env-cmd electron-forge start",
 		"package": "env-cmd electron-forge package",
 		"make": " env-cmd electron-forge make",
 		"publish": " env-cmd electron-forge publish",
@@ -30,6 +31,7 @@
 		"babel-loader": "^9.1.2",
 		"css-loader": "^6.0.0",
 		"electron": "24.3.0",
+		"electron-builder": "^24.6.3",
 		"node-loader": "^2.0.0",
 		"style-loader": "^3.0.0"
 	},
@@ -47,6 +49,7 @@
 		"dotenv": "^16.0.3",
 		"electron-squirrel-startup": "^1.0.0",
 		"electron-store": "^8.1.0",
+		"electron-updater": "^6.1.1",
 		"env-cmd": "^10.1.0",
 		"jsonwebtoken": "^9.0.0",
 		"mui-file-input": "^2.0.0",

@@ -46,4 +46,9 @@ export const CHANNELS = {
 	DIALOG: {
 		SAVE_FILE: "dialog-save-file",
 	},
+	AUTO_UPDATE: {
+		AVAILABLE: "update-available",
+		DOWNLOAD: "update-downloaded",
+		UPDATE: "update-restart",
+	},
 };

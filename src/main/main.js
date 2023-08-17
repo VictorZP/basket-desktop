@@ -1,8 +1,9 @@
 const { app, BrowserWindow, session } = require("electron");
+const { autoUpdater } = require("electron-updater");
 
 require("dotenv").config();
 
-const { REDUX_EXT_PATH } = process.env;
+// const { REDUX_EXT_PATH } = process.env;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -26,6 +27,10 @@ const createWindow = () => {
 	// and load the index.html of the app.
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
+	mainWindow.once("ready-to-show", () => {
+		autoUpdater.checkForUpdatesAndNotify();
+	});
+
 	// Open the DevTools.
 	mainWindow.webContents.openDevTools();
 };
@@ -34,12 +39,12 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 //
-// app.on("ready", createWindow);
+app.on("ready", createWindow);
 
-app.on("ready", async () => {
-	await session.defaultSession.loadExtension(REDUX_EXT_PATH);
-	createWindow();
-});
+// app.on("ready", async () => {
+// 	await session.defaultSession.loadExtension(REDUX_EXT_PATH);
+// 	createWindow();
+// });
 //
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -70,3 +75,4 @@ import "./processes/urlFormProcesses.js";
 import "./processes/activeGamesProcesses.js";
 import "./processes/parcerProcesses.js";
 import "./processes/saveFileProcesses.js";
+import "./processes/updateProcesses.js";

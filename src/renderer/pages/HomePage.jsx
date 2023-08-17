@@ -1,6 +1,8 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
+const ipcRenderer = window.require("electron").ipcRenderer;
+
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useTheme } from "@mui/material/styles";
@@ -11,6 +13,8 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { SIDE_MENU } from "../../common/constants/index.js";
 import { setDrawerHeader } from "../components/SideMenu/functions.js";
 
+import { CHANNELS } from "../../common/constants/channels.js";
+
 const initTitle = "Добро пожаловать";
 
 const HomePage = () => {
@@ -18,6 +22,14 @@ const HomePage = () => {
 	let location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [mainTitle, setMainTitle] = useState("");
+
+	useEffect(() => {
+		ipcRenderer.once(CHANNELS.AUTO_UPDATE.DOWNLOAD, (e) => {
+			console.log("in update");
+			const res = ipcRenderer.invoke(CHANNELS.AUTO_UPDATE.UPDATE);
+			console.log("🚀 ~ res:", res);
+		});
+	}, []);
 
 	useEffect(() => {
 		let title = "";

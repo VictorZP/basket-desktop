@@ -5,4 +5,5 @@ export const CYBER_LIST = [
 	"Cyber V",
 	"Cyber LA",
 	"Cyber Summer",
+	"Cyber Сборные",
 ];
