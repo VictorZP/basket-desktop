@@ -28,13 +28,11 @@ const LoginPage = () => {
 			email: data.get("email"),
 			password: data.get("password"),
 		};
-		console.log("🚀 ~ reqData:", reqData);
 		ipcRenderer.send(CHANNELS.AUTH.LOGIN, reqData);
 	};
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.AUTH.LOGIN, (event, arg) => {
-			console.log("🚀 ~ arg:", arg);
 			if (
 				arg.statusCode === 400 &&
 				(arg.message === ERR_MESSAGES.EMAIL_FORMAT ||
