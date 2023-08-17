@@ -31,13 +31,13 @@ const PrivateRoute = () => {
 					CHANNELS.AUTH.CHECK_TOKEN,
 					{ token: res?.token }
 				);
+				console.log("🚀 ~ tokenVerified:", tokenVerified);
 
 				if (
 					tokenVerified?.statusCode !== 200 &&
 					tokenVerified?.statusText !== "OK"
 				) {
-					// const message = `${tokenVerified?.message} Код: ${tokenVerified?.statusCode}`;
-					const message = `${tokenVerified}`;
+					const message = `${tokenVerified?.message} Код: ${tokenVerified?.statusCode}`;
 					enqueueSnackbar(message, {
 						variant: "error",
 					});
