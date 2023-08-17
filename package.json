@@ -1,7 +1,7 @@
 {
 	"name": "basket-desktop",
 	"productName": "Who wins",
-	"version": "1.1.7",
+	"version": "1.1.8",
 	"description": "Application for tracking matches scores",
 	"main": ".webpack/main",
 	"repository": "https://github.com/VictorZP/basket-desktop.git",
@@ -38,6 +38,7 @@
 		"style-loader": "^3.0.0"
 	},
 	"dependencies": {
+		"@electron-forge/publisher-github": "^6.3.0",
 		"@emotion/react": "^11.11.0",
 		"@emotion/styled": "^11.11.0",
 		"@fontsource/roboto": "^4.5.8",
@@ -62,6 +63,7 @@
 		"react-dom": "^18.2.0",
 		"react-redux": "^8.0.5",
 		"react-router-dom": "^6.11.2",
+		"update-electron-app": "^2.0.1",
 		"xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
 	}
 }

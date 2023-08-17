@@ -19,6 +19,21 @@ module.exports = {
 			config: {},
 		},
 	],
+
+	publishers: [
+		{
+			name: "@electron-forge/publisher-github",
+			config: {
+				repository: {
+					owner: "VictorZP",
+					name: "basket-desktop",
+				},
+				authToken: "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",
+				prerelease: true,
+			},
+		},
+	],
+
 	plugins: [
 		{
 			name: "@electron-forge/plugin-webpack",

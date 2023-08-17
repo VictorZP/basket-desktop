@@ -1,6 +1,8 @@
 const { app, BrowserWindow, session } = require("electron");
 const { autoUpdater } = require("electron-updater");
 
+require("update-electron-app")();
+
 require("dotenv").config();
 
 const { CHANNELS } = require("../common/constants/channels.js");
