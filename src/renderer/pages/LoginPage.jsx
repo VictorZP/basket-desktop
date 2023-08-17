@@ -28,6 +28,7 @@ const LoginPage = () => {
 			email: data.get("email"),
 			password: data.get("password"),
 		};
+		console.log("🚀 ~ reqData:", reqData);
 		ipcRenderer.send(CHANNELS.AUTH.LOGIN, reqData);
 	};
 

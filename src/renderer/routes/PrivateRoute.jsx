@@ -36,7 +36,8 @@ const PrivateRoute = () => {
 					tokenVerified?.statusCode !== 200 &&
 					tokenVerified?.statusText !== "OK"
 				) {
-					const message = `${tokenVerified?.message} Код: ${tokenVerified?.statusCode}`;
+					// const message = `${tokenVerified?.message} Код: ${tokenVerified?.statusCode}`;
+					const message = `${tokenVerified}`;
 					enqueueSnackbar(message, {
 						variant: "error",
 					});
