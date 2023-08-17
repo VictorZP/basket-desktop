@@ -28,7 +28,7 @@ module.exports = {
 					owner: "VictorZP",
 					name: "basket-desktop",
 				},
-				authToken: "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",
+				authToken: "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",
 				prerelease: true,
 			},
 		},

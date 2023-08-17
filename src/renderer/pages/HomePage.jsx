@@ -78,7 +78,7 @@ const HomePage = () => {
 			<Box component="main" sx={{ flexGrow: 1, paddingY: 3 }}>
 				<DrawerHeader />
 				<Box sx={{ mt: 20, ml: 20 }}>
-					<p>updating...</p>
+					<p>обновлено</p>
 				</Box>
 
 				<Suspense fallback={<LoadingSpinner height={"calc(100vh - 128px)"} />}>
