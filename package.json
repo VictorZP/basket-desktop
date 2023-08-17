@@ -1,7 +1,7 @@
 {
 	"name": "basket-desktop",
 	"productName": "Who wins",
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"description": "Application for tracking matches scores",
 	"main": ".webpack/main",
 	"repository": "https://github.com/VictorZP/basket-desktop.git",
@@ -13,7 +13,6 @@
 		"build": "electron-builder build --win --publish never",
 		"deploy": "electron-builder build --win --publish always",
 		"lint": "echo \"No linting configured\""
-		
 	},
 	"keywords": [],
 	"author": {

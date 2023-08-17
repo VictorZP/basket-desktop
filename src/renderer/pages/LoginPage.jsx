@@ -33,6 +33,7 @@ const LoginPage = () => {
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.AUTH.LOGIN, (event, arg) => {
+			console.log("🚀 ~ arg:", arg);
 			if (
 				arg.statusCode === 400 &&
 				(arg.message === ERR_MESSAGES.EMAIL_FORMAT ||
