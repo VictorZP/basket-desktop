@@ -10,7 +10,10 @@
 		"package": "env-cmd electron-forge package",
 		"make": " env-cmd electron-forge make",
 		"publish": " env-cmd electron-forge publish",
+		"build": "electron-builder build --win --publish never",
+		"deploy": "electron-builder build --win --publish always",
 		"lint": "echo \"No linting configured\""
+		
 	},
 	"keywords": [],
 	"author": {
