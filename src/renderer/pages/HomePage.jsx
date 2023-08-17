@@ -23,12 +23,31 @@ const HomePage = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [mainTitle, setMainTitle] = useState("");
 
+	const [showUpdate, setShowUpdate] = useState(false);
+
 	useEffect(() => {
-		ipcRenderer.once(CHANNELS.AUTO_UPDATE.DOWNLOAD, (e) => {
+		console.log("before upload");
+		ipcRenderer.on(CHANNELS.AUTO_UPDATE.AVAILABLE, () => {
+			console.log("in upload message");
+			setShowUpdate(true);
+		});
+
+		return () => {
+			ipcRenderer.removeAllListeners(CHANNELS.AUTO_UPDATE.AVAILABLE);
+		};
+	}, []);
+
+	useEffect(() => {
+		console.log("in update before");
+		ipcRenderer.on(CHANNELS.AUTO_UPDATE.DOWNLOAD, (e) => {
 			console.log("in update");
 			const res = ipcRenderer.invoke(CHANNELS.AUTO_UPDATE.UPDATE);
 			console.log("🚀 ~ res:", res);
 		});
+
+		return () => {
+			ipcRenderer.removeAllListeners(CHANNELS.AUTO_UPDATE.DOWNLOAD);
+		};
 	}, []);
 
 	useEffect(() => {
@@ -87,6 +106,11 @@ const HomePage = () => {
 			<SideMenu {...sideMenuProps} />
 			<Box component="main" sx={{ flexGrow: 1, paddingY: 3 }}>
 				<DrawerHeader />
+				{showUpdate ? (
+					<Box sx={{ mt: 20, ml: 20 }}>
+						<p>updating...</p>
+					</Box>
+				) : null}
 				<Suspense fallback={<LoadingSpinner height={"calc(100vh - 128px)"} />}>
 					<Outlet />
 				</Suspense>

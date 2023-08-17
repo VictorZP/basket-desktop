@@ -3,6 +3,8 @@ const { autoUpdater } = require("electron-updater");
 
 require("dotenv").config();
 
+const { CHANNELS } = require("../common/constants/channels.js");
+
 // const { REDUX_EXT_PATH } = process.env;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -62,6 +64,13 @@ app.on("activate", () => {
 	if (BrowserWindow.getAllWindows().length === 0) {
 		createWindow();
 	}
+});
+
+autoUpdater.on(CHANNELS.AUTO_UPDATE.AVAILABLE, () => {
+	mainWindow.webContents.send(CHANNELS.AUTO_UPDATE.AVAILABLE);
+});
+autoUpdater.on(CHANNELS.AUTO_UPDATE.DOWNLOAD, () => {
+	mainWindow.webContents.send(CHANNELS.AUTO_UPDATE.DOWNLOAD);
 });
 
 // In this file you can include the rest of your app's specific main process
