@@ -1,9 +1,8 @@
 const { app, BrowserWindow, session } = require("electron");
-const { autoUpdater } = require("electron-updater");
 
 require("dotenv").config();
 
-const { CHANNELS } = require("../common/constants/channels.js");
+require("update-electron-app")();
 
 // const { REDUX_EXT_PATH } = process.env;
 
@@ -28,10 +27,6 @@ const createWindow = () => {
 
 	// and load the index.html of the app.
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-	mainWindow.once("ready-to-show", () => {
-		autoUpdater.checkForUpdatesAndNotify();
-	});
 
 	// Open the DevTools.
 	mainWindow.webContents.openDevTools();
@@ -66,13 +61,6 @@ app.on("activate", () => {
 	}
 });
 
-autoUpdater.on(CHANNELS.AUTO_UPDATE.AVAILABLE, () => {
-	mainWindow.webContents.send(CHANNELS.AUTO_UPDATE.AVAILABLE);
-});
-autoUpdater.on(CHANNELS.AUTO_UPDATE.DOWNLOAD, () => {
-	mainWindow.webContents.send(CHANNELS.AUTO_UPDATE.DOWNLOAD);
-});
-
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 import "./processes/storeProcesses.js";
@@ -84,4 +72,3 @@ import "./processes/urlFormProcesses.js";
 import "./processes/activeGamesProcesses.js";
 import "./processes/parcerProcesses.js";
 import "./processes/saveFileProcesses.js";
-import "./processes/updateProcesses.js";
