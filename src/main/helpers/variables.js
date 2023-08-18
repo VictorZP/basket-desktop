@@ -1,5 +1,5 @@
-const ADDRESS = "91.219.61.189";
-const PORT = "8000";
+const ADDRESS = process.env.ADDRESS;
+const PORT = process.env.PORT;
 
 module.exports = {
 	ADDRESS,

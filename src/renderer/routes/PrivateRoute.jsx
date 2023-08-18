@@ -31,7 +31,6 @@ const PrivateRoute = () => {
 					CHANNELS.AUTH.CHECK_TOKEN,
 					{ token: res?.token }
 				);
-				console.log("🚀 ~ tokenVerified:", tokenVerified);
 
 				if (
 					tokenVerified?.statusCode !== 200 &&

@@ -1,5 +1,7 @@
 const { app, BrowserWindow, session } = require("electron");
 
+require("update-electron-app")();
+
 require("dotenv").config();
 
 require("update-electron-app")();
