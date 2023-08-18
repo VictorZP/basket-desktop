@@ -58,18 +58,4 @@ module.exports = {
 			},
 		},
 	],
-	publishers: [
-		{
-			name: "@electron-forge/publisher-github",
-			config: {
-				repository: {
-					repository: "https://github.com/VictorZP/basket-desktop.git",
-					owner: "VictorZP",
-					name: "basket-app",
-					authToken: "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",
-				},
-				prerelease: true,
-			},
-		},
-	],
 };
