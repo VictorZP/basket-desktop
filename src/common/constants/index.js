@@ -3,6 +3,7 @@ export const SIDE_MENU = {
 	MATCH_LIST: [
 		{ TITLE: "Начальная страница", PAGE_NAME: "" },
 		{ TITLE: "Матчи", PAGE_NAME: "matches" },
+		{ TITLE: "Результат ставок", PAGE_NAME: "" },
 		{ TITLE: "Настройка матчей", PAGE_NAME: "matches_setting" },
 		{ TITLE: "Отслеживание матчей", PAGE_NAME: "active_games" },
 	],

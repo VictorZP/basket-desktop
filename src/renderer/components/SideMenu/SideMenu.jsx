@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import {
-	Box,
 	IconButton,
 	List,
 	ListItem,
@@ -17,6 +16,7 @@ import {
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import DataThresholdingOutlinedIcon from "@mui/icons-material/DataThresholdingOutlined";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
 
@@ -33,7 +33,12 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 		navigate(`/${pName}`);
 	};
 
-	const iconsArr = [<HomeIcon />, <BarChartIcon />, <EditNoteIcon />];
+	const iconsArr = [
+		<HomeIcon />,
+		<BarChartIcon />,
+		<DataThresholdingOutlinedIcon />,
+		<EditNoteIcon />,
+	];
 	const parserIconsArr = [<ScreenSearchDesktopIcon />, <EditNoteIcon />];
 
 	return (
