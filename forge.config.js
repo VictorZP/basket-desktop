@@ -29,6 +29,7 @@ module.exports = {
 					name: "basket-desktop",
 				},
 				authToken: process.env.GITHUB_TOKEN,
+				draft: true,
 				prerelease: false,
 			},
 		},
