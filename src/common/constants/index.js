@@ -93,6 +93,7 @@ export const MATCHES_SETTINGS = {
 		ON_ERROR_CHAMP_DEL: "Ошибка при удаление чемпионата. ",
 		ON_ERROR_TEAM_NAME_DEL: "Ошибка при удалении названия команды.",
 	},
+	REGEX: { ONE: /\\|\*|\?/g, TWO: /\(/g, THREE: /\)/g },
 };
 
 export const TOOLTIPS = {

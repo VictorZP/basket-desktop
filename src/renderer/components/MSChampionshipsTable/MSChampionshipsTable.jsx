@@ -14,6 +14,7 @@ const MSChampionshipsTable = ({
 	dataList = [],
 	btnStackProps,
 }) => {
+	console.log("🚀 ~ dataList:", dataList);
 	return (
 		<Table aria-label="championship table">
 			<TableHead>

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -16,6 +16,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { grey } from "@mui/material/colors";
 
 import MSTeamNamesTable from "../MSTeamNamesTable";
+import SearchInput from "../SearchInput";
 import LoadingSpinner from "../LoadingSpinner";
 
 import { setTeamExpanded } from "../../redux/matchSettings/matchSettingsSlice.js";
@@ -27,14 +28,18 @@ import {
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
 const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
+	const [filteredList, setFilteredList] = useState([]);
+	const [searchValue, setSearchValue] = useState("");
+	const [visibleFilteredValues, setVisibleFilteredValues] = useState([]);
+	const [searchTimeOut, setSearchTimeOut] = useState(null);
+
 	const expanded = useSelector(getTeamExpandedVal);
 	const isLoading = useSelector(getTeamLoadingStatus);
 
-	const [page, setPage] = useState(0);
-	const [rowsPerPage, setRowsPerPage] = useState(10);
-
 	const dispatch = useDispatch();
-	const { TEAM_NAMES_TABLE } = MATCHES_SETTINGS;
+	const { TEAM_NAMES_TABLE, REGEX } = MATCHES_SETTINGS;
 
 	const visibleRows = useMemo(
 		() =>
@@ -54,6 +59,46 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 		setPage(0);
 	};
 
+	const handleSearchFilter = (e) => {
+		const searchQuery = e.target.value
+			.replaceAll(REGEX.ONE, "")
+			.replaceAll(REGEX.TWO, "\\(")
+			.replaceAll(REGEX.THREE, "\\)");
+
+		const regex = new RegExp(searchQuery, "i");
+
+		clearTimeout(searchTimeOut);
+
+		setSearchTimeOut(
+			setTimeout(() => {
+				setSearchValue(searchQuery);
+
+				const filterRes = teamNamesList.filter(
+					(team) =>
+						regex.test(team.teamChamp.championshipName) ||
+						regex.test(team.teamCyber.cyberName) ||
+						regex.test(team.teamName) ||
+						regex.test(team.fibaliveTeamName) ||
+						regex.test(team.betsapiTeamName) ||
+						regex.test(team.otherSiteTeamName)
+				);
+				setPage(0);
+				setFilteredList(filterRes);
+			}, 500)
+		);
+	};
+
+	useEffect(() => {
+		if (searchValue.length !== 0) {
+			const list = filteredList.slice(
+				page * rowsPerPage,
+				page * rowsPerPage + rowsPerPage
+			);
+
+			setVisibleFilteredValues(list);
+		}
+	}, [filteredList, searchValue, page, rowsPerPage]);
+
 	const btnStackProps = {
 		onEdit: handleEdit,
 		onDelete: handleDelete,
@@ -72,8 +117,12 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 
 	const tableProps = {
 		headerList: tableHeadRowsName,
-		dataList: visibleRows,
+		dataList: searchValue.length === 0 ? visibleRows : visibleFilteredValues,
 		btnStackProps,
+	};
+	const searchInputProps = {
+		idType: "team",
+		handleSearchFilter,
 	};
 
 	return (
@@ -95,13 +144,20 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 						{isLoading ? (
 							<LoadingSpinner height={"500px"} />
 						) : (
-							<MSTeamNamesTable {...tableProps} />
+							<>
+								<SearchInput {...searchInputProps} />
+								<MSTeamNamesTable {...tableProps} />
+							</>
 						)}
 					</TableContainer>
 					<TablePagination
 						rowsPerPageOptions={[10, 15, 25]}
 						component="div"
-						count={teamNamesList.length}
+						count={
+							searchValue.length === 0
+								? teamNamesList.length
+								: filteredList.length
+						}
 						rowsPerPage={rowsPerPage}
 						page={page}
 						onPageChange={handlePageChange}
