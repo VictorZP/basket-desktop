@@ -11,6 +11,11 @@ export const PARCER_TEXT = {
 	SAVE_TITLE: "Сохранить как",
 };
 
+export const ANALYZE_TEXT = {
+	noData: "Нет данных.",
+	noChampionships: "Чемпионaты отсутствуют",
+};
+
 export const FILTER_TEXT = {
 	FILE_NAME: "Отфильтрованная статистика",
 	NO_CHAMPIONSHIPS: "Чемпионaты отсутствуют",

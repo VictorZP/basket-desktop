@@ -2,7 +2,7 @@ import { utils, write } from "xlsx";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { PARCER_TEXT } from "../../../constants/parcer.js";
+import { PARCER_TEXT, ANALYZE_TEXT } from "../../../constants/parcer.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
 
 export const createXlsxDoc = async (data) => {
