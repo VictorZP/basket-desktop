@@ -6,6 +6,10 @@ import { store } from "./redux/store.js";
 import { SnackbarProvider } from "notistack";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/ru";
+import { ruRU as ruLoc } from "@mui/x-date-pickers/locales";
 import { ruRU } from "@mui/material/locale";
 
 import appRouter from "./routes/appRouter.js";
@@ -17,7 +21,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "normalize.css";
 
-const theme = createTheme(ruRU);
+const theme = createTheme(ruRU, ruLoc);
 
 const App = () => {
 	return (
@@ -40,7 +44,9 @@ root.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<ThemeProvider theme={theme}>
-				<App />
+				<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+					<App />
+				</LocalizationProvider>
 			</ThemeProvider>
 		</Provider>
 	</React.StrictMode>

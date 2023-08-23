@@ -51,4 +51,7 @@ export const CHANNELS = {
 		DOWNLOAD: "update-downloaded",
 		UPDATE: "update-restart",
 	},
+	BETTING_RESULTS: {
+		GET_RESULTS: "betting-get-results",
+	},
 };

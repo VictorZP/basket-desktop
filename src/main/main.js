@@ -74,3 +74,4 @@ import "./processes/urlFormProcesses.js";
 import "./processes/activeGamesProcesses.js";
 import "./processes/parcerProcesses.js";
 import "./processes/saveFileProcesses.js";
+import "./processes/bettingResultsProcesses.js";
