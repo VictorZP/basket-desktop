@@ -71,6 +71,19 @@ const ActiveGamesList = ({ matches, hideMatch }) => {
 													{match.teamAway}
 												</span>
 												<span className="active-list__total">
+													{match.kickOFF}
+												</span>
+												<span className="active-list__total">{match.temp}</span>
+												<span className="active-list__attackKEF">
+													{match.attackKEF}
+												</span>
+												<span className="active-list__calcTemp">
+													{match.calcTemp}
+												</span>
+												<span className="active-list__total2ndHALF">
+													{match.total2ndHALF}
+												</span>
+												<span className="active-list__totalInMoment">
 													<Tooltip
 														title={
 															<>
@@ -85,21 +98,8 @@ const ActiveGamesList = ({ matches, hideMatch }) => {
 															</>
 														}
 													>
-														<Typography>{match.kickOFF}</Typography>
+														<Typography>{match.totalInMoment}</Typography>
 													</Tooltip>
-												</span>
-												<span className="active-list__total">{match.temp}</span>
-												<span className="active-list__attackKEF">
-													{match.attackKEF}
-												</span>
-												<span className="active-list__calcTemp">
-													{match.calcTemp}
-												</span>
-												<span className="active-list__total2ndHALF">
-													{match.total2ndHALF}
-												</span>
-												<span className="active-list__totalInMoment">
-													{match.totalInMoment}
 												</span>
 												<span className="active-list__predict">
 													{match.predict}
