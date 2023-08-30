@@ -18,7 +18,6 @@ ipcMain.on(CHANNELS.BETTING_RESULTS.GET_RESULTS, async (e, data) => {
 
 		e.sender.send(CHANNELS.BETTING_RESULTS.GET_RESULTS, resData);
 	} catch (err) {
-		console.log("🚀 ~ err:", err);
 		const res = {
 			statusCode: err?.response?.status,
 			statusText: err?.response?.statusText,
