@@ -14,7 +14,11 @@ import { CONSTANTS } from "../constants/matchesPage.js";
 
 const TEXT = {
 	NEXT_BTN: "Отслеживание матчей",
+	ACTIVE_BTN_ID: "active games",
 	PATH: "active_games",
+	MANUAL_BTN: "Ручное добавление",
+	MANUAL_BTN_ID: "manual handler",
+	MANUAL_PATH: "manual_results",
 };
 
 const GamesSettings = () => {
@@ -28,8 +32,13 @@ const GamesSettings = () => {
 		dispatch(handleOpenState(!isFormOpen));
 	};
 
-	const handleNavigate = () => {
-		navigate(`/${TEXT.PATH}`);
+	const handleNavigate = (e) => {
+		const id = e.target.id;
+		if (id === TEXT.ACTIVE_BTN_ID) {
+			navigate(`/${TEXT.PATH}`);
+		} else {
+			navigate(`/${TEXT.MANUAL_PATH}`);
+		}
 	};
 
 	return (
@@ -55,9 +64,28 @@ const GamesSettings = () => {
 			<Divider />
 			<GamesStaticList />
 			<Divider />
-			<Box sx={{ px: 3, py: 1, overflow: "hidden" }}>
-				<Button variant="outlined" size="small" onClick={handleNavigate}>
+			<Box sx={{ px: 3, py: 3, overflow: "hidden" }}>
+				<Button
+					variant="outlined"
+					size="small"
+					id={TEXT.ACTIVE_BTN_ID}
+					onClick={handleNavigate}
+				>
 					{TEXT.NEXT_BTN}
+				</Button>
+			</Box>
+			<Divider />
+			<Box sx={{ px: 3, py: 3, overflow: "hidden" }}>
+				<Typography variant="h5" sx={{ mb: 1 }}>
+					{CONSTANTS.MANUAL_ADD.TITLE}
+				</Typography>
+				<Button
+					variant="outlined"
+					size="small"
+					id={TEXT.MANUAL_BTN_ID}
+					onClick={handleNavigate}
+				>
+					{TEXT.MANUAL_BTN}
 				</Button>
 			</Box>
 		</Box>

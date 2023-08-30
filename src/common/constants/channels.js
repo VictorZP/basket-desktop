@@ -54,4 +54,9 @@ export const CHANNELS = {
 	BETTING_RESULTS: {
 		GET_RESULTS: "betting-get-results",
 	},
+	MANUAL_ADDING: {
+		GET_MANUAL_LIST: "manual-list-get",
+		SAVE_MANUAL_LIST: "manual-list-save",
+		ADD_MANUAL_URL: "manual-url-add",
+	},
 };

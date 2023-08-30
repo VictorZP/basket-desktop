@@ -6,6 +6,7 @@ export const SIDE_MENU = {
 		{ TITLE: "Результат ставок", PAGE_NAME: "betting_results" },
 		{ TITLE: "Настройка матчей", PAGE_NAME: "matches_setting" },
 		{ TITLE: "Отслеживание матчей", PAGE_NAME: "active_games" },
+		{ TITLE: "Ручной ввод", PAGE_NAME: "manual_results" },
 	],
 	PARSER_LIST: [
 		{ TITLE: "Парсинг данных", PAGE_NAME: "parcer" },

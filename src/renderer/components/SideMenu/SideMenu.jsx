@@ -53,7 +53,7 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 			<Divider />
 			<List>
 				{SIDE_MENU.MATCH_LIST.map(({ TITLE, PAGE_NAME }, index) => {
-					if (PAGE_NAME !== "active_games")
+					if (PAGE_NAME !== "active_games" && PAGE_NAME !== "manual_results")
 						return (
 							<ListItem
 								key={PAGE_NAME}
