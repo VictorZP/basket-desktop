@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
+import PropTypes from "prop-types";
 
 import { Box, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -23,7 +24,7 @@ import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { TEXT } from "./text.js";
 import { CYBER_LIST } from "../../constants/cyberList.js";
 
-const GamesStaticList = () => {
+const GamesStaticList = ({ paramsObj }) => {
 	const [dataList, setDataList] = useState([]);
 	const [games, setGames] = useState([]);
 	const [tempUpdated, setTempUpdated] = useState(false);
@@ -32,7 +33,7 @@ const GamesStaticList = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST);
+		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST, paramsObj);
 		ipcRenderer.on(CHANNELS.ANALYZE.GET_STATIC_LIST, (event, arg) => {
 			if (arg?.statusText !== "OK") {
 				enqueueSnackbar(
@@ -51,7 +52,7 @@ const GamesStaticList = () => {
 		return () => {
 			ipcRenderer.removeAllListeners();
 		};
-	}, [isUrlAdded]);
+	}, [isUrlAdded, paramsObj]);
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.ANALYZE.UPD_TEMP, (event, arg) => {
@@ -117,9 +118,6 @@ const GamesStaticList = () => {
 		<Box component="section" sx={{ px: 3, py: 1 }}>
 			<Box mb={1}>
 				<Typography variant="h5">{TEXT.TITLE}</Typography>
-				<Typography variant="body1" component="span">
-					{`${TEXT.DATE} ${dataList?.date ?? ""}`}
-				</Typography>
 			</Box>
 			<Box sx={{ py: 1 }}>
 				{CYBER_LIST
@@ -155,6 +153,14 @@ const GamesStaticList = () => {
 			</Box>
 		</Box>
 	);
+};
+
+GamesStaticList.propTypes = {
+	paramsObj: PropTypes.shape({
+		day: PropTypes.string.isRequired,
+		month: PropTypes.string.isRequired,
+		year: PropTypes.string.isRequired,
+	}),
 };
 
 export default GamesStaticList;

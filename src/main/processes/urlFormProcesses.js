@@ -26,9 +26,10 @@ ipcMain.on(CHANNELS.ANALYZE.ADD_URL, async (event, arg) => {
 	}
 });
 
-ipcMain.on(CHANNELS.ANALYZE.GET_STATIC_LIST, async (event) => {
+ipcMain.on(CHANNELS.ANALYZE.GET_STATIC_LIST, async (event, reqData) => {
+	const params = new URLSearchParams(reqData);
 	try {
-		const res = await axios.get(`${endPoint}/list/static`);
+		const res = await axios.get(`${endPoint}/list/static`, { params });
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,
