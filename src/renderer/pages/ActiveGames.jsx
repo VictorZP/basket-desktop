@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import dayjs from "dayjs";
 import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
@@ -20,6 +21,12 @@ const ActiveGames = () => {
 	const [matches, setMatches] = useState([]);
 	// таймер
 	const [timerId, setTimerId] = useState(0);
+
+	const paramsObj = {
+		day: dayjs().format("DD.MM.YY").split(".")[0],
+		month: dayjs().format("DD.MM.YY").split(".")[1],
+		year: dayjs().format("DD.MM.YY").split(".")[2],
+	};
 
 	const handleStart = async () => {
 		if (!isOn) {
@@ -73,7 +80,7 @@ const ActiveGames = () => {
 	});
 
 	useEffect(() => {
-		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST);
+		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST, paramsObj);
 		ipcRenderer.on(CHANNELS.ANALYZE.GET_STATIC_LIST, (event, arg) => {
 			if (arg?.statusText !== "OK") {
 				enqueueSnackbar(

@@ -18,7 +18,7 @@ import { TEXT } from "./text.js";
 import { handleFile } from "./functions.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
-const UrlForm = forwardRef((props, ref) => {
+const UrlForm = forwardRef(({ paramsObj }, ref) => {
 	const [urlList, setUrlList] = useState([]);
 	const [file, setFile] = useState(null);
 	const [isAdd, setIsAdd] = useState(false);
@@ -61,6 +61,7 @@ const UrlForm = forwardRef((props, ref) => {
 			const reqData = {
 				urlArray,
 				fileData,
+				paramsObj,
 			};
 
 			setIsAdd(true);

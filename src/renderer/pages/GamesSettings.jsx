@@ -91,7 +91,7 @@ const GamesSettings = () => {
 						in={isFormOpen}
 						container={containerRef.current}
 					>
-						{<UrlForm />}
+						{<UrlForm paramsObj={paramsObj} />}
 					</Slide>
 				</Box>
 			</Box>
