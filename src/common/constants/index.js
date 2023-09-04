@@ -57,7 +57,7 @@ export const MATCHES_SETTINGS = {
 		ACCORDION_NAME: "champTableAccordion",
 	},
 	TEAM_NAMES_FORM: {
-		TITLE: "Навзвания команд",
+		TITLE: "Названия команд",
 		CYBER_LABEL: "Выбор Cyber",
 		CHAMP_LABEL: "Выбор чемпионата",
 		CUSTOM_TEAM_NAME_LABEL: "Название команды",
