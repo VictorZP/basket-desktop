@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { List, InputBase, Typography, Paper } from "@mui/material";
-import MuiBox from "@mui/material/Box";
+import { List, InputBase, Typography } from "@mui/material";
 
 import {
 	ListItem,
@@ -17,7 +16,10 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 	};
 
 	const gamesByCyber = games?.filter((item) => {
-		return item?.homeTeam?.teamCyber?.cyberName === cyber;
+		return (
+			item?.homeTeam?.teamCyber?.cyberName === cyber &&
+			item?.status === "scheduled"
+		);
 	});
 
 	const sortedList = gamesByCyber?.sort((a, b) => {
