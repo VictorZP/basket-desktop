@@ -37,7 +37,6 @@ const ManualPageUrlForm = forwardRef(({ dateValue, setGames }, ref) => {
 				?.filter((string) => string?.length > 0);
 			const reqData = {
 				date: dateValue.format("DD.MM.YY"),
-				dateString: dateValue.format("YYYYMMDD"),
 				urlArray,
 			};
 
