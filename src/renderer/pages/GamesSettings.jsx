@@ -47,6 +47,11 @@ const GamesSettings = () => {
 			navigate(`/${TEXT.MANUAL_PATH}`);
 		}
 	};
+	const dateObj = {
+		selectedDate: dayjs(dateValue).format("DD.MM.YY"),
+		prevDate: dayjs(dateValue).subtract(1, "day").format("DD.MM.YY"),
+	};
+
 	const paramsObj = {
 		day: dayjs(dateValue).format("DD.MM.YY").split(".")[0],
 		month: dayjs(dateValue).format("DD.MM.YY").split(".")[1],
@@ -91,7 +96,7 @@ const GamesSettings = () => {
 						in={isFormOpen}
 						container={containerRef.current}
 					>
-						{<UrlForm paramsObj={paramsObj} />}
+						{<UrlForm dateObj={dateObj} />}
 					</Slide>
 				</Box>
 			</Box>

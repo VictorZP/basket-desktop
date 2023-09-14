@@ -6,13 +6,8 @@ const endPoint = "/desktop/data/games";
 const { CHANNELS } = require("../../common/constants/channels.js");
 
 ipcMain.on(CHANNELS.ANALYZE.ADD_URL, async (event, reqData) => {
-	const { urlArray, fileData, paramsObj } = reqData;
 	try {
-		const res = await axios.post(
-			`${endPoint}/generate`,
-			{ urlArray, fileData },
-			{ params: paramsObj }
-		);
+		const res = await axios.post(`${endPoint}/generate`, reqData);
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,

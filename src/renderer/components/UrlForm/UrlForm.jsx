@@ -18,7 +18,7 @@ import { TEXT } from "./text.js";
 import { handleFile } from "./functions.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
-const UrlForm = forwardRef(({ paramsObj }, ref) => {
+const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const [urlList, setUrlList] = useState([]);
 	const [file, setFile] = useState(null);
 	const [isAdd, setIsAdd] = useState(false);
@@ -52,18 +52,15 @@ const UrlForm = forwardRef(({ paramsObj }, ref) => {
 	const submitData = async () => {
 		try {
 			dispatch(handleFileModalOpen(true));
-
 			const fileData = await handleFile(file);
-
 			const urlArray = urlList
 				.split("\n")
 				?.filter((string) => string?.length > 0);
 			const reqData = {
 				urlArray,
 				fileData,
-				paramsObj,
+				dateObj,
 			};
-
 			setIsAdd(true);
 			ipcRenderer.send(CHANNELS.ANALYZE.ADD_URL, reqData);
 		} catch (error) {
