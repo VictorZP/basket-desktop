@@ -44,6 +44,10 @@ export const FILTER_GROUPS = [
 	},
 	{
 		base: "BaseM",
+		group: "Cups",
+	},
+	{
+		base: "BaseM",
 		group: "Summer",
 	},
 	{
@@ -68,6 +72,10 @@ export const FILTER_GROUPS = [
 	},
 	{
 		base: "BaseW",
+		group: "Cups",
+	},
+	{
+		base: "BaseW",
 		group: "Summer",
 	},
 	{
@@ -89,6 +97,10 @@ export const FILTER_GROUPS = [
 	{
 		base: "BaseG",
 		group: "LA",
+	},
+	{
+		base: "BaseG",
+		group: "Cups",
 	},
 	{
 		base: "BaseG",
