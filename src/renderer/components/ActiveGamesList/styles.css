@@ -84,6 +84,10 @@
 
 .active-list__tooltip {
 	display: flex;
+	flex-direction: column;
+}
+.active-list__tooltip--ods {
+	display: flex;
 	justify-content: space-evenly;
 	width: 100px;
 	height: 30px;
@@ -93,9 +97,14 @@
 	display: flex;
 	align-items: center;
 	font-size: 14px;
+	padding: 5px;
 }
 
 .active-list__tooltip-span + span {
 	border-left: 1px solid #fff;
-	padding-left: 5px;
+}
+.active-list__tooltip--limit {
+	display: flex;
+	justify-content: center;
+	padding: 5px;
 }

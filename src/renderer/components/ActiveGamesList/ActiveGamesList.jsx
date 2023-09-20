@@ -4,7 +4,7 @@ import "./styles.css";
 
 const { shell } = window.require("electron");
 
-import { Box, Typography, Tooltip, IconButton } from "@mui/material";
+import { Box, Typography, Tooltip, IconButton, Divider } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -86,16 +86,22 @@ const ActiveGamesList = ({ matches, hideMatch }) => {
 												<span className="active-list__totalInMoment">
 													<Tooltip
 														title={
-															<>
-																<div className="active-list__tooltip">
+															<div className="active-list__tooltip">
+																<div className="active-list__tooltip--ods">
 																	<span className="active-list__tooltip-span">
-																		{match.overOd}
+																		{match?.overOd ?? "-"}
 																	</span>
 																	<span className="active-list__tooltip-span">
-																		{match.underOd}
+																		{match?.underOd ?? "-"}
 																	</span>
 																</div>
-															</>
+																<Divider sx={{ background: "#fff" }} />
+																<div className="active-list__tooltip--limit">
+																	<span className="active-list__tooltip-span">
+																		{match?.betLimit ?? "-"}
+																	</span>
+																</div>
+															</div>
 														}
 													>
 														<Typography>{match.totalInMoment}</Typography>
