@@ -104,12 +104,16 @@ const GamesStaticList = ({ paramsObj }) => {
 
 	const handleSaveTemp = () => {
 		const updatedGames = games?.map((game) => {
-			game.temp = Number.parseFloat(game.temp);
-			game.predict = Number.parseFloat(game.predict);
+			if (!game) return;
+
+			game.temp = Number.parseFloat(game?.temp);
+			game.predict = Number.parseFloat(game?.predict);
 			return game;
 		});
+
 		const data = { ...dataList, games: updatedGames };
 		ipcRenderer.send(CHANNELS.ANALYZE.UPD_TEMP, { data });
+
 		setTempUpdated(true);
 		setLoadingTemp(true);
 	};
