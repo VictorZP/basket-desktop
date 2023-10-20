@@ -16,12 +16,13 @@ import { getIsUrlFormOpen } from "../../redux/urlForm/urlFormSelector.js";
 import { styles } from "./styles.js";
 import { TEXT } from "./text.js";
 import { handleFile } from "./functions.js";
+import { createWarnDetailsFile } from "../../helpers/functions/addMatches/createWarnDetailsFile.js";
+
 import { CHANNELS } from "../../../common/constants/channels.js";
 
 const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const [urlList, setUrlList] = useState([]);
 	const [file, setFile] = useState(null);
-	const [isAdd, setIsAdd] = useState(false);
 
 	const isShown = useSelector(getIsUrlFormOpen);
 	const dispatch = useDispatch();
@@ -61,34 +62,44 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 				fileData,
 				dateObj,
 			};
-			setIsAdd(true);
-			ipcRenderer.send(CHANNELS.ANALYZE.ADD_URL, reqData);
-		} catch (error) {
-			enqueueSnackbar(error?.message ?? TEXT.ERROR.ON_SUBMIT_DATA, {
+
+			//	Добавление матчей и получение ответа о результатах добавления
+			const addUrlResponse = await ipcRenderer.invoke(
+				CHANNELS.ANALYZE.ADD_URL,
+				reqData
+			);
+
+			dispatch(handleFileModalOpen(false));
+
+			if (addUrlResponse?.resStatusText !== "OK") {
+				enqueueSnackbar(addUrlResponse?.resMessage ?? TEXT.ERROR.ON_URL_ADD, {
+					variant: "error",
+				});
+				return;
+			}
+
+			const { status, unsuccessfulData } = addUrlResponse;
+
+			if (status !== "ok") {
+				enqueueSnackbar(
+					status === "warning" ? TEXT.WARNING.WARN : TEXT.WARNING.ERR,
+					{
+						variant: status === "warning" ? "warning" : "error",
+					}
+				);
+				await createWarnDetailsFile(unsuccessfulData);
+				return;
+			}
+
+			dispatch(handleUrlAdded(true));
+		} catch (err) {
+			dispatch(handleFileModalOpen(false));
+
+			enqueueSnackbar(err?.message ?? TEXT.ERROR.ON_SUBMIT_DATA, {
 				variant: "error",
 			});
 		}
 	};
-
-	useEffect(() => {
-		if (isAdd) {
-			ipcRenderer.once(CHANNELS.ANALYZE.ADD_URL, (event, arg) => {
-				if (arg?.statusText !== "OK") {
-					enqueueSnackbar(arg?.message ?? TEXT.ERROR.ON_URL_ADD, {
-						variant: "error",
-					});
-					dispatch(handleFileModalOpen(false));
-					return;
-				}
-				enqueueSnackbar(arg?.message ?? TEXT.SUCCESS, {
-					variant: "success",
-				});
-				dispatch(handleFileModalOpen(false));
-				dispatch(handleUrlAdded(true));
-				setIsAdd(false);
-			});
-		}
-	}, [isAdd]);
 
 	useEffect(() => {
 		return () => {

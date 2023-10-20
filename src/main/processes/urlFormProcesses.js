@@ -5,16 +5,19 @@ const endPoint = "/desktop/data/games";
 
 const { CHANNELS } = require("../../common/constants/channels.js");
 
-ipcMain.on(CHANNELS.ANALYZE.ADD_URL, async (event, reqData) => {
+ipcMain.handle(CHANNELS.ANALYZE.ADD_URL, async (event, reqData) => {
 	try {
 		const res = await axios.post(`${endPoint}/generate`, reqData);
+
 		const resData = {
-			status: res?.status,
-			statusText: res?.statusText,
-			message: res?.data?.message,
+			resStatus: res?.status,
+			resStatusText: res?.statusText,
+			resMessage: res?.data?.message,
+			status: res?.data?.status,
+			unsuccessfulData: res?.data?.data,
 		};
 
-		event.sender.send(CHANNELS.ANALYZE.ADD_URL, resData);
+		return resData;
 	} catch (err) {
 		const res = {
 			statusCode: err?.response?.status,
@@ -22,7 +25,7 @@ ipcMain.on(CHANNELS.ANALYZE.ADD_URL, async (event, reqData) => {
 			message: err?.response?.data?.message,
 		};
 
-		event.sender.send(CHANNELS.ANALYZE.ADD_URL, res);
+		return res;
 	}
 });
 
