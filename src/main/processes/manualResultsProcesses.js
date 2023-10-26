@@ -10,9 +10,11 @@ ipcMain.handle(CHANNELS.MANUAL_ADDING.ADD_MANUAL_URL, async (e, reqData) => {
 		const res = await axios.put(`${endPoint}/add`, reqData);
 
 		const resData = {
-			status: res?.status,
-			statusText: res?.statusText,
-			message: res?.data?.message,
+			resStatus: res?.status,
+			resStatusText: res?.statusText,
+			resMessage: res?.data?.message,
+			status: res?.data?.status,
+			unsuccessfulData: res?.data?.data,
 		};
 
 		return resData;

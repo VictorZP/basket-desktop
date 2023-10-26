@@ -9,6 +9,8 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import { getIsUrlFormOpen } from "../../../redux/urlForm/urlFormSelector.js";
 
+import { createWarnDetailsFile } from "../../../helpers/functions/addMatches/createWarnDetailsFile.js";
+
 import { styles } from "./styles.js";
 import { TEXT } from "./text.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
@@ -40,18 +42,32 @@ const ManualPageUrlForm = forwardRef(({ dateValue, setGames }, ref) => {
 				urlArray,
 			};
 
+			//	Добавление матчей и получение ответа о результатах добавления
 			const submitRes = await ipcRenderer.invoke(
 				CHANNELS.MANUAL_ADDING.ADD_MANUAL_URL,
 				reqData
 			);
 
-			if (submitRes.statusText !== "OK") {
-				enqueueSnackbar(submitRes?.message ?? MANUAL_PAGE.ERROR.ON_ADD_DATA, {
+			if (submitRes?.resStatusText !== "OK") {
+				enqueueSnackbar(submitRes?.resMessage ?? TEXT.ERROR.ON_URL_ADD, {
 					variant: "error",
 				});
-				setIsLoading(false);
 				return;
 			}
+
+			const { status, unsuccessfulData } = submitRes;
+
+			if (status !== "ok") {
+				enqueueSnackbar(
+					status === "warning" ? TEXT.WARNING.WARN : TEXT.WARNING.ERR,
+					{
+						variant: status === "warning" ? "warning" : "error",
+					}
+				);
+				await createWarnDetailsFile(unsuccessfulData);
+				return;
+			}
+
 			enqueueSnackbar(submitRes?.message ?? MANUAL_PAGE.SUCCESS.SAVE, {
 				variant: "success",
 			});
