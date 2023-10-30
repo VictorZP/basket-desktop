@@ -12,10 +12,7 @@ export const createWarningFile = async (data) => {
 
 	const dialogData = {
 		title: PARCER_TEXT.SAVE_TITLE,
-		defaultPath:
-			process.env.USERPROFILE +
-			"\\Downloads\\" +
-			PARCER_TEXT.FILE_NAME.ERR_REPORT,
+		fileName: PARCER_TEXT.FILE_NAME.ERR_REPORT,
 		filters: [
 			{
 				name: ".txt",

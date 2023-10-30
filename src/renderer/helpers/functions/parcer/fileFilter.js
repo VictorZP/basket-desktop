@@ -62,7 +62,7 @@ const fileFilter = async (file, filterArr = []) => {
 
 		const dialogData = {
 			title: PARCER_TEXT.SAVE_TITLE,
-			defaultPath: process.env.USERPROFILE + "\\Downloads\\" + fileName,
+			fileName,
 			filters: [
 				{
 					name: ".xlsx",

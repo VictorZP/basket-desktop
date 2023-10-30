@@ -14,8 +14,7 @@ export const createWarnDetailsFile = async (data) => {
 
 	const dialogData = {
 		title: CONSTANTS.SAVE_TITLE,
-		defaultPath:
-			process.env.USERPROFILE + "\\Downloads\\" + CONSTANTS.FILE_NAME,
+		fileName: CONSTANTS.FILE_NAME,
 		filters: [
 			{
 				name: ".txt",
