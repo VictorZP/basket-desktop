@@ -65,25 +65,23 @@ const ManualPageUrlForm = forwardRef(({ dateValue, setGames }, ref) => {
 					}
 				);
 				await createWarnDetailsFile(unsuccessfulData);
-				return;
 			}
 
-			enqueueSnackbar(submitRes?.message ?? MANUAL_PAGE.SUCCESS.SAVE, {
-				variant: "success",
-			});
-		} catch (error) {
-			enqueueSnackbar(error?.message ?? TEXT.ON_URL_ADD_ERR, {
-				variant: "error",
-			});
-		}
+			if (status === "error") return;
 
-		const date = dateValue.format("DD.MM.YY").split(".");
-		const paramsObj = {
-			day: date[0],
-			month: date[1],
-			year: date[2],
-		};
-		try {
+			if (status === "ok") {
+				enqueueSnackbar(submitRes?.message ?? MANUAL_PAGE.SUCCESS.SAVE, {
+					variant: "success",
+				});
+			}
+
+			const date = dateValue.format("DD.MM.YY").split(".");
+			const paramsObj = {
+				day: date[0],
+				month: date[1],
+				year: date[2],
+			};
+
 			const resData = await ipcRenderer.invoke(
 				CHANNELS.MANUAL_ADDING.GET_MANUAL_LIST,
 				paramsObj
@@ -93,11 +91,10 @@ const ManualPageUrlForm = forwardRef(({ dateValue, setGames }, ref) => {
 				enqueueSnackbar(resData?.message ?? MANUAL_PAGE.ERROR.ON_GET_LIST, {
 					variant: "error",
 				});
-				setIsLoading(false);
 				return;
 			}
 			setGames(resData.data);
-			setUrlList([]);
+			if (status === "ok") setUrlList([]);
 		} catch (err) {
 			enqueueSnackbar(err?.message ?? err, {
 				variant: "error",
