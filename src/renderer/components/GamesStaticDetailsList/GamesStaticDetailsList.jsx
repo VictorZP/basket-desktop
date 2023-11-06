@@ -38,7 +38,14 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 		<List sx={{ py: 0 }}>
 			{sortedList?.map((item) => {
 				return (
-					<ListItem key={item?.eventId}>
+					<ListItem
+						key={item?.eventId}
+						sx={{
+							background: `${
+								item?.noBets ? "#ffa726" : item?.total === 0 ? "#fff59d" : ""
+							}`,
+						}}
+					>
 						<Box sx={{ width: "6%" }}>
 							<Typography>{getDeviation(item)}</Typography>
 						</Box>
