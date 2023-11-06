@@ -1,0 +1,110 @@
+.active-list {
+	padding: 12px;
+	min-width: 1100px;
+}
+
+.active-list__item {
+	/* padding: 12px; */
+	min-width: 1100px;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-top: none;
+}
+
+.active-list__item-less {
+	background-color: #ffcdd2;
+}
+
+.active-list__item-more {
+	background-color: #dcedc8;
+}
+
+.active-list__row {
+	display: flex;
+}
+
+.active-list__row span {
+	display: flex;
+	padding: 5px;
+	min-height: 40px;
+	align-items: center;
+	justify-content: center;
+}
+
+.active-list__row span:not(:last-child) {
+	border-right: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.active-list__deviation {
+	width: 60px;
+}
+.active-list__players {
+	width: 50px;
+}
+
+.active-list__championship {
+	width: 150px;
+	overflow: hidden;
+}
+
+.active-list__team {
+	width: 150px;
+}
+
+.active-list__total {
+	width: 100px;
+}
+
+.active-list__attackKEF {
+	width: 80px;
+}
+
+.active-list__calcTemp {
+	width: 80px;
+}
+
+.active-list__total2ndHALF {
+	width: 80px;
+}
+
+.active-list__totalInMoment {
+	width: 80px;
+}
+
+.active-list__predict {
+	width: 80px;
+}
+
+.active-list__url {
+	width: 60px;
+}
+
+.active-list__close {
+	width: 80px;
+}
+
+.active-list__tooltip {
+	display: flex;
+	flex-direction: column;
+}
+.active-list__tooltip--ods {
+	display: flex;
+	justify-content: space-evenly;
+	width: 100px;
+	height: 30px;
+}
+
+.active-list__tooltip-span {
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	padding: 5px;
+}
+
+.active-list__tooltip-span + span {
+	border-left: 1px solid #fff;
+}
+.active-list__tooltip--limit {
+	display: flex;
+	justify-content: center;
+	padding: 5px;
+}

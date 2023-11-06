@@ -7,6 +7,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { Box, Button, Divider } from "@mui/material";
 
 import ActiveGamesList from "../components/ActiveGamesList/ActiveGamesList.jsx";
+import ActiveGamesListNoBets from "../components/ActiveGamesListNoBets/ActiveGamesListNoBets.jsx";
 
 import { CHANNELS } from "../../common/constants/channels.js";
 import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
@@ -112,7 +113,20 @@ const ActiveGames = () => {
 	};
 
 	const filteredMatches = matches.filter((match) => {
-		return match?.statusFront !== ACTIVE_PAGE.STATUS;
+		return (
+			match?.statusFront !== ACTIVE_PAGE.STATUS &&
+			!match?.noBets &&
+			match?.total !== 0 &&
+			match?.kickOFF !== 0
+		);
+	});
+
+	//	-- Список матчей где нет KickOff или Bets ID --
+	const filteredMatchesManual = matches.filter((match) => {
+		return (
+			match?.statusFront !== ACTIVE_PAGE.STATUS &&
+			(match?.noBets || match?.kickOFF === 0)
+		);
 	});
 
 	return (
@@ -134,6 +148,11 @@ const ActiveGames = () => {
 			</Box>
 			<Divider />
 			<ActiveGamesList matches={filteredMatches} hideMatch={hideMatch} />
+			<Divider />
+			<ActiveGamesListNoBets
+				matches={filteredMatchesManual}
+				hideMatch={hideMatch}
+			/>
 		</Box>
 	);
 };
