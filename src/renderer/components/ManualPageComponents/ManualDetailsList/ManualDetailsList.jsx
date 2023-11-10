@@ -35,10 +35,10 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 		>
 			{sortedList?.map((item) => {
 				return (
-					<ListItem key={item?.eventId}>
+					<ListItem key={item?.eventId ? item?.eventId : item?.url}>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`deviation_${item?.eventId}`}
+								id={`deviation_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleInput}
 								value={item?.deviation ?? 0}
 								size="small"
@@ -62,7 +62,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "7%" }}>
 							<InputBase
-								id={`total_${item?.eventId}`}
+								id={`total_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleInput}
 								value={item?.total ?? 0}
 								size="small"
@@ -75,7 +75,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`temp_${item?.eventId}`}
+								id={`temp_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleInput}
 								value={item?.temp ?? 0}
 								size="small"
@@ -88,7 +88,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`attackKEF_${item?.eventId}`}
+								id={`attackKEF_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleInput}
 								value={item?.attackKEF ?? 0}
 								size="small"
@@ -101,7 +101,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`calcTemp_${item?.eventId}`}
+								id={`calcTemp_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleInput}
 								value={item?.calcTemp ?? 0}
 								size="small"
@@ -114,7 +114,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`total2ndHALF_${item?.eventId}`}
+								id={`total2ndHALF_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleInput}
 								value={item?.total2ndHALF ?? 0}
 								size="small"
@@ -127,7 +127,9 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`totalInMoment_${item?.eventId}`}
+								id={`totalInMoment_${
+									item?.eventId ? item?.eventId : item?.url
+								}`}
 								onChange={handleInput}
 								value={item?.totalInMoment ?? 0}
 								size="small"
@@ -143,7 +145,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`predict_${item?.eventId}`}
+								id={`predict_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleInput}
 								value={item?.predict}
 								size="small"

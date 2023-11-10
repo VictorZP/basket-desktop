@@ -55,9 +55,18 @@ const ActiveGames = () => {
 		const matchesData = [...matches];
 
 		arg.data?.forEach((item) => {
-			const ndx = matchesData.findIndex(
-				(match) => match?.eventId === item?.eventId
-			);
+			let ndx = nul;
+
+			switch (true) {
+				case !item?.eventId:
+					ndx = matchesData.findIndex((match) => match?.url === item?.url);
+					break;
+				default:
+					ndx = matchesData.findIndex(
+						(match) => match?.eventId === item?.eventId
+					);
+					break;
+			}
 
 			// Проверка на наличие матча в масиве, а также проверка статуса матча(отображать или нет)
 			if (ndx < 0) {
@@ -104,9 +113,18 @@ const ActiveGames = () => {
 	}, []);
 
 	const hideMatch = (id) => {
-		const ndx = matches.findIndex((match) => match.eventId === id);
-		const matchesArr = [...matches];
+		let ndx = null;
 
+		switch (true) {
+			case id.includes("http"):
+				ndx = matches.findIndex((match) => match?.url === id);
+				break;
+			default:
+				ndx = matches.findIndex((match) => match?.eventId === id);
+				break;
+		}
+
+		const matchesArr = [...matches];
 		matchesArr[ndx].statusFront = ACTIVE_PAGE.STATUS;
 
 		setMatches(matchesArr);

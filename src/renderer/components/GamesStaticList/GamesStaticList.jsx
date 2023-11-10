@@ -91,7 +91,17 @@ const GamesStaticList = ({ paramsObj }) => {
 		const name = elemID?.split("_")[0];
 
 		const value = e?.target?.value;
-		const index = games?.findIndex((game) => game?.eventId === id);
+		let index = null;
+
+		switch (true) {
+			case id.includes("http"):
+				index = games?.findIndex((game) => game?.url === id);
+				break;
+			default:
+				index = games?.findIndex((game) => game?.eventId === id);
+				break;
+		}
+
 		const updatedDataList = games;
 		if (name === "temp") {
 			updatedDataList[index].temp = value;

@@ -49,7 +49,7 @@ const ActiveGamesList = ({ matches, hideMatch }) => {
 								{gamesByCyber(cyber).map((match) => {
 									return (
 										<li
-											key={match.eventId}
+											key={match?.eventId ? match?.eventId : match?.url}
 											className={`active-list__item ${
 												match.difRes === "less"
 													? "active-list__item-less"
@@ -127,7 +127,11 @@ const ActiveGamesList = ({ matches, hideMatch }) => {
 													<Tooltip title={ACTIVE_PAGE.CLOSE} placement="top">
 														<IconButton
 															color="error"
-															onClick={() => hideMatch(match.eventId)}
+															onClick={() =>
+																hideMatch(
+																	match?.eventId ? match?.eventId : match?.url
+																)
+															}
 														>
 															<CloseIcon />
 														</IconButton>

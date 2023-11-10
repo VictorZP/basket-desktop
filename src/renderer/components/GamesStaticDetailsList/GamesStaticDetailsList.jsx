@@ -39,7 +39,7 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 			{sortedList?.map((item) => {
 				return (
 					<ListItem
-						key={item?.eventId}
+						key={item?.eventId ? item?.eventId : item?.url}
 						sx={{
 							background: `${
 								item?.noBets ? "#ffa726" : item?.total === 0 ? "#fff59d" : ""
@@ -67,7 +67,7 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`temp_${item?.eventId}`}
+								id={`temp_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleTemp}
 								value={item?.temp}
 								size="small"
@@ -95,7 +95,7 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`predict_${item?.eventId}`}
+								id={`predict_${item?.eventId ? item?.eventId : item?.url}`}
 								onChange={handleTemp}
 								value={item?.predict}
 								size="small"
