@@ -1,7 +1,7 @@
 {
 	"name": "basket-desktop",
 	"productName": "Who wins",
-	"version": "1.4.12",
+	"version": "1.4.13",
 	"description": "Application for tracking matches scores",
 	"main": ".webpack/main",
 	"repository": "https://github.com/VictorZP/basket-desktop.git",
