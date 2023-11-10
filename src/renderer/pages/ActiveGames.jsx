@@ -55,7 +55,7 @@ const ActiveGames = () => {
 		const matchesData = [...matches];
 
 		arg.data?.forEach((item) => {
-			let ndx = nul;
+			let ndx = null;
 
 			switch (true) {
 				case !item?.eventId:

@@ -4,7 +4,7 @@ import "./styles.css";
 
 const { shell } = window.require("electron");
 
-import { Box, Typography, Tooltip, IconButton, Divider } from "@mui/material";
+import { Box, Typography, Tooltip, IconButton } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -48,7 +48,10 @@ const ActiveGamesListNoBets = ({ matches, hideMatch }) => {
 							<ul>
 								{gamesByCyber(cyber).map((match) => {
 									return (
-										<li key={match.eventId} className={"active-list__item"}>
+										<li
+											key={match?.eventId ? match?.eventId : match?.url}
+											className={"active-list__item"}
+										>
 											<div className="active-list__row">
 												<span className="active-list__deviation">
 													{match.deviation}
@@ -114,7 +117,11 @@ const ActiveGamesListNoBets = ({ matches, hideMatch }) => {
 													<Tooltip title={ACTIVE_PAGE.CLOSE} placement="top">
 														<IconButton
 															color="error"
-															onClick={() => hideMatch(match.eventId)}
+															onClick={() =>
+																hideMatch(
+																	match?.eventId ? match?.eventId : match?.url
+																)
+															}
 														>
 															<CloseIcon />
 														</IconButton>
