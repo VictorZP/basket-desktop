@@ -87,6 +87,8 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 						variant: status === "warning" ? "warning" : "error",
 					}
 				);
+				if (status === "warning") dispatch(handleUrlAdded(true));
+
 				await createWarnDetailsFile(unsuccessfulData);
 				return;
 			}
