@@ -61,6 +61,7 @@
 		"react-dom": "^18.2.0",
 		"react-redux": "^8.0.5",
 		"react-router-dom": "^6.11.2",
+		"socket.io-client": "^4.7.2",
 		"update-electron-app": "^2.0.1",
 		"xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
 	}
