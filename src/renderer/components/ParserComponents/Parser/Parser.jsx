@@ -36,44 +36,46 @@ const Parser = () => {
 				return;
 			}
 
-			const successResponse = arg?.data
-				.filter((item) => {
-					return item.status === "ok";
-				})
-				?.sort((a, b) => {
-					const champA = a.championship.toLowerCase();
-					const champB = b.championship.toLowerCase();
+			console.log(arg?.data);
 
-					if (champA < champB) {
-						return -1;
-					}
-					if (champA > champB) {
-						return 1;
-					}
+			// const successResponse = arg?.data
+			// 	.filter((item) => {
+			// 		return item.status === "ok";
+			// 	})
+			// 	?.sort((a, b) => {
+			// 		const champA = a.championship.toLowerCase();
+			// 		const champB = b.championship.toLowerCase();
 
-					return 0;
-				});
-			const warningResponse = arg?.data.filter((item) => {
-				return item.status !== "ok";
-			});
+			// 		if (champA < champB) {
+			// 			return -1;
+			// 		}
+			// 		if (champA > champB) {
+			// 			return 1;
+			// 		}
 
-			try {
-				if (successResponse?.length > 0) {
-					await createXlsxDoc(successResponse);
-				}
-				if (warningResponse?.length > 0) {
-					await createWarningFile(warningResponse);
-				}
-			} catch (err) {
-				enqueueSnackbar(
-					arg?.message ?? `${TEXT.ERR_ANALYZE_CREATE_DOC} ${err?.message}`,
-					{
-						variant: "error",
-					}
-				);
-				setIsLoading(false);
-				return;
-			}
+			// 		return 0;
+			// 	});
+			// const warningResponse = arg?.data.filter((item) => {
+			// 	return item.status !== "ok";
+			// });
+
+			// try {
+			// 	if (successResponse?.length > 0) {
+			// 		await createXlsxDoc(successResponse);
+			// 	}
+			// 	if (warningResponse?.length > 0) {
+			// 		await createWarningFile(warningResponse);
+			// 	}
+			// } catch (err) {
+			// 	enqueueSnackbar(
+			// 		arg?.message ?? `${TEXT.ERR_ANALYZE_CREATE_DOC} ${err?.message}`,
+			// 		{
+			// 			variant: "error",
+			// 		}
+			// 	);
+			// 	setIsLoading(false);
+			// 	return;
+			// }
 
 			enqueueSnackbar(arg?.message ?? TEXT.SUCCESS, {
 				variant: "success",

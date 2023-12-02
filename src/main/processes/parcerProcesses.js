@@ -1,10 +1,52 @@
 const axios = require("axios");
-const { ipcMain } = require("electron");
+const { ipcMain, Notification } = require("electron");
+//
+const { io } = require("socket.io-client");
+const Store = require("electron-store");
+//
 
 const endPoint = "/parcer";
 const filterEndPoint = "/filter";
 
 const { CHANNELS } = require("../../common/constants/channels.js");
+
+const NOTIFICATION_TITLE = "Результаты парсера";
+const NOTIFICATION_BODY = "Данные готовы!";
+
+//
+let store = new Store();
+const TOKEN = store.get("token");
+
+const socket = io("ws://localhost:8010/api/v1/parcer/", {
+	auth: {
+		token: TOKEN,
+	},
+});
+
+// client-side
+socket.on("connect", () => {
+	console.log("----------------------");
+	// console.log("socket.connected ---> ", socket.connected);
+	// console.log("socket.id ---> ", socket.id);
+	// console.log("socket ---> ", socket);
+	console.log("connected!");
+	socket.emit("room", "parcerHandler");
+	console.log("----------------------");
+});
+
+socket.on("errRoom", (arg) => {
+	console.log("arg  ->", arg);
+	next(new Error(arg));
+});
+
+socket.on("parcer", (arg) => {
+	console.log(arg);
+
+	new Notification({
+		title: NOTIFICATION_TITLE,
+		body: arg,
+	}).show();
+});
 
 ipcMain.on(CHANNELS.PARSER.ADD_URL, async (event, arg) => {
 	try {
@@ -101,6 +143,9 @@ ipcMain.on(CHANNELS.PARSER.ANALYZE, async (event, arg) => {
 			statusText: res?.statusText,
 			data: res?.data,
 		};
+		console.log("🚀 ~ resData.data:", resData.data);
+
+		socket.connect();
 
 		event.sender.send(CHANNELS.PARSER.ANALYZE, resData);
 	} catch (err) {
