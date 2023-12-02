@@ -87,8 +87,8 @@ const GamesStaticList = ({ paramsObj }) => {
 
 	const handleInput = (e) => {
 		const elemID = e.target.id;
-		const id = elemID?.split("_")[1];
-		const name = elemID?.split("_")[0];
+		const id = elemID?.split("_")?.slice(1)?.join("_");
+		const name = elemID?.split("_")?.at(0);
 
 		const value = e?.target?.value;
 		let index = null;
