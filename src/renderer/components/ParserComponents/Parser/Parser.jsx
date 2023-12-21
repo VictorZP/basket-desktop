@@ -10,9 +10,6 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { TEXT } from "./text.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
 
-import { createXlsxDoc } from "../../../helpers/functions/parcer/createXlsxDoc.js";
-import { createWarningFile } from "../../../helpers/functions/parcer/createWarningFile.js";
-
 const Parser = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const onAnalyzeClick = async () => {
@@ -36,48 +33,7 @@ const Parser = () => {
 				return;
 			}
 
-			console.log(arg?.data);
-
-			// const successResponse = arg?.data
-			// 	.filter((item) => {
-			// 		return item.status === "ok";
-			// 	})
-			// 	?.sort((a, b) => {
-			// 		const champA = a.championship.toLowerCase();
-			// 		const champB = b.championship.toLowerCase();
-
-			// 		if (champA < champB) {
-			// 			return -1;
-			// 		}
-			// 		if (champA > champB) {
-			// 			return 1;
-			// 		}
-
-			// 		return 0;
-			// 	});
-			// const warningResponse = arg?.data.filter((item) => {
-			// 	return item.status !== "ok";
-			// });
-
-			// try {
-			// 	if (successResponse?.length > 0) {
-			// 		await createXlsxDoc(successResponse);
-			// 	}
-			// 	if (warningResponse?.length > 0) {
-			// 		await createWarningFile(warningResponse);
-			// 	}
-			// } catch (err) {
-			// 	enqueueSnackbar(
-			// 		arg?.message ?? `${TEXT.ERR_ANALYZE_CREATE_DOC} ${err?.message}`,
-			// 		{
-			// 			variant: "error",
-			// 		}
-			// 	);
-			// 	setIsLoading(false);
-			// 	return;
-			// }
-
-			enqueueSnackbar(arg?.message ?? TEXT.SUCCESS, {
+			enqueueSnackbar(arg?.data?.message ?? TEXT.SUCCESS, {
 				variant: "success",
 			});
 			setIsLoading(false);
