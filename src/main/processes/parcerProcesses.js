@@ -92,7 +92,7 @@ ipcMain.on(CHANNELS.PARSER.GET_URL, async (event, arg) => {
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,
-			data: res?.data?.list,
+			data: res?.data,
 		};
 
 		event.sender.send(CHANNELS.PARSER.GET_URL, resData);
