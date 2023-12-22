@@ -21,6 +21,10 @@ export const FILTER_TEXT = {
 	NO_CHAMPIONSHIPS: "Чемпионaты отсутствуют",
 };
 
+export const PARCER_DATA = {
+	ON_ERROR: "Прозошла ошибка при загрузке результатов парсера",
+};
+
 export const FILTER_GROUPS = [
 	{
 		base: "BaseM",
