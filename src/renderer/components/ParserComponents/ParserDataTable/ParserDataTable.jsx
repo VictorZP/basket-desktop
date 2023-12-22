@@ -34,10 +34,10 @@ const ParserDataTable = ({
 					<TableCell sx={{ color: "white", width: 200 }}>
 						{PARCER_DATA.HEADER_NAMES.at(1)}
 					</TableCell>
-					<TableCell sx={{ color: "white", width: 220 }}>
+					<TableCell sx={{ color: "white", width: 220 }} align="center">
 						{PARCER_DATA.HEADER_NAMES.at(2)}
 					</TableCell>
-					<TableCell sx={{ color: "white", width: 220 }}>
+					<TableCell sx={{ color: "white", width: 220 }} align="center">
 						{PARCER_DATA.HEADER_NAMES.at(3)}
 					</TableCell>
 					<TableCell sx={{ color: "white" }}>
@@ -55,7 +55,7 @@ const ParserDataTable = ({
 					<StyledTableRow key={row.id}>
 						<TableCell>{index + countNumber}</TableCell>
 						<TableCell>{row?.title ?? ""}</TableCell>
-						<TableCell>
+						<TableCell align="center">
 							<LoadingButton
 								id={`success_${row.id}`}
 								variant="outlined"
@@ -73,7 +73,7 @@ const ParserDataTable = ({
 								{PARCER_DATA.BTN_LOAD}
 							</LoadingButton>
 						</TableCell>
-						<TableCell>
+						<TableCell align="center">
 							<LoadingButton
 								id={`error_${row.id}`}
 								variant="outlined"
