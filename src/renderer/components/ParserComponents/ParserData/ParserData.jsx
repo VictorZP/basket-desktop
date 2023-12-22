@@ -7,6 +7,8 @@ import "./styles.css";
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { Box, Typography, TablePagination } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import SyncIcon from "@mui/icons-material/Sync";
 
 import ParserDataTable from "../ParserDataTable";
 import DelModal from "../../DelModal/DelModal.jsx";
@@ -182,9 +184,25 @@ const ParserData = () => {
 	return (
 		<>
 			<Box sx={{ px: 3, py: 1, mb: 2 }}>
-				<Typography variant="h5" sx={{ mb: 2 }}>
-					{TEXT.TITLE}
-				</Typography>
+				<Box
+					sx={{
+						display: "flex",
+						alignItems: "center",
+						mb: 2,
+						gap: 2,
+					}}
+				>
+					<Typography variant="h5">{TEXT.TITLE}</Typography>
+					<IconButton
+						size="small"
+						color="primary"
+						onClick={() => {
+							dispatch(handleClickRequest(true));
+						}}
+					>
+						<SyncIcon />
+					</IconButton>
+				</Box>
 				<div className="pdt-container pdt-container__radius">
 					<div className="pdt-container__inner ">
 						<ParserDataTable {...tableProps} />
