@@ -5,17 +5,13 @@ import { enqueueSnackbar } from "notistack";
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { refresh } from "../../redux/parcerData/parcerDataSlice.js";
-import {
-	getOnClickRequest,
-	getOnClickLoading,
-} from "../../redux/parcerData/parcerDataSelector.js";
+import { getOnClickRequest } from "../../redux/parcerData/parcerDataSelector.js";
 
 import { PARCER_DATA } from "../../constants/parcer.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
 export const useGetParcerData = (setList) => {
 	const isOnClick = useSelector(getOnClickRequest);
-	const isLoading = useSelector(getOnClickLoading);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
