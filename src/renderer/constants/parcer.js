@@ -24,8 +24,11 @@ export const FILTER_TEXT = {
 export const PARCER_DATA = {
 	ON_ERROR: "Прозошла ошибка при загрузке результатов парсера",
 	BTN_LOAD: "Загрузить",
+	BTN_DELETE: "Удалить",
 	HEADER_NAMES: ["№", "Дата", "Рузельтат", "Ошибки", ""],
 	ON_ERROR_DOWNLOAD: "Прозошла ошибка при загрузке данных с результатами",
+	ON_ERROR_DELETE: "Произошла ошибка при удалении",
+	SUCCESS_DELETE: "Успешно удалено",
 	UNKNOWN_FORMAT: "Ошибка при создании документа. Попробуйте еще раз.",
 };
 

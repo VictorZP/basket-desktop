@@ -34,6 +34,8 @@ const DelModal = ({ handleClose, handleDelete }) => {
 				break;
 			case MODAL_DEL.PAGE_TYPE_TEAM_NAME:
 				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}`;
+			case MODAL_DEL.PAGE_TYPE_PARCER_DATA:
+				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}?`;
 
 			default:
 				break;

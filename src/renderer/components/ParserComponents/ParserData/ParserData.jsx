@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
@@ -9,15 +9,29 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { Box, Typography, TablePagination } from "@mui/material";
 
 import ParserDataTable from "../ParserDataTable";
+import DelModal from "../../DelModal/DelModal.jsx";
 
 import { useGetParcerData } from "../../../hooks/parcerData";
-import {} from "../../../redux/parcerData/parcerDataSlice.js";
-import {} from "../../../redux/parcerData/parcerDataSelector.js";
+
+import {
+	handleModalDelOpen,
+	handleModalDelClose,
+	setModalDelData,
+	refreshModalDel,
+} from "../../../redux/modalDelete/modalDelSlice.js";
+import { isMDOpen } from "../../../redux/modalDelete/modalDelSelector.js";
+
+import {
+	handleClickRequest,
+	handleOnClickLoading,
+} from "../../../redux/parcerData/parcerDataSlice.js";
+import { getOnClickLoading } from "../../../redux/parcerData/parcerDataSelector.js";
 import { createWarningFile } from "../../../helpers/functions/parcer/createWarningFile.js";
 import { createXlsxDoc } from "../../../helpers/functions/parcer/createXlsxDoc.js";
 
 import { TEXT } from "./text.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
+import { MODAL_DEL } from "../../../constants/modaldel.js";
 import { PARCER_DATA } from "../../../constants/parcer.js";
 
 const ParserData = () => {
@@ -29,6 +43,10 @@ const ParserData = () => {
 		dataId: "",
 	});
 	const [isLoading, setIsLoading] = useState(false);
+
+	const isOpen = useSelector(isMDOpen);
+	const isDelLoading = useSelector(getOnClickLoading);
+	const dispatch = useDispatch();
 
 	useGetParcerData(setDataList);
 
@@ -92,37 +110,100 @@ const ParserData = () => {
 		});
 	};
 
+	//	Открытиые модалки для удаления
+	const openModal = (e) => {
+		const type = e.currentTarget.id?.split("_")?.at(0);
+		const dataId = e.currentTarget.id?.split("_")?.at(1);
+
+		const payload = {
+			pageType: MODAL_DEL.PAGE_TYPE_PARCER_DATA,
+			descriptionExtend: "результатов парсера",
+			elemId: dataId,
+		};
+
+		setSelectedResult({
+			type,
+			dataId,
+		});
+
+		dispatch(handleOnClickLoading(true));
+		dispatch(setModalDelData(payload));
+		dispatch(handleModalDelOpen());
+	};
+
+	const handleClose = () => {
+		dispatch(handleModalDelClose());
+		dispatch(handleOnClickLoading(false));
+		!isOpen && dispatch(refreshModalDel());
+	};
+
+	const handleDelete = async (e) => {
+		const res = await ipcRenderer.invoke(
+			CHANNELS.PARCER_DATA.DELETE,
+			selectedResult.dataId
+		);
+
+		if (res?.statusText !== "OK") {
+			enqueueSnackbar(res?.message ?? PARCER_DATA.ON_ERROR_DELETE, {
+				variant: "error",
+			});
+			return;
+		}
+
+		dispatch(handleClickRequest(true));
+		dispatch(handleModalDelClose());
+
+		enqueueSnackbar(res?.message ?? PARCER_DATA.SUCCESS_DELETE, {
+			variant: "success",
+		});
+
+		setSelectedResult({
+			type: "",
+			dataId: "",
+		});
+	};
+
 	const tableProps = {
 		page,
 		rowsPerPage,
 		handleClick,
+		openModal,
 		selectedResult,
 		isLoading,
+		isDelLoading,
 		dataList: visibleRows,
 	};
 
+	const delModalProps = {
+		handleClose,
+		handleDelete,
+	};
+
 	return (
-		<Box sx={{ px: 3, py: 1, mb: 2 }}>
-			<Typography variant="h5" sx={{ mb: 2 }}>
-				{TEXT.TITLE}
-			</Typography>
-			<div className="pdt-container pdt-container__radius">
-				<div className="pdt-container__inner ">
-					<ParserDataTable {...tableProps} />
-					<TablePagination
-						sx={{ border: "1px solid #e0e0e0" }}
-						rowsPerPageOptions={[10, 15, 20]}
-						component="div"
-						count={dataList?.length}
-						rowsPerPage={rowsPerPage}
-						page={page}
-						onPageChange={handlePageChange}
-						onRowsPerPageChange={handleChangeRowsPerPage}
-						labelRowsPerPage={TEXT.PAGINATION}
-					/>
+		<>
+			<Box sx={{ px: 3, py: 1, mb: 2 }}>
+				<Typography variant="h5" sx={{ mb: 2 }}>
+					{TEXT.TITLE}
+				</Typography>
+				<div className="pdt-container pdt-container__radius">
+					<div className="pdt-container__inner ">
+						<ParserDataTable {...tableProps} />
+						<TablePagination
+							sx={{ border: "1px solid #e0e0e0" }}
+							rowsPerPageOptions={[10, 15, 20]}
+							component="div"
+							count={dataList?.length}
+							rowsPerPage={rowsPerPage}
+							page={page}
+							onPageChange={handlePageChange}
+							onRowsPerPageChange={handleChangeRowsPerPage}
+							labelRowsPerPage={TEXT.PAGINATION}
+						/>
+					</div>
 				</div>
-			</div>
-		</Box>
+			</Box>
+			<DelModal {...delModalProps} />
+		</>
 	);
 };
 

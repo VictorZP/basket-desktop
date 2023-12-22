@@ -4,11 +4,7 @@ import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import {
-	handleClickRequest,
-	handleOnClickLoading,
-	refresh,
-} from "../../redux/parcerData/parcerDataSlice.js";
+import { refresh } from "../../redux/parcerData/parcerDataSlice.js";
 import {
 	getOnClickRequest,
 	getOnClickLoading,
@@ -37,12 +33,6 @@ export const useGetParcerData = (setList) => {
 
 			setList(response.list);
 			dispatch(refresh());
-			if (isLoading) {
-				dispatch(handleOnClickLoading(false));
-			}
-			if (isOnClick) {
-				dispatch(handleClickRequest(false));
-			}
 		};
 
 		getData();

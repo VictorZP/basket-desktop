@@ -9,6 +9,7 @@ import {
 	TableCell,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 import { StyledTableRow } from "../../../helpers/reusableComponents/tableComponents.js";
@@ -21,9 +22,11 @@ const ParserDataTable = ({
 	selectedResult,
 	isLoading,
 	handleClick,
+	openModal,
+	isDelLoading,
 	dataList = [],
 }) => {
-	const countNumber = page * rowsPerPage;
+	const countNumber = 1 + page * rowsPerPage;
 	return (
 		<Table>
 			<TableHead>
@@ -91,7 +94,24 @@ const ParserDataTable = ({
 								{PARCER_DATA.BTN_LOAD}
 							</LoadingButton>
 						</TableCell>
-						<TableCell></TableCell>
+						<TableCell>
+							<LoadingButton
+								color="error"
+								id={`del_${row.id}`}
+								variant="outlined"
+								size="small"
+								loadingPosition="start"
+								startIcon={<DeleteIcon />}
+								loading={
+									isDelLoading &&
+									selectedResult.type === "del" &&
+									selectedResult.dataId === row.id
+								}
+								onClick={openModal}
+							>
+								{PARCER_DATA.BTN_DELETE}
+							</LoadingButton>
+						</TableCell>
 					</StyledTableRow>
 				))}
 			</TableBody>
@@ -102,12 +122,14 @@ const ParserDataTable = ({
 ParserDataTable.propTypes = {
 	page: PropTypes.number,
 	rowsPerPage: PropTypes.number,
+	isLoading: PropTypes.bool,
+	isDelLoading: PropTypes.bool,
+	handleClick: PropTypes.func.isRequired,
+	openModal: PropTypes.func.isRequired,
 	selectedResult: PropTypes.shape({
 		type: PropTypes.string,
 		dataId: PropTypes.string,
 	}),
-	isLoading: PropTypes.bool,
-	handleClick: PropTypes.func.isRequired,
 	dataList: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,

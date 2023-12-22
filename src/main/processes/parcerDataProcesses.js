@@ -51,3 +51,24 @@ ipcMain.handle(CHANNELS.PARCER_DATA.DOWNLOAD, async (event, reqData) => {
 		event.sender.send(CHANNELS.PARCER_DATA.GET_DATA_LIST, res);
 	}
 });
+
+ipcMain.handle(CHANNELS.PARCER_DATA.DELETE, async (event, dataId) => {
+	try {
+		const res = await axios.delete(`${endPoint}/delete/${dataId}`);
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
+
+		return resData;
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		return res;
+	}
+});

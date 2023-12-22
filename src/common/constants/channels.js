@@ -46,6 +46,7 @@ export const CHANNELS = {
 	PARCER_DATA: {
 		GET_DATA_LIST: "parcer-data-get-list",
 		DOWNLOAD: "parcer-data-download",
+		DELETE: "parcer-data-delete",
 	},
 	DIALOG: {
 		SAVE_FILE: "dialog-save-file",
