@@ -5,7 +5,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { Box, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 
 import { TEXT } from "./text.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
@@ -48,7 +48,7 @@ const Parser = () => {
 			<LoadingButton
 				loading={isLoading}
 				loadingPosition="start"
-				startIcon={<FileDownloadIcon />}
+				startIcon={<ListAltIcon />}
 				onClick={onAnalyzeClick}
 			>
 				{TEXT.BTN}
