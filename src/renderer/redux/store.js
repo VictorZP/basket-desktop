@@ -5,6 +5,7 @@ import { matchSettingsReducer } from "./matchSettings/matchSettingsSlice.js";
 import { modalDelReducer } from "./modalDelete/modalDelSlice.js";
 import { urlFormReducer } from "./urlForm/urlFormSlice.js";
 import { modalReducer } from "./modal/modalSlice.js";
+import { parcerDataReducer } from "./parcerData/parcerDataSlice.js";
 
 const store = configureStore({
 	reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
 		modalDel: modalDelReducer,
 		urlForm: urlFormReducer,
 		modal: modalReducer,
+		parcerData: parcerDataReducer,
 	},
 });
 
