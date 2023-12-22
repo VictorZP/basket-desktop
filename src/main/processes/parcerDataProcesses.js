@@ -14,7 +14,6 @@ ipcMain.handle(CHANNELS.PARCER_DATA.GET_DATA_LIST, async (event) => {
 			statusText: res?.statusText,
 			list: res?.data?.dataList,
 		};
-		console.log("🚀 ~ resData:", resData);
 
 		return resData;
 	} catch (err) {
@@ -23,7 +22,31 @@ ipcMain.handle(CHANNELS.PARCER_DATA.GET_DATA_LIST, async (event) => {
 			statusText: err?.response?.statusText,
 			message: err?.response?.data?.message,
 		};
-		console.log("🚀 ~ res:", res);
+
+		event.sender.send(CHANNELS.PARCER_DATA.GET_DATA_LIST, res);
+	}
+});
+
+ipcMain.handle(CHANNELS.PARCER_DATA.DOWNLOAD, async (event, reqData) => {
+	try {
+		const params = new URLSearchParams(reqData);
+		const res = await axios.get(`${endPoint}/download`, { params });
+
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			data: res?.data?.data,
+			type: res?.data?.type,
+			title: res?.data?.title,
+		};
+
+		return resData;
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
 
 		event.sender.send(CHANNELS.PARCER_DATA.GET_DATA_LIST, res);
 	}

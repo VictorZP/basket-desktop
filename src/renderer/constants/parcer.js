@@ -23,6 +23,10 @@ export const FILTER_TEXT = {
 
 export const PARCER_DATA = {
 	ON_ERROR: "Прозошла ошибка при загрузке результатов парсера",
+	BTN_LOAD: "Загрузить",
+	HEADER_NAMES: ["№", "Дата", "Рузельтат", "Ошибки", ""],
+	ON_ERROR_DOWNLOAD: "Прозошла ошибка при загрузке данных с результатами",
+	UNKNOWN_FORMAT: "Ошибка при создании документа. Попробуйте еще раз.",
 };
 
 export const FILTER_GROUPS = [

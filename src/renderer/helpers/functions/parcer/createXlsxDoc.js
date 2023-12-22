@@ -5,7 +5,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { PARCER_TEXT, ANALYZE_TEXT } from "../../../constants/parcer.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
 
-export const createXlsxDoc = async (data) => {
+export const createXlsxDoc = async (data, fileName) => {
 	const workbook = utils.book_new();
 
 	const matchResult = [];
@@ -169,16 +169,13 @@ export const createXlsxDoc = async (data) => {
 	utils.book_append_sheet(workbook, ws, PARCER_TEXT.FILE_NAME.CHAMPIONSHIPS);
 	utils.book_append_sheet(workbook, quartersWs, PARCER_TEXT.FILE_NAME.QUARTERS);
 
-	const date = new Date();
-	const normalizeDate = `${date.getDate()}.${
-		date.getMonth() + 1
-	}.${date.getFullYear()}`;
-
-	const fileName = `${PARCER_TEXT.FILE_NAME.STATISTICS}-${normalizeDate}`;
+	const normalizedFileName = `${PARCER_TEXT.FILE_NAME.STATISTICS}-${fileName
+		?.split(" ")
+		?.at(0)}`;
 
 	const dialogData = {
 		title: PARCER_TEXT.SAVE_TITLE,
-		fileName,
+		fileName: normalizedFileName,
 		filters: [
 			{
 				name: ".xlsx",

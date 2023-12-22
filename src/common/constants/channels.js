@@ -43,7 +43,10 @@ export const CHANNELS = {
 		FILTER_ADD_CHAMP: "filter-add-championship",
 		FILTER_DELETE_CHAMP: "filter-delete-champ",
 	},
-	PARCER_DATA: { GET_DATA_LIST: "parcer-data-get-list" },
+	PARCER_DATA: {
+		GET_DATA_LIST: "parcer-data-get-list",
+		DOWNLOAD: "parcer-data-download",
+	},
 	DIALOG: {
 		SAVE_FILE: "dialog-save-file",
 	},
