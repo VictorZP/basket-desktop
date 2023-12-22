@@ -39,7 +39,7 @@ const Filter = () => {
 	};
 
 	return (
-		<Box sx={{ px: 3, py: 1, mb: 2 }}>
+		<Box sx={{ px: 3, pt: 1, pb: 4 }}>
 			<Typography variant="h5" sx={{ mb: 2 }}>
 				{TEXT.TITLE}
 			</Typography>
