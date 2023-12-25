@@ -9,5 +9,8 @@ export const CONSTANTS = {
 		FORM_BTN: "Форма добавления",
 	},
 	SAVE_TITLE: "Сохранить как",
+	HYPERLINK_TITLE: "Открыть в браузере",
+	HYPERLINK_TOOLTIP: "Перейти по выбранной ссылке для просмотра страницы матча",
+	SHEET_NAME: "Предупреждения",
 	FILE_NAME: "Отчёт об ошибках при добавлении матчей",
 };
