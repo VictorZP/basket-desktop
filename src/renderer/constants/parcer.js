@@ -9,6 +9,9 @@ export const PARCER_TEXT = {
 		ERR_REPORT: "Отчёт об ошибках",
 	},
 	SAVE_TITLE: "Сохранить как",
+	HYPERLINK_TITLE: "Открыть в браузере",
+	HYPERLINK_TOOLTIP: "Перейти по выбранной ссылке для просмотра страницы матча",
+	SHEET_NAME: "Предупреждения",
 };
 
 export const ANALYZE_TEXT = {
