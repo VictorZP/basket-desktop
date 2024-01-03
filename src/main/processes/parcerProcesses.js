@@ -189,7 +189,7 @@ ipcMain.handle(CHANNELS.PARSER.FILTER_LIST, async (event) => {
 			message: err?.response?.data?.message,
 		};
 
-		event.sender.send(CHANNELS.PARSER.FILTER_LIST, res);
+		return res;
 	}
 });
 
