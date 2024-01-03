@@ -13,12 +13,13 @@ import {
 	Tooltip,
 } from "@mui/material";
 
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import DataThresholdingOutlinedIcon from "@mui/icons-material/DataThresholdingOutlined";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
 import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
+import DataThresholdingOutlinedIcon from "@mui/icons-material/DataThresholdingOutlined";
 
 import { SIDE_MENU, TOOLTIPS } from "../../../common/constants/index.js";
 
@@ -36,6 +37,7 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 	const iconsArr = [
 		<HomeIcon />,
 		<BarChartIcon />,
+		<ViewTimelineIcon />,
 		<DataThresholdingOutlinedIcon />,
 		<EditNoteIcon />,
 	];
