@@ -82,7 +82,7 @@ const ParserData = () => {
 		});
 
 		if (res?.statusText !== "OK") {
-			enqueueSnackbar(arg?.message ?? PARCER_DATA.ON_ERROR_DOWNLOAD, {
+			enqueueSnackbar(res?.message ?? PARCER_DATA.ON_ERROR_DOWNLOAD, {
 				variant: "error",
 			});
 			return;
