@@ -33,6 +33,7 @@ export const CHANNELS = {
 		UPD_TEMP: "update-temp",
 		ACTIVE: "active",
 	},
+	LINES: { GET_LINES: "lines-get" },
 	PARSER: {
 		ADD_URL: "parser-add-url",
 		GET_URL: "parser-get-utl-list",
