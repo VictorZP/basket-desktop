@@ -15,6 +15,7 @@ ipcMain.on(CHANNELS.LINES.GET_LINES, async (event, paramsData) => {
 			statusText: res?.statusText,
 			statusCode: res?.statusCode,
 		};
+		console.log("🚀 ~ resData:", resData);
 
 		// new Notification({
 		// 	title: "Линии",
@@ -26,6 +27,7 @@ ipcMain.on(CHANNELS.LINES.GET_LINES, async (event, paramsData) => {
 			statusText: err?.response?.statusText,
 			message: err?.response?.data?.message,
 		};
+		console.log("🚀 ~ res:", res);
 
 		// new Notification({
 		// 	title: "Линии",

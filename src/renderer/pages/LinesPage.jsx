@@ -36,9 +36,9 @@ const LinesPage = () => {
 			setIsLoading(true);
 
 			const paramsObj = {
-				day: dayjs(dateValue).format("DD.MM.YY").split(".")[0],
-				month: dayjs(dateValue).format("DD.MM.YY").split(".")[1],
-				year: dayjs(dateValue).format("DD.MM.YY").split(".")[2],
+				day: dayjs(dateValue).format("DD"),
+				month: dayjs(dateValue).format("MM"),
+				year: dayjs(dateValue).format("YYYY"),
 				start_h: startTime ? dayjs(startTime).format("HH") : "",
 				start_m: startTime ? dayjs(startTime).format("mm") : "",
 				end_h: endTime ? dayjs(endTime).format("HH") : "",
