@@ -4,9 +4,10 @@ import dayjs from "dayjs";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 
 import LinesTop from "../components/LinesComponents/LinesTop";
+import LinesData from "../components/LinesComponents/LinesData";
 
 import { CHANNELS } from "../../common/constants/channels.js";
 import { MESSAGES } from "../constants/lines.js";
@@ -72,6 +73,8 @@ const LinesPage = () => {
 	return (
 		<Box component="section">
 			<LinesTop {...linesTopProps} />
+			<Divider />
+			<LinesData />
 		</Box>
 	);
 };
