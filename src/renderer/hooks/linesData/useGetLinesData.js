@@ -20,9 +20,7 @@ export const useGetLinesData = (setList) => {
 	useEffect(() => {
 		const getData = async () => {
 			dispatch(handleIsDataLoading(true));
-			const response = await ipcRenderer.invoke(
-				CHANNELS.LINES_DATA.GET_LINES_LIST
-			);
+			const response = await ipcRenderer.invoke(CHANNELS.LINES.GET_LINES_LIST);
 
 			if (response?.statusText !== "OK") {
 				enqueueSnackbar(response?.message ?? MESSAGES.ON_GET_LINES_ERR, {
