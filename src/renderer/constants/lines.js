@@ -5,12 +5,15 @@ export const MESSAGES = {
 };
 
 export const LINES_DATA = {
+	BTN_DOWNLOAD: "Скачать",
+	BTN_DELETE: "Удалить",
 	HEADER_NAMES: [
 		"№",
 		"Дата линий",
-		"Дата формирования",
+		"Когда сформировано",
 		"Начиная",
 		"Заканчивая",
+		"",
 		"",
 	],
 };

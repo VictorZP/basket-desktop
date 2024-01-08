@@ -21,3 +21,25 @@ ipcMain.on(CHANNELS.LINES.GET_LINES, async (event, paramsData) => {
 		}).show();
 	}
 });
+
+ipcMain.handle(CHANNELS.LINES.GET_LINES_LIST, async (event) => {
+	try {
+		const res = await axios.get(`${endPoint}/list`);
+
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			list: res?.data?.list,
+		};
+
+		return resData;
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		return res;
+	}
+});
