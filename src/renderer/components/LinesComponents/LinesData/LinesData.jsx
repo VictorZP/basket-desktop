@@ -9,6 +9,7 @@ import SyncIcon from "@mui/icons-material/Sync";
 
 import LinesDataTable from "../LinesDataTable";
 import DelModal from "../../DelModal/DelModal.jsx";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner.jsx";
 
 import { useGetLinesData } from "../../../hooks/linesData/useGetLinesData.js";
 
@@ -76,6 +77,7 @@ const LinesData = () => {
 		openModal,
 		selectedResult,
 		isLoading,
+		isDataLoading,
 		isDelLoading,
 		dataList: visibleRows,
 	};
@@ -105,17 +107,23 @@ const LinesData = () => {
 				<div className="ldt-container ldt-container__radius">
 					<div className="pdt-container__inner">
 						<LinesDataTable {...linesTableProps} />
-						<TablePagination
-							sx={{ border: "1px solid #e0e0e0" }}
-							rowsPerPageOptions={[10, 15, 20]}
-							component="div"
-							count={dataList?.length}
-							rowsPerPage={rowsPerPage}
-							page={page}
-							onPageChange={handlePageChange}
-							onRowsPerPageChange={handleChangeRowsPerPage}
-							labelRowsPerPage={TEXT.PAGINATION}
-						/>
+						{isDataLoading ? (
+							<div className="loading-height">
+								<LoadingSpinner />
+							</div>
+						) : (
+							<TablePagination
+								sx={{ border: "1px solid #e0e0e0" }}
+								rowsPerPageOptions={[10, 15, 20]}
+								component="div"
+								count={dataList?.length}
+								rowsPerPage={rowsPerPage}
+								page={page}
+								onPageChange={handlePageChange}
+								onRowsPerPageChange={handleChangeRowsPerPage}
+								labelRowsPerPage={TEXT.PAGINATION}
+							/>
+						)}
 					</div>
 				</div>
 			</Box>

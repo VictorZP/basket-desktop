@@ -12,6 +12,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner.jsx";
 import { StyledTableRow } from "../../../helpers/reusableComponents/tableComponents.js";
 
 import { LINES_DATA } from "../../../constants/lines.js";
@@ -23,6 +24,7 @@ const LinesDataTable = ({
 	handleClick,
 	rowsPerPage,
 	isDelLoading,
+	isDataLoading,
 	dataList = [],
 	selectedResult,
 }) => {
@@ -34,78 +36,82 @@ const LinesDataTable = ({
 					<TableCell sx={{ color: "white", width: 60 }}>
 						{LINES_DATA.HEADER_NAMES.at(0)}
 					</TableCell>
-					<TableCell sx={{ color: "white", width: 200 }} align="center">
+					<TableCell sx={{ color: "white", width: 130 }} align="center">
 						{LINES_DATA.HEADER_NAMES.at(1)}
 					</TableCell>
-					<TableCell sx={{ color: "white", width: 220 }} align="center">
+					<TableCell sx={{ color: "white", width: 195 }} align="center">
 						{LINES_DATA.HEADER_NAMES.at(2)}
 					</TableCell>
-					<TableCell sx={{ color: "white", width: 150 }} align="center">
+					<TableCell sx={{ color: "white", width: 90 }} align="center">
 						{LINES_DATA.HEADER_NAMES.at(3)}
 					</TableCell>
-					<TableCell sx={{ color: "white", width: 150 }} align="center">
+					<TableCell sx={{ color: "white", width: 130 }} align="center">
 						{LINES_DATA.HEADER_NAMES.at(4)}
 					</TableCell>
-					<TableCell sx={{ color: "white" }}>
+					<TableCell sx={{ color: "white", minWidth: 137 }}>
 						{LINES_DATA.HEADER_NAMES.at(5)}
 					</TableCell>
-					<TableCell sx={{ color: "white" }}>
+					<TableCell sx={{ color: "white", minWidth: 137 }}>
 						{LINES_DATA.HEADER_NAMES.at(6)}
 					</TableCell>
 				</TableRow>
 			</TableHead>
-			<TableBody
-				sx={{
-					borderLeft: "1px solid #e0e0e0",
-					borderRight: "1px solid #e0e0e0",
-				}}
-			>
-				{dataList?.map((row, index) => (
-					<StyledTableRow key={row.linesId}>
-						<TableCell>{index + countNumber}</TableCell>
-						<TableCell align="center">{row?.title ?? ""}</TableCell>
-						<TableCell align="center">{row?.createdAt ?? ""}</TableCell>
-						<TableCell align="center">{row?.start ?? ""}</TableCell>
-						<TableCell align="center">{row?.end ?? ""}</TableCell>
-						<TableCell align="center">
-							<LoadingButton
-								id={`download_${row.linesId}`}
-								variant="outlined"
-								size="small"
-								loadingPosition="start"
-								startIcon={<FileDownloadIcon />}
-								loading={
-									isLoading &&
-									selectedResult.type === "download" &&
-									selectedResult.dataId === row.id
-								}
-								onClick={handleClick}
-								disabled={row?.successDataValue === 0}
-							>
-								{LINES_DATA.BTN_DOWNLOAD}
-							</LoadingButton>
-						</TableCell>
-						<TableCell align="center">
-							<LoadingButton
-								color="error"
-								id={`delete_${row.linesId}`}
-								variant="outlined"
-								size="small"
-								loadingPosition="start"
-								startIcon={<DeleteIcon />}
-								loading={
-									isDelLoading &&
-									selectedResult.type === "delete" &&
-									selectedResult.dataId === row.id
-								}
-								onClick={openModal}
-							>
-								{LINES_DATA.BTN_DELETE}
-							</LoadingButton>
-						</TableCell>
-					</StyledTableRow>
-				))}
-			</TableBody>
+			{!isDataLoading ? (
+				<TableBody
+					sx={{
+						borderLeft: "1px solid #e0e0e0",
+						borderRight: "1px solid #e0e0e0",
+					}}
+				>
+					{dataList?.map((row, index) => (
+						<StyledTableRow key={row.linesId}>
+							<TableCell>{index + countNumber}</TableCell>
+							<TableCell align="center">{row?.title ?? ""}</TableCell>
+							<TableCell align="center">{row?.createdAt ?? ""}</TableCell>
+							<TableCell align="center">{row?.start ?? ""}</TableCell>
+							<TableCell align="center">{row?.end ?? ""}</TableCell>
+							<TableCell align="center">
+								<LoadingButton
+									id={`download_${row.linesId}`}
+									variant="outlined"
+									size="small"
+									loadingPosition="start"
+									startIcon={<FileDownloadIcon />}
+									loading={
+										isLoading &&
+										selectedResult.type === "download" &&
+										selectedResult.dataId === row.id
+									}
+									onClick={handleClick}
+									disabled={row?.successDataValue === 0}
+								>
+									{LINES_DATA.BTN_DOWNLOAD}
+								</LoadingButton>
+							</TableCell>
+							<TableCell align="center">
+								<LoadingButton
+									color="error"
+									id={`delete_${row.linesId}`}
+									variant="outlined"
+									size="small"
+									loadingPosition="start"
+									startIcon={<DeleteIcon />}
+									loading={
+										isDelLoading &&
+										selectedResult.type === "delete" &&
+										selectedResult.dataId === row.id
+									}
+									onClick={openModal}
+								>
+									{LINES_DATA.BTN_DELETE}
+								</LoadingButton>
+							</TableCell>
+						</StyledTableRow>
+					))}
+				</TableBody>
+			) : (
+				""
+			)}
 		</Table>
 	);
 };
@@ -115,6 +121,7 @@ LinesDataTable.propTypes = {
 	rowsPerPage: PropTypes.number,
 	isLoading: PropTypes.bool,
 	isDelLoading: PropTypes.bool,
+	isDataLoading: PropTypes.bool,
 	handleClick: PropTypes.func.isRequired,
 	openModal: PropTypes.func.isRequired,
 	selectedResult: PropTypes.shape({
