@@ -33,7 +33,7 @@ import "./styles.css";
 import { TEXT } from "./text.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
 import { MODAL_DEL } from "../../../constants/modaldel.js";
-import { LINES_DATA } from "../../../constants/lines.js";
+import { MESSAGES } from "../../../constants/lines.js";
 
 const LinesData = () => {
 	const [page, setPage] = useState(0);
@@ -68,7 +68,54 @@ const LinesData = () => {
 	const handleClick = (e) => {};
 
 	//	Открытиые модалки для удаления
-	const openModal = () => {};
+	const openModal = (e) => {
+		const dataId = e.currentTarget.id?.split("_")?.at(1);
+
+		const payload = {
+			pageType: MODAL_DEL.PAGE_TYPE_LINES_DATA,
+			descriptionExtend: "линий на выбранную дату",
+			elemId: dataId,
+		};
+
+		setSelectedResult({
+			dataId,
+		});
+
+		dispatch(handleOnClickLoading(true));
+		dispatch(setModalDelData(payload));
+		dispatch(handleModalDelOpen());
+	};
+
+	const handleDelete = async () => {
+		const res = await ipcRenderer.invoke(
+			CHANNELS.LINES.DELETE_LINES,
+			selectedResult.dataId
+		);
+
+		if (res?.statusText !== "OK") {
+			enqueueSnackbar(res?.message ?? MESSAGES.ON_ERROR_DELETE, {
+				variant: "error",
+			});
+			return;
+		}
+
+		dispatch(handleClickRequest(true));
+		dispatch(handleModalDelClose());
+
+		enqueueSnackbar(res?.message ?? MESSAGES.ON_SUCCESS_DELETE, {
+			variant: "success",
+		});
+
+		setSelectedResult({
+			dataId: "",
+		});
+	};
+
+	const handleClose = () => {
+		dispatch(handleModalDelClose());
+		dispatch(handleOnClickLoading(false));
+		!isOpen && dispatch(refreshModalDel());
+	};
 
 	const linesTableProps = {
 		page,
@@ -80,6 +127,11 @@ const LinesData = () => {
 		isDataLoading,
 		isDelLoading,
 		dataList: visibleRows,
+	};
+
+	const delModalProps = {
+		handleClose,
+		handleDelete,
 	};
 
 	return (
@@ -127,6 +179,7 @@ const LinesData = () => {
 					</div>
 				</div>
 			</Box>
+			<DelModal {...delModalProps} />
 		</>
 	);
 };

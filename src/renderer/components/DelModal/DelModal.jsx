@@ -27,6 +27,8 @@ const DelModal = ({ handleClose, handleDelete }) => {
 			case MODAL_DEL.PAGE_TYPE_C:
 			case MODAL_DEL.PAGE_TYPE_PARCER_URL:
 			case MODAL_DEL.PAGE_TYPE_FILTER_CHAMP:
+			case MODAL_DEL.PAGE_TYPE_PARCER_DATA:
+			case MODAL_DEL.PAGE_TYPE_LINES_DATA:
 				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}? `;
 				break;
 			case MODAL_DEL.PAGE_TYPE_CHAMP:
@@ -34,8 +36,7 @@ const DelModal = ({ handleClose, handleDelete }) => {
 				break;
 			case MODAL_DEL.PAGE_TYPE_TEAM_NAME:
 				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}`;
-			case MODAL_DEL.PAGE_TYPE_PARCER_DATA:
-				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}?`;
+				break;
 
 			default:
 				break;

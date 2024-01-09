@@ -43,3 +43,24 @@ ipcMain.handle(CHANNELS.LINES.GET_LINES_LIST, async (event) => {
 		return res;
 	}
 });
+
+ipcMain.handle(CHANNELS.LINES.DELETE_LINES, async (event, dataId) => {
+	try {
+		const res = await axios.delete(`${endPoint}/delete/${dataId}`);
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
+		};
+
+		return resData;
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		return res;
+	}
+});

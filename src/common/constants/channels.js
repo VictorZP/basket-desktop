@@ -36,6 +36,7 @@ export const CHANNELS = {
 	LINES: {
 		GET_LINES: "lines-get",
 		GET_LINES_LIST: "lines-get-list",
+		DELETE_LINES: "lines-delete",
 	},
 	PARSER: {
 		ADD_URL: "parser-add-url",
