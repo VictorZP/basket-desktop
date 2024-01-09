@@ -48,7 +48,7 @@ ipcMain.handle(CHANNELS.PARCER_DATA.DOWNLOAD, async (event, reqData) => {
 			message: err?.response?.data?.message,
 		};
 
-		event.sender.send(CHANNELS.PARCER_DATA.GET_DATA_LIST, res);
+		return res;
 	}
 });
 
