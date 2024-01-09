@@ -65,7 +65,30 @@ const LinesData = () => {
 		setPage(0);
 	};
 
-	const handleClick = (e) => {};
+	// Обработчик загрузки данных
+	const handleClick = async (e) => {
+		const dataId = e.currentTarget.id?.split("_")?.at(1);
+		setIsLoading(true);
+		setSelectedResult({
+			dataId,
+		});
+
+		const res = await ipcRenderer.invoke(CHANNELS.LINES.DOWNLOAD_LINES, {
+			linesId: dataId,
+		});
+
+		if (res?.statusText !== "OK") {
+			enqueueSnackbar(res?.message ?? MESSAGES.ON_DOWNLOAD_LINES_ERR, {
+				variant: "error",
+			});
+			return;
+		}
+
+		setIsLoading(false);
+		setSelectedResult({
+			dataId: "",
+		});
+	};
 
 	//	Открытиые модалки для удаления
 	const openModal = (e) => {

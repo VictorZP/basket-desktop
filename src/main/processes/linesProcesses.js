@@ -22,6 +22,29 @@ ipcMain.on(CHANNELS.LINES.GET_LINES, async (event, paramsData) => {
 	}
 });
 
+ipcMain.handle(CHANNELS.LINES.DOWNLOAD_LINES, async (event, reqData) => {
+	try {
+		const params = new URLSearchParams(reqData);
+		const res = await axios.get(`${endPoint}/download`, { params });
+
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			data: res?.data?.data,
+		};
+
+		return resData;
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		return res;
+	}
+});
+
 ipcMain.handle(CHANNELS.LINES.GET_LINES_LIST, async (event) => {
 	try {
 		const res = await axios.get(`${endPoint}/list`);
