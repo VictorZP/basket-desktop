@@ -7,6 +7,12 @@ export const MESSAGES = {
 	ON_SUCCESS_DELETE: "Линии удалены",
 };
 
+export const LINES_TEXT = {
+	LINES: "Линии",
+	SAVE_MODAL_TITLE: "Сохранение линий",
+	TITLE: "Линии на ",
+};
+
 export const LINES_DATA = {
 	BTN_DOWNLOAD: "Скачать",
 	BTN_DELETE: "Удалить",
