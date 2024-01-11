@@ -80,7 +80,7 @@ const LinesDataTable = ({
 									loading={
 										isLoading &&
 										selectedResult.type === "download" &&
-										selectedResult.dataId === row.id
+										selectedResult.dataId === row.linesId
 									}
 									onClick={handleClick}
 									disabled={row?.successDataValue === 0}
@@ -99,7 +99,7 @@ const LinesDataTable = ({
 									loading={
 										isDelLoading &&
 										selectedResult.type === "delete" &&
-										selectedResult.dataId === row.id
+										selectedResult.dataId === row.linesId
 									}
 									onClick={openModal}
 								>
