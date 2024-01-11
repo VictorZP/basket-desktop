@@ -31,6 +31,9 @@ ipcMain.handle(CHANNELS.LINES.DOWNLOAD_LINES, async (event, reqData) => {
 			status: res?.status,
 			statusText: res?.statusText,
 			data: res?.data?.data,
+			title: res?.data?.title,
+			start: res?.data?.start,
+			end: res?.data?.end,
 		};
 
 		return resData;
