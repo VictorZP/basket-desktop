@@ -28,6 +28,7 @@ import {
 	getOnClickLoading,
 	getIsDataLoading,
 } from "../../../redux/linesData/linesDataSelector.js";
+import { createLinesXlsxFile } from "../../../helpers/functions/lines/createLinesXlsxFile.js";
 
 import "./styles.css";
 import { TEXT } from "./text.js";
@@ -40,6 +41,7 @@ const LinesData = () => {
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [dataList, setDataList] = useState([]);
 	const [selectedResult, setSelectedResult] = useState({
+		type: "",
 		dataId: "",
 	});
 	const [isLoading, setIsLoading] = useState(false);
@@ -67,9 +69,12 @@ const LinesData = () => {
 
 	// Обработчик загрузки данных
 	const handleClick = async (e) => {
+		const type = e.currentTarget.id?.split("_")?.at(0);
 		const dataId = e.currentTarget.id?.split("_")?.at(1);
+
 		setIsLoading(true);
 		setSelectedResult({
+			type,
 			dataId,
 		});
 
@@ -84,14 +89,19 @@ const LinesData = () => {
 			return;
 		}
 
+		//	Creating exel file according to the received data
+		await createLinesXlsxFile(res);
+
 		setIsLoading(false);
 		setSelectedResult({
+			type: "",
 			dataId: "",
 		});
 	};
 
 	//	Открытиые модалки для удаления
 	const openModal = (e) => {
+		const type = e.currentTarget.id?.split("_")?.at(0);
 		const dataId = e.currentTarget.id?.split("_")?.at(1);
 
 		const payload = {
@@ -101,6 +111,7 @@ const LinesData = () => {
 		};
 
 		setSelectedResult({
+			type,
 			dataId,
 		});
 
@@ -130,6 +141,7 @@ const LinesData = () => {
 		});
 
 		setSelectedResult({
+			type: "",
 			dataId: "",
 		});
 	};
