@@ -25,7 +25,7 @@ export const createWarningFile = async (data, fileName) => {
 		5
 	);
 	const linkMaxWidth = dataForWs.reduce(
-		(w, r) => Math.max(w, r.link.length),
+		(w, r) => Math.max(w, r.link?.length || 20),
 		5
 	);
 	ws["!cols"] = [
@@ -39,8 +39,9 @@ export const createWarningFile = async (data, fileName) => {
 	dataForWs?.forEach((row, index) => {
 		if (row?.link) {
 			ws[`D${index + 1}`].l = {
-				Target: row.link,
-				Tooltip: PARCER_TEXT.HYPERLINK_TOOLTIP,
+				Target: typeof row?.link === "string" ? row.link : "",
+				Tooltip:
+					typeof row?.link === "string" ? PARCER_TEXT.HYPERLINK_TOOLTIP : "",
 			};
 		}
 	});
