@@ -1,10 +1,8 @@
-const { app, BrowserWindow, session } = require("electron");
-
-require("update-electron-app")();
+const { app, BrowserWindow } = require("electron");
 
 require("dotenv").config();
 
-require("update-electron-app")();
+const updateApp = require("update-electron-app");
 
 // const { REDUX_EXT_PATH } = process.env;
 
@@ -61,6 +59,14 @@ app.on("activate", () => {
 	if (BrowserWindow.getAllWindows().length === 0) {
 		createWindow();
 	}
+});
+
+// Updater listener
+app.on("ready", () => {
+	updateApp.updateElectronApp({
+		updateInterval: "5 minutes",
+		notifyUser: true,
+	});
 });
 
 // In this file you can include the rest of your app's specific main process
