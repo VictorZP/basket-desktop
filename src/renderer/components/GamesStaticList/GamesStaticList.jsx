@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { Box, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
@@ -19,6 +20,8 @@ import GamesStaticDetailsList from "../GamesStaticDetailsList";
 import { handleUrlAdded } from "../../redux/urlForm/urlFormSlice.js";
 import { getIsUrlAdded } from "../../redux/urlForm/urlFormSelector.js";
 
+import { createLinesXlsxFileNoBets } from "../../helpers/functions/lines/createLinesXlsxFileNoBets.js";
+
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { TEXT } from "./text.js";
@@ -29,6 +32,7 @@ const GamesStaticList = ({ paramsObj }) => {
 	const [games, setGames] = useState([]);
 	const [tempUpdated, setTempUpdated] = useState(false);
 	const [loadingTemp, setLoadingTemp] = useState(false);
+	const [loadingLines, setLoadingLines] = useState(false);
 	const isUrlAdded = useSelector(getIsUrlAdded);
 	const dispatch = useDispatch();
 
@@ -128,6 +132,25 @@ const GamesStaticList = ({ paramsObj }) => {
 		setLoadingTemp(true);
 	};
 
+	//	Download matches without betsApi data (backgroundColor: orange,yellow)
+	const downloadOrangeMatches = async () => {
+		setLoadingLines(true);
+		const dateString = `${paramsObj.day}.${paramsObj.month}.${paramsObj.year}`;
+		const writeResult = await createLinesXlsxFileNoBets(games, dateString);
+
+		if (writeResult?.status === "empty") {
+			enqueueSnackbar(TEXT.LINES_WARNING, {
+				variant: "warning",
+			});
+		} else if (writeResult?.status === "error") {
+			enqueueSnackbar(err?.message ?? TEXT.LINES_ERROR, {
+				variant: "error",
+			});
+		}
+
+		setLoadingLines(false);
+	};
+
 	return (
 		<Box component="section" sx={{ px: 3, py: 1 }}>
 			<Box mb={1}>
@@ -153,17 +176,31 @@ const GamesStaticList = ({ paramsObj }) => {
 					  })
 					: ""}
 			</Box>
-			<Box>
-				<LoadingButton
-					variant="outlined"
-					size="small"
-					loading={loadingTemp}
-					onClick={handleSaveTemp}
-					endIcon={<SendIcon />}
-					loadingPosition="end"
-				>
-					{TEXT.TEMP_BTN}
-				</LoadingButton>
+			<Box sx={{ display: "flex", gap: 5, my: 2 }}>
+				<Box>
+					<LoadingButton
+						variant="outlined"
+						size="small"
+						loading={loadingTemp}
+						onClick={handleSaveTemp}
+						endIcon={<SendIcon />}
+						loadingPosition="end"
+					>
+						{TEXT.TEMP_BTN}
+					</LoadingButton>
+				</Box>
+				<Box>
+					<LoadingButton
+						variant="outlined"
+						size="small"
+						loading={loadingLines}
+						onClick={downloadOrangeMatches}
+						endIcon={<DownloadIcon />}
+						loadingPosition="end"
+					>
+						{TEXT.LINES_BTN}
+					</LoadingButton>
+				</Box>
 			</Box>
 		</Box>
 	);

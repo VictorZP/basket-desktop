@@ -9,8 +9,10 @@ export const MESSAGES = {
 
 export const LINES_TEXT = {
 	LINES: "Линии",
+	ORANGE_LINES: "Оранжевые линии",
 	SAVE_MODAL_TITLE: "Сохранение линий",
 	TITLE: "Линии на ",
+	ORANGE_TITLE: "Оранжевые линии на ",
 };
 
 export const LINES_DATA = {
