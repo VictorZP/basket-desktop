@@ -36,7 +36,14 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 //
-app.on("ready", createWindow);
+app.on("ready", () => {
+	createWindow();
+	// Updater listener
+	updateApp.updateElectronApp({
+		updateInterval: "5 minutes",
+		notifyUser: true,
+	});
+});
 
 // app.on("ready", async () => {
 // 	await session.defaultSession.loadExtension(REDUX_EXT_PATH);
@@ -59,14 +66,6 @@ app.on("activate", () => {
 	if (BrowserWindow.getAllWindows().length === 0) {
 		createWindow();
 	}
-});
-
-// Updater listener
-app.on("ready", () => {
-	updateApp.updateElectronApp({
-		updateInterval: "5 minutes",
-		notifyUser: true,
-	});
 });
 
 // In this file you can include the rest of your app's specific main process
