@@ -1,9 +1,9 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import { useTheme } from "@mui/material/styles";
+import { Box, CssBaseline, useTheme, Typography } from "@mui/material";
+// import CssBaseline from "@mui/material/CssBaseline";
+// import { useTheme } from "@mui/material/styles";
 
 import AppNavBar from "../components/AppNavBar";
 import SideMenu from "../components/SideMenu";
@@ -76,6 +76,10 @@ const HomePage = () => {
 			<Box component="main" sx={{ flexGrow: 1, paddingY: 3 }}>
 				<DrawerHeader />
 				<Suspense fallback={<LoadingSpinner height={"calc(100vh - 128px)"} />}>
+					<Typography sx={{ px: 2 }}>
+						Для начала пользования приложением выберите один из разделов в меню
+						слева.
+					</Typography>
 					<Outlet />
 				</Suspense>
 			</Box>
