@@ -4,6 +4,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { LINES_TEXT } from "../../../constants/lines.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
+import { CYBER_LIST_LINES } from "../../../constants/cyberList.js";
 
 export const createLinesXlsxFileNoBets = async (
 	linesData = [],
@@ -13,7 +14,6 @@ export const createLinesXlsxFileNoBets = async (
 		return { status: "empty" };
 	}
 
-	const cyberArr = [];
 	const dataForFile = [];
 
 	// Filter data to get only games with no bets field or where total is 0
@@ -21,17 +21,8 @@ export const createLinesXlsxFileNoBets = async (
 		(game) => game?.noBets === true || game?.total === 0
 	);
 
-	// Set cyber for file headers
-	filteredData.forEach((item) => {
-		const cyber = item.homeTeam.teamCyber.cyberName;
-
-		if (!cyberArr.includes(cyber)) {
-			cyberArr.push(cyber);
-		}
-	});
-
 	//  Format data for file
-	cyberArr.forEach((cyber) => {
+	CYBER_LIST_LINES.forEach((cyber) => {
 		const filteredGames = filteredData
 			.filter((game) => game.homeTeam.teamCyber.cyberName === cyber)
 			?.sort(
@@ -39,7 +30,9 @@ export const createLinesXlsxFileNoBets = async (
 					a.homeTeam.teamChamp.championshipName -
 					b.homeTeam.teamChamp.championshipName
 			);
-		dataForFile.push({ cyber, events: filteredGames });
+
+		if (filteredGames?.length > 0)
+			dataForFile.push({ cyber, events: filteredGames });
 	});
 
 	const workbook = utils.book_new();

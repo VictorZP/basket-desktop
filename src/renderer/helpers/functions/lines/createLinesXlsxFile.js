@@ -4,6 +4,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { LINES_TEXT } from "../../../constants/lines.js";
 import { CHANNELS } from "../../../../common/constants/channels.js";
+import { CYBER_LIST_LINES } from "../../../constants/cyberList.js";
 
 export const createLinesXlsxFile = async (linesData) => {
 	const workbook = utils.book_new();
@@ -12,8 +13,21 @@ export const createLinesXlsxFile = async (linesData) => {
 	let columnNumber = 0;
 	let maxRows = 0;
 
+	const orderedEventsList = [];
+
+	//	Order events by cyber name
+	CYBER_LIST_LINES.forEach((cyberName) => {
+		const cyberEvents = linesData.data.find(
+			(item) => item.cyberName === cyberName
+		);
+
+		if (cyberEvents?.events?.length > 0) {
+			orderedEventsList.push(cyberEvents);
+		}
+	});
+
 	// Set cyber names as headers in the first row
-	linesData.data.forEach((item) => {
+	orderedEventsList.forEach((item) => {
 		// Check if the events array is not empty
 		if (item.events.length > 0) {
 			let rowsCounter = 0;
