@@ -43,6 +43,7 @@ export const createLinesXlsxFileNoBets = async (
 
 	dataForFile.forEach((item) => {
 		let rowsCounter = 0;
+		let orderedIndex = 1; // Index for ordered events
 
 		// Set cyber name as header
 		let cell = { v: item.cyber, t: "s" };
@@ -50,60 +51,63 @@ export const createLinesXlsxFileNoBets = async (
 		worksheet[cellRef] = cell;
 
 		// Set event info as rows
-		item.events.forEach((event, index) => {
+		item.events.forEach((event) => {
 			if (rowsCounter === 15) {
 				const emptyCell = { v: "", t: "s" };
 				const emptyCellRef = utils.encode_cell({
-					r: index + 1,
+					r: orderedIndex,
 					c: columnNumber,
 				});
 				worksheet[emptyCellRef] = emptyCell;
+
 				rowsCounter = 0;
-			} else {
-				const champCell = {
-					v: event?.homeTeam?.teamChamp?.championshipName,
-					t: "s",
-				};
-				const homeTeamCell = {
-					v: event?.homeTeam?.teamName,
-					t: "s",
-				};
-				const awayTeamCell = {
-					v: event?.awayTeam?.teamName,
-					t: "s",
-				};
-				const handicapCell = { v: "-", t: "s" };
-				const OUCell = { v: "-", t: "s" };
-
-				const champCellRef = utils.encode_cell({
-					r: index + 1,
-					c: columnNumber,
-				});
-				const homeTeamCellRef = utils.encode_cell({
-					r: index + 1,
-					c: columnNumber + 1,
-				});
-				const awayTeamCellRef = utils.encode_cell({
-					r: index + 1,
-					c: columnNumber + 2,
-				});
-				const handicapCellRef = utils.encode_cell({
-					r: index + 1,
-					c: columnNumber + 3,
-				});
-				const OUCellRef = utils.encode_cell({
-					r: index + 1,
-					c: columnNumber + 4,
-				});
-
-				worksheet[champCellRef] = champCell;
-				worksheet[homeTeamCellRef] = homeTeamCell;
-				worksheet[awayTeamCellRef] = awayTeamCell;
-				worksheet[handicapCellRef] = handicapCell;
-				worksheet[OUCellRef] = OUCell;
-
-				rowsCounter += 1;
+				orderedIndex += 1;
 			}
+
+			const champCell = {
+				v: event?.homeTeam?.teamChamp?.championshipName,
+				t: "s",
+			};
+			const homeTeamCell = {
+				v: event?.homeTeam?.teamName,
+				t: "s",
+			};
+			const awayTeamCell = {
+				v: event?.awayTeam?.teamName,
+				t: "s",
+			};
+			const handicapCell = { v: "-", t: "s" };
+			const OUCell = { v: "-", t: "s" };
+
+			const champCellRef = utils.encode_cell({
+				r: orderedIndex,
+				c: columnNumber,
+			});
+			const homeTeamCellRef = utils.encode_cell({
+				r: orderedIndex,
+				c: columnNumber + 1,
+			});
+			const awayTeamCellRef = utils.encode_cell({
+				r: orderedIndex,
+				c: columnNumber + 2,
+			});
+			const handicapCellRef = utils.encode_cell({
+				r: orderedIndex,
+				c: columnNumber + 3,
+			});
+			const OUCellRef = utils.encode_cell({
+				r: orderedIndex,
+				c: columnNumber + 4,
+			});
+
+			worksheet[champCellRef] = champCell;
+			worksheet[homeTeamCellRef] = homeTeamCell;
+			worksheet[awayTeamCellRef] = awayTeamCell;
+			worksheet[handicapCellRef] = handicapCell;
+			worksheet[OUCellRef] = OUCell;
+
+			rowsCounter += 1;
+			orderedIndex += 1;
 		});
 
 		columnNumber += 6;
