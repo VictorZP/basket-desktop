@@ -53,6 +53,7 @@ export const MATCHES_SETTINGS = {
 		CELL_FIBALIVE_NAME: "Название fibalive",
 		CELL_BETSAPI_NAME: "Название betsapi",
 		CELL_OTHER_NAME: "Название с сайта",
+		CELL_NO_BETS_LIST: "Отсутствует на betsApi",
 		DEL_BTN_NAME: "delChampionship",
 		EDIT_BTN_NAME: "editChampionship",
 		ACCORDION_NAME: "champTableAccordion",

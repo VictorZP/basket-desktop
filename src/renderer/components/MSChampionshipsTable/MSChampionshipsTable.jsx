@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Table, TableBody, TableHead, TableRow } from "@mui/material";
+import { Box, Table, TableBody, TableHead, TableRow } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 
 import TableBtnStack from "../TableBtnStack";
 import {
@@ -18,9 +19,17 @@ const MSChampionshipsTable = ({
 		<Table aria-label="championship table">
 			<TableHead>
 				<TableRow>
-					{headerList.map((name) => (
-						<StyledTableCell key={name}>{name}</StyledTableCell>
-					))}
+					{headerList.map((name, index) => {
+						if (index === 0) {
+							return (
+								<StyledTableCell key={index} sx={{ width: 100 }}>
+									{name}
+								</StyledTableCell>
+							);
+						} else {
+							return <StyledTableCell key={index}>{name}</StyledTableCell>;
+						}
+					})}
 				</TableRow>
 			</TableHead>
 			<TableBody>
@@ -31,6 +40,17 @@ const MSChampionshipsTable = ({
 						<StyledTableCell>{row?.fibaliveName ?? ""}</StyledTableCell>
 						<StyledTableCell>{row?.betsapiName ?? ""}</StyledTableCell>
 						<StyledTableCell>{row?.otherSiteName ?? ""}</StyledTableCell>
+						<StyledTableCell>
+							<Box
+								sx={{
+									display: "flex",
+									alignItems: "center",
+									justifyContent: "center",
+								}}
+							>
+								{row?.noBetsList ? <CheckIcon color="success" /> : ""}
+							</Box>
+						</StyledTableCell>
 						<StyledTableCell>
 							<TableBtnStack {...btnStackProps} btnId={row?.championshipId} />
 						</StyledTableCell>
