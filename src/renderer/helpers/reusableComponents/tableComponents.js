@@ -19,22 +19,22 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 		width: 170,
 	},
 
-	"&:nth-child(2)": {
+	"&:nth-of-type(2)": {
 		width: 160,
 	},
 
-	"&:nth-child(3)": {
+	"&:nth-of-type(3)": {
 		width: 250,
 	},
 
-	"&:nth-child(4)": {
+	"&:nth-of-type(4)": {
 		width: 250,
 	},
-	"&:nth-child(4)": {
+	"&:nth-of-type(4)": {
 		width: 230,
 	},
 
-	"&:nth-child(6)": {
+	"&:nth-of-type(6)": {
 		width: 140,
 	},
 
