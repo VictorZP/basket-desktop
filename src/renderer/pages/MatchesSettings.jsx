@@ -169,6 +169,7 @@ const MatchesSettings = () => {
 					otherSiteName: championship?.otherSiteName ?? "",
 					cyberName: championship?.cyber?.name ?? "",
 					cyberId: championship?.cyberId ?? "",
+					noBetsList: championship?.noBetsList ?? false,
 				};
 				dispatch(setChampData(champPayload));
 				dispatch(handleEditChamp(true));

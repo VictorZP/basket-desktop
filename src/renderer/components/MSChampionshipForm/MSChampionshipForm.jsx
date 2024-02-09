@@ -68,6 +68,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 				betsapiName: champData?.betsapiName,
 				otherSiteName: champData?.otherSiteName,
 				cyberId: champData?.cyberId,
+				noBetsList: champData?.noBetsList,
 			});
 		}
 	}, [onEdit, champData]);
