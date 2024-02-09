@@ -29,6 +29,7 @@ import {
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
 const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
+	console.log("🚀 ~ champList:", champList);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [filteredList, setFilteredList] = useState([]);
@@ -177,6 +178,7 @@ MSChampionships.propTypes = {
 			fibaliveName: PropTypes.string,
 			betsapiName: PropTypes.string,
 			otherSiteName: PropTypes.string,
+			noBetsList: PropTypes.bool,
 			owner: PropTypes.string,
 		})
 	),
