@@ -76,7 +76,11 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 
 				const filterRes = champList.filter(
 					(champ) =>
-						regex.test(champ.cyber.name) || regex.test(champ.championshipName)
+						regex.test(champ.cyber.name) ||
+						regex.test(champ.championshipName) ||
+						regex.test(champ.fibaliveName) ||
+						regex.test(champ.betsapiName) ||
+						regex.test(champ.otherSiteName)
 				);
 
 				setPage(0);
