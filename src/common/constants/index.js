@@ -41,6 +41,7 @@ export const MATCHES_SETTINGS = {
 		FIBALIVE_NAME_INPUT: "Название fibalive",
 		BETSAPI_NAME_INPUT: "Название betsApi",
 		OTHER_SITE_NAME_INPUT: "Название с сайта",
+		NO_BETS_CHECKBOX: "Без Bets",
 		BTN_ADD: "Добавить",
 		BTN_UPD: "Обновить",
 		CHAMP_ADDED: "Чемпионат добавлен.",

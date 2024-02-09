@@ -6,11 +6,13 @@ import {
 	Box,
 	Typography,
 	FormControl,
+	FormControlLabel,
 	InputLabel,
 	Select,
 	MenuItem,
 	TextField,
 	IconButton,
+	Checkbox,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -38,6 +40,7 @@ const initialData = {
 	betsapiName: "",
 	otherSiteName: "",
 	cyberId: "",
+	noBetsList: false,
 };
 
 const MSChampionshipForm = ({ cyberList }) => {
@@ -151,6 +154,15 @@ const MSChampionshipForm = ({ cyberList }) => {
 					otherSiteName: inputValue,
 				}));
 				break;
+			case "noBetsCheckbox": {
+				const isChecked = e?.target?.checked;
+
+				setChamp((prevState) => ({
+					...prevState,
+					noBetsList: isChecked,
+				}));
+				break;
+			}
 			default:
 				break;
 		}
@@ -188,7 +200,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 		<Box sx={{ paddingX: 3, paddingY: 1 }}>
 			<Typography variant="h5">{CHAMPIONSHIP_FORM.TITLE}</Typography>
 			<StyledChampSettingsBox component={"form"} onSubmit={handleFormSubmit}>
-				<FormControl required size="small" sx={{}}>
+				<FormControl required size="small" sx={{ gridColumn: "1" }}>
 					<InputLabel id="cyber-select-label">
 						{CHAMPIONSHIP_FORM.SELECT_LABEL}
 					</InputLabel>
@@ -202,13 +214,14 @@ const MSChampionshipForm = ({ cyberList }) => {
 					>
 						{options?.map((opt) => {
 							return (
-								<MenuItem key={opt?.id} value={opt?.value} sx={{}}>
+								<MenuItem key={opt?.id} value={opt?.value}>
 									{opt?.label}
 								</MenuItem>
 							);
 						})}
 					</Select>
 				</FormControl>
+				<Box sx={{ gridColumn: "span 6" }} />
 				<FormControl>
 					<TextField
 						required
@@ -248,6 +261,20 @@ const MSChampionshipForm = ({ cyberList }) => {
 						variant="outlined"
 						size="small"
 						onChange={handleChange}
+					/>
+				</FormControl>
+				<FormControl sx={{ justifyContent: "center" }}>
+					<FormControlLabel
+						sx={{ mx: "auto" }}
+						control={
+							<Checkbox
+								name="noBetsCheckbox"
+								onChange={handleChange}
+								checked={champ.noBetsList}
+							/>
+						}
+						labelPlacement="start"
+						label={CHAMPIONSHIP_FORM.NO_BETS_CHECKBOX}
 					/>
 				</FormControl>
 				<LoadingButton
