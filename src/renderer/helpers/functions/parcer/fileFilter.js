@@ -31,7 +31,6 @@ const fileFilter = async (file, filterArr = []) => {
 			const filteredMatches = [];
 
 			const groupName = `${obj?.base} ${obj?.group}`;
-
 			// массив отфильтрованих по группам чемпионтаов
 			const sortedArr = filterArr?.filter((item) => {
 				return item?.baseName === obj?.base && item?.group === obj?.group;
@@ -43,17 +42,21 @@ const fileFilter = async (file, filterArr = []) => {
 				sortedArr?.forEach((sortGroup) => {
 					// отфильрованные с файла матчи
 					const matches = data?.filter((item) => {
-						return item?.includes(sortGroup.champName);
+						return (
+							item?.[1]?.toLowerCase() === sortGroup.champName.toLowerCase()
+						);
 					});
 
 					filteredMatches.push(...matches);
 				});
 			}
 
-			const wbSheets = utils.aoa_to_sheet([...filteredMatches], {
-				skipHeader: true,
-			});
-			utils.book_append_sheet(filteredWb, wbSheets, groupName);
+			if (filteredMatches?.length !== 0) {
+				const wbSheets = utils.aoa_to_sheet([...filteredMatches], {
+					skipHeader: true,
+				});
+				utils.book_append_sheet(filteredWb, wbSheets, groupName);
+			}
 		});
 
 		const date = new Date();
