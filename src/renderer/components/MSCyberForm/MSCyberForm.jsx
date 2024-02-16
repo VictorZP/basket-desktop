@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
 import { Box, Typography, TextField } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 
+import SaveBtn from "../../ui/SaveBtn.jsx";
 import IconBtn from "../../ui/iconBtn.jsx";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
@@ -152,15 +152,7 @@ const MSCyberForm = () => {
 					onChange={handleNameChange}
 					sx={{ mr: 2 }}
 				/>
-				<LoadingButton
-					type="submit"
-					loading={loading}
-					variant="outlined"
-					disabled={!cyberName}
-					sx={{ mr: 2, width: 110 }}
-				>
-					{!onEdit ? CYBER_FORM.BTN_ADD : CYBER_FORM.BTN_UPD}
-				</LoadingButton>
+				<SaveBtn isDisabled={!cyberName} isLoading={loading} onEdit={onEdit} />
 				<IconBtn onClearBtn={onClearBtn} isDisabled={!cyberName} />
 			</Box>
 		</Box>

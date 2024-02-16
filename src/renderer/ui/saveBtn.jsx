@@ -5,14 +5,14 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import { MATCHES_SETTINGS } from "../../common/constants/index.js";
 
-const SaveBtn = ({ champ, isLoading, onEdit }) => {
+const SaveBtn = ({ isDisabled, isLoading, onEdit }) => {
 	const { BUTTON } = MATCHES_SETTINGS;
 	return (
 		<LoadingButton
 			type="submit"
 			loading={isLoading}
 			variant="outlined"
-			disabled={!champ?.cyberId || !champ?.championshipName}
+			disabled={isDisabled}
 		>
 			{!onEdit ? BUTTON.ADD : BUTTON.EDIT}
 		</LoadingButton>
@@ -20,9 +20,9 @@ const SaveBtn = ({ champ, isLoading, onEdit }) => {
 };
 
 SaveBtn.propTypes = {
-	champ: PropTypes.object,
+	isDisabled: PropTypes.bool,
 	isLoading: PropTypes.bool,
-	onEdit: PropTypes.bool,
+	onEdit: PropTypes.bool.isRequired,
 };
 
 export default SaveBtn;

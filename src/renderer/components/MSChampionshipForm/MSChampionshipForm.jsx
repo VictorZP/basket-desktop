@@ -11,7 +11,6 @@ import {
 	Select,
 	MenuItem,
 	TextField,
-	IconButton,
 	Checkbox,
 } from "@mui/material";
 
@@ -280,7 +279,11 @@ const MSChampionshipForm = ({ cyberList }) => {
 						label={CHAMPIONSHIP_FORM.NO_BETS_CHECKBOX}
 					/>
 				</FormControl>
-				<SaveBtn champ={champ} isLoading={isLoading} onEdit={onEdit} />
+				<SaveBtn
+					isLoading={isLoading}
+					onEdit={onEdit}
+					isDisabled={!champ?.cyberId || !champ?.championshipName}
+				/>
 				<IconBtn onClearBtn={onClearBtn} isDisabled={isDisabled} />
 			</StyledChampSettingsBox>
 		</Box>

@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Box, FormControl, TextField } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
 
+import SaveBtn from "../../ui/SaveBtn.jsx";
 import IconBtn from "../../ui/iconBtn.jsx";
 
 import { getTeamEditStatus } from "../../redux/matchSettings/matchSettingSelector.js";
@@ -95,14 +95,11 @@ const TeamFormInputStack = ({
 					disabled={!isInputDisabled && !onEdit}
 				/>
 			</FormControl>
-			<LoadingButton
-				type="submit"
-				loading={isLoading}
-				variant="outlined"
-				disabled={!isAddBtnDisabled}
-			>
-				{!onEdit ? TEAM_NAMES_FORM.BTN_ADD : TEAM_NAMES_FORM.BTN_UPD}
-			</LoadingButton>
+			<SaveBtn
+				isLoading={isLoading}
+				onEdit={onEdit}
+				isDisabled={!isAddBtnDisabled}
+			/>
 			<IconBtn isDisabled={!isClearBtnDisabled} onClearBtn={onClearBtn} />
 		</Box>
 	);
