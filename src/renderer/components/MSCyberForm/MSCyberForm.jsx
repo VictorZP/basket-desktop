@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
-import { Box, Typography, TextField, IconButton } from "@mui/material";
+import { Box, Typography, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import ClearIcon from "@mui/icons-material/Clear";
+
+import IconBtn from "../../ui/iconBtn.jsx";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
@@ -160,15 +161,7 @@ const MSCyberForm = () => {
 				>
 					{!onEdit ? CYBER_FORM.BTN_ADD : CYBER_FORM.BTN_UPD}
 				</LoadingButton>
-				<IconButton
-					size="small"
-					sx={{ width: 35 }}
-					color="error"
-					disabled={!cyberName}
-					onClick={onClearBtn}
-				>
-					<ClearIcon />
-				</IconButton>
+				<IconBtn onClearBtn={onClearBtn} isDisabled={!cyberName} />
 			</Box>
 		</Box>
 	);

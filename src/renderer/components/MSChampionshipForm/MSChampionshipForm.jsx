@@ -14,9 +14,9 @@ import {
 	IconButton,
 	Checkbox,
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
-import ClearIcon from "@mui/icons-material/Clear";
 
+import SaveBtn from "../../ui/SaveBtn.jsx";
+import IconBtn from "../../ui/iconBtn.jsx";
 import { StyledChampSettingsBox } from "../../helpers/reusableComponents/addChampionships.js";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
@@ -197,6 +197,8 @@ const MSChampionshipForm = ({ cyberList }) => {
 		}
 	};
 
+	const isDisabled = !champ?.cyberId || !champ?.championshipName;
+
 	return (
 		<Box sx={{ paddingX: 3, paddingY: 1 }}>
 			<Typography variant="h5">{CHAMPIONSHIP_FORM.TITLE}</Typography>
@@ -278,23 +280,8 @@ const MSChampionshipForm = ({ cyberList }) => {
 						label={CHAMPIONSHIP_FORM.NO_BETS_CHECKBOX}
 					/>
 				</FormControl>
-				<LoadingButton
-					type="submit"
-					loading={isLoading}
-					variant="outlined"
-					disabled={!champ?.cyberId || !champ?.championshipName}
-				>
-					{!onEdit ? CHAMPIONSHIP_FORM.BTN_ADD : CHAMPIONSHIP_FORM.BTN_UPD}
-				</LoadingButton>
-				<IconButton
-					size="small"
-					sx={{ width: 35 }}
-					color="error"
-					disabled={!champ?.cyberId || !champ?.championshipName}
-					onClick={onClearBtn}
-				>
-					<ClearIcon />
-				</IconButton>
+				<SaveBtn champ={champ} isLoading={isLoading} onEdit={onEdit} />
+				<IconBtn onClearBtn={onClearBtn} isDisabled={isDisabled} />
 			</StyledChampSettingsBox>
 		</Box>
 	);

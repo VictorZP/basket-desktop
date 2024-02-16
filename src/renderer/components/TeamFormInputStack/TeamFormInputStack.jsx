@@ -2,9 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-import { Box, FormControl, TextField, IconButton } from "@mui/material";
+import { Box, FormControl, TextField } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import ClearIcon from "@mui/icons-material/Clear";
+
+import IconBtn from "../../ui/iconBtn.jsx";
 
 import { getTeamEditStatus } from "../../redux/matchSettings/matchSettingSelector.js";
 
@@ -102,15 +103,7 @@ const TeamFormInputStack = ({
 			>
 				{!onEdit ? TEAM_NAMES_FORM.BTN_ADD : TEAM_NAMES_FORM.BTN_UPD}
 			</LoadingButton>
-			<IconButton
-				size="small"
-				sx={{ width: 35 }}
-				color="error"
-				disabled={!isClearBtnDisabled}
-				onClick={onClearBtn}
-			>
-				<ClearIcon />
-			</IconButton>
+			<IconBtn isDisabled={!isClearBtnDisabled} onClearBtn={onClearBtn} />
 		</Box>
 	);
 };
