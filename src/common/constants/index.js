@@ -98,6 +98,10 @@ export const MATCHES_SETTINGS = {
 		ON_ERROR_TEAM_NAME_DEL: "Ошибка при удалении названия команды.",
 	},
 	REGEX: { ONE: /\\|\*|\?/g, TWO: /\(/g, THREE: /\)/g },
+	BUTTON: {
+		ADD: "Добавить",
+		EDIT: "Редактировать",
+	},
 };
 
 export const TOOLTIPS = {
