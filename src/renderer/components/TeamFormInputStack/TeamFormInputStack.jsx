@@ -22,7 +22,6 @@ const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
 	const teamData = useSelector(getTeamData);
 	const selectedChamp = useSelector(getSelectedChamp);
 	const isLoading = useSelector(getTeamLoadingStatus);
-	console.log("🚀 ~ isLoading:", isLoading);
 
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
 
