@@ -72,15 +72,13 @@ const MSTeamNameForm = ({ cyberList }) => {
 
 	// Edit team data
 	useEditTeam(
-		teamData,
 		setCyberId,
 		setSelectedChamp,
 		INITIAL_CHAMP_DATA,
 		champShortList,
 		generateChampOptions,
 		setTeamNames,
-		cyberId,
-		onEdit
+		cyberId
 	);
 
 	//  Handle add team response
