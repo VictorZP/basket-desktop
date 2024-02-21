@@ -14,3 +14,16 @@ export const CONSTANTS = {
 		FP: "filter page",
 	},
 };
+
+export const INITIAL_TEAM_DATA = {
+	teamName: "",
+	fibaliveTeamName: "",
+	betsapiTeamName: "",
+	otherSiteTeamName: "",
+};
+
+export const INITIAL_CHAMP_DATA = {
+	id: "",
+	value: "",
+	label: "",
+};
