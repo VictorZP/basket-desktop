@@ -11,7 +11,6 @@ import TeamFormSelectStack from "../TeamFormSelectStack";
 import TeamFormInputStack from "../TeamFormInputStack";
 
 import {
-	handleAddTeam,
 	handleEditTeam,
 	setTeamData,
 	refreshTeamData,
@@ -26,6 +25,7 @@ import {
 	useEditTeam,
 	useHandleTeamAdd,
 	useGetShortChampList,
+	useHandleAfterTeamEdit,
 } from "../../hooks/teamNamesForm/index.js";
 
 import {
@@ -91,36 +91,15 @@ const MSTeamNameForm = ({ cyberList }) => {
 		}
 	}, [cyberId]);
 
-	useEffect(() => {
-		ipcRenderer.on(CHANNELS.TEAM_NAME.EDIT_NAME, (event, arg) => {
-			if (arg?.statusCode === 409) {
-				enqueueSnackbar(arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
-					variant: "warning",
-				});
-				setIsLoading(false);
-				return;
-			}
-			if (arg?.statusText !== "OK") {
-				enqueueSnackbar(
-					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
-					{
-						variant: "error",
-					}
-				);
-				setIsLoading(false);
-				return;
-			}
-			dispatch(handleAddTeam(true));
-			dispatch(handleEditTeam(false));
-			dispatch(refreshTeamData());
-
-			enqueueSnackbar(TEAM_NAMES_FORM.UPDATED, { variant: "success" });
-			setTeamNames(INITIAL_TEAM_DATA);
-			setSelectedChamp(INITIAL_CHAMP_DATA);
-			setCyberId("");
-			setIsLoading(false);
-		});
-	}, []);
+	// After edit team handler
+	useHandleAfterTeamEdit(
+		INITIAL_TEAM_DATA,
+		INITIAL_CHAMP_DATA,
+		setTeamNames,
+		setSelectedChamp,
+		setIsLoading,
+		setCyberId
+	);
 
 	const options = cyberList?.map((el) => {
 		return {

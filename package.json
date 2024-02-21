@@ -1,7 +1,7 @@
 {
 	"name": "basket-desktop",
 	"productName": "Who wins",
-	"version": "1.7.10",
+	"version": "1.7.11",
 	"description": "Application for tracking matches scores",
 	"main": ".webpack/main",
 	"repository": "https://github.com/VictorZP/basket-desktop",
@@ -15,7 +15,7 @@
 	"keywords": [],
 	"author": {
 		"name": "Yevhen Bakhtizin",
-		"email": "eugenbah@gmail.com"
+		"email": "yevhenbakhtizin@gmail.com"
 	},
 	"license": "MIT",
 	"devDependencies": {
