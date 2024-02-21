@@ -23,8 +23,9 @@ import {
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import {
-	useGetShortChampList,
 	useEditTeam,
+	useHandleTeamAdd,
+	useGetShortChampList,
 } from "../../hooks/teamNamesForm/index.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
@@ -90,34 +91,15 @@ const MSTeamNameForm = ({ cyberList }) => {
 		onEdit
 	);
 
+	//  Handle add team response
+	useHandleTeamAdd(setIsLoading, setTeamNames, initialData);
+
 	// Forming options for championship select
 	useEffect(() => {
 		if (cyberId) {
 			generateChampOptions();
 		}
 	}, [cyberId]);
-
-	// получение ответа при добавление команды
-	useEffect(() => {
-		ipcRenderer.on(CHANNELS.TEAM_NAME.ADD_NAME, (e, arg) => {
-			if (arg?.statusText !== "Created") {
-				enqueueSnackbar(
-					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
-					{
-						variant: "error",
-					}
-				);
-				setIsLoading(false);
-				return;
-			}
-			dispatch(handleAddTeam(true));
-			enqueueSnackbar(arg?.message ?? TEAM_NAMES_FORM.ADDED, {
-				variant: "success",
-			});
-			setTeamNames(initialData);
-			setIsLoading(false);
-		});
-	}, []);
 
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.TEAM_NAME.EDIT_NAME, (event, arg) => {

@@ -1,4 +1,5 @@
-import { useGetShortChampList } from "./useGetShortChampList";
 import { useEditTeam } from "./useEditTeam";
+import { useHandleTeamAdd } from "./useHandleTeamAdd";
+import { useGetShortChampList } from "./useGetShortChampList";
 
-export { useGetShortChampList, useEditTeam };
+export { useEditTeam, useHandleTeamAdd, useGetShortChampList };
