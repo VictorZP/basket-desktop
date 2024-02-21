@@ -174,18 +174,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 		}
 	};
 
-	const formSelectStackProps = {
-		pageType: CONSTANTS.PAGE_TYPE.MS,
-		cyberOptions: options,
-		champOptions,
-		handleChange,
-	};
-
-	const formInputStackProps = {
-		handleTeamNames: handleChange,
-		onClearBtn,
-	};
-
 	return (
 		<Box sx={{ paddingX: 3, paddingY: 1 }}>
 			<Typography variant="h5">{TEAM_NAMES_FORM.TITLE}</Typography>
@@ -194,8 +182,16 @@ const MSTeamNameForm = ({ cyberList }) => {
 				onSubmit={handleSubmit}
 				sx={{ maxWidth: "1300px" }}
 			>
-				<TeamFormSelectStack {...formSelectStackProps} />
-				<TeamFormInputStack {...formInputStackProps} />
+				<TeamFormSelectStack
+					pageType={CONSTANTS.PAGE_TYPE.MS}
+					cyberOptions={options}
+					champOptions={champOptions}
+					handleChange={handleChange}
+				/>
+				<TeamFormInputStack
+					handleTeamNames={handleChange}
+					onClearBtn={onClearBtn}
+				/>
 			</Box>
 		</Box>
 	);
