@@ -22,7 +22,10 @@ import {
 	getTeamData,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
-import { useGetShortChampList } from "../../hooks/teamNamesForm/index.js";
+import {
+	useGetShortChampList,
+	useEditTeam,
+} from "../../hooks/teamNamesForm/index.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
@@ -74,7 +77,20 @@ const MSTeamNameForm = ({ cyberList }) => {
 	// Get short list of championships
 	useGetShortChampList(setChampShortList, champAddStatus);
 
-	// формирование опций для выбора чампионата
+	// Edit team data
+	useEditTeam(
+		teamData,
+		setCyberId,
+		setSelectedChamp,
+		initialChamp,
+		champShortList,
+		generateChampOptions,
+		setTeamNames,
+		cyberId,
+		onEdit
+	);
+
+	// Forming options for championship select
 	useEffect(() => {
 		if (cyberId) {
 			generateChampOptions();
@@ -103,33 +119,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 		});
 	}, []);
 
-	//редактирование команды
-	useEffect(() => {
-		if (teamData?.teamId) {
-			setCyberId(teamData?.cyberId);
-			setSelectedChamp(initialChamp);
-			const champ = champShortList?.find(({ championshipId }) => {
-				return championshipId === teamData?.championshipId;
-			});
-
-			const champData = {
-				id: champ?.championshipId ?? "",
-				value: champ?.championshipId ?? "",
-				label: champ?.championshipName ?? "",
-			};
-
-			const teamEditData = {
-				teamName: teamData?.teamName,
-				fibaliveTeamName: teamData?.fibaliveTeamName,
-				betsapiTeamName: teamData?.betsapiTeamName,
-				otherSiteTeamName: teamData?.otherSiteTeamName,
-			};
-
-			generateChampOptions();
-			setSelectedChamp(champData);
-			setTeamNames(teamEditData);
-		}
-	}, [cyberId, onEdit, teamData]);
 	useEffect(() => {
 		ipcRenderer.on(CHANNELS.TEAM_NAME.EDIT_NAME, (event, arg) => {
 			if (arg?.statusCode === 409) {
