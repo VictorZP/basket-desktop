@@ -10,13 +10,15 @@ import {
 	refreshTeamData,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 
+import {
+	INITIAL_TEAM_DATA,
+	INITIAL_CHAMP_DATA,
+} from "../../constants/teamNameFormConstants.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
 // Handler for after editing team
 export const useHandleAfterTeamEdit = (
-	initialTeamData,
-	initialChampData,
 	setTeamNames,
 	setSelectedChamp,
 	setIsLoading,
@@ -50,8 +52,8 @@ export const useHandleAfterTeamEdit = (
 			dispatch(refreshTeamData());
 
 			enqueueSnackbar(TEAM_NAMES_FORM.UPDATED, { variant: "success" });
-			setTeamNames(initialTeamData);
-			setSelectedChamp(initialChampData);
+			setTeamNames(INITIAL_TEAM_DATA);
+			setSelectedChamp(INITIAL_CHAMP_DATA);
 			setCyberId("");
 			setIsLoading(false);
 		});

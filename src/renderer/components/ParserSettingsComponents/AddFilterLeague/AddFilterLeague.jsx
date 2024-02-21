@@ -12,7 +12,7 @@ import TeamFormSelectStack from "../../TeamFormSelectStack";
 import { useGetAllCyber } from "../../../hooks/msPage";
 
 import { CHANNELS } from "../../../../common/constants/channels.js";
-import { CONSTANTS } from "../../MSTeamNameForm/constants.js";
+import { CONSTANTS } from "../../../constants/teamNameFormConstants.js";
 import { TEXT, INITIAL_CHAMP } from "./text.js";
 
 const AddFilterLeague = ({

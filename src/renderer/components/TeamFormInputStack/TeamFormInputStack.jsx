@@ -10,7 +10,7 @@ import IconBtn from "../../ui/iconBtn.jsx";
 import { getTeamEditStatus } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
-import { CONSTANTS } from "../MSTeamNameForm/constants.js";
+import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 
 const TeamFormInputStack = ({
 	teamNames,

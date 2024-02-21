@@ -32,7 +32,7 @@ import {
 	CONSTANTS,
 	INITIAL_TEAM_DATA,
 	INITIAL_CHAMP_DATA,
-} from "./constants.js";
+} from "../../constants/teamNameFormConstants.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 
@@ -74,7 +74,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 	useEditTeam(
 		setCyberId,
 		setSelectedChamp,
-		INITIAL_CHAMP_DATA,
 		champShortList,
 		generateChampOptions,
 		setTeamNames,
@@ -82,7 +81,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 	);
 
 	//  Handle add team response
-	useHandleTeamAdd(setIsLoading, setTeamNames, INITIAL_TEAM_DATA);
+	useHandleTeamAdd(setIsLoading, setTeamNames);
 
 	// Forming options for championship select
 	useEffect(() => {
@@ -93,8 +92,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 
 	// After edit team handler
 	useHandleAfterTeamEdit(
-		INITIAL_TEAM_DATA,
-		INITIAL_CHAMP_DATA,
 		setTeamNames,
 		setSelectedChamp,
 		setIsLoading,
@@ -172,7 +169,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 				betsapiTeamName: teamNames?.betsapiTeamName,
 				otherSiteTeamName: teamNames?.otherSiteTeamName,
 			};
-
 			if (onEdit) {
 				const updateData = {
 					data: { ...reqData },

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
-import { CONSTANTS } from "../MSTeamNameForm/constants.js";
+import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 import { STYLES } from "./style.js";
 
 const ITEM_HEIGHT = 50;

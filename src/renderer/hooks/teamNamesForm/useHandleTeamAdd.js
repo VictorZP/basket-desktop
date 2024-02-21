@@ -8,9 +8,10 @@ import { handleAddTeam } from "../../redux/matchSettings/matchSettingsSlice.js";
 
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { INITIAL_TEAM_DATA } from "../../constants/teamNameFormConstants.js";
 
 // Hook for handle team add response
-export const useHandleTeamAdd = (setIsLoading, setTeamNames, initialData) => {
+export const useHandleTeamAdd = (setIsLoading, setTeamNames) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -29,7 +30,7 @@ export const useHandleTeamAdd = (setIsLoading, setTeamNames, initialData) => {
 			enqueueSnackbar(arg?.message ?? TEAM_NAMES_FORM.ADDED, {
 				variant: "success",
 			});
-			setTeamNames(initialData);
+			setTeamNames(INITIAL_TEAM_DATA);
 			setIsLoading(false);
 		});
 	}, []);

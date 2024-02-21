@@ -6,11 +6,12 @@ import {
 	getTeamEditStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
+import { INITIAL_CHAMP_DATA } from "../../constants/teamNameFormConstants.js";
+
 // Hook for editing team data
 export const useEditTeam = (
 	setId,
 	setSelectedChamp,
-	initialChamp,
 	champShortList,
 	generateChampOptions,
 	setTeamNames,
@@ -22,7 +23,7 @@ export const useEditTeam = (
 	useEffect(() => {
 		if (teamData?.teamId) {
 			setId(teamData?.cyberId);
-			setSelectedChamp(initialChamp);
+			setSelectedChamp(INITIAL_CHAMP_DATA);
 			const champ = champShortList?.find(({ championshipId }) => {
 				return championshipId === teamData?.championshipId;
 			});
