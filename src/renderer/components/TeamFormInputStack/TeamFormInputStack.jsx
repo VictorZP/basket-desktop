@@ -7,38 +7,41 @@ import { Box, FormControl, TextField } from "@mui/material";
 import SaveBtn from "../../ui/SaveBtn.jsx";
 import IconBtn from "../../ui/iconBtn.jsx";
 
-import { getTeamEditStatus } from "../../redux/matchSettings/matchSettingSelector.js";
+import {
+	getTeamData,
+	getSelectedChamp,
+	getTeamEditStatus,
+	getTeamLoadingStatus,
+} from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 
-const TeamFormInputStack = ({
-	teamNames,
-	cyberId,
-	selectedId,
-	isLoading,
-	handleTeamNames,
-	onClearBtn,
-}) => {
+const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
 	const onEdit = useSelector(getTeamEditStatus);
+	const teamData = useSelector(getTeamData);
+	const selectedChamp = useSelector(getSelectedChamp);
+	const isLoading = useSelector(getTeamLoadingStatus);
+	console.log("🚀 ~ isLoading:", isLoading);
+
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
 
 	const isAddBtnDisabled =
-		selectedId?.length > 0 &&
-		teamNames.teamName?.length > 0 &&
-		(teamNames.fibaliveTeamName?.length > 0 ||
-			teamNames.betsapiTeamName?.length > 0 ||
-			teamNames.otherSiteTeamName?.length > 0);
+		selectedChamp?.id?.length > 0 &&
+		teamData.teamName?.length > 0 &&
+		(teamData.fibaliveTeamName?.length > 0 ||
+			teamData.betsapiTeamName?.length > 0 ||
+			teamData.otherSiteTeamName?.length > 0);
 
 	const isClearBtnDisabled =
-		cyberId?.length > 0 ||
-		selectedId?.length > 0 ||
-		teamNames.customName?.length > 0 ||
-		teamNames.fibaliveTeamName?.length > 0 ||
-		teamNames.betsapiTeamName?.length > 0 ||
-		teamNames.otherSiteTeamName?.length > 0;
+		teamData.cyberId?.length > 0 ||
+		selectedChamp?.id?.length > 0 ||
+		teamData.customName?.length > 0 ||
+		teamData.fibaliveTeamName?.length > 0 ||
+		teamData.betsapiTeamName?.length > 0 ||
+		teamData.otherSiteTeamName?.length > 0;
 
-	const isInputDisabled = selectedId;
+	const isInputDisabled = selectedChamp?.id;
 
 	return (
 		<Box
@@ -55,7 +58,7 @@ const TeamFormInputStack = ({
 					required
 					name={CONSTANTS.TEAM_NAME_INP}
 					label={TEAM_NAMES_FORM.CUSTOM_TEAM_NAME_LABEL}
-					value={teamNames?.teamName}
+					value={teamData?.teamName}
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
@@ -66,7 +69,7 @@ const TeamFormInputStack = ({
 				<TextField
 					name={CONSTANTS.FIBALIVE_NAME_INP}
 					label={TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_LABEL}
-					value={teamNames?.fibaliveTeamName}
+					value={teamData?.fibaliveTeamName}
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
@@ -77,7 +80,7 @@ const TeamFormInputStack = ({
 				<TextField
 					name={CONSTANTS.BETSAPI_NAME_INP}
 					label={TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_LABEL}
-					value={teamNames?.betsapiTeamName}
+					value={teamData?.betsapiTeamName}
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
@@ -88,7 +91,7 @@ const TeamFormInputStack = ({
 				<TextField
 					name={CONSTANTS.OTHER_SITE_INP}
 					label={TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_LABEL}
-					value={teamNames?.otherSiteTeamName}
+					value={teamData?.otherSiteTeamName}
 					variant="outlined"
 					size="small"
 					onChange={handleTeamNames}
@@ -106,10 +109,6 @@ const TeamFormInputStack = ({
 };
 
 TeamFormInputStack.propTypes = {
-	teamNames: PropTypes.objectOf(PropTypes.string),
-	cyberId: PropTypes.string,
-	selectedId: PropTypes.string,
-	isLoading: PropTypes.bool,
 	handleTeamNames: PropTypes.func.isRequired,
 	onClearBtn: PropTypes.func.isRequired,
 };

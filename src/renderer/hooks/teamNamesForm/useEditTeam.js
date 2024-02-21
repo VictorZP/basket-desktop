@@ -1,29 +1,28 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
 	getTeamData,
+	getTeamCyberId,
 	getTeamEditStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
-
-import { INITIAL_CHAMP_DATA } from "../../constants/teamNameFormConstants.js";
+import {
+	setTeamNames,
+	setSelectedChamp,
+	refreshSelectedChamp,
+} from "../../redux/matchSettings/matchSettingsSlice.js";
 
 // Hook for editing team data
-export const useEditTeam = (
-	setId,
-	setSelectedChamp,
-	champShortList,
-	generateChampOptions,
-	setTeamNames,
-	cyberId
-) => {
+export const useEditTeam = (champShortList, generateChampOptions) => {
 	const teamData = useSelector(getTeamData);
 	const onEdit = useSelector(getTeamEditStatus);
+	const cyberId = useSelector(getTeamCyberId);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (teamData?.teamId) {
-			setId(teamData?.cyberId);
-			setSelectedChamp(INITIAL_CHAMP_DATA);
+			dispatch(refreshSelectedChamp());
 			const champ = champShortList?.find(({ championshipId }) => {
 				return championshipId === teamData?.championshipId;
 			});
@@ -42,8 +41,8 @@ export const useEditTeam = (
 			};
 
 			generateChampOptions();
-			setSelectedChamp(champData);
-			setTeamNames(teamEditData);
+			dispatch(setSelectedChamp(champData));
+			dispatch(setTeamNames(teamEditData));
 		}
 	}, [cyberId, onEdit, teamData]);
 };

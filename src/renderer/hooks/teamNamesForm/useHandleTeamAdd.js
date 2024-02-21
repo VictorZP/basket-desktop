@@ -4,14 +4,17 @@ import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { handleAddTeam } from "../../redux/matchSettings/matchSettingsSlice.js";
+import {
+	handleAddTeam,
+	refreshTeamNames,
+	setTeamLoadingStatus,
+} from "../../redux/matchSettings/matchSettingsSlice.js";
 
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
-import { INITIAL_TEAM_DATA } from "../../constants/teamNameFormConstants.js";
 
 // Hook for handle team add response
-export const useHandleTeamAdd = (setIsLoading, setTeamNames) => {
+export const useHandleTeamAdd = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -23,15 +26,16 @@ export const useHandleTeamAdd = (setIsLoading, setTeamNames) => {
 						variant: "error",
 					}
 				);
-				setIsLoading(false);
+				dispatch(setTeamLoadingStatus(false));
 				return;
 			}
 			dispatch(handleAddTeam(true));
 			enqueueSnackbar(arg?.message ?? TEAM_NAMES_FORM.ADDED, {
 				variant: "success",
 			});
-			setTeamNames(INITIAL_TEAM_DATA);
-			setIsLoading(false);
+
+			dispatch(refreshTeamNames());
+			dispatch(setTeamLoadingStatus(false));
 		});
 	}, []);
 };

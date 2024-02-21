@@ -8,22 +8,16 @@ import {
 	handleAddTeam,
 	handleEditTeam,
 	refreshTeamData,
+	refreshTeamNames,
+	setTeamLoadingStatus,
+	refreshSelectedChamp,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 
-import {
-	INITIAL_TEAM_DATA,
-	INITIAL_CHAMP_DATA,
-} from "../../constants/teamNameFormConstants.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
 // Handler for after editing team
-export const useHandleAfterTeamEdit = (
-	setTeamNames,
-	setSelectedChamp,
-	setIsLoading,
-	setCyberId
-) => {
+export const useHandleAfterTeamEdit = () => {
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
 
 	const dispatch = useDispatch();
@@ -34,7 +28,7 @@ export const useHandleAfterTeamEdit = (
 				enqueueSnackbar(arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.EXIST, {
 					variant: "warning",
 				});
-				setIsLoading(false);
+				dispatch(setTeamLoadingStatus(false));
 				return;
 			}
 			if (arg?.statusText !== "OK") {
@@ -44,18 +38,18 @@ export const useHandleAfterTeamEdit = (
 						variant: "error",
 					}
 				);
-				setIsLoading(false);
+				dispatch(setTeamLoadingStatus(false));
 				return;
 			}
 			dispatch(handleAddTeam(true));
 			dispatch(handleEditTeam(false));
 			dispatch(refreshTeamData());
+			dispatch(refreshSelectedChamp());
 
 			enqueueSnackbar(TEAM_NAMES_FORM.UPDATED, { variant: "success" });
-			setTeamNames(INITIAL_TEAM_DATA);
-			setSelectedChamp(INITIAL_CHAMP_DATA);
-			setCyberId("");
-			setIsLoading(false);
+
+			dispatch(refreshTeamNames());
+			dispatch(setTeamLoadingStatus(false));
 		});
 	}, []);
 };

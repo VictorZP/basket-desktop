@@ -12,13 +12,19 @@ import TeamFormInputStack from "../TeamFormInputStack";
 
 import {
 	handleEditTeam,
+	setTeamName,
 	setTeamData,
+	setTeamCyberId,
 	refreshTeamData,
+	setSelectedChamp,
+	setTeamLoadingStatus,
+	refreshSelectedChamp,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
-	getChampAddStatus,
 	getTeamEditStatus,
 	getTeamData,
+	getTeamCyberId,
+	getSelectedChamp,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import {
@@ -28,25 +34,19 @@ import {
 	useHandleAfterTeamEdit,
 } from "../../hooks/teamNamesForm/index.js";
 
-import {
-	CONSTANTS,
-	INITIAL_TEAM_DATA,
-	INITIAL_CHAMP_DATA,
-} from "../../constants/teamNameFormConstants.js";
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
+import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
+import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
 const MSTeamNameForm = ({ cyberList }) => {
-	const [cyberId, setCyberId] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
 	const [champOptions, setChampOptions] = useState([]);
 	const [champShortList, setChampShortList] = useState([]);
-	const [teamNames, setTeamNames] = useState(INITIAL_TEAM_DATA);
-	const [selectedChamp, setSelectedChamp] = useState(INITIAL_CHAMP_DATA);
 
-	const champAddStatus = useSelector(getChampAddStatus);
 	const teamData = useSelector(getTeamData);
+	const cyberId = useSelector(getTeamCyberId);
 	const onEdit = useSelector(getTeamEditStatus);
+	const selectedChamp = useSelector(getSelectedChamp);
+
 	const dispatch = useDispatch();
 
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
@@ -68,20 +68,13 @@ const MSTeamNameForm = ({ cyberList }) => {
 	};
 
 	// Get short list of championships
-	useGetShortChampList(setChampShortList, champAddStatus);
+	useGetShortChampList(setChampShortList);
 
 	// Edit team data
-	useEditTeam(
-		setCyberId,
-		setSelectedChamp,
-		champShortList,
-		generateChampOptions,
-		setTeamNames,
-		cyberId
-	);
+	useEditTeam(champShortList, generateChampOptions);
 
 	//  Handle add team response
-	useHandleTeamAdd(setIsLoading, setTeamNames);
+	useHandleTeamAdd();
 
 	// Forming options for championship select
 	useEffect(() => {
@@ -91,12 +84,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 	}, [cyberId]);
 
 	// After edit team handler
-	useHandleAfterTeamEdit(
-		setTeamNames,
-		setSelectedChamp,
-		setIsLoading,
-		setCyberId
-	);
+	useHandleAfterTeamEdit();
 
 	const options = cyberList?.map((el) => {
 		return {
@@ -112,10 +100,10 @@ const MSTeamNameForm = ({ cyberList }) => {
 
 		switch (name) {
 			case CONSTANTS.CYBER_SELECT_NAME:
-				setCyberId(inputValue);
+				dispatch(setTeamCyberId(inputValue));
 
 				if (selectedChamp?.value) {
-					setSelectedChamp(INITIAL_CHAMP_DATA);
+					dispatch(refreshSelectedChamp());
 					dispatch(
 						setTeamData({
 							...teamData,
@@ -129,17 +117,19 @@ const MSTeamNameForm = ({ cyberList }) => {
 				const champ = champOptions?.find(({ value }) => {
 					return value === inputValue;
 				});
-				setSelectedChamp({
-					id: champ?.id,
-					value: inputValue,
-					label: inputValue,
-				});
+				dispatch(
+					setSelectedChamp({
+						id: champ?.id,
+						value: inputValue,
+						label: inputValue,
+					})
+				);
 				break;
 			case CONSTANTS.TEAM_NAME_INP:
 			case CONSTANTS.FIBALIVE_NAME_INP:
 			case CONSTANTS.BETSAPI_NAME_INP:
 			case CONSTANTS.OTHER_SITE_INP:
-				setTeamNames((state) => ({ ...state, [name]: inputValue }));
+				dispatch(setTeamName({ name, value: inputValue }));
 				break;
 			default:
 				break;
@@ -147,28 +137,27 @@ const MSTeamNameForm = ({ cyberList }) => {
 	};
 
 	const onClearBtn = () => {
-		setCyberId("");
-		setSelectedChamp(INITIAL_CHAMP_DATA);
-		setTeamNames(INITIAL_TEAM_DATA);
+		dispatch(refreshTeamData());
+		dispatch(refreshSelectedChamp());
 		if (onEdit) {
 			dispatch(handleEditTeam(false));
-			dispatch(refreshTeamData());
 		}
-		setIsLoading(false);
+		dispatch(setTeamLoadingStatus(false));
 	};
 
 	const handleSubmit = async (e) => {
 		e?.preventDefault();
 		try {
-			setIsLoading(true);
+			dispatch(setTeamLoadingStatus(true));
 			const reqData = {
 				cyberId,
 				championshipId: selectedChamp?.id,
-				teamName: teamNames?.teamName,
-				fibaliveTeamName: teamNames?.fibaliveTeamName,
-				betsapiTeamName: teamNames?.betsapiTeamName,
-				otherSiteTeamName: teamNames?.otherSiteTeamName,
+				teamName: teamData?.teamName,
+				fibaliveTeamName: teamData?.fibaliveTeamName,
+				betsapiTeamName: teamData?.betsapiTeamName,
+				otherSiteTeamName: teamData?.otherSiteTeamName,
 			};
+
 			if (onEdit) {
 				const updateData = {
 					data: { ...reqData },
@@ -186,8 +175,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 	};
 
 	const formSelectStackProps = {
-		cyberId,
-		champId: selectedChamp?.value,
 		pageType: CONSTANTS.PAGE_TYPE.MS,
 		cyberOptions: options,
 		champOptions,
@@ -195,10 +182,6 @@ const MSTeamNameForm = ({ cyberList }) => {
 	};
 
 	const formInputStackProps = {
-		teamNames,
-		cyberId,
-		selectedId: selectedChamp.id,
-		isLoading,
 		handleTeamNames: handleChange,
 		onClearBtn,
 	};

@@ -15,6 +15,9 @@ const getTeamEditStatus = (state) => state.matchSettings.editTeam;
 const getTeamLoadingStatus = (state) => state.matchSettings.isTeamLoading;
 const getTeamData = (state) => state.matchSettings.teamData;
 const getTeamExpandedVal = (state) => state.matchSettings.teamExpanded;
+const getTeamCyberId = (state) => state.matchSettings.teamData.cyberId;
+
+const getSelectedChamp = (state) => state.matchSettings.selectedChamp;
 
 export {
 	getCyberAddStatus,
@@ -30,4 +33,6 @@ export {
 	getTeamData,
 	getExpandedVal,
 	getTeamExpandedVal,
+	getTeamCyberId,
+	getSelectedChamp,
 };

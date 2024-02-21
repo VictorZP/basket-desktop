@@ -34,6 +34,7 @@ const initialState = {
 		cyberId: "",
 		championshipId: "",
 	},
+	selectedChamp: { id: "", value: "", label: "" },
 };
 
 const matchSettingsSlice = createSlice({
@@ -81,6 +82,26 @@ const matchSettingsSlice = createSlice({
 			state.teamData.cyberId = payload.cyberId ?? "";
 			state.teamData.championshipId = payload.championshipId ?? "";
 		},
+		setTeamCyberId(state, { payload }) {
+			state.teamData.cyberId = payload ?? "";
+		},
+		setTeamChampionshipId(state, { payload }) {
+			state.teamData.championshipId = payload ?? "";
+		},
+		setTeamName(state, { payload }) {
+			state.teamData[payload.name] = payload.value;
+		},
+		setTeamNames(state, { payload }) {
+			state.teamData.teamName = payload.teamName;
+			state.teamData.fibaliveTeamName = payload.fibaliveTeamName;
+			state.teamData.betsapiTeamName = payload.betsapiTeamName;
+			state.teamData.otherSiteTeamName = payload.otherSiteTeamName;
+		},
+		setSelectedChamp(state, { payload }) {
+			state.selectedChamp.id = payload.id;
+			state.selectedChamp.value = payload.value;
+			state.selectedChamp.label = payload.label;
+		},
 		setExpanded(state, { payload }) {
 			state.expanded = payload ?? "";
 		},
@@ -108,14 +129,17 @@ const matchSettingsSlice = createSlice({
 			state.champData.cyberId = initialState.champData.cyberId;
 		},
 		refreshTeamData(state) {
-			state.teamData.teamId = initialState.teamData.teamId;
+			state.teamData = initialState.teamData;
+		},
+		refreshTeamNames(state) {
 			state.teamData.teamName = initialState.teamData.teamName;
 			state.teamData.fibaliveTeamName = initialState.teamData.fibaliveTeamName;
 			state.teamData.betsapiTeamName = initialState.teamData.betsapiTeamName;
 			state.teamData.otherSiteTeamName =
 				initialState.teamData.otherSiteTeamName;
-			state.teamData.cyberId = initialState.teamData.cyberId;
-			state.teamData.championshipId = initialState.teamData.championshipId;
+		},
+		refreshSelectedChamp(state) {
+			state.selectedChamp = initialState.selectedChamp;
 		},
 		refreshMS: () => initialState,
 	},
@@ -131,6 +155,11 @@ export const {
 	setCyberData,
 	setChampData,
 	setTeamData,
+	setTeamCyberId,
+	setTeamChampionshipId,
+	setTeamName,
+	setTeamNames,
+	setSelectedChamp,
 	setExpanded,
 	setTeamExpanded,
 	setChampLoadingStatus,
@@ -138,6 +167,8 @@ export const {
 	refreshCyberData,
 	refreshChampData,
 	refreshTeamData,
+	refreshTeamNames,
 	refreshMS,
+	refreshSelectedChamp,
 } = matchSettingsSlice.actions;
 export const matchSettingsReducer = matchSettingsSlice.reducer;
