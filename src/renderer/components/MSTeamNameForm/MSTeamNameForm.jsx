@@ -7,7 +7,7 @@ import { Box, Typography, Button } from "@mui/material";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import TeamFormSelectStack from "../TeamFormSelectStack";
+import { TeamFormSelectStack } from "../../ui/teamSettings/index.js";
 import TeamFormInputStack from "../TeamFormInputStack";
 
 import {
@@ -189,6 +189,8 @@ const MSTeamNameForm = ({ cyberList }) => {
 				sx={{ maxWidth: "1300px" }}
 			>
 				<TeamFormSelectStack
+					cyberId={cyberId}
+					selectedChamp={selectedChamp.id}
 					pageType={CONSTANTS.PAGE_TYPE.MS}
 					cyberOptions={options}
 					champOptions={champOptions}

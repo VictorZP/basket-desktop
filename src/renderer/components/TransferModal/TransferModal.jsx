@@ -5,6 +5,8 @@ import { Box, Typography } from "@mui/material";
 
 import ModalHandler from "../../helpers/classes/modal.js";
 
+import { TeamFormSelectStack } from "../../ui/teamSettings/index.js";
+
 const TransferModal = () => {
 	const dispatch = useDispatch();
 
@@ -20,10 +22,7 @@ const TransferModal = () => {
 			<Typography variant="h5" sx={{ mb: 2 }}>
 				Исходный турнир
 			</Typography>
-			<Box>
-				<select name="" id=""></select>
-				<select name="" id=""></select>
-			</Box>
+			<TeamFormSelectStack />
 		</Box>
 	);
 };
