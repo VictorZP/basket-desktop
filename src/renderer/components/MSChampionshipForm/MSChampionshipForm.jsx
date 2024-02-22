@@ -29,6 +29,7 @@ import {
 	getChampEditStatus,
 	getChampData,
 } from "../../redux/matchSettings/matchSettingSelector.js";
+import CommonHandler from "../../helpers/classes/CommonHandler.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
@@ -51,13 +52,7 @@ const MSChampionshipForm = ({ cyberList }) => {
 	const dispatch = useDispatch();
 	const { CHAMPIONSHIP_FORM } = MATCHES_SETTINGS;
 
-	const options = cyberList?.map((el) => {
-		return {
-			value: el?.id,
-			label: el?.cyberName,
-			id: el?.id,
-		};
-	});
+	const options = CommonHandler.getCyberSelectOptions(cyberList);
 
 	useEffect(() => {
 		if (champData?.champId) {

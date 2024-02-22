@@ -34,6 +34,7 @@ import {
 	useHandleAfterTeamEdit,
 } from "../../hooks/teamNamesForm/index.js";
 import ModalHandler from "../../helpers/classes/modal.js";
+import CommonHandler from "../../helpers/classes/CommonHandler.js";
 
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
@@ -88,13 +89,7 @@ const MSTeamNameForm = ({ cyberList }) => {
 	// After edit team handler
 	useHandleAfterTeamEdit();
 
-	const options = cyberList?.map((el) => {
-		return {
-			value: el?.id,
-			label: el?.cyberName,
-			id: el?.id,
-		};
-	});
+	const options = CommonHandler.getCyberSelectOptions(cyberList);
 
 	const handleChange = (e) => {
 		const name = e?.target?.name;
