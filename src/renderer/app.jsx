@@ -15,6 +15,8 @@ import { ruRU } from "@mui/material/locale";
 import appRouter from "./routes/appRouter.js";
 import DismissAction from "./components/DismissAction/DismissAction.jsx";
 
+import Modal from "./ui/Modal.jsx";
+
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -35,6 +37,7 @@ const App = () => {
 			}}
 		>
 			<RouterProvider router={appRouter} />
+			<Modal />
 		</SnackbarProvider>
 	);
 };

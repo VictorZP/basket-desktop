@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 import PropTypes from "prop-types";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
@@ -33,9 +33,11 @@ import {
 	useGetShortChampList,
 	useHandleAfterTeamEdit,
 } from "../../hooks/teamNamesForm/index.js";
+import ModalHandler from "../../helpers/classes/modal.js";
 
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
+import { MODAL_TYPES } from "../../constants/modalTypes.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
 const MSTeamNameForm = ({ cyberList }) => {
@@ -174,8 +176,12 @@ const MSTeamNameForm = ({ cyberList }) => {
 		}
 	};
 
+	const openModal = () => {
+		ModalHandler.openModal(dispatch, MODAL_TYPES.TEAMS_NAMES);
+	};
+
 	return (
-		<Box sx={{ paddingX: 3, paddingY: 1 }}>
+		<Box sx={{ paddingX: 3, pt: 1, pb: 2 }}>
 			<Typography variant="h5">{TEAM_NAMES_FORM.TITLE}</Typography>
 			<Box
 				component={"form"}
@@ -193,6 +199,9 @@ const MSTeamNameForm = ({ cyberList }) => {
 					onClearBtn={onClearBtn}
 				/>
 			</Box>
+			<Button variant="contained" onClick={openModal}>
+				{TEAM_NAMES_FORM.TEAMS_TRANSFER}
+			</Button>
 		</Box>
 	);
 };
