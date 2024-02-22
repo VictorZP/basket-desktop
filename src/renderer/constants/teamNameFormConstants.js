@@ -10,8 +10,8 @@ export const CONSTANTS = {
 	BETSAPI_NAME_INP: "betsapiTeamName",
 	OTHER_SITE_INP: "otherSiteTeamName",
 	PAGE_TYPE: {
-		MS: "match settings",
-		FP: "filter page",
+		MS: "MS_PAGE",
+		FP: "FILTER_PAGE",
 	},
 };
 

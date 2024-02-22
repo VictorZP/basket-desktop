@@ -1,46 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-
-import {
-	getTeamCyberId,
-	getSelectedChamp,
-} from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 import { STYLES } from "./style.js";
 
-const ITEM_HEIGHT = 50;
-const ITEM_PADDING_TOP = 15;
-const MenuProps = {
-	PaperProps: {
-		style: {
-			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-		},
-	},
-};
-
 const TeamFormSelectStack = ({
+	cyberId,
+	selectedChamp,
 	pageType,
 	cyberOptions,
 	champOptions,
 	handleChange,
 }) => {
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
-	const cyberId = useSelector(getTeamCyberId);
-	const selectedChamp = useSelector(getSelectedChamp);
-
 	return (
-		<Box
-			sx={
-				pageType === CONSTANTS.PAGE_TYPE.MS
-					? STYLES.MS_PAGE
-					: STYLES.FILTER_PAGE
-			}
-		>
+		<Box sx={STYLES[pageType]}>
 			<FormControl required size="small">
 				<InputLabel id={CONSTANTS.CYBER_SELECT_LABEL_ID}>
 					{TEAM_NAMES_FORM.CYBER_LABEL}
@@ -49,7 +26,7 @@ const TeamFormSelectStack = ({
 					labelId={CONSTANTS.CYBER_SELECT_LABEL_ID}
 					id={CONSTANTS.CYBER_SELECT_ID}
 					label={TEAM_NAMES_FORM.CYBER_LABEL}
-					value={cyberId}
+					value={cyberId ?? ""}
 					onChange={handleChange}
 					name={CONSTANTS.CYBER_SELECT_NAME}
 				>
@@ -70,10 +47,10 @@ const TeamFormSelectStack = ({
 					labelId={CONSTANTS.CHAMP_SELECT_LABEL_ID}
 					id={CONSTANTS.CHAMP_SELECT_ID}
 					label={TEAM_NAMES_FORM.CHAMP_LABEL}
-					value={selectedChamp.id}
+					value={selectedChamp ?? ""}
 					onChange={handleChange}
 					name={CONSTANTS.CHAMP_SELECT_NAME}
-					MenuProps={MenuProps}
+					MenuProps={STYLES.MENU_PROPS}
 					disabled={!cyberId}
 				>
 					{champOptions?.map((opt) => {

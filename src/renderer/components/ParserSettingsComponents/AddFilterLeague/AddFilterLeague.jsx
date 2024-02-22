@@ -7,7 +7,7 @@ import { Box, Typography } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 
-import TeamFormSelectStack from "../../TeamFormSelectStack";
+import { TeamFormSelectStack } from "../../../ui/teamSettings/index.js";
 
 import { useGetAllCyber } from "../../../hooks/msPage";
 

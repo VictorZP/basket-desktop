@@ -11,4 +11,13 @@ export const STYLES = {
 		gap: 3,
 		width: "300px",
 	},
+	ITEM_HEIGHT: 50,
+	ITEM_PADDING_TOP: 15,
+	MENU_PROPS: {
+		PaperProps: {
+			style: {
+				maxHeight: 50 * 4.5 + 15,
+			},
+		},
+	},
 };
