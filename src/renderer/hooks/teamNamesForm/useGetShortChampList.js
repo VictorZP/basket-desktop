@@ -15,19 +15,23 @@ export const useGetShortChampList = (setShortChampList) => {
 
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT);
+
+		ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT, (e, arg) => {
+			if (arg?.statusText !== "OK") {
+				enqueueSnackbar(
+					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
+					{
+						variant: "error",
+					}
+				);
+				return;
+			}
+
+			setShortChampList(arg?.list);
+		});
+
 		return () => {
 			ipcRenderer.removeAllListeners(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT);
 		};
 	}, [champAddStatus]);
-
-	ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_GET_SHORT, (e, arg) => {
-		if (arg?.statusText !== "OK") {
-			enqueueSnackbar(arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR, {
-				variant: "error",
-			});
-			return;
-		}
-
-		setShortChampList(arg?.list);
-	});
 };
