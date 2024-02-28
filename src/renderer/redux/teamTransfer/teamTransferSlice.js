@@ -18,7 +18,7 @@ const teamTransferSlice = createSlice({
 			state[payload.key] = payload.id;
 		},
 		setTransferChampOptions(state, { payload }) {
-			state[payload.key] = [...state[payload.key], ...payload.options];
+			state[payload.key] = payload.options;
 		},
 		setTransferTeamsIds(state, { payload }) {
 			state.teamsIds = [...state.teamsIds, ...payload];
