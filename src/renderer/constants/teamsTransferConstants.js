@@ -4,7 +4,7 @@ export const TRANSFER_TYPE = {
 };
 
 export const TEXT = {
-	OUT_GROUP_TITLE: "Группа для переноса",
-	TARGET_GROUP_TITLE: "Группа назначения",
+	OUT_GROUP_TITLE: "Группа из которой переносим",
+	TARGET_GROUP_TITLE: "Группа в которую переносим",
 	BACK_BTN: "Назад",
 };

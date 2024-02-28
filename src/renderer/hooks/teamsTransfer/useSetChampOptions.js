@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getOutCyberId } from "../../redux/teamTransfer/teamTransferSelector.js";
+import {
+	getOutCyberId,
+	getTargetCyberId,
+} from "../../redux/teamTransfer/teamTransferSelector.js";
 import {
 	setTransferChampOptions,
 	refreshTransferData,
@@ -10,6 +13,7 @@ import {
 // Hook for setting championship options
 export const useSetChampOptions = (champShortList) => {
 	const outCyberId = useSelector(getOutCyberId);
+	const targetCyberId = useSelector(getTargetCyberId);
 	const dispatch = useDispatch();
 
 	const generateChampOptions = (id) => {
@@ -35,10 +39,11 @@ export const useSetChampOptions = (champShortList) => {
 		}
 	}, [outCyberId]);
 
-	// useEffect(() => {
-	// 	if (outCyberId) {
-	// 		const options = generateChampOptions(outCyberId);
-	// 		dispatch(setTransferChampOptions({ key: "outChampOptions", options }));
-	// 	}
-	// }, [outCyberId]);
+	useEffect(() => {
+		if (targetCyberId) {
+			const options = generateChampOptions(targetCyberId);
+			dispatch(refreshTransferData({ key: "targetChampId" }));
+			dispatch(setTransferChampOptions({ key: "targetChampOptions", options }));
+		}
+	}, [targetCyberId]);
 };

@@ -17,6 +17,9 @@ import {
 	getOutCyberId,
 	getOutChampId,
 	getOutChampOptions,
+	getTargetCyberId,
+	getTargetChampId,
+	getTargetChampOptions,
 } from "../../redux/teamTransfer/teamTransferSelector.js";
 
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
@@ -29,6 +32,9 @@ const TransferModal = () => {
 	const outCyberId = useSelector(getOutCyberId);
 	const outChampId = useSelector(getOutChampId);
 	const outChampOptions = useSelector(getOutChampOptions);
+	const targetCyberId = useSelector(getTargetCyberId);
+	const targetChampId = useSelector(getTargetChampId);
+	const targetChampOptions = useSelector(getTargetChampOptions);
 
 	const dispatch = useDispatch();
 
@@ -67,6 +73,19 @@ const TransferModal = () => {
 					champOptions={outChampOptions}
 					handleChange={(e) => {
 						transferHandler.handleIdsChange(e, TRANSFER_TYPE.OUT);
+					}}
+				/>
+				<Typography variant="h5" sx={{ mb: 2, mt: 2 }}>
+					{TEXT.TARGET_GROUP_TITLE}
+				</Typography>
+				<TeamFormSelectStack
+					cyberId={targetCyberId}
+					selectedChamp={targetChampId}
+					pageType={CONSTANTS.PAGE_TYPE.MS}
+					cyberOptions={options}
+					champOptions={targetChampOptions}
+					handleChange={(e) => {
+						transferHandler.handleIdsChange(e, TRANSFER_TYPE.TARGET);
 					}}
 				/>
 			</Box>

@@ -17,10 +17,10 @@ export class TeamsTransfer {
 
 		switch (name) {
 			case CONSTANTS.CYBER_SELECT_NAME:
-				key = type === TRANSFER_TYPE.OUT ? "outCyberId" : "";
+				key = type === TRANSFER_TYPE.OUT ? "outCyberId" : "targetCyberId";
 				break;
 			case CONSTANTS.CHAMP_SELECT_NAME:
-				key = type === TRANSFER_TYPE.OUT ? "outChampId" : "";
+				key = type === TRANSFER_TYPE.OUT ? "outChampId" : "targetChampId";
 				break;
 
 			default:
