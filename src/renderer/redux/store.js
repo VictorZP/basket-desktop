@@ -6,7 +6,8 @@ import { modalDelReducer } from "./modalDelete/modalDelSlice.js";
 import { urlFormReducer } from "./urlForm/urlFormSlice.js";
 import { modalReducer } from "./modal/modalSlice.js";
 import { parcerDataReducer } from "./parcerData/parcerDataSlice.js";
-const { linesDataReducer } = require("./linesData/linesDataSlice.js");
+import { linesDataReducer } from "./linesData/linesDataSlice.js";
+import { teamTransferReducer } from "./teamTransfer/teamTransferSlice.js";
 
 const store = configureStore({
 	reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
 		modal: modalReducer,
 		parcerData: parcerDataReducer,
 		linesData: linesDataReducer,
+		teamTransfer: teamTransferReducer,
 	},
 });
 

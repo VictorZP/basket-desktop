@@ -19,8 +19,6 @@ const getTeamCyberId = (state) => state.matchSettings.teamData.cyberId;
 
 const getSelectedChamp = (state) => state.matchSettings.selectedChamp;
 
-const getOutCyberId = (state) => state.matchSettings.transferModal.outCyberId;
-
 export {
 	getCyberAddStatus,
 	getChampAddStatus,
@@ -37,5 +35,4 @@ export {
 	getTeamExpandedVal,
 	getTeamCyberId,
 	getSelectedChamp,
-	getOutCyberId,
 };

@@ -35,15 +35,6 @@ const initialState = {
 		championshipId: "",
 	},
 	selectedChamp: { id: "", value: "", label: "" },
-	transferModal: {
-		outCyberId: "",
-		outChampId: "",
-		targetCyberId: "",
-		targetChampId: "",
-		teamsIds: [],
-		outChampOptions: [],
-		targetChampOptions: [],
-	},
 };
 
 const matchSettingsSlice = createSlice({
@@ -123,21 +114,6 @@ const matchSettingsSlice = createSlice({
 		setTeamLoadingStatus(state, { payload }) {
 			state.isTeamLoading = payload;
 		},
-		setTransferData(state, { payload }) {
-			state.transferModal[payload.key] = payload.id;
-		},
-		setTransferChampOptions(state, { payload }) {
-			state.transferModal[payload.key] = [
-				...state.transferModal[payload.key],
-				...payload.options,
-			];
-		},
-		setTransferTeamsIds(state, { payload }) {
-			state.transferModal.teamsIds = [
-				...state.transferModal.teamsIds,
-				...payload,
-			];
-		},
 		refreshCyberData(state) {
 			state.cyberData.cyberId = initialState.cyberData.cyberId;
 			state.cyberData.cyberName = initialState.cyberData.cyberName;
@@ -165,21 +141,6 @@ const matchSettingsSlice = createSlice({
 		refreshSelectedChamp(state) {
 			state.selectedChamp = initialState.selectedChamp;
 		},
-		refreshTransferData(state, { payload }) {
-			state.transferModal[payload.key] =
-				initialState.transferModal[payload.key];
-		},
-		refreshTransferTeamsIds(state) {
-			state.transferModal.teamsIds = initialState.transferModal.teamsIds;
-		},
-		refreshTransferChampOptions(state, { payload }) {
-			state.transferModal[payload.key] =
-				initialState.transferModal[payload.key];
-		},
-
-		refreshTransferModal(state) {
-			state.transferModal = initialState.transferModal;
-		},
 		refreshMS: () => initialState,
 	},
 });
@@ -203,18 +164,11 @@ export const {
 	setTeamExpanded,
 	setChampLoadingStatus,
 	setTeamLoadingStatus,
-	setTransferData,
-	setTransferChampOptions,
-	setTransferTeamsIds,
 	refreshCyberData,
 	refreshChampData,
 	refreshTeamData,
 	refreshTeamNames,
 	refreshMS,
 	refreshSelectedChamp,
-	refreshTransferData,
-	refreshTransferTeamsIds,
-	refreshTransferChampOptions,
-	refreshTransferModal,
 } = matchSettingsSlice.actions;
 export const matchSettingsReducer = matchSettingsSlice.reducer;
