@@ -55,39 +55,50 @@ const TransferModal = () => {
 	return (
 		<Box
 			sx={{
-				width: "100%",
-				background: "white",
+				minWidth: "1100px",
 				height: "100%",
+				background: "white",
 			}}
 		>
 			<Header />
-			<Box sx={{ p: 3 }}>
-				<Typography variant="h5" sx={{ mb: 2 }}>
-					{TEXT.OUT_GROUP_TITLE}
-				</Typography>
-				<TeamFormSelectStack
-					cyberId={outCyberId}
-					selectedChamp={outChampId}
-					pageType={CONSTANTS.PAGE_TYPE.MS}
-					cyberOptions={options}
-					champOptions={outChampOptions}
-					handleChange={(e) => {
-						transferHandler.handleIdsChange(e, TRANSFER_TYPE.OUT);
-					}}
-				/>
-				<Typography variant="h5" sx={{ mb: 2, mt: 2 }}>
-					{TEXT.TARGET_GROUP_TITLE}
-				</Typography>
-				<TeamFormSelectStack
-					cyberId={targetCyberId}
-					selectedChamp={targetChampId}
-					pageType={CONSTANTS.PAGE_TYPE.MS}
-					cyberOptions={options}
-					champOptions={targetChampOptions}
-					handleChange={(e) => {
-						transferHandler.handleIdsChange(e, TRANSFER_TYPE.TARGET);
-					}}
-				/>
+			<Box
+				sx={{
+					p: 3,
+					display: "grid",
+					gridTemplateColumns: "repeat(2, 500px)",
+					gap: 2,
+				}}
+			>
+				<Box>
+					<Typography variant="h5" sx={{ mb: 2 }}>
+						{TEXT.OUT_GROUP_TITLE}
+					</Typography>
+					<TeamFormSelectStack
+						cyberId={outCyberId}
+						selectedChamp={outChampId}
+						pageType={CONSTANTS.PAGE_TYPE.MS}
+						cyberOptions={options}
+						champOptions={outChampOptions}
+						handleChange={(e) => {
+							transferHandler.handleIdsChange(e, TRANSFER_TYPE.OUT);
+						}}
+					/>
+				</Box>
+				<Box>
+					<Typography variant="h5" sx={{ mb: 2 }}>
+						{TEXT.TARGET_GROUP_TITLE}
+					</Typography>
+					<TeamFormSelectStack
+						cyberId={targetCyberId}
+						selectedChamp={targetChampId}
+						pageType={CONSTANTS.PAGE_TYPE.MS}
+						cyberOptions={options}
+						champOptions={targetChampOptions}
+						handleChange={(e) => {
+							transferHandler.handleIdsChange(e, TRANSFER_TYPE.TARGET);
+						}}
+					/>
+				</Box>
 			</Box>
 		</Box>
 	);
