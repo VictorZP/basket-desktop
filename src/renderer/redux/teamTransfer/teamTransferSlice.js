@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	outCyberId: "",
-	outChapId: "",
+	outChampId: "",
 	targetCyberId: "",
 	targetChampId: "",
 	teamsIds: [],
