@@ -32,7 +32,7 @@ const Modal = () => {
 				overflowY: "auto",
 			}}
 		>
-			<Box sx={{ padding: 6, width: "80%", minHeight: "80%" }}>
+			<Box sx={{ width: "100%", height: "100%" }}>
 				{type === MODAL_TYPES.TEAMS_NAMES && <TransferModal />}
 			</Box>
 		</MuiModal>
