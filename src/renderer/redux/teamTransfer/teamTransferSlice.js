@@ -37,7 +37,14 @@ const teamTransferSlice = createSlice({
 			state[payload.key] = initialState[payload.key];
 		},
 		refreshTransferModal(state) {
-			state = initialState;
+			state.outCyberId = initialState.outCyberId;
+			state.outChampId = initialState.outChampId;
+			state.targetCyberId = initialState.targetCyberId;
+			state.targetChampId = initialState.targetChampId;
+			state.transferType = initialState.transferType;
+			state.teamsIds = initialState.teamsIds;
+			state.outChampOptions = initialState.outChampOptions;
+			state.targetChampOptions = initialState.targetChampOptions;
 		},
 	},
 });
@@ -50,5 +57,6 @@ export const {
 	refreshTransferData,
 	refreshTransferTeamsIds,
 	refreshTransferChampOptions,
+	refreshTransferModal,
 } = teamTransferSlice.actions;
 export const teamTransferReducer = teamTransferSlice.reducer;

@@ -1,4 +1,7 @@
-import { setTransferData } from "../../redux/teamTransfer/teamTransferSlice.js";
+import {
+	setTransferData,
+	refreshTransferModal,
+} from "../../redux/teamTransfer/teamTransferSlice.js";
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 import { TRANSFER_TYPE } from "../../constants/teamsTransferConstants.js";
 
@@ -35,5 +38,10 @@ export class TeamsTransfer {
 		if (cyberId) {
 			generateChampOptions();
 		}
+	};
+
+	// Refresh redux state
+	refreshTransferModal = () => {
+		this.dispatch(refreshTransferModal());
 	};
 }

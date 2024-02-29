@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Typography, Divider } from "@mui/material";
@@ -47,6 +47,13 @@ const TransferModal = () => {
 
 	// Forming options for championship select
 	useSetChampOptions(champShortList);
+
+	// Clear redux state on unmount
+	useEffect(() => {
+		return () => {
+			transferHandler.refreshTransferModal();
+		};
+	}, []);
 
 	const options = CommonHandler.getCyberSelectOptions(cyberList);
 
