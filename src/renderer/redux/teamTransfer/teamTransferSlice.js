@@ -5,6 +5,7 @@ const initialState = {
 	outChampId: "",
 	targetCyberId: "",
 	targetChampId: "",
+	transferType: "",
 	teamsIds: [],
 	outChampOptions: [],
 	targetChampOptions: [],
@@ -22,6 +23,9 @@ const teamTransferSlice = createSlice({
 		},
 		setTransferTeamsIds(state, { payload }) {
 			state.teamsIds = [...state.teamsIds, ...payload];
+		},
+		setTransferType(state, { payload }) {
+			state.transferType = payload;
 		},
 		refreshTransferData(state, { payload }) {
 			state[payload.key] = initialState[payload.key];
@@ -42,6 +46,7 @@ export const {
 	setTransferData,
 	setTransferChampOptions,
 	setTransferTeamsIds,
+	setTransferType,
 	refreshTransferData,
 	refreshTransferTeamsIds,
 	refreshTransferChampOptions,

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 
 import { TeamFormSelectStack } from "../../ui/teamSettings/index.js";
 
@@ -11,7 +11,7 @@ import { useGetShortChampList } from "../../hooks/teamNamesForm/index.js";
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
 import { TeamsTransfer } from "../../helpers/classes/TeamsTransfer.js";
 
-import { Header } from "../../ui/teamsTransfer/index.js";
+import { Header, TransferTypeSelect } from "../../ui/teamsTransfer/index.js";
 
 import {
 	getOutCyberId,
@@ -100,6 +100,8 @@ const TransferModal = () => {
 					/>
 				</Box>
 			</Box>
+			<Divider />
+			<TransferTypeSelect />
 		</Box>
 	);
 };
