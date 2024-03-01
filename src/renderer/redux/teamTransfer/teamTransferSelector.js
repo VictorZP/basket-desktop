@@ -10,6 +10,10 @@ const getTransferType = (state) => state.teamTransfer.transferType;
 
 const getTeamsIdsArray = (state) => state.teamTransfer.teamsIds;
 
+const getIsTeamsUpdated = (state) => state.teamTransfer.isTeamsUpdated;
+
+const getSearchQuery = (state) => state.teamTransfer.searchQuery;
+
 export {
 	getOutCyberId,
 	getOutChampId,
@@ -19,4 +23,6 @@ export {
 	getTargetChampOptions,
 	getTransferType,
 	getTeamsIdsArray,
+	getIsTeamsUpdated,
+	getSearchQuery,
 };
