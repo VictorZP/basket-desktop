@@ -8,10 +8,16 @@ import { useGetAllCyber } from "../../hooks/msPage/useGetAllCyber.js";
 import { useSetChampOptions } from "../../hooks/teamsTransfer/useSetChampOptions.js";
 import { useGetShortChampList } from "../../hooks/teamNamesForm/index.js";
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
+import ModalHandler from "../../helpers/classes/modal.js";
 import { TeamsTransfer } from "../../helpers/classes/TeamsTransfer.js";
 
 import { TeamFormSelectStack } from "../../ui/teamSettings/index.js";
-import { Header, TransferTypeSelect } from "../../ui/teamsTransfer/index.js";
+import {
+	Header,
+	TransferTypeSelect,
+	TransferList,
+} from "../../ui/teamsTransfer/index.js";
+
 import ButtonStack from "../../ui/ButtonStack.jsx";
 
 import {
@@ -89,6 +95,10 @@ const TransferModal = () => {
 		}
 	};
 
+	const handleClose = () => {
+		ModalHandler.closeModal(dispatch);
+	};
+
 	return (
 		<Box
 			sx={{
@@ -139,13 +149,20 @@ const TransferModal = () => {
 			</Box>
 			<Divider />
 			<TransferTypeSelect />
+			{transferType === TRANSFER_TYPE.VALUE_CUSTOM ? (
+				<TransferList
+					isNotInList={transferHandler.isNotInList}
+					handleIntersection={transferHandler.handleIntersection}
+					handleInputSearch={transferHandler.handleInputSearch}
+				/>
+			) : null}
 			<Divider />
 			<ButtonStack
 				saveText={TEXT.TRANSFER_BTN}
 				closeText={TEXT.CLOSE_BTN}
 				isDisabled={!isBtnDisabled}
 				handleSave={handleTeamTransfer}
-				handleClose={() => console.log("close")}
+				handleClose={handleClose}
 			/>
 		</Box>
 	);
