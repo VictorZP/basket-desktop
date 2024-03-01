@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { enqueueSnackbar } from "notistack";
 
 import { Box, Typography, Divider } from "@mui/material";
-
-import { TeamFormSelectStack } from "../../ui/teamSettings/index.js";
 
 import { useGetAllCyber } from "../../hooks/msPage/useGetAllCyber.js";
 import { useSetChampOptions } from "../../hooks/teamsTransfer/useSetChampOptions.js";
@@ -11,7 +10,9 @@ import { useGetShortChampList } from "../../hooks/teamNamesForm/index.js";
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
 import { TeamsTransfer } from "../../helpers/classes/TeamsTransfer.js";
 
+import { TeamFormSelectStack } from "../../ui/teamSettings/index.js";
 import { Header, TransferTypeSelect } from "../../ui/teamsTransfer/index.js";
+import ButtonStack from "../../ui/ButtonStack.jsx";
 
 import {
 	getOutCyberId,
@@ -20,7 +21,10 @@ import {
 	getTargetCyberId,
 	getTargetChampId,
 	getTargetChampOptions,
+	getTransferType,
+	getTeamsIdsArray,
 } from "../../redux/teamTransfer/teamTransferSelector.js";
+import { refreshTransferModal } from "../../redux/teamTransfer/teamTransferSlice.js";
 
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 import { TRANSFER_TYPE, TEXT } from "../../constants/teamsTransferConstants.js";
@@ -35,6 +39,8 @@ const TransferModal = () => {
 	const targetCyberId = useSelector(getTargetCyberId);
 	const targetChampId = useSelector(getTargetChampId);
 	const targetChampOptions = useSelector(getTargetChampOptions);
+	const transferType = useSelector(getTransferType);
+	const teamIdsArray = useSelector(getTeamsIdsArray);
 
 	const dispatch = useDispatch();
 
@@ -51,13 +57,37 @@ const TransferModal = () => {
 	// Clear redux state on unmount
 	useEffect(() => {
 		return () => {
-			transferHandler.refreshTransferModal();
+			dispatch(refreshTransferModal());
 		};
 	}, []);
 
 	const options = CommonHandler.getCyberSelectOptions(cyberList);
+	const isBtnDisabled = transferHandler.handleBtnDisabled(
+		transferType,
+		teamIdsArray
+	);
 
-	const handleChange = () => {};
+	const handleTeamTransfer = async () => {
+		const reqDataObj = {
+			outCyberId,
+			targetCyberId,
+			outChampId,
+			targetChampId,
+			transferType,
+			teamIdsArray,
+		};
+		const res = await transferHandler.handleTransfer(reqDataObj);
+
+		if (res?.statusText !== "OK") {
+			enqueueSnackbar(res?.message ?? TEXT.TRANSFER_ERROR, {
+				variant: "error",
+			});
+		}
+
+		if (res?.status === 200) {
+			enqueueSnackbar(TEXT.TRANSFER_SUCCESS, { variant: "success" });
+		}
+	};
 
 	return (
 		<Box
@@ -109,6 +139,14 @@ const TransferModal = () => {
 			</Box>
 			<Divider />
 			<TransferTypeSelect />
+			<Divider />
+			<ButtonStack
+				saveText={TEXT.TRANSFER_BTN}
+				closeText={TEXT.CLOSE_BTN}
+				isDisabled={!isBtnDisabled}
+				handleSave={handleTeamTransfer}
+				handleClose={() => console.log("close")}
+			/>
 		</Box>
 	);
 };

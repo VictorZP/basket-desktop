@@ -12,4 +12,8 @@ export const TEXT = {
 	TRANSFER_TYPE_FULL: "Полностью",
 	TRANSFER_TYPE_CUSTOM: "Выборочно",
 	BACK_BTN: "Назад",
+	TRANSFER_BTN: "Перенести",
+	CLOSE_BTN: "Закрыть",
+	TRANSFER_SUCCESS: "Перенос прошел успешно",
+	TRANSFER_ERROR: "Ошибка при переносе",
 };

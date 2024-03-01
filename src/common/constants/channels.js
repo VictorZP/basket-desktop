@@ -27,6 +27,7 @@ export const CHANNELS = {
 		EDIT_NAME: "team-name-edit",
 		DEL_NAME: "team-name-del",
 	},
+	TEAMS_TRANSFER: { SAVE: "teams-transfer-save" },
 	ANALYZE: {
 		ADD_URL: "add-url",
 		GET_STATIC_LIST: "get-static-list",

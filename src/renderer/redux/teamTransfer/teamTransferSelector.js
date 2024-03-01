@@ -8,6 +8,8 @@ const getTargetChampOptions = (state) => state.teamTransfer.targetChampOptions;
 
 const getTransferType = (state) => state.teamTransfer.transferType;
 
+const getTeamsIdsArray = (state) => state.teamTransfer.teamsIds;
+
 export {
 	getOutCyberId,
 	getOutChampId,
@@ -16,4 +18,5 @@ export {
 	getTargetChampId,
 	getTargetChampOptions,
 	getTransferType,
+	getTeamsIdsArray,
 };

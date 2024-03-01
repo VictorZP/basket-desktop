@@ -5,7 +5,13 @@ import { Box, Button, Stack } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 
-const ButtonStack = ({ saveText, closeText, isDisabled, handleClick }) => {
+const ButtonStack = ({
+	saveText,
+	closeText,
+	isDisabled,
+	handleSave,
+	handleClose,
+}) => {
 	return (
 		<Box
 			display="flex"
@@ -17,16 +23,15 @@ const ButtonStack = ({ saveText, closeText, isDisabled, handleClick }) => {
 		>
 			<Stack direction="row" spacing={3}>
 				<LoadingButton
-					name="save_btn"
 					loading={false}
 					variant="contained"
 					startIcon={<SaveIcon />}
-					onClick={handleClick}
+					onClick={handleSave}
 					disabled={isDisabled}
 				>
 					{saveText}
 				</LoadingButton>
-				<Button name="close_btn" variant="outlined" onClick={handleClick}>
+				<Button variant="outlined" onClick={handleClose}>
 					{closeText}
 				</Button>
 			</Stack>
@@ -38,7 +43,8 @@ ButtonStack.propTypes = {
 	saveText: PropTypes.string.isRequired,
 	closeText: PropTypes.string.isRequired,
 	isDisabled: PropTypes.bool,
-	handleClick: PropTypes.func.isRequired,
+	handleSave: PropTypes.func.isRequired,
+	handleClose: PropTypes.func.isRequired,
 };
 
 export default ButtonStack;

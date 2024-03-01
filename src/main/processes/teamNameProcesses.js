@@ -92,3 +92,25 @@ ipcMain.on(CHANNELS.TEAM_NAME.DEL_NAME, async (event, arg) => {
 		event.sender.send(CHANNELS.TEAM_NAME.DEL_NAME, res);
 	}
 });
+
+ipcMain.handle(CHANNELS.TEAMS_TRANSFER.SAVE, async (event, arg) => {
+	try {
+		const response = await axios.put(`${endPoint}/transfer`, arg);
+
+		const responseData = {
+			status: response?.status,
+			statusText: response?.statusText,
+			message: response?.data?.message,
+		};
+
+		return responseData;
+	} catch (err) {
+		const errorDataResponse = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		return errorDataResponse;
+	}
+});

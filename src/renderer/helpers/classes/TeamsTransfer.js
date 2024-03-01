@@ -1,9 +1,9 @@
-import {
-	setTransferData,
-	refreshTransferModal,
-} from "../../redux/teamTransfer/teamTransferSlice.js";
+const ipcRenderer = window.require("electron").ipcRenderer;
+
+import { setTransferData } from "../../redux/teamTransfer/teamTransferSlice.js";
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 import { TRANSFER_TYPE } from "../../constants/teamsTransferConstants.js";
+import { CHANNELS } from "../../../common/constants/channels";
 
 // Class for handle operations in teams transfer modal
 export class TeamsTransfer {
@@ -33,15 +33,25 @@ export class TeamsTransfer {
 		this.dispatch(setTransferData({ id, key }));
 	};
 
-	// Handler for championship options
-	handleChampOptions = (cyberId, champShortList, generateChampOptions) => {
-		if (cyberId) {
-			generateChampOptions();
-		}
+	// Handle bool value for loading button
+	handleBtnDisabled = (transferType, teamIdsArray) => {
+		return (
+			transferType === TRANSFER_TYPE.VALUE_FULL ||
+			(transferType === TRANSFER_TYPE.VALUE_CUSTOM && teamIdsArray.length > 0)
+		);
 	};
 
-	// Refresh redux state
-	refreshTransferModal = () => {
-		this.dispatch(refreshTransferModal());
+	// Handle teams transfer
+	handleTransfer = async (reqDataObj) => {
+		try {
+			const res = await ipcRenderer.invoke(
+				CHANNELS.TEAMS_TRANSFER.SAVE,
+				reqDataObj
+			);
+			return res;
+		} catch (err) {
+			console.log("err", err);
+			return err;
+		}
 	};
 }
