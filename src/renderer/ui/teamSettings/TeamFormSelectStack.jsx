@@ -67,6 +67,8 @@ const TeamFormSelectStack = ({
 };
 
 TeamFormSelectStack.propTypes = {
+	cyberId: PropTypes.string.isRequired,
+	selectedChamp: PropTypes.string.isRequired,
 	pageType: PropTypes.string.isRequired,
 	cyberOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	champOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
