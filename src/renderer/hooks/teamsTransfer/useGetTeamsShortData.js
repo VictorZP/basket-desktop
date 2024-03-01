@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
@@ -7,16 +7,26 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import {
 	getOutChampId,
 	getTargetChampId,
+	getIsTeamsUpdated,
 } from "../../redux/teamTransfer/teamTransferSelector.js";
+import { handleSearchQuery } from "../../redux/teamTransfer/teamTransferSlice.js";
 
 import { CHANNELS } from "../../../common/constants/channels";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { TRANSFER_TYPE } from "../../constants/teamsTransferConstants.js";
 
 // Hook for getting short teams data
-export const useGetTeamsShortData = (setLeft, setRight) => {
+export const useGetTeamsShortData = (
+	setLeft,
+	setRight,
+	setDisabledIds,
+	setVisibleList
+) => {
 	const outChampId = useSelector(getOutChampId);
 	const targetChampId = useSelector(getTargetChampId);
+	const isTeamsUpdated = useSelector(getIsTeamsUpdated);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.TEAMS_TRANSFER.GET_TEAMS_LIST, {
@@ -37,6 +47,10 @@ export const useGetTeamsShortData = (setLeft, setRight) => {
 			}
 
 			if (arg.type === TRANSFER_TYPE.OUT) {
+				// Clear search query and visible list for transfer list component
+				setVisibleList([]);
+				dispatch(handleSearchQuery(""));
+
 				setLeft(arg?.list ?? []);
 			}
 		});
@@ -44,7 +58,7 @@ export const useGetTeamsShortData = (setLeft, setRight) => {
 		return () => {
 			ipcRenderer.removeAllListeners(CHANNELS.TEAMS_TRANSFER.GET_TEAMS_LIST);
 		};
-	}, [outChampId]);
+	}, [outChampId, isTeamsUpdated]);
 
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.TEAMS_TRANSFER.GET_TEAMS_LIST, {
@@ -65,6 +79,8 @@ export const useGetTeamsShortData = (setLeft, setRight) => {
 			}
 
 			if (arg.type === TRANSFER_TYPE.TARGET) {
+				const disabledIds = arg?.list?.map((team) => team?.teamId);
+				setDisabledIds(disabledIds); // Set disabled ids for transfer list component
 				setRight(arg?.list ?? []);
 			}
 		});
@@ -72,5 +88,5 @@ export const useGetTeamsShortData = (setLeft, setRight) => {
 		return () => {
 			ipcRenderer.removeAllListeners(CHANNELS.TEAMS_TRANSFER.GET_TEAMS_LIST);
 		};
-	}, [targetChampId]);
+	}, [targetChampId, isTeamsUpdated]);
 };

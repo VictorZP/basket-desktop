@@ -8,6 +8,8 @@ import {
 import {
 	setTransferChampOptions,
 	refreshTransferData,
+	refreshTransferType,
+	handleSearchQuery,
 } from "../../redux/teamTransfer/teamTransferSlice.js";
 
 // Hook for setting championship options
@@ -34,6 +36,8 @@ export const useSetChampOptions = (champShortList) => {
 	useEffect(() => {
 		if (outCyberId) {
 			const options = generateChampOptions(outCyberId);
+			dispatch(refreshTransferType());
+			dispatch(handleSearchQuery(""));
 			dispatch(refreshTransferData({ key: "outChampId" }));
 			dispatch(setTransferChampOptions({ key: "outChampOptions", options }));
 		}
@@ -42,6 +46,7 @@ export const useSetChampOptions = (champShortList) => {
 	useEffect(() => {
 		if (targetCyberId) {
 			const options = generateChampOptions(targetCyberId);
+			dispatch(refreshTransferType());
 			dispatch(refreshTransferData({ key: "targetChampId" }));
 			dispatch(setTransferChampOptions({ key: "targetChampOptions", options }));
 		}
