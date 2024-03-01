@@ -114,3 +114,25 @@ ipcMain.handle(CHANNELS.TEAMS_TRANSFER.SAVE, async (event, arg) => {
 		return errorDataResponse;
 	}
 });
+
+ipcMain.on(CHANNELS.TEAMS_TRANSFER.GET_TEAMS_LIST, async (event, arg) => {
+	try {
+		const res = await axios.get(`${endPoint}/list/short/${arg?.champId}`);
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+			list: res?.data?.list,
+			type: arg?.listType,
+		};
+
+		event.sender.send(CHANNELS.TEAMS_TRANSFER.GET_TEAMS_LIST, resData);
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+			type: arg?.listType,
+		};
+		event.sender.send(CHANNELS.TEAMS_TRANSFER.GET_TEAMS_LIST, res);
+	}
+});
