@@ -107,7 +107,7 @@ const AddFilterLeague = ({
 
 	const formSelectStackProps = {
 		cyberId,
-		champId: selectedChamp?.value,
+		selectedChamp: selectedChamp?.value,
 		pageType: CONSTANTS.PAGE_TYPE.FP,
 		cyberOptions: options,
 		champOptions,
