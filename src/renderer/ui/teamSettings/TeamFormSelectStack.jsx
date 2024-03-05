@@ -9,7 +9,7 @@ import { STYLES } from "./style.js";
 
 const TeamFormSelectStack = ({
 	cyberId,
-	selectedChamp,
+	champId,
 	pageType,
 	cyberOptions,
 	champOptions,
@@ -47,7 +47,7 @@ const TeamFormSelectStack = ({
 					labelId={CONSTANTS.CHAMP_SELECT_LABEL_ID}
 					id={CONSTANTS.CHAMP_SELECT_ID}
 					label={TEAM_NAMES_FORM.CHAMP_LABEL}
-					value={selectedChamp ?? ""}
+					value={champId ?? ""}
 					onChange={handleChange}
 					name={CONSTANTS.CHAMP_SELECT_NAME}
 					MenuProps={STYLES.MENU_PROPS}
@@ -68,7 +68,7 @@ const TeamFormSelectStack = ({
 
 TeamFormSelectStack.propTypes = {
 	cyberId: PropTypes.string.isRequired,
-	selectedChamp: PropTypes.string.isRequired,
+	champId: PropTypes.string.isRequired,
 	pageType: PropTypes.string.isRequired,
 	cyberOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 	champOptions: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
