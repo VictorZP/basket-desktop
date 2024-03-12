@@ -156,7 +156,7 @@ const GamesStaticList = ({ paramsObj }) => {
 			<Box mb={1}>
 				<Typography variant="h5">{TEXT.TITLE}</Typography>
 			</Box>
-			<Box sx={{ py: 1 }}>
+			<Box sx={{ py: 1 }} maxWidth={1300}>
 				{CYBER_LIST
 					? CYBER_LIST.map((cyber) => {
 							return (
