@@ -1,0 +1,38 @@
+.active-list__item {
+	min-width: 1100px;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	border-top: none;
+}
+
+.active-list__item-less {
+	background-color: #ffcdd2;
+}
+
+.active-list__item-more {
+	background-color: #dcedc8;
+}
+
+.active-list__row {
+	display: flex;
+	width: 100%;
+}
+
+.active-list__row span {
+	display: flex;
+	padding: 5px;
+	min-height: 40px;
+	align-items: center;
+	justify-content: center;
+}
+
+.active-list__row span:not(:last-child) {
+	border-right: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.active-list__bet-limit-odds {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	width: 49.5px;
+}

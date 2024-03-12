@@ -7,7 +7,6 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { Box, Button, Divider } from "@mui/material";
 
 import ActiveGamesList from "../components/ActiveGamesList/ActiveGamesList.jsx";
-import ActiveGamesListNoBets from "../components/ActiveGamesListNoBets/ActiveGamesListNoBets.jsx";
 
 import { CHANNELS } from "../../common/constants/channels.js";
 import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
@@ -142,20 +141,15 @@ const ActiveGames = () => {
 	//	-- Список матчей где нет KickOff или Bets ID --
 	const filteredMatchesManual = matches.filter((match) => {
 		return (
-			match?.statusFront !== ACTIVE_PAGE.STATUS &&
-			(match?.noBets || match?.kickOFF === 0)
+			(match?.statusFront !== ACTIVE_PAGE.STATUS &&
+				(match?.noBets || match?.kickOFF === 0)) ||
+			(!match?.noBets && match?.total === 0)
 		);
 	});
 
 	return (
 		<Box component="section">
-			<Box
-				px={3}
-				mb={2}
-				sx={{
-					height: "40px",
-				}}
-			>
+			<Box px={3} mb={2} height={40}>
 				<Button
 					variant="contained"
 					onClick={handleStart}
@@ -165,11 +159,16 @@ const ActiveGames = () => {
 				</Button>
 			</Box>
 			<Divider />
-			<ActiveGamesList matches={filteredMatches} hideMatch={hideMatch} />
+			<ActiveGamesList
+				matches={filteredMatches}
+				hideMatch={hideMatch}
+				isBets={true}
+			/>
 			<Divider />
-			<ActiveGamesListNoBets
+			<ActiveGamesList
 				matches={filteredMatchesManual}
 				hideMatch={hideMatch}
+				isBets={false}
 			/>
 		</Box>
 	);
