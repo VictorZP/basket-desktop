@@ -141,9 +141,10 @@ const ActiveGames = () => {
 	//	-- Список матчей где нет KickOff или Bets ID --
 	const filteredMatchesManual = matches.filter((match) => {
 		return (
-			(match?.statusFront !== ACTIVE_PAGE.STATUS &&
-				(match?.noBets || match?.kickOFF === 0)) ||
-			(!match?.noBets && match?.total === 0)
+			match?.statusFront !== ACTIVE_PAGE.STATUS &&
+			(match?.noBets ||
+				match?.kickOFF === 0 ||
+				(!match?.noBets && match?.total === 0))
 		);
 	});
 
