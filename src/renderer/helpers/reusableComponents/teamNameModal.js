@@ -15,6 +15,7 @@ export const TeamModalContainer = styled(Box)(({ theme }) => ({
 export const TeamModalInnerBox = styled(Box)(({ theme }) => ({
 	width: "1100px",
 	height: "700px",
+	padding: "20px",
 	borderRadius: "10px",
 	background: "#fff",
 }));
