@@ -171,14 +171,26 @@ const MSTeamNameForm = ({ cyberList }) => {
 		}
 	};
 
-	const openModal = () => {
-		ModalHandler.openModal(dispatch, MODAL_TYPES.TEAMS_NAMES);
+	const openModal = (e) => {
+		const btnId = e?.currentTarget?.id;
+
+		switch (btnId) {
+			case "transferTeam":
+				ModalHandler.openModal(dispatch, MODAL_TYPES.TEAMS_NAMES);
+				break;
+			case "addTeam":
+				ModalHandler.openModal(dispatch, MODAL_TYPES.TEAM_ADD);
+				break;
+
+			default:
+				break;
+		}
 	};
 
 	return (
-		<Box sx={{ paddingX: 3, pt: 1, pb: 2 }}>
+		<Box sx={{ display: "grid", paddingX: 3, pt: 1, pb: 2, rowGap: 2 }}>
 			<Typography variant="h5">{TEAM_NAMES_FORM.TITLE}</Typography>
-			<Box
+			{/* <Box
 				component={"form"}
 				onSubmit={handleSubmit}
 				sx={{ maxWidth: "1300px" }}
@@ -195,10 +207,15 @@ const MSTeamNameForm = ({ cyberList }) => {
 					handleTeamNames={handleChange}
 					onClearBtn={onClearBtn}
 				/>
+			</Box> */}
+			<Box display="flex" gap={3}>
+				<Button id="addTeam" variant="contained" onClick={openModal}>
+					{TEAM_NAMES_FORM.TEAM_ADD}
+				</Button>
+				<Button id="transferTeam" variant="contained" onClick={openModal}>
+					{TEAM_NAMES_FORM.TEAMS_TRANSFER}
+				</Button>
 			</Box>
-			<Button variant="contained" onClick={openModal}>
-				{TEAM_NAMES_FORM.TEAMS_TRANSFER}
-			</Button>
 		</Box>
 	);
 };

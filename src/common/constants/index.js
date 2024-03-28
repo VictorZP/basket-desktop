@@ -71,6 +71,7 @@ export const MATCHES_SETTINGS = {
 		BTN_UPD: "Обновить",
 		ADDED: "Команда добавлена",
 		UPDATED: "Обновлено",
+		TEAM_ADD: "Добавить команду",
 		TEAMS_TRANSFER: "Перенос команд",
 	},
 	TEAM_NAMES_TABLE: {

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Modal as MuiModal, Box } from "@mui/material";
 
 import TransferModal from "../components/TransferModal";
+import TeamModal from "../components/TeamModal";
+
 import {
 	getModalType,
 	getModalOpenStatus,
@@ -23,7 +25,10 @@ const Modal = () => {
 
 	return (
 		<MuiModal
-			open={isOpen && type === MODAL_TYPES.TEAMS_NAMES}
+			open={
+				isOpen &&
+				(type === MODAL_TYPES.TEAMS_NAMES || type === MODAL_TYPES.TEAM_ADD)
+			}
 			onClose={handleClose}
 			sx={{
 				display: "flex",
@@ -34,6 +39,8 @@ const Modal = () => {
 		>
 			<Box sx={{ width: "100%", height: "100%" }}>
 				{type === MODAL_TYPES.TEAMS_NAMES && <TransferModal />}
+
+				{type === MODAL_TYPES.TEAM_ADD && <TeamModal />}
 			</Box>
 		</MuiModal>
 	);
