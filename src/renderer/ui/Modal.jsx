@@ -27,7 +27,7 @@ const Modal = () => {
 		<MuiModal
 			open={
 				isOpen &&
-				(type === MODAL_TYPES.TEAMS_NAMES || type === MODAL_TYPES.TEAM_ADD)
+				(type === MODAL_TYPES.TRANSFER_TEAMS || type === MODAL_TYPES.TEAM_ADD)
 			}
 			onClose={handleClose}
 			sx={{
@@ -38,9 +38,9 @@ const Modal = () => {
 			}}
 		>
 			<Box sx={{ width: "100%", height: "100%" }}>
-				{type === MODAL_TYPES.TEAMS_NAMES && <TransferModal />}
-
 				{type === MODAL_TYPES.TEAM_ADD && <TeamModal />}
+				{type === MODAL_TYPES.TRANSFER_TEAMS && <TransferModal />}
+				<TeamModal />
 			</Box>
 		</MuiModal>
 	);

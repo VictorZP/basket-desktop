@@ -221,10 +221,6 @@ const MatchesSettings = () => {
 		handleEdit,
 	};
 
-	const teamNameFormProps = {
-		cyberList,
-	};
-
 	const teamNamesProps = {
 		teamNamesList,
 		setTeamNamesList,
@@ -245,7 +241,7 @@ const MatchesSettings = () => {
 			</Box>
 			<Divider />
 			<Box sx={{ pb: 3 }}>
-				<MSTeamNameForm {...teamNameFormProps} />
+				<MSTeamNameForm />
 				<MSTeamNames {...teamNamesProps} />
 			</Box>
 			<DelModal {...delModalProps} />
