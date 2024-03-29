@@ -2,10 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-import { Box, FormControl, TextField } from "@mui/material";
+import {
+	Box,
+	FormControl,
+	TextField,
+	Typography,
+	Divider,
+} from "@mui/material";
 
 import SaveBtn from "../../ui/SaveBtn.jsx";
 import IconBtn from "../../ui/iconBtn.jsx";
+import NameTextField from "../../ui/teamNames/NameTextField.jsx";
 
 import {
 	getTeamData,
@@ -46,63 +53,80 @@ const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
 		<Box
 			sx={{
 				display: "grid",
-				gridTemplateColumns: "repeat(4, minmax(150px, 210px)) 10% 5%",
-				columnGap: "10px",
-				alignItems: "center",
+				gap: 2,
 				padding: "10px 0px",
 			}}
 		>
-			<FormControl>
-				<TextField
-					required
-					name={CONSTANTS.TEAM_NAME_INP}
-					label={TEAM_NAMES_FORM.CUSTOM_TEAM_NAME_LABEL}
-					value={teamData?.teamName}
-					variant="outlined"
-					size="small"
-					onChange={handleTeamNames}
-					disabled={!isInputDisabled && !onEdit}
-				/>
-			</FormControl>
-			<FormControl>
-				<TextField
+			<Typography variant="p">Личное название команды</Typography>
+			<NameTextField
+				name={CONSTANTS.TEAM_NAME_INP}
+				label={TEAM_NAMES_FORM.CUSTOM_TEAM_NAME_LABEL}
+				value={teamData?.teamName}
+				onChange={handleTeamNames}
+				disabled={!isInputDisabled && !onEdit}
+				required={true}
+			/>
+			<Typography variant="p">
+				Названия команды в соответствии с Fibalive
+			</Typography>
+			<Box
+				sx={{
+					display: "grid",
+					gridTemplateColumns: "repeat(3, minmax(150px, 210px)) ",
+					gap: 2,
+				}}
+			>
+				<NameTextField
 					name={CONSTANTS.FIBALIVE_NAME_INP}
-					label={TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_LABEL}
+					label={`${TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_LABEL} 1`}
 					value={teamData?.fibaliveTeamName}
-					variant="outlined"
-					size="small"
 					onChange={handleTeamNames}
 					disabled={!isInputDisabled && !onEdit}
 				/>
-			</FormControl>
-			<FormControl>
-				<TextField
-					name={CONSTANTS.BETSAPI_NAME_INP}
-					label={TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_LABEL}
-					value={teamData?.betsapiTeamName}
-					variant="outlined"
-					size="small"
+				<NameTextField
+					name={CONSTANTS.FIBALIVE_NAME_INP}
+					label={`${TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_LABEL} 2`}
+					value={teamData?.fibaliveTeamName}
 					onChange={handleTeamNames}
 					disabled={!isInputDisabled && !onEdit}
 				/>
-			</FormControl>
-			<FormControl>
-				<TextField
-					name={CONSTANTS.OTHER_SITE_INP}
-					label={TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_LABEL}
-					value={teamData?.otherSiteTeamName}
-					variant="outlined"
-					size="small"
+				<NameTextField
+					name={CONSTANTS.FIBALIVE_NAME_INP}
+					label={`${TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_LABEL} 3`}
+					value={teamData?.fibaliveTeamName}
 					onChange={handleTeamNames}
 					disabled={!isInputDisabled && !onEdit}
+					style={false}
 				/>
-			</FormControl>
-			<SaveBtn
+			</Box>
+			<Typography variant="p">
+				Названия команды в соответствии с BetsApi
+			</Typography>
+			<NameTextField
+				name={CONSTANTS.BETSAPI_NAME_INP}
+				label={TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_LABEL}
+				value={teamData?.betsapiTeamName}
+				onChange={handleTeamNames}
+				disabled={!isInputDisabled && !onEdit}
+			/>
+			<Typography variant="p">
+				Названия команды в соответствии с сайтом чемпионата
+			</Typography>
+			<NameTextField
+				name={CONSTANTS.OTHER_SITE_INP}
+				label={TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_LABEL}
+				value={teamData?.otherSiteTeamName}
+				variant="outlined"
+				size="small"
+				onChange={handleTeamNames}
+				disabled={!isInputDisabled && !onEdit}
+			/>
+			{/* <SaveBtn
 				isLoading={isLoading}
 				onEdit={onEdit}
 				isDisabled={!isAddBtnDisabled}
 			/>
-			<IconBtn isDisabled={!isClearBtnDisabled} onClearBtn={onClearBtn} />
+			<IconBtn isDisabled={!isClearBtnDisabled} onClearBtn={onClearBtn} /> */}
 		</Box>
 	);
 };
