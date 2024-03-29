@@ -40,7 +40,6 @@ const Modal = () => {
 			<Box sx={{ width: "100%", height: "100%" }}>
 				{type === MODAL_TYPES.TEAM_ADD && <TeamModal />}
 				{type === MODAL_TYPES.TRANSFER_TEAMS && <TransferModal />}
-				<TeamModal />
 			</Box>
 		</MuiModal>
 	);
