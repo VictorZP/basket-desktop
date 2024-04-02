@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Button } from "@mui/material";
 
@@ -9,8 +9,14 @@ import {
 	getTeamEditStatus,
 	getTeamLoadingStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
+import {
+	refreshTeamData,
+	refreshSelectedChamp,
+} from "../../redux/matchSettings/matchSettingsSlice.js";
 
 import SaveBtn from "../../ui/SaveBtn.jsx";
+
+import ModalHandler from "../../helpers/classes/modal.js";
 
 import { TEXT } from "../../constants/teamNameFormConstants.js";
 
@@ -19,6 +25,14 @@ const TeamNamesModalBtn = () => {
 	const teamData = useSelector(getTeamData);
 	const onEdit = useSelector(getTeamEditStatus);
 	const isLoading = useSelector(getTeamLoadingStatus);
+
+	const dispatch = useDispatch();
+
+	const closeModal = () => {
+		ModalHandler.closeModal(dispatch);
+		dispatch(refreshTeamData());
+		dispatch(refreshSelectedChamp());
+	};
 
 	const isAddBtnDisabled =
 		selectedChamp?.id?.length > 0 &&
@@ -36,7 +50,7 @@ const TeamNamesModalBtn = () => {
 				onEdit={onEdit}
 				isDisabled={!isAddBtnDisabled}
 			/>
-			<Button variant="outlined" sx={{ width: "110px" }}>
+			<Button variant="outlined" sx={{ width: "110px" }} onClick={closeModal}>
 				{TEXT.BTN_BACK}
 			</Button>
 		</Box>
