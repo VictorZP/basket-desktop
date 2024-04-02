@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Table, TableBody, TableHead, TableRow } from "@mui/material";
+import { Table, TableBody, TableHead, TableRow, List } from "@mui/material";
 
 import TableBtnStack from "../TableBtnStack";
+import TeamNameListItem from "../../ui/teamNames/TeamNameListItem.jsx";
 import {
 	StyledTableCell,
 	StyledTableRow,
@@ -31,7 +32,20 @@ const MSTeamNamesTable = ({
 							{row?.teamChamp?.championshipName ?? ""}
 						</StyledTableCell>
 						<StyledTableCell>{row?.teamName ?? ""}</StyledTableCell>
-						<StyledTableCell>{row?.fibaliveTeamName ?? ""}</StyledTableCell>
+						<StyledTableCell>
+							<List disablePadding>
+								{row?.fibaliveTeamNameOne && (
+									<TeamNameListItem teamName={row?.fibaliveTeamNameOne} />
+								)}
+								{row?.fibaliveTeamNameTwo && (
+									<TeamNameListItem teamName={row?.fibaliveTeamNameTwo} />
+								)}
+								{row?.fibaliveTeamNameThree && (
+									<TeamNameListItem teamName={row?.fibaliveTeamNameThree} />
+								)}
+							</List>
+						</StyledTableCell>
+
 						<StyledTableCell>{row?.betsapiTeamName ?? ""}</StyledTableCell>
 						<StyledTableCell>{row?.otherSiteTeamName ?? ""}</StyledTableCell>
 						<StyledTableCell>
