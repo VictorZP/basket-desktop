@@ -23,7 +23,9 @@ const TeamNamesModalBtn = () => {
 	const isAddBtnDisabled =
 		selectedChamp?.id?.length > 0 &&
 		teamData.teamName?.length > 0 &&
-		(teamData.fibaliveTeamName?.length > 0 ||
+		(teamData.fibaliveTeamName1?.length > 0 ||
+			teamData.fibaliveTeamName2?.length > 0 ||
+			teamData.fibaliveTeamName3?.length > 0 ||
 			teamData.betsapiTeamName?.length > 0 ||
 			teamData.otherSiteTeamName?.length > 0);
 

@@ -187,7 +187,9 @@ const TeamModal = () => {
 		teamData.cyberId?.length > 0 ||
 		selectedChamp?.id?.length > 0 ||
 		teamData.customName?.length > 0 ||
-		teamData.fibaliveTeamName?.length > 0 ||
+		teamData.fibaliveTeamName1?.length > 0 ||
+		teamData.fibaliveTeamName2?.length > 0 ||
+		teamData.fibaliveTeamName3?.length > 0 ||
 		teamData.betsapiTeamName?.length > 0 ||
 		teamData.otherSiteTeamName?.length > 0;
 

@@ -135,7 +135,12 @@ const matchSettingsSlice = createSlice({
 		},
 		refreshTeamNames(state) {
 			state.teamData.teamName = initialState.teamData.teamName;
-			state.teamData.fibaliveTeamName = initialState.teamData.fibaliveTeamName;
+			state.teamData.fibaliveTeamName1 =
+				initialState.teamData.fibaliveTeamName1;
+			state.teamData.fibaliveTeamName2 =
+				initialState.teamData.fibaliveTeamName2;
+			state.teamData.fibaliveTeamName3 =
+				initialState.teamData.fibaliveTeamName3;
 			state.teamData.betsapiTeamName = initialState.teamData.betsapiTeamName;
 			state.teamData.otherSiteTeamName =
 				initialState.teamData.otherSiteTeamName;
