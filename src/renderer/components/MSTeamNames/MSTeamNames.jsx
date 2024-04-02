@@ -78,9 +78,9 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 						regex.test(team.teamChamp.championshipName) ||
 						regex.test(team.teamCyber.cyberName) ||
 						regex.test(team.teamName) ||
-						regex.test(team.fibaliveTeamNameOne) ||
-						regex.test(team.fibaliveTeamNameTwo) ||
-						regex.test(team.fibaliveTeamNameThree) ||
+						regex.test(team.fibaliveTeamName1) ||
+						regex.test(team.fibaliveTeamName2) ||
+						regex.test(team.fibaliveTeamName3) ||
 						regex.test(team.betsapiTeamName) ||
 						regex.test(team.otherSiteTeamName)
 				);
@@ -177,9 +177,9 @@ MSTeamNames.propTypes = {
 		PropTypes.shape({
 			teamId: PropTypes.string.isRequired,
 			teamName: PropTypes.string.isRequired,
-			fibaliveTeamNameOne: PropTypes.string,
-			fibaliveTeamNameTwo: PropTypes.string,
-			fibaliveTeamNameThree: PropTypes.string,
+			fibaliveTeamName1: PropTypes.string,
+			fibaliveTeamName2: PropTypes.string,
+			fibaliveTeamName3: PropTypes.string,
 			betsapiTeamName: PropTypes.string,
 			otherSiteTeamName: PropTypes.string,
 			teamCyber: PropTypes.objectOf(PropTypes.string),

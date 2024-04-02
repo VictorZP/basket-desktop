@@ -34,14 +34,14 @@ const MSTeamNamesTable = ({
 						<StyledTableCell>{row?.teamName ?? ""}</StyledTableCell>
 						<StyledTableCell>
 							<List disablePadding>
-								{row?.fibaliveTeamNameOne && (
-									<TeamNameListItem teamName={row?.fibaliveTeamNameOne} />
+								{row?.fibaliveTeamName1 && (
+									<TeamNameListItem teamName={row?.fibaliveTeamName1} />
 								)}
-								{row?.fibaliveTeamNameTwo && (
-									<TeamNameListItem teamName={row?.fibaliveTeamNameTwo} />
+								{row?.fibaliveTeamName2 && (
+									<TeamNameListItem teamName={row?.fibaliveTeamName2} />
 								)}
-								{row?.fibaliveTeamNameThree && (
-									<TeamNameListItem teamName={row?.fibaliveTeamNameThree} />
+								{row?.fibaliveTeamName3 && (
+									<TeamNameListItem teamName={row?.fibaliveTeamName3} />
 								)}
 							</List>
 						</StyledTableCell>
