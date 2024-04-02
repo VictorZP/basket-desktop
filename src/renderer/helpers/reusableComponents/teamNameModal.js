@@ -3,8 +3,8 @@ import Box, { boxClasses } from "@mui/material/Box";
 
 export const TeamModalContainer = styled(Box)(({ theme }) => ({
 	display: "flex",
-	minWidth: "1100px",
-	minHeight: "700px",
+	minWidth: "900px",
+	minHeight: "650px",
 	width: "100%",
 	height: "100%",
 	padding: "24px",
@@ -13,8 +13,8 @@ export const TeamModalContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const TeamModalInnerBox = styled(Box)(({ theme }) => ({
-	width: "1100px",
-	height: "700px",
+	width: "900px",
+	height: "650px",
 	padding: "20px",
 	borderRadius: "10px",
 	background: "#fff",

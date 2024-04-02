@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { TeamFormSelectStack } from "../../ui/teamSettings/index.js";
 import TeamFormInputStack from "../TeamFormInputStack";
+import TeamNamesModalBtn from "../TeamNamesModalBtn";
 
 import {
 	handleEditTeam,
@@ -41,7 +42,7 @@ import {
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
 
 import { CHANNELS } from "../../../common/constants/channels.js";
-import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
+import { CONSTANTS, TEXT } from "../../constants/teamNameFormConstants.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
 const TeamModal = () => {
@@ -130,7 +131,9 @@ const TeamModal = () => {
 				);
 				break;
 			case CONSTANTS.TEAM_NAME_INP:
-			case CONSTANTS.FIBALIVE_NAME_INP:
+			case CONSTANTS.FIBALIVE_NAME_INP_1:
+			case CONSTANTS.FIBALIVE_NAME_INP_2:
+			case CONSTANTS.FIBALIVE_NAME_INP_3:
 			case CONSTANTS.BETSAPI_NAME_INP:
 			case CONSTANTS.OTHER_SITE_INP:
 				dispatch(setTeamName({ name, value: inputValue }));
@@ -157,7 +160,9 @@ const TeamModal = () => {
 				cyberId,
 				championshipId: selectedChamp?.id,
 				teamName: teamData?.teamName,
-				fibaliveTeamName: teamData?.fibaliveTeamName,
+				fibaliveTeamName1: teamData?.fibaliveTeamName1,
+				fibaliveTeamName2: teamData?.fibaliveTeamName2,
+				fibaliveTeamName3: teamData?.fibaliveTeamName3,
 				betsapiTeamName: teamData?.betsapiTeamName,
 				otherSiteTeamName: teamData?.otherSiteTeamName,
 			};
@@ -178,25 +183,42 @@ const TeamModal = () => {
 		}
 	};
 
+	const isClearBtnDisabled =
+		teamData.cyberId?.length > 0 ||
+		selectedChamp?.id?.length > 0 ||
+		teamData.customName?.length > 0 ||
+		teamData.fibaliveTeamName?.length > 0 ||
+		teamData.betsapiTeamName?.length > 0 ||
+		teamData.otherSiteTeamName?.length > 0;
+
 	return (
 		<TeamModalContainer>
 			<TeamModalInnerBox>
 				<Typography variant="h5" mb={2}>
 					{TEAM_NAMES_FORM.ADD_TEAM_TITLE}
 				</Typography>
-				<Box component={"form"}>
-					<TeamFormSelectStack
-						cyberId={cyberId}
-						selectedChamp={selectedChamp.id}
-						pageType={CONSTANTS.PAGE_TYPE.MS}
-						cyberOptions={options}
-						champOptions={champOptions}
-						handleChange={handleChange}
-					/>
-					<TeamFormInputStack
-						handleTeamNames={handleChange}
-						onClearBtn={onClearBtn}
-					/>
+				<Box component={"form"} onSubmit={handleSubmit}>
+					<Box mb={3}>
+						<TeamFormSelectStack
+							cyberId={cyberId}
+							selectedChamp={selectedChamp.id}
+							pageType={CONSTANTS.PAGE_TYPE.MS}
+							cyberOptions={options}
+							champOptions={champOptions}
+							handleChange={handleChange}
+						/>
+						<TeamFormInputStack handleTeamNames={handleChange} />
+						<Button
+							variant="outlined"
+							color="error"
+							disabled={!isClearBtnDisabled}
+							sx={{ width: "210px" }}
+							onClick={onClearBtn}
+						>
+							{TEXT.BTN_CLEAR}
+						</Button>
+					</Box>
+					<TeamNamesModalBtn />
 				</Box>
 			</TeamModalInnerBox>
 		</TeamModalContainer>

@@ -17,7 +17,7 @@ export const CONSTANTS = {
 	},
 };
 
-export const TEXT = { BTN_BACK: "Назад" };
+export const TEXT = { BTN_BACK: "Назад", BTN_CLEAR: "Очистить" };
 
 export const INITIAL_TEAM_DATA = {
 	teamName: "",

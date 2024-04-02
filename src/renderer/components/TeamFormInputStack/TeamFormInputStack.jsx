@@ -105,7 +105,6 @@ const TeamFormInputStack = ({ handleTeamNames }) => {
 
 TeamFormInputStack.propTypes = {
 	handleTeamNames: PropTypes.func.isRequired,
-	onClearBtn: PropTypes.func.isRequired,
 };
 
 export default TeamFormInputStack;
