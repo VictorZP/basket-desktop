@@ -2,50 +2,25 @@ import React from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-import {
-	Box,
-	FormControl,
-	TextField,
-	Typography,
-	Divider,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
-import SaveBtn from "../../ui/SaveBtn.jsx";
-import IconBtn from "../../ui/iconBtn.jsx";
 import NameTextField from "../../ui/teamNames/NameTextField.jsx";
 
 import {
 	getTeamData,
 	getSelectedChamp,
 	getTeamEditStatus,
-	getTeamLoadingStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 
-const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
+const TeamFormInputStack = ({ handleTeamNames }) => {
 	const onEdit = useSelector(getTeamEditStatus);
 	const teamData = useSelector(getTeamData);
 	const selectedChamp = useSelector(getSelectedChamp);
-	const isLoading = useSelector(getTeamLoadingStatus);
 
 	const { TEAM_NAMES_FORM } = MATCHES_SETTINGS;
-
-	const isAddBtnDisabled =
-		selectedChamp?.id?.length > 0 &&
-		teamData.teamName?.length > 0 &&
-		(teamData.fibaliveTeamName?.length > 0 ||
-			teamData.betsapiTeamName?.length > 0 ||
-			teamData.otherSiteTeamName?.length > 0);
-
-	const isClearBtnDisabled =
-		teamData.cyberId?.length > 0 ||
-		selectedChamp?.id?.length > 0 ||
-		teamData.customName?.length > 0 ||
-		teamData.fibaliveTeamName?.length > 0 ||
-		teamData.betsapiTeamName?.length > 0 ||
-		teamData.otherSiteTeamName?.length > 0;
 
 	const isInputDisabled = selectedChamp?.id;
 
@@ -55,9 +30,12 @@ const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
 				display: "grid",
 				gap: 2,
 				padding: "10px 0px",
+				mb: 2,
 			}}
 		>
-			<Typography variant="p">Личное название команды</Typography>
+			<Typography variant="p">
+				{TEAM_NAMES_FORM.CUSTOM_TEAM_NAME_TITLE}
+			</Typography>
 			<NameTextField
 				name={CONSTANTS.TEAM_NAME_INP}
 				label={TEAM_NAMES_FORM.CUSTOM_TEAM_NAME_LABEL}
@@ -67,7 +45,7 @@ const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
 				required={true}
 			/>
 			<Typography variant="p">
-				Названия команды в соответствии с Fibalive
+				{TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_TITLE}
 			</Typography>
 			<Box
 				sx={{
@@ -77,30 +55,30 @@ const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
 				}}
 			>
 				<NameTextField
-					name={CONSTANTS.FIBALIVE_NAME_INP}
+					name={CONSTANTS.FIBALIVE_NAME_INP_1}
 					label={`${TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_LABEL} 1`}
-					value={teamData?.fibaliveTeamName}
+					value={teamData?.fibaliveTeamName1}
 					onChange={handleTeamNames}
 					disabled={!isInputDisabled && !onEdit}
 				/>
 				<NameTextField
-					name={CONSTANTS.FIBALIVE_NAME_INP}
+					name={CONSTANTS.FIBALIVE_NAME_INP_2}
 					label={`${TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_LABEL} 2`}
-					value={teamData?.fibaliveTeamName}
+					value={teamData?.fibaliveTeamName2}
 					onChange={handleTeamNames}
 					disabled={!isInputDisabled && !onEdit}
 				/>
 				<NameTextField
-					name={CONSTANTS.FIBALIVE_NAME_INP}
+					name={CONSTANTS.FIBALIVE_NAME_INP_3}
 					label={`${TEAM_NAMES_FORM.FIBALIVE_TEAM_NAME_LABEL} 3`}
-					value={teamData?.fibaliveTeamName}
+					value={teamData?.fibaliveTeamName3}
 					onChange={handleTeamNames}
 					disabled={!isInputDisabled && !onEdit}
 					style={false}
 				/>
 			</Box>
 			<Typography variant="p">
-				Названия команды в соответствии с BetsApi
+				{TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_TITLE}
 			</Typography>
 			<NameTextField
 				name={CONSTANTS.BETSAPI_NAME_INP}
@@ -110,7 +88,7 @@ const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
 				disabled={!isInputDisabled && !onEdit}
 			/>
 			<Typography variant="p">
-				Названия команды в соответствии с сайтом чемпионата
+				{TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_TITLE}
 			</Typography>
 			<NameTextField
 				name={CONSTANTS.OTHER_SITE_INP}
@@ -121,12 +99,6 @@ const TeamFormInputStack = ({ handleTeamNames, onClearBtn }) => {
 				onChange={handleTeamNames}
 				disabled={!isInputDisabled && !onEdit}
 			/>
-			{/* <SaveBtn
-				isLoading={isLoading}
-				onEdit={onEdit}
-				isDisabled={!isAddBtnDisabled}
-			/>
-			<IconBtn isDisabled={!isClearBtnDisabled} onClearBtn={onClearBtn} /> */}
 		</Box>
 	);
 };

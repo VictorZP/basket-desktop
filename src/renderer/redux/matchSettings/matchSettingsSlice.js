@@ -28,7 +28,9 @@ const initialState = {
 	teamData: {
 		teamId: "",
 		teamName: "",
-		fibaliveTeamName: "",
+		fibaliveTeamName1: "",
+		fibaliveTeamName2: "",
+		fibaliveTeamName3: "",
 		betsapiTeamName: "",
 		otherSiteTeamName: "",
 		cyberId: "",

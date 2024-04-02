@@ -6,7 +6,9 @@ export const CONSTANTS = {
 	CHAMP_SELECT_ID: "champ-select-team-name",
 	CHAMP_SELECT_NAME: "champSelectTeamName",
 	TEAM_NAME_INP: "teamName",
-	FIBALIVE_NAME_INP: "fibaliveTeamName",
+	FIBALIVE_NAME_INP_1: "fibaliveTeamName1",
+	FIBALIVE_NAME_INP_2: "fibaliveTeamName2",
+	FIBALIVE_NAME_INP_3: "fibaliveTeamName3",
 	BETSAPI_NAME_INP: "betsapiTeamName",
 	OTHER_SITE_INP: "otherSiteTeamName",
 	PAGE_TYPE: {
@@ -14,6 +16,8 @@ export const CONSTANTS = {
 		FP: "FILTER_PAGE",
 	},
 };
+
+export const TEXT = { BTN_BACK: "Назад" };
 
 export const INITIAL_TEAM_DATA = {
 	teamName: "",
