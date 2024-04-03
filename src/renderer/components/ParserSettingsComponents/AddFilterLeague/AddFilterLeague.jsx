@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
@@ -12,6 +13,9 @@ import { TeamFormSelectStack } from "../../../ui/teamSettings/index.js";
 import { useGetAllCyber } from "../../../hooks/msPage";
 import CommonHandler from "../../../helpers/classes/CommonHandler.js";
 
+import { refreshCyberList } from "../../../redux/matchSettings/matchSettingsSlice.js";
+import { getCyberList } from "../../../redux/matchSettings/matchSettingSelector.js";
+
 import { CHANNELS } from "../../../../common/constants/channels.js";
 import { CONSTANTS } from "../../../constants/teamNameFormConstants.js";
 import { TEXT, INITIAL_CHAMP } from "./text.js";
@@ -23,10 +27,12 @@ const AddFilterLeague = ({
 	setSelectedChamp,
 	handleSubmit,
 }) => {
-	const [cyberList, setCyberList] = useState([]);
 	const [cyberId, setCyberId] = useState("");
 	const [champShortList, setChampShortList] = useState([]);
 	const [champOptions, setChampOptions] = useState([]);
+
+	const cyberList = useSelector(getCyberList);
+	const dispatch = useDispatch();
 
 	const generateChampOptions = () => {
 		const list = [...champShortList]?.filter((el) => {
@@ -44,7 +50,7 @@ const AddFilterLeague = ({
 		setChampOptions(filteredOptions);
 	};
 
-	useGetAllCyber(setCyberList);
+	useGetAllCyber();
 
 	//загрузка списка
 	useEffect(() => {
@@ -75,6 +81,15 @@ const AddFilterLeague = ({
 	useEffect(() => {
 		setCyberId("");
 	}, [isUpdated]);
+
+	//  Clear cyber list on unmount
+	useEffect(() => {
+		return () => {
+			if (cyberList) {
+				dispatch(refreshCyberList());
+			}
+		};
+	}, []);
 
 	const options = CommonHandler.getCyberSelectOptions(cyberList);
 

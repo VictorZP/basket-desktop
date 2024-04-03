@@ -1,5 +1,6 @@
 const getCyberAddStatus = (state) => state.matchSettings.addCyber;
 const getCyberEditStatus = (state) => state.matchSettings.editCyber;
+const getCyberList = (state) => state.matchSettings.cyberList;
 const getCyberData = (state) => state.matchSettings.cyberData;
 
 const getChampAddStatus = (state) => state.matchSettings.addChamp;
@@ -29,6 +30,7 @@ export {
 	getChampEditStatus,
 	getTeamEditStatus,
 	getTeamLoadingStatus,
+	getCyberList,
 	getCyberData,
 	getChampData,
 	getTeamData,

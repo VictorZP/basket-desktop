@@ -22,6 +22,7 @@ import {
 	handleEditModalLoadingStatus,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
+	getCyberList,
 	getTeamEditStatus,
 	getTeamData,
 	getTeamCyberId,
@@ -29,7 +30,6 @@ import {
 	getEditModalLoadingStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
-import { useGetAllCyber } from "../../hooks/msPage";
 import {
 	useEditTeam,
 	useHandleTeamAdd,
@@ -48,12 +48,12 @@ import { CONSTANTS, TEXT } from "../../constants/teamNameFormConstants.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
 const TeamModal = () => {
-	const [cyberList, setCyberList] = useState([]);
 	const [champOptions, setChampOptions] = useState([]);
 	const [champShortList, setChampShortList] = useState([]);
 
 	const teamData = useSelector(getTeamData);
 	const cyberId = useSelector(getTeamCyberId);
+	const cyberList = useSelector(getCyberList);
 	const onEdit = useSelector(getTeamEditStatus);
 	const selectedChamp = useSelector(getSelectedChamp);
 	const isEditLoading = useSelector(getEditModalLoadingStatus);
@@ -77,9 +77,6 @@ const TeamModal = () => {
 
 		setChampOptions(filteredOptions);
 	};
-
-	// Get Cybers list
-	useGetAllCyber(setCyberList);
 
 	// Get short list of championships
 	useGetShortChampList(setChampShortList);

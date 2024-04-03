@@ -4,7 +4,6 @@ import { enqueueSnackbar } from "notistack";
 
 import { Box, Typography, Divider } from "@mui/material";
 
-import { useGetAllCyber } from "../../hooks/msPage/useGetAllCyber.js";
 import { useSetChampOptions } from "../../hooks/teamsTransfer/useSetChampOptions.js";
 import { useGetShortChampList } from "../../hooks/teamNamesForm/index.js";
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
@@ -31,12 +30,12 @@ import {
 	getTeamsIdsArray,
 } from "../../redux/teamTransfer/teamTransferSelector.js";
 import { refreshTransferModal } from "../../redux/teamTransfer/teamTransferSlice.js";
+import { getCyberList } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 import { TRANSFER_TYPE, TEXT } from "../../constants/teamsTransferConstants.js";
 
 const TransferModal = () => {
-	const [cyberList, setCyberList] = useState([]);
 	const [champShortList, setChampShortList] = useState([]);
 
 	const outCyberId = useSelector(getOutCyberId);
@@ -47,12 +46,11 @@ const TransferModal = () => {
 	const targetChampOptions = useSelector(getTargetChampOptions);
 	const transferType = useSelector(getTransferType);
 	const teamIdsArray = useSelector(getTeamsIdsArray);
+	const cyberList = useSelector(getCyberList);
 
 	const dispatch = useDispatch();
 
 	const transferHandler = new TeamsTransfer(dispatch);
-
-	useGetAllCyber(setCyberList);
 
 	// Get short list of championships
 	useGetShortChampList(setChampShortList);

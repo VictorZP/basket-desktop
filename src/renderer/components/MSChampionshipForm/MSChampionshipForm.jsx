@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
-import PropTypes from "prop-types";
+
 import {
 	Box,
 	Typography,
@@ -28,6 +28,7 @@ import {
 import {
 	getChampEditStatus,
 	getChampData,
+	getCyberList,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
 
@@ -43,9 +44,10 @@ const initialData = {
 	noBetsList: false,
 };
 
-const MSChampionshipForm = ({ cyberList }) => {
+const MSChampionshipForm = () => {
 	const onEdit = useSelector(getChampEditStatus);
 	const champData = useSelector(getChampData);
+	const cyberList = useSelector(getCyberList);
 
 	const [champ, setChamp] = useState(initialData);
 	const [isLoading, setIsLoading] = useState(false);
@@ -283,10 +285,6 @@ const MSChampionshipForm = ({ cyberList }) => {
 			</StyledChampSettingsBox>
 		</Box>
 	);
-};
-
-MSChampionshipForm.propTypes = {
-	cyberList: PropTypes.array,
 };
 
 export default MSChampionshipForm;

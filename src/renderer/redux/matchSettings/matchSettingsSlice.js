@@ -16,6 +16,7 @@ const initialState = {
 		cyberId: "",
 		cyberName: "",
 	},
+	cyberList: [],
 	champData: {
 		champId: "",
 		championshipName: "",
@@ -64,6 +65,9 @@ const matchSettingsSlice = createSlice({
 		},
 		handleEditModalLoadingStatus(state, { payload }) {
 			state.isEditModalLoading = payload;
+		},
+		setCyberList(state, { payload }) {
+			state.cyberList = payload;
 		},
 		setCyberData(state, { payload }) {
 			state.cyberData.cyberId = payload.id;
@@ -124,6 +128,9 @@ const matchSettingsSlice = createSlice({
 		setTeamLoadingStatus(state, { payload }) {
 			state.isTeamLoading = payload;
 		},
+		refreshCyberList(state) {
+			state.cyberList = initialState.cyberList;
+		},
 		refreshCyberData(state) {
 			state.cyberData.cyberId = initialState.cyberData.cyberId;
 			state.cyberData.cyberName = initialState.cyberData.cyberName;
@@ -168,6 +175,7 @@ export const {
 	handleEditChamp,
 	handleEditTeam,
 	handleEditModalLoadingStatus,
+	setCyberList,
 	setCyberData,
 	setChampData,
 	setTeamData,
@@ -180,6 +188,7 @@ export const {
 	setTeamExpanded,
 	setChampLoadingStatus,
 	setTeamLoadingStatus,
+	refreshCyberList,
 	refreshCyberData,
 	refreshChampData,
 	refreshTeamData,

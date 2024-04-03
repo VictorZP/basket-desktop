@@ -4,16 +4,28 @@ import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { handleAddCyber } from "../../redux/matchSettings/matchSettingsSlice.js";
-import { getCyberAddStatus } from "../../redux/matchSettings/matchSettingSelector.js";
+import {
+	handleAddCyber,
+	setCyberList,
+} from "../../redux/matchSettings/matchSettingsSlice.js";
+import {
+	getCyberAddStatus,
+	getCyberList,
+} from "../../redux/matchSettings/matchSettingSelector.js";
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
-export const useGetAllCyber = (setList) => {
+export const useGetAllCyber = () => {
 	const isCyberOnAdd = useSelector(getCyberAddStatus);
+	const cyberList = useSelector(getCyberList);
+
 	const dispatch = useDispatch();
+
 	useEffect(() => {
-		ipcRenderer.send(CHANNELS.CYBER.GET_ALL_CYBER);
+		if (cyberList.length === 0 || (cyberList.length > 0 && isCyberOnAdd)) {
+			ipcRenderer.send(CHANNELS.CYBER.GET_ALL_CYBER);
+		}
+
 		ipcRenderer.on(CHANNELS.CYBER.GET_ALL_CYBER, (event, arg) => {
 			if (arg?.statusText !== "OK") {
 				enqueueSnackbar(
@@ -25,12 +37,12 @@ export const useGetAllCyber = (setList) => {
 				return;
 			}
 
-			setList(arg?.list);
-			return () => {
-				ipcRenderer.removeAllListeners(CHANNELS.CYBER.GET_ALL_CYBER);
-			};
+			dispatch(setCyberList(arg?.list));
 		});
 
 		dispatch(handleAddCyber(false));
-	}, [isCyberOnAdd]);
+		return () => {
+			ipcRenderer.removeAllListeners(CHANNELS.CYBER.GET_ALL_CYBER);
+		};
+	}, [isCyberOnAdd, cyberList]);
 };

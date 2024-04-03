@@ -24,6 +24,7 @@ import {
 	refreshMS,
 	handleEditModalLoadingStatus,
 } from "../redux/matchSettings/matchSettingsSlice.js";
+import { getCyberList } from "../redux/matchSettings/matchSettingSelector.js";
 import {
 	handleModalDelOpen,
 	handleModalDelClose,
@@ -53,16 +54,16 @@ import { CHANNELS } from "../../common/constants/channels.js";
 import { MODAL_TYPES } from "../constants/modalTypes.js";
 
 const MatchesSettings = () => {
-	const [cyberList, setCyberList] = useState([]);
 	const [champList, setChampList] = useState([]);
 	const [teamNamesList, setTeamNamesList] = useState([]);
 
+	const cyberList = useSelector(getCyberList);
 	const isOpen = useSelector(isMDOpen);
 	const id = useSelector(getMDElemId);
 	const pageType = useSelector(getMDPageType);
 	const dispatch = useDispatch();
 
-	useGetAllCyber(setCyberList);
+	useGetAllCyber();
 	useGetChampionships(setChampList);
 	useGetAllTeamNames(setTeamNamesList);
 
@@ -222,9 +223,6 @@ const MatchesSettings = () => {
 		handleClose,
 		handleDelete,
 	};
-	const championshipProps = {
-		cyberList,
-	};
 	const championshipsProps = {
 		champList,
 		handleDelete: openModalDel,
@@ -246,7 +244,7 @@ const MatchesSettings = () => {
 			</Box>
 			<Divider />
 			<Box>
-				<MSChampionshipForm {...championshipProps} />
+				<MSChampionshipForm />
 				<MSChampionships {...championshipsProps} />
 			</Box>
 			<Divider />
