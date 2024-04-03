@@ -4,8 +4,6 @@ require("dotenv").config();
 
 const updateApp = require("update-electron-app");
 
-// const { REDUX_EXT_PATH } = process.env;
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
 	app.quit();
@@ -27,9 +25,6 @@ const createWindow = () => {
 
 	// and load the index.html of the app.
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-	// Open the DevTools.
-	// mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -44,12 +39,6 @@ app.on("ready", () => {
 		notifyUser: true,
 	});
 });
-
-// app.on("ready", async () => {
-// 	await session.defaultSession.loadExtension(REDUX_EXT_PATH);
-// 	createWindow();
-// });
-//
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
