@@ -28,7 +28,6 @@ export {
 	getCyberEditStatus,
 	getChampEditStatus,
 	getTeamEditStatus,
-	getChampionshipsLoadingStatus,
 	getTeamLoadingStatus,
 	getCyberData,
 	getChampData,
@@ -37,5 +36,6 @@ export {
 	getTeamExpandedVal,
 	getTeamCyberId,
 	getSelectedChamp,
+	getChampionshipsLoadingStatus,
 	getEditModalLoadingStatus,
 };

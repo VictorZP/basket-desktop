@@ -167,6 +167,7 @@ export const {
 	handleEditCyber,
 	handleEditChamp,
 	handleEditTeam,
+	handleEditModalLoadingStatus,
 	setCyberData,
 	setChampData,
 	setTeamData,
@@ -185,7 +186,5 @@ export const {
 	refreshTeamNames,
 	refreshMS,
 	refreshSelectedChamp,
-
-	handleEditModalLoadingStatus,
 } = matchSettingsSlice.actions;
 export const matchSettingsReducer = matchSettingsSlice.reducer;
