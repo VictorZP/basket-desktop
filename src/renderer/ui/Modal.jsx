@@ -20,7 +20,7 @@ const Modal = () => {
 	const isOpen = useSelector(getModalOpenStatus);
 
 	const handleClose = () => {
-		ModalHandler.closeModal(dispatch);
+		ModalHandler.closeModal(dispatch, type);
 	};
 
 	return (

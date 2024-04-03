@@ -9,10 +9,7 @@ import {
 	getTeamEditStatus,
 	getTeamLoadingStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
-import {
-	refreshTeamData,
-	refreshSelectedChamp,
-} from "../../redux/matchSettings/matchSettingsSlice.js";
+import { getModalType } from "../../redux/modal/modalSelector.js";
 
 import SaveBtn from "../../ui/SaveBtn.jsx";
 
@@ -25,13 +22,12 @@ const TeamNamesModalBtn = () => {
 	const teamData = useSelector(getTeamData);
 	const onEdit = useSelector(getTeamEditStatus);
 	const isLoading = useSelector(getTeamLoadingStatus);
+	const type = useSelector(getModalType);
 
 	const dispatch = useDispatch();
 
 	const closeModal = () => {
-		ModalHandler.closeModal(dispatch);
-		dispatch(refreshTeamData());
-		dispatch(refreshSelectedChamp());
+		ModalHandler.closeModal(dispatch, type);
 	};
 
 	const isAddBtnDisabled =
