@@ -13,6 +13,8 @@ import {
 	refreshSelectedChamp,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 
+import ModalHandler from "../../helpers/classes/modal.js";
+
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 
@@ -41,6 +43,9 @@ export const useHandleAfterTeamEdit = () => {
 				dispatch(setTeamLoadingStatus(false));
 				return;
 			}
+
+			ModalHandler.closeModal(dispatch);
+
 			dispatch(handleAddTeam(true));
 			dispatch(handleEditTeam(false));
 			dispatch(refreshTeamData());
