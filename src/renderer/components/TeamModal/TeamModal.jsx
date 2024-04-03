@@ -9,9 +9,9 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { TeamFormSelectStack } from "../../ui/teamSettings/index.js";
 import TeamFormInputStack from "../TeamFormInputStack";
 import TeamNamesModalBtn from "../TeamNamesModalBtn";
+import LoadingSpinner from "../LoadingSpinner";
 
 import {
-	handleEditTeam,
 	setTeamName,
 	setTeamData,
 	setTeamCyberId,
@@ -205,12 +205,12 @@ const TeamModal = () => {
 		<TeamModalContainer>
 			<TeamModalInnerBox>
 				<Typography variant="h5" mb={2}>
-					{TEAM_NAMES_FORM.ADD_TEAM_TITLE}
+					{onEdit
+						? TEAM_NAMES_FORM.EDIT_TEAM_TITLE
+						: TEAM_NAMES_FORM.ADD_TEAM_TITLE}
 				</Typography>
 				{isEditLoading && onEdit ? (
-					<Box>
-						<p>Loading</p>
-					</Box>
+					<LoadingSpinner height={"562px"} />
 				) : (
 					<Box component={"form"} onSubmit={handleSubmit}>
 						<Box mb={3}>

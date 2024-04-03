@@ -62,6 +62,7 @@ export const MATCHES_SETTINGS = {
 	TEAM_NAMES_FORM: {
 		TITLE: "Названия команд",
 		ADD_TEAM_TITLE: "Добавление команды",
+		EDIT_TEAM_TITLE: "Редактирование команды",
 		CYBER_LABEL: "Выбор Cyber",
 		CHAMP_LABEL: "Выбор чемпионата",
 		CUSTOM_TEAM_NAME_TITLE: "Личное название команды",
