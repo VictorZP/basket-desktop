@@ -43,7 +43,11 @@ const FilterSettings = ({ isFilterDel, openModalDel }) => {
 	}, [isFilterDel]);
 
 	const handleListItemClick = (index, type) => {
-		if (type === "base") setSelectedBaseIndex(index);
+		if (type === "base") {
+			setSelectedBaseIndex(index);
+			// clear selected champ when changing base group
+			setSelectedChamp(INITIAL_CHAMP);
+		}
 		if (type === "group") setSelectedGroupIndex(index);
 	};
 
