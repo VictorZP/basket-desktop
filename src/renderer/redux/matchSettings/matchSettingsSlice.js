@@ -7,6 +7,7 @@ const initialState = {
 	editCyber: false,
 	editChamp: false,
 	editTeam: false,
+	isEditModalLoading: false,
 	isChampLoading: false,
 	isTeamLoading: false,
 	expanded: false,
@@ -61,6 +62,9 @@ const matchSettingsSlice = createSlice({
 		handleEditTeam(state, { payload }) {
 			state.editTeam = payload;
 		},
+		handleEditModalLoadingStatus(state, { payload }) {
+			state.isEditModalLoading = payload;
+		},
 		setCyberData(state, { payload }) {
 			state.cyberData.cyberId = payload.id;
 			state.cyberData.cyberName = payload.name;
@@ -78,7 +82,9 @@ const matchSettingsSlice = createSlice({
 		setTeamData(state, { payload }) {
 			state.teamData.teamId = payload.teamId ?? "";
 			state.teamData.teamName = payload.teamName ?? "";
-			state.teamData.fibaliveTeamName = payload.fibaliveTeamName ?? "";
+			state.teamData.fibaliveTeamName1 = payload.fibaliveTeamName1 ?? "";
+			state.teamData.fibaliveTeamName2 = payload.fibaliveTeamName2 ?? "";
+			state.teamData.fibaliveTeamName3 = payload.fibaliveTeamName3 ?? "";
 			state.teamData.betsapiTeamName = payload.betsapiTeamName ?? "";
 			state.teamData.otherSiteTeamName = payload.otherSiteTeamName ?? "";
 			state.teamData.cyberId = payload.cyberId ?? "";
@@ -95,7 +101,9 @@ const matchSettingsSlice = createSlice({
 		},
 		setTeamNames(state, { payload }) {
 			state.teamData.teamName = payload.teamName;
-			state.teamData.fibaliveTeamName = payload.fibaliveTeamName;
+			state.teamData.fibaliveTeamName1 = payload.fibaliveTeamName1;
+			state.teamData.fibaliveTeamName2 = payload.fibaliveTeamName2;
+			state.teamData.fibaliveTeamName3 = payload.fibaliveTeamName3;
 			state.teamData.betsapiTeamName = payload.betsapiTeamName;
 			state.teamData.otherSiteTeamName = payload.otherSiteTeamName;
 		},
@@ -177,5 +185,7 @@ export const {
 	refreshTeamNames,
 	refreshMS,
 	refreshSelectedChamp,
+
+	handleEditModalLoadingStatus,
 } = matchSettingsSlice.actions;
 export const matchSettingsReducer = matchSettingsSlice.reducer;

@@ -22,6 +22,7 @@ import {
 	setChampData,
 	setTeamData,
 	refreshMS,
+	handleEditModalLoadingStatus,
 } from "../redux/matchSettings/matchSettingsSlice.js";
 import {
 	handleModalDelOpen,
@@ -44,10 +45,12 @@ import {
 	useGetAllTeamNames,
 	useDeleteTeamName,
 } from "../hooks/msPage";
+import ModalHandler from "../helpers/classes/modal.js";
 
 import { MATCHES_SETTINGS } from "../../common/constants/index.js";
 import { MODAL_DEL } from "../constants/modaldel.js";
 import { CHANNELS } from "../../common/constants/channels.js";
+import { MODAL_TYPES } from "../constants/modalTypes.js";
 
 const MatchesSettings = () => {
 	const [cyberList, setCyberList] = useState([]);
@@ -185,12 +188,19 @@ const MatchesSettings = () => {
 					cyberId: team?.teamCyber?.cyberId ?? "",
 					championshipId: team?.teamChamp?.championshipId ?? "",
 					teamName: team?.teamName ?? "",
-					fibaliveTeamName: team?.fibaliveTeamName ?? "",
+					fibaliveTeamName1: team?.fibaliveTeamName1 ?? "",
+					fibaliveTeamName2: team?.fibaliveTeamName2 ?? "",
+					fibaliveTeamName3: team?.fibaliveTeamName3 ?? "",
 					betsapiTeamName: team?.betsapiTeamName ?? "",
 					otherSiteTeamName: team?.otherSiteTeamName ?? "",
 				};
+
 				dispatch(setTeamData(payload));
 				dispatch(handleEditTeam(true));
+
+				dispatch(handleEditModalLoadingStatus(true));
+
+				ModalHandler.openModal(dispatch, MODAL_TYPES.TEAM_ADD);
 				break;
 
 			default:

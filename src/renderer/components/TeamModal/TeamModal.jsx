@@ -19,12 +19,14 @@ import {
 	setSelectedChamp,
 	setTeamLoadingStatus,
 	refreshSelectedChamp,
+	handleEditModalLoadingStatus,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
 	getTeamEditStatus,
 	getTeamData,
 	getTeamCyberId,
 	getSelectedChamp,
+	getEditModalLoadingStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import { useGetAllCyber } from "../../hooks/msPage";
@@ -54,6 +56,7 @@ const TeamModal = () => {
 	const cyberId = useSelector(getTeamCyberId);
 	const onEdit = useSelector(getTeamEditStatus);
 	const selectedChamp = useSelector(getSelectedChamp);
+	const isEditLoading = useSelector(getEditModalLoadingStatus);
 
 	const dispatch = useDispatch();
 
@@ -98,6 +101,14 @@ const TeamModal = () => {
 	useHandleAfterTeamEdit();
 
 	const options = CommonHandler.getCyberSelectOptions(cyberList);
+
+	//  Handle loading status when editing team
+	//  Waiting while cyber options and championships options are set
+	useEffect(() => {
+		if (options?.length > 0 && onEdit && champOptions?.length > 0) {
+			dispatch(handleEditModalLoadingStatus(false));
+		}
+	}, [options]);
 
 	const handleChange = (e) => {
 		const name = e?.target?.name;
@@ -146,9 +157,6 @@ const TeamModal = () => {
 	const onClearBtn = () => {
 		dispatch(refreshTeamData());
 		dispatch(refreshSelectedChamp());
-		if (onEdit) {
-			dispatch(handleEditTeam(false));
-		}
 		dispatch(setTeamLoadingStatus(false));
 	};
 
@@ -199,29 +207,35 @@ const TeamModal = () => {
 				<Typography variant="h5" mb={2}>
 					{TEAM_NAMES_FORM.ADD_TEAM_TITLE}
 				</Typography>
-				<Box component={"form"} onSubmit={handleSubmit}>
-					<Box mb={3}>
-						<TeamFormSelectStack
-							cyberId={cyberId}
-							selectedChamp={selectedChamp.id}
-							pageType={CONSTANTS.PAGE_TYPE.MS}
-							cyberOptions={options}
-							champOptions={champOptions}
-							handleChange={handleChange}
-						/>
-						<TeamFormInputStack handleTeamNames={handleChange} />
-						<Button
-							variant="outlined"
-							color="error"
-							disabled={!isClearBtnDisabled}
-							sx={{ width: "210px" }}
-							onClick={onClearBtn}
-						>
-							{TEXT.BTN_CLEAR}
-						</Button>
+				{isEditLoading && onEdit ? (
+					<Box>
+						<p>Loading</p>
 					</Box>
-					<TeamNamesModalBtn />
-				</Box>
+				) : (
+					<Box component={"form"} onSubmit={handleSubmit}>
+						<Box mb={3}>
+							<TeamFormSelectStack
+								cyberId={cyberId}
+								selectedChamp={selectedChamp.id}
+								pageType={CONSTANTS.PAGE_TYPE.MS}
+								cyberOptions={options}
+								champOptions={champOptions}
+								handleChange={handleChange}
+							/>
+							<TeamFormInputStack handleTeamNames={handleChange} />
+							<Button
+								variant="outlined"
+								color="error"
+								disabled={!isClearBtnDisabled}
+								sx={{ width: "210px" }}
+								onClick={onClearBtn}
+							>
+								{TEXT.BTN_CLEAR}
+							</Button>
+						</Box>
+						<TeamNamesModalBtn />
+					</Box>
+				)}
 			</TeamModalInnerBox>
 		</TeamModalContainer>
 	);
