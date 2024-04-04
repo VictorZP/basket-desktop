@@ -72,3 +72,5 @@ import "./processes/saveFileProcesses.js";
 import "./processes/manualResultsProcesses.js";
 import "./processes/bettingResultsProcesses.js";
 import "./processes/linesProcesses.js";
+
+import "./menu.js";
