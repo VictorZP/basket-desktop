@@ -17,6 +17,10 @@ module.exports = {
 					from: "./dist/data/config.json",
 					to: "./data/config.json",
 				},
+				{
+					from: "./src/main/images/icon.ico",
+					to: "./data/images/icon.ico",
+				},
 			],
 		}),
 	],

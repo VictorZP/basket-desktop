@@ -1,31 +1,21 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Tray } = require("electron");
 
 require("dotenv").config();
 
 const updateApp = require("update-electron-app");
+
+const createWindow = require("./functions/handleWindow.js");
+const trayHandler = require("./functions/trayHandler.js");
+
+const contextMenu = require("./helpers/trayContextMenu.js");
+const { trayIcon } = require("./helpers/icons.js");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
 	app.quit();
 }
 
-const createWindow = () => {
-	// Create the browser window.
-	const mainWindow = new BrowserWindow({
-		width: 1920,
-		height: 1080,
-		minWidth: 600,
-		minHeight: 400,
-		webPreferences: {
-			nodeIntegration: true,
-			contextIsolation: false,
-			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-		},
-	});
-
-	// and load the index.html of the app.
-	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-};
+let tray;
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -33,6 +23,13 @@ const createWindow = () => {
 //
 app.on("ready", () => {
 	createWindow();
+
+	tray = new Tray(trayIcon);
+
+	tray.setContextMenu(contextMenu);
+
+	trayHandler(tray);
+
 	// Updater listener
 	updateApp.updateElectronApp({
 		updateInterval: "5 minutes",
@@ -43,11 +40,7 @@ app.on("ready", () => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on("window-all-closed", () => {
-	if (process.platform !== "darwin") {
-		app.quit();
-	}
-});
+app.on("window-all-closed", () => {});
 
 app.on("activate", () => {
 	// On OS X it's common to re-create a window in the app when the
