@@ -119,3 +119,8 @@ export const TOOLTIPS = {
 	T_BTN_STACK_EDIT: "редактировать",
 	T_BTN_STACK_DEL: "удалить",
 };
+
+export const STORAGE_KEYS = {
+	TOKEN: "token",
+	ADDRESS: "address",
+};

@@ -55,6 +55,14 @@ module.exports = {
 								js: "./src/preload/preload.js",
 							},
 						},
+						{
+							html: "./src/settings.html",
+							js: "./src/renderer/settings.js",
+							name: "settings_window",
+							preload: {
+								js: "./src/preload/preload.js",
+							},
+						},
 					],
 				},
 			},

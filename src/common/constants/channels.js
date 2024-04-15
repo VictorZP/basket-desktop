@@ -74,4 +74,8 @@ export const CHANNELS = {
 		SAVE_MANUAL_LIST: "manual-list-save",
 		ADD_MANUAL_URL: "manual-url-add",
 	},
+	SETTINGS: {
+		GET_ADDRESS: "settings-get-address",
+		SET_ADDRESS: "settings-set-address",
+	},
 };

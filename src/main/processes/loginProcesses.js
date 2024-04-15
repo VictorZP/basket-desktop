@@ -4,20 +4,19 @@ const Store = require("electron-store");
 
 const { api } = require("./api.js");
 
+const { STORAGE_KEYS } = require("../../common/constants/index.js");
+
 api();
 
 const endPoint = "/auth";
 let store = new Store();
-const STORAGE_KEY = {
-	TOKEN: "token",
-};
 
 const { CHANNELS } = require("../../common/constants/channels.js");
 
 ipcMain.on(CHANNELS.AUTH.LOGIN, async (event, arg) => {
 	try {
 		const res = await axios.post(`${endPoint}/desktop/login`, arg);
-		store.set(STORAGE_KEY.TOKEN, res?.data?.token);
+		store.set(STORAGE_KEYS.TOKEN, res?.data?.token);
 
 		const resData = {
 			statusCode: res?.status,

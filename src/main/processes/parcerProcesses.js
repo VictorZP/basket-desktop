@@ -1,27 +1,39 @@
 const axios = require("axios");
-const { ipcMain, Notification } = require("electron");
-//
-const { io } = require("socket.io-client");
 const Store = require("electron-store");
+const fs = require("fs");
+const path = require("path");
+const { io } = require("socket.io-client");
+
+const { ipcMain, Notification } = require("electron");
+
+const { STORAGE_KEYS } = require("../../common/constants/index.js");
 //
 
 const endPoint = "/parcer";
 const filterEndPoint = "/filter";
 
 const { CHANNELS } = require("../../common/constants/channels.js");
-const { WS_ADDRESS, WS_PORT } = require("../helpers/variables.js");
 
 const NOTIFICATION_TITLE = "Результаты парсера";
 
-//
 let store = new Store();
-const TOKEN = store.get("token");
+const TOKEN = store.get(STORAGE_KEYS.TOKEN);
+const WS_ADDRESS = store.get(STORAGE_KEYS.ADDRESS) ?? "localhost";
 
-const socket = io(`ws://${WS_ADDRESS}:${WS_PORT}/api/v1/parcer/`, {
-	auth: {
-		token: TOKEN,
-	},
-});
+// get port data
+const rawConfigData = fs.readFileSync(
+	path.join(__dirname, "./data/config.json")
+);
+const config = JSON.parse(rawConfigData);
+
+const socket = io(
+	`ws://${WS_ADDRESS}:${config.WS_PARSER_PORT}/api/v1/parcer/`,
+	{
+		auth: {
+			token: TOKEN,
+		},
+	}
+);
 
 // client-side
 socket.on("connect", () => {
