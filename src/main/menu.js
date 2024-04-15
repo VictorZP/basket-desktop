@@ -38,13 +38,13 @@ const handleAppMenu = (window) => {
 		{
 			label: "Окно",
 			submenu: [
-				{ label: "devTools", role: "toggleDevTools" },
 				{ label: "Перезагрузка", role: "reload" },
 				{ label: "Принудительная перезагрузка", role: "forceReload" },
 				{ type: "separator" },
 				{ label: "Сбросить зум", role: "resetZoom" },
 				{ label: "Увеличить зум", role: "zoomIn" },
 				{ label: "Уменьшить зум", role: "zoomOut" },
+				{ label: "Инструменты разработчика", role: "toggleDevTools" },
 				{ type: "separator" },
 				{ label: "Полноекранный/Оконный режим", role: "togglefullscreen" },
 				{ type: "separator" },
