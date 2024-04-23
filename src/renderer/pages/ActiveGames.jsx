@@ -33,6 +33,7 @@ const ActiveGames = () => {
 			ipcRenderer.send(CHANNELS.ANALYZE.ACTIVE, dataList);
 		}
 		setIsOn(!isOn);
+
 		if (isOn) {
 			clearInterval(timerId);
 			setIsOn(!isOn);
@@ -50,43 +51,52 @@ const ActiveGames = () => {
 		setOnCheck(false);
 	}, [matches]);
 
-	ipcRenderer.once(CHANNELS.ANALYZE.ACTIVE, (event, arg) => {
-		const matchesData = [...matches];
+	useEffect(() => {
+		const listener = (event, arg) => {
+			const matchesData = [...matches];
 
-		arg.data?.forEach((item) => {
-			let ndx = null;
+			arg.data?.forEach((item) => {
+				let ndx = null;
 
-			switch (true) {
-				case !item?.eventId:
-					ndx = matchesData.findIndex((match) => match?.url === item?.url);
-					break;
-				default:
-					ndx = matchesData.findIndex(
-						(match) => match?.eventId === item?.eventId
-					);
-					break;
-			}
+				switch (true) {
+					case !item?.eventId:
+						ndx = matchesData.findIndex((match) => match?.url === item?.url);
+						break;
+					default:
+						ndx = matchesData.findIndex(
+							(match) => match?.eventId === item?.eventId
+						);
+						break;
+				}
 
-			// Проверка на наличие матча в масиве, а также проверка статуса матча(отображать или нет)
-			if (ndx < 0) {
-				matchesData.push(item);
-				return;
-			}
+				// Checking for the presence of a match in the array, as well as checking the status of the match (whether to display it or not)
+				if (ndx < 0) {
+					matchesData.push(item);
+					// Sends a notification when a bid first appears
+					ipcRenderer.send(CHANNELS.ANALYZE.SHOW_NOTIFICATION, item);
+					return;
+				}
 
-			if (matches[ndx]?.statusFront === ACTIVE_PAGE.STATUS) {
-				return;
-			}
+				if (matches[ndx]?.statusFront === ACTIVE_PAGE.STATUS) {
+					return;
+				}
 
-			if (matches[ndx]?.statusFront !== ACTIVE_PAGE.STATUS) {
-				matchesData.splice(ndx, 1, item);
+				if (matches[ndx]?.statusFront !== ACTIVE_PAGE.STATUS) {
+					matchesData.splice(ndx, 1, item);
+					return;
+				}
+			});
 
-				return;
-			}
-		});
+			setMatches(matchesData);
+			setOnCheck(true);
+		};
 
-		setMatches(matchesData);
-		setOnCheck(true);
-	});
+		ipcRenderer.on(CHANNELS.ANALYZE.ACTIVE, listener);
+
+		return () => {
+			ipcRenderer.removeListener(CHANNELS.ANALYZE.ACTIVE, listener);
+		};
+	}, [onCheck]);
 
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST, paramsObj);

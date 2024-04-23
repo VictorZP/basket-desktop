@@ -36,6 +36,7 @@ export const CHANNELS = {
 		GET_STATIC_LIST: "get-static-list",
 		UPD_TEMP: "update-temp",
 		ACTIVE: "active",
+		SHOW_NOTIFICATION: "show-notification",
 	},
 	LINES: {
 		GET_LINES: "lines-get",

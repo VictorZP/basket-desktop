@@ -124,3 +124,10 @@ export const STORAGE_KEYS = {
 	TOKEN: "token",
 	ADDRESS: "address",
 };
+
+export const ACTIVE_PAGE_NOTIFICATION = {
+	TITLE_WITH_BETS: "Ставка",
+	TITLE_WITHOUT_BETS: "Без бетс",
+	TITLE_ERROR: "Ошибка в уведомлениях",
+	BODY_ERROR: "Ошибка при фрмировании уведомления о ставке.",
+};
