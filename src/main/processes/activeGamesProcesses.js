@@ -44,8 +44,8 @@ ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
 			betLimit,
 			deviation,
 			total2ndHALF,
-			statusFront,
 			noBets,
+			statusFront,
 			total,
 			kickOFF,
 		} = arg;
@@ -53,8 +53,8 @@ ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
 		if (
 			statusFront === ACTIVE_PAGE.STATUS &&
 			!noBets &&
-			total === 0 &&
-			kickOFF === 0
+			total !== 0 &&
+			kickOFF !== 0
 		) {
 			return;
 		}
