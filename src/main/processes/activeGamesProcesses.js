@@ -5,6 +5,7 @@ const endPoint = "/desktop/data/games";
 
 const { CHANNELS } = require("../../common/constants/channels.js");
 const { ACTIVE_PAGE_NOTIFICATION } = require("../../common/constants/index.js");
+const { ACTIVE_PAGE } = require("../../renderer/constants/activeGamesPage.js");
 
 ipcMain.on(CHANNELS.ANALYZE.ACTIVE, async (event, arg) => {
 	try {
@@ -43,7 +44,20 @@ ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
 			betLimit,
 			deviation,
 			total2ndHALF,
+			statusFront,
+			noBets,
+			total,
+			kickOFF,
 		} = arg;
+
+		if (
+			statusFront === ACTIVE_PAGE.STATUS &&
+			!noBets &&
+			total === 0 &&
+			kickOFF === 0
+		) {
+			return;
+		}
 
 		let betPrediction = "-";
 
