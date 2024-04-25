@@ -7,32 +7,32 @@ const { CHANNELS } = require("../../common/constants/channels.js");
 const { ACTIVE_PAGE_NOTIFICATION } = require("../../common/constants/index.js");
 const { ACTIVE_PAGE } = require("../../renderer/constants/activeGamesPage.js");
 
-ipcMain.on(CHANNELS.ANALYZE.ACTIVE, async (event, arg) => {
-	try {
-		const res = await axios.post(`${endPoint}/active`, arg);
-		const resData = {
-			status: res?.status,
-			statusText: res?.statusText,
-			data: res?.data,
-		};
-		event.sender.send(CHANNELS.ANALYZE.ACTIVE, resData);
-	} catch (err) {
-		if (
-			err?.name === "TypeError" &&
-			err?.message === "Object has been destroyed"
-		) {
-			return;
-		}
+// ipcMain.on(CHANNELS.ANALYZE.ACTIVE, async (event, arg) => {
+// 	try {
+// 		const res = await axios.post(`${endPoint}/active`, arg);
+// 		const resData = {
+// 			status: res?.status,
+// 			statusText: res?.statusText,
+// 			data: res?.data,
+// 		};
+// 		event.sender.send(CHANNELS.ANALYZE.ACTIVE, resData);
+// 	} catch (err) {
+// 		if (
+// 			err?.name === "TypeError" &&
+// 			err?.message === "Object has been destroyed"
+// 		) {
+// 			return;
+// 		}
 
-		const res = {
-			statusCode: err?.response?.status,
-			statusText: err?.response?.statusText,
-			message: err?.response?.data?.message,
-		};
+// 		const res = {
+// 			statusCode: err?.response?.status,
+// 			statusText: err?.response?.statusText,
+// 			message: err?.response?.data?.message,
+// 		};
 
-		event.sender.send(CHANNELS.ANALYZE.ACTIVE, res);
-	}
-});
+// 		event.sender.send(CHANNELS.ANALYZE.ACTIVE, res);
+// 	}
+// });
 
 ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
 	try {
