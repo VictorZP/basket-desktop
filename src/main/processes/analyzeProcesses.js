@@ -41,9 +41,13 @@ socket.on("connect_error", (err) => {
 	console.error("Error code", err.data);
 });
 
+socket.on("message", (message) => {
+	console.log("Received message:", message);
+});
+
 ipcMain.handle(CHANNELS.ANALYZE.ACTIVE, async (event, arg) => {
 	const { isConnected } = arg;
-	console.log("🚀 ~ isOn:", isConnected);
+
 	try {
 		if (!isConnected) {
 			socket.emit("join_room", "analyze-room");
