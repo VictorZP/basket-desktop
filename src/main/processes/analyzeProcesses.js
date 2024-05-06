@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { io } = require("socket.io-client");
 
-const { ipcMain, Notification } = require("electron");
+const { ipcMain, Notification, webContents } = require("electron");
 
 const { STORAGE_KEYS } = require("../../common/constants/index.js");
 
@@ -31,7 +31,6 @@ const socket = io(
 	}
 );
 
-// client-side
 socket.on("connect", () => {
 	console.log("Connected to the server");
 });
@@ -42,10 +41,12 @@ socket.on("connect_error", (err) => {
 });
 
 socket.on("message", (message) => {
-	console.log("Received message:", message);
+	webContents.getAllWebContents().forEach((content) => {
+		content.send(CHANNELS.ANALYZE.ACTIVE, message);
+	});
 });
 
-ipcMain.handle(CHANNELS.ANALYZE.ACTIVE, async (event, arg) => {
+ipcMain.handle(CHANNELS.ANALYZE.CONNECT, async (event, arg) => {
 	const { isConnected } = arg;
 
 	try {

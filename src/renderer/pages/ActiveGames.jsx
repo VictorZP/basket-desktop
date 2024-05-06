@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import dayjs from "dayjs";
+import React, { useState, useEffect } from "react";
 import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
@@ -12,144 +11,76 @@ import { CHANNELS } from "../../common/constants/channels.js";
 import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
 
 const ActiveGames = () => {
-	const [dataList, setDataList] = useState({});
-
-	// const [isOn, setIsOn] = useState(false);
-	// const [isConnected, setIsConnected] = useState(false);
-
-	// статус отслеживания
-	const [onCheck, setOnCheck] = useState(false);
-	// матчи, которые прошли проверку
-	const [matches, setMatches] = useState([]);
-	// таймер
-	const [timerId, setTimerId] = useState(0);
-
-	//  -- Ref for connection/disconnection to room --
-	const isConnected = useRef(false);
-
-	const paramsObj = {
-		day: dayjs().format("DD.MM.YY").split(".")[0],
-		month: dayjs().format("DD.MM.YY").split(".")[1],
-		year: dayjs().format("DD.MM.YY").split(".")[2],
-	};
+	const [matches, setMatches] = useState([]); // matches that have passed the check
+	const [isConnected, setIsConnected] = useState(false);
 
 	//  -- Handling connection/disconnection to room by button --
 	const handleStart = async () => {
-		await ipcRenderer.invoke(CHANNELS.ANALYZE.ACTIVE, {
-			isConnected: isConnected.current,
+		await ipcRenderer.invoke(CHANNELS.ANALYZE.CONNECT, {
+			isConnected,
 		});
 
-		isConnected.current = !isConnected.current;
-		setOnCheck(!onCheck);
+		ipcRenderer.removeAllListeners();
+
+		setIsConnected((prevState) => !prevState);
 	};
 
 	//  -- Handling unmounting --
 	useEffect(() => {
 		return () => {
 			//  Leave the room when the component is unmounted
-			if (isConnected.current) {
-				ipcRenderer.invoke(CHANNELS.ANALYZE.ACTIVE, {
-					isConnected: isConnected.current,
+			if (isConnected) {
+				ipcRenderer.invoke(CHANNELS.ANALYZE.CONNECT, {
+					isConnected,
 				});
-				isConnected.current = false;
+
+				setIsConnected(false);
 			}
 
 			ipcRenderer.removeAllListeners();
 		};
 	}, []);
 
-	// const handleStart = async () => {
-	// 	if (!isOn) {
-	// 		ipcRenderer.send(CHANNELS.ANALYZE.ACTIVE, dataList);
-	// 	}
-	// 	setIsOn(!isOn);
+	useEffect(() => {
+		const listener = (event, game) => {
+			const matchesData = [...matches];
 
-	// 	if (isOn) {
-	// 		clearInterval(timerId);
-	// 		setIsOn(!isOn);
-	// 		setOnCheck(false);
-	// 	}
-	// };
+			let ndx = null;
 
-	// useEffect(() => {
-	// 	if (onCheck && isOn) {
-	// 		const timer = setTimeout(() => {
-	// 			ipcRenderer.send(CHANNELS.ANALYZE.ACTIVE, dataList);
-	// 		}, 10000);
-	// 		setTimerId(timer);
-	// 	}
-	// 	setOnCheck(false);
-	// }, [matches]);
+			switch (true) {
+				case !game?.eventId:
+					ndx = matchesData.findIndex((match) => match?.url === game?.url);
+					break;
+				default:
+					ndx = matchesData.findIndex(
+						(match) => match?.eventId === game?.eventId
+					);
+					break;
+			}
 
-	// useEffect(() => {
-	// 	const listener = (event, arg) => {
-	// 		const matchesData = [...matches];
+			// Checking for the presence of a match in the array, as well as checking the status of the match (whether to display it or not)
+			if (ndx < 0) {
+				matchesData.push(game);
+				ipcRenderer.send(CHANNELS.ANALYZE.SHOW_NOTIFICATION, game); // Sends a notification when a bid first appears
+			}
 
-	// 		arg.data?.forEach((item) => {
-	// 			let ndx = null;
+			if (matches[ndx]?.statusFront === ACTIVE_PAGE.STATUS) {
+				return;
+			}
 
-	// 			switch (true) {
-	// 				case !item?.eventId:
-	// 					ndx = matchesData.findIndex((match) => match?.url === item?.url);
-	// 					break;
-	// 				default:
-	// 					ndx = matchesData.findIndex(
-	// 						(match) => match?.eventId === item?.eventId
-	// 					);
-	// 					break;
-	// 			}
+			if (matches[ndx]?.statusFront !== ACTIVE_PAGE.STATUS) {
+				matchesData.splice(ndx, 1, game);
+			}
 
-	// 			// Checking for the presence of a match in the array, as well as checking the status of the match (whether to display it or not)
-	// 			if (ndx < 0) {
-	// 				matchesData.push(item);
-	// 				// Sends a notification when a bid first appears
-	// 				ipcRenderer.send(CHANNELS.ANALYZE.SHOW_NOTIFICATION, item);
-	// 				return;
-	// 			}
+			setMatches(matchesData);
+		};
 
-	// 			if (matches[ndx]?.statusFront === ACTIVE_PAGE.STATUS) {
-	// 				return;
-	// 			}
+		ipcRenderer.on(CHANNELS.ANALYZE.ACTIVE, listener);
 
-	// 			if (matches[ndx]?.statusFront !== ACTIVE_PAGE.STATUS) {
-	// 				matchesData.splice(ndx, 1, item);
-	// 				return;
-	// 			}
-	// 		});
-
-	// 		setMatches(matchesData);
-	// 		setOnCheck(true);
-	// 	};
-
-	// 	ipcRenderer.on(CHANNELS.ANALYZE.ACTIVE, listener);
-
-	// 	return () => {
-	// 		ipcRenderer.removeListener(CHANNELS.ANALYZE.ACTIVE, listener);
-	// 	};
-	// }, [onCheck]);
-
-	// useEffect(() => {
-	// 	ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST, paramsObj);
-	// 	ipcRenderer.on(CHANNELS.ANALYZE.GET_STATIC_LIST, (event, arg) => {
-	// 		if (arg?.statusText !== "OK") {
-	// 			enqueueSnackbar(
-	// 				arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
-	// 				{
-	// 					variant: "error",
-	// 				}
-	// 			);
-	// 			return;
-	// 		}
-	// 		setDataList(arg?.data);
-	// 	});
-	// }, []);
-
-	// useEffect(() => {
-	// 	return () => {
-	// 		ipcRenderer.removeAllListeners();
-	// 		clearInterval(timerId);
-	// 	};
-	// }, []);
+		return () => {
+			ipcRenderer.removeListener(CHANNELS.ANALYZE.ACTIVE, listener);
+		};
+	});
 
 	const hideMatch = (id) => {
 		let ndx = null;
@@ -178,7 +109,7 @@ const ActiveGames = () => {
 		);
 	});
 
-	//	-- Список матчей где нет KickOff или Bets ID --
+	//  -- List of matches where there is no KickOff or Bets ID --
 	const filteredMatchesManual = matches.filter((match) => {
 		return (
 			match?.statusFront !== ACTIVE_PAGE.STATUS &&
@@ -194,9 +125,9 @@ const ActiveGames = () => {
 				<Button
 					variant="contained"
 					onClick={handleStart}
-					color={`${onCheck ? "error" : "success"}`}
+					color={`${isConnected ? "error" : "success"}`}
 				>
-					{onCheck ? ACTIVE_PAGE.BTN.END : ACTIVE_PAGE.BTN.START}
+					{isConnected ? ACTIVE_PAGE.BTN.END : ACTIVE_PAGE.BTN.START}
 				</Button>
 			</Box>
 			<Divider />
