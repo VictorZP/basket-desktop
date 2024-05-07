@@ -1,16 +1,20 @@
-const axios = require("axios");
 const Store = require("electron-store");
 const fs = require("fs");
 const path = require("path");
 const { io } = require("socket.io-client");
 
-const { ipcMain, Notification, webContents } = require("electron");
+const {
+	ipcMain,
+	Notification,
+	BrowserWindow,
+	webContents,
+} = require("electron");
 
 const { STORAGE_KEYS } = require("../../common/constants/index.js");
 
-const endPoint = "/analyze";
-
 const { CHANNELS } = require("../../common/constants/channels.js");
+const { ACTIVE_PAGE_NOTIFICATION } = require("../../common/constants/index.js");
+const { ACTIVE_PAGE } = require("../../renderer/constants/activeGamesPage.js");
 
 let store = new Store();
 const TOKEN = store.get(STORAGE_KEYS.TOKEN);
@@ -69,5 +73,78 @@ ipcMain.handle(CHANNELS.ANALYZE.CONNECT, async (event, arg) => {
 		};
 
 		return res;
+	}
+});
+
+ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
+	try {
+		const {
+			champ,
+			teamHome,
+			teamAway,
+			difRes,
+			betLimit,
+			deviation,
+			total2ndHALF,
+			noBets,
+			statusFront,
+			total,
+			kickOFF,
+		} = arg;
+
+		if (
+			statusFront === ACTIVE_PAGE.STATUS &&
+			!noBets &&
+			total !== 0 &&
+			kickOFF !== 0
+		) {
+			return;
+		}
+
+		let betPrediction = "-";
+
+		switch (difRes) {
+			case "more":
+				betPrediction = "OVER";
+				break;
+			case "less":
+				betPrediction = "UNDER";
+				break;
+			default:
+				break;
+		}
+
+		const notificationObj = {
+			title:
+				betPrediction !== "-"
+					? ACTIVE_PAGE_NOTIFICATION.TITLE_WITH_BETS
+					: ACTIVE_PAGE_NOTIFICATION.TITLE_WITHOUT_BETS,
+			body:
+				betPrediction !== "-"
+					? `${champ}\n${teamHome} - ${teamAway} ${betPrediction} ${betLimit}\n${deviation}`
+					: `${champ}\n${teamHome} - ${teamAway} ${total2ndHALF}\n${deviation}`,
+		};
+
+		const notification = new Notification(notificationObj);
+		const mainWindow = BrowserWindow.getAllWindows()?.at(0);
+
+		notification.timeoutType = "never";
+
+		notification.on("click", () => {
+			// Restore and focus the window when the notification is clicked
+			if (mainWindow.isMinimized()) mainWindow.restore();
+			mainWindow.focus();
+		});
+
+		notification.show();
+	} catch (err) {
+		const errNotificationObj = {
+			title: ACTIVE_PAGE_NOTIFICATION.TITLE_ERROR,
+			body: ACTIVE_PAGE_NOTIFICATION.BODY_ERROR,
+		};
+
+		const errNotification = new Notification(errNotificationObj);
+
+		errNotification.show();
 	}
 });
