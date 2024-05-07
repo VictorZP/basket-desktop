@@ -66,15 +66,13 @@ if (!gotTheLock) {
 import "./processes/storeProcesses.js";
 import "./processes/loginProcesses.js";
 import "./processes/cyberProcesses.js";
+import "./processes/linesProcesses.js";
+import "./processes/parcerProcesses.js";
+import "./processes/urlFormProcesses.js";
+import "./processes/analyzeProcesses.js";
 import "./processes/appChampProcesses.js";
 import "./processes/teamNameProcesses.js";
-import "./processes/urlFormProcesses.js";
-import "./processes/activeGamesProcesses.js";
-import "./processes/parcerProcesses.js";
-import "./processes/parcerDataProcesses.js";
 import "./processes/saveFileProcesses.js";
+import "./processes/parcerDataProcesses.js";
 import "./processes/manualResultsProcesses.js";
 import "./processes/bettingResultsProcesses.js";
-import "./processes/linesProcesses.js";
-
-import "./processes/analyzeProcesses.js";
