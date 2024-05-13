@@ -71,8 +71,8 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 
 			dispatch(handleFileModalOpen(false));
 
-			if (addUrlResponse?.resStatusText !== "OK") {
-				enqueueSnackbar(addUrlResponse?.resMessage ?? TEXT.ERROR.ON_URL_ADD, {
+			if (addUrlResponse?.statusText !== "OK") {
+				enqueueSnackbar(addUrlResponse?.message ?? TEXT.ERROR.ON_URL_ADD, {
 					variant: "error",
 				});
 				return;

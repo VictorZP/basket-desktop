@@ -10,9 +10,9 @@ ipcMain.handle(CHANNELS.ANALYZE.ADD_URL, async (event, reqData) => {
 		const res = await axios.post(`${endPoint}/generate`, reqData);
 
 		const resData = {
-			resStatus: res?.status,
-			resStatusText: res?.statusText,
-			resMessage: res?.data?.message,
+			status: res?.status,
+			statusText: res?.statusText,
+			message: res?.data?.message,
 			status: res?.data?.status,
 			unsuccessfulData: res?.data?.data,
 		};
