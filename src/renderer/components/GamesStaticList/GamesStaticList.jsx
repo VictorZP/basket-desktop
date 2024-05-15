@@ -26,15 +26,16 @@ import { CHANNELS } from "../../../common/constants/channels.js";
 import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
 import { TEXT } from "./text.js";
 import { CYBER_LIST } from "../../constants/cyberList.js";
+import { CONSTANTS } from "../../constants/matchesPage.js";
 
 const GamesStaticList = ({ paramsObj }) => {
-	const [dataList, setDataList] = useState([]);
 	const [games, setGames] = useState([]);
-	const [tempUpdated, setTempUpdated] = useState(false);
 	const [loadingTemp, setLoadingTemp] = useState(false);
 	const [loadingLines, setLoadingLines] = useState(false);
 	const isUrlAdded = useSelector(getIsUrlAdded);
 	const dispatch = useDispatch();
+
+	const [updatedMatches, setUpdatedMatches] = useState([]);
 
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST, paramsObj);
@@ -48,7 +49,7 @@ const GamesStaticList = ({ paramsObj }) => {
 				);
 				return;
 			}
-			setDataList(arg?.data);
+
 			setGames(arg?.data);
 			dispatch(handleUrlAdded(false));
 		});
@@ -59,33 +60,9 @@ const GamesStaticList = ({ paramsObj }) => {
 	}, [isUrlAdded, paramsObj]);
 
 	useEffect(() => {
-		ipcRenderer.on(CHANNELS.ANALYZE.UPD_TEMP, (event, arg) => {
-			if (arg?.statusText !== "OK") {
-				enqueueSnackbar(
-					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
-					{
-						variant: "error",
-					}
-				);
-				return;
-			}
-			setDataList(arg?.data);
-			setTempUpdated(false);
-			setLoadingTemp(false);
-		});
 		return () => {
-			ipcRenderer.removeAllListeners();
-		};
-	}, [tempUpdated]);
-
-	useEffect(() => {
-		setGames(dataList);
-	}, [dataList]);
-
-	useEffect(() => {
-		return () => {
-			setDataList({});
 			setGames([]);
+			setUpdatedMatches([]);
 		};
 	}, []);
 
@@ -95,16 +72,7 @@ const GamesStaticList = ({ paramsObj }) => {
 		const name = elemID?.split("_")?.at(0);
 
 		const value = e?.target?.value;
-		let index = null;
-
-		switch (true) {
-			case id.includes("http"):
-				index = games?.findIndex((game) => game?.url === id);
-				break;
-			default:
-				index = games?.findIndex((game) => game?.eventId === id);
-				break;
-		}
+		let index = games?.findIndex((game) => game?.matchId === id);
 
 		const updatedDataList = games;
 		if (name === "temp") {
@@ -114,22 +82,46 @@ const GamesStaticList = ({ paramsObj }) => {
 		}
 
 		setGames([...updatedDataList]);
-	};
 
-	const handleSaveTemp = () => {
-		const updatedGames = games?.map((game) => {
+		const matchesToSave = updatedDataList?.map((game) => {
 			if (!game) return;
 
-			game.temp = Number.parseFloat(game?.temp);
-			game.predict = Number.parseFloat(game?.predict);
-			return game;
+			const dataForSave = {
+				matchId: game?.matchId,
+				temp: Number.parseFloat(game?.temp),
+				predict: Number.parseFloat(game?.predict),
+			};
+			return dataForSave;
 		});
 
-		const data = { ...dataList, games: updatedGames };
-		ipcRenderer.send(CHANNELS.ANALYZE.UPD_TEMP, { data });
+		setUpdatedMatches([...matchesToSave]);
+	};
 
-		setTempUpdated(true);
+	const handleSaveTemp = async () => {
+		const data = { games: updatedMatches };
+
 		setLoadingTemp(true);
+
+		const saveResult = await ipcRenderer.invoke(
+			CHANNELS.ANALYZE.UPD_TEMP,
+			data
+		);
+
+		setLoadingTemp(false);
+
+		if (saveResult?.statusText !== "OK") {
+			enqueueSnackbar(
+				saveResult?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
+				{
+					variant: "error",
+				}
+			);
+			return;
+		}
+
+		enqueueSnackbar(CONSTANTS.SUCCESS_MSG.TEMP_PREDICT, {
+			variant: "success",
+		});
 	};
 
 	//	Download matches without betsApi data (backgroundColor: orange,yellow)

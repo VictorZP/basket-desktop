@@ -50,17 +50,15 @@ ipcMain.on(CHANNELS.ANALYZE.GET_STATIC_LIST, async (event, reqData) => {
 	}
 });
 
-ipcMain.on(CHANNELS.ANALYZE.UPD_TEMP, async (event, arg) => {
-	const { data } = arg;
+ipcMain.handle(CHANNELS.ANALYZE.UPD_TEMP, async (event, data) => {
 	try {
 		const res = await axios.put(`${endPoint}/list/static/temp`, data);
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,
-			data: res?.data?.data,
 		};
 
-		event.sender.send(CHANNELS.ANALYZE.UPD_TEMP, resData);
+		return resData;
 	} catch (err) {
 		const res = {
 			statusCode: err?.response?.status,
@@ -68,6 +66,6 @@ ipcMain.on(CHANNELS.ANALYZE.UPD_TEMP, async (event, arg) => {
 			message: err?.response?.data?.message,
 		};
 
-		event.sender.send(CHANNELS.ANALYZE.UPD_TEMP, res);
+		return res;
 	}
 });
