@@ -21,14 +21,16 @@ export const createLinesXlsxFileNoBets = async (
 		(game) => game?.noBets === true || game?.total === 0
 	);
 
+	if (filteredData?.length === 0) {
+		return { status: "empty" };
+	}
+
 	//  Format data for file
 	CYBER_LIST_LINES.forEach((cyber) => {
 		const filteredGames = filteredData
-			.filter((game) => game.homeTeam.teamCyber.cyberName === cyber)
+			.filter((game) => game?.homeTeam?.teamCyber?.name === cyber)
 			?.sort(
-				(a, b) =>
-					a.homeTeam.teamChamp.championshipName -
-					b.homeTeam.teamChamp.championshipName
+				(a, b) => a?.homeTeam?.teamChamp?.name - b?.homeTeam?.teamChamp?.name
 			);
 
 		if (filteredGames?.length > 0)
@@ -65,7 +67,7 @@ export const createLinesXlsxFileNoBets = async (
 			}
 
 			const champCell = {
-				v: event?.homeTeam?.teamChamp?.championshipName,
+				v: event.homeTeam.teamChamp.name,
 				t: "s",
 			};
 			const homeTeamCell = {
