@@ -19,6 +19,7 @@ import { handleFile } from "./functions.js";
 import { createWarnDetailsFile } from "../../helpers/functions/addMatches/createWarnDetailsFile.js";
 
 import { CHANNELS } from "../../../common/constants/channels.js";
+import { CONSTANTS } from "../../constants/matchesPage.js";
 
 const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const [urlList, setUrlList] = useState([]);
@@ -92,6 +93,10 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 				await createWarnDetailsFile(unsuccessfulData);
 				return;
 			}
+
+			enqueueSnackbar(CONSTANTS.SUCCESS_MSG.MATCHES, {
+				variant: "success",
+			});
 
 			dispatch(handleUrlAdded(true));
 		} catch (err) {
