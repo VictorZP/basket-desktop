@@ -9,22 +9,15 @@ import {
 } from "../../helpers/reusableComponents/gamesStaticListAccordion.js";
 
 const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
-	const getDeviation = (item) => {
-		return Number.parseFloat(
-			(item?.homeDeviation + item?.awayDeviation) / 4
-		).toFixed(2);
-	};
-
 	const gamesByCyber = games?.filter((item) => {
 		return (
-			item?.homeTeam?.teamCyber?.cyberName === cyber &&
-			item?.status === "scheduled"
+			item?.homeTeam?.teamCyber?.name === cyber && item?.status === "scheduled"
 		);
 	});
 
 	const sortedList = gamesByCyber?.sort((a, b) => {
-		const champA = a?.homeTeam?.teamChamp?.championshipName?.toLowerCase();
-		const champB = b?.homeTeam?.teamChamp?.championshipName?.toLowerCase();
+		const champA = a?.homeTeam?.teamChamp?.name?.toLowerCase();
+		const champB = b?.homeTeam?.teamChamp?.name?.toLowerCase();
 		if (champA < champB) {
 			return -1;
 		}
@@ -47,12 +40,10 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 						}}
 					>
 						<Box sx={{ width: "6%" }}>
-							<Typography>{getDeviation(item)}</Typography>
+							<Typography>{item?.deviation}</Typography>
 						</Box>
 						<Box sx={{ width: "12%" }}>
-							<Typography>
-								{item?.homeTeam?.teamChamp?.championshipName}
-							</Typography>
+							<Typography>{item?.homeTeam?.teamChamp?.name}</Typography>
 						</Box>
 						<Box sx={{ width: "14%" }}>
 							<Typography>{item?.homeTeam?.teamName}</Typography>

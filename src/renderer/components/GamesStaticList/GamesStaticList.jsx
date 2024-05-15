@@ -49,7 +49,7 @@ const GamesStaticList = ({ paramsObj }) => {
 				return;
 			}
 			setDataList(arg?.data);
-			setGames(arg?.data?.games);
+			setGames(arg?.data);
 			dispatch(handleUrlAdded(false));
 		});
 
@@ -79,7 +79,7 @@ const GamesStaticList = ({ paramsObj }) => {
 	}, [tempUpdated]);
 
 	useEffect(() => {
-		setGames(dataList?.games);
+		setGames(dataList);
 	}, [dataList]);
 
 	useEffect(() => {
