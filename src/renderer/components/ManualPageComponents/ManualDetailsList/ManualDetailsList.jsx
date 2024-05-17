@@ -10,12 +10,12 @@ import {
 
 const ManualDetailsList = ({ handleInput, games, cyber }) => {
 	const gamesByCyber = games?.filter((item) => {
-		return item?.homeTeam?.teamCyber?.cyberName === cyber;
+		return item?.homeTeam?.teamCyber?.name === cyber;
 	});
 
 	const sortedList = gamesByCyber?.sort((a, b) => {
-		const champA = a?.homeTeam?.teamChamp?.championshipName?.toLowerCase();
-		const champB = b?.homeTeam?.teamChamp?.championshipName?.toLowerCase();
+		const champA = a?.homeTeam?.teamChamp?.name?.toLowerCase();
+		const champB = b?.homeTeam?.teamChamp?.name?.toLowerCase();
 		if (champA < champB) {
 			return -1;
 		}
@@ -35,10 +35,10 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 		>
 			{sortedList?.map((item) => {
 				return (
-					<ListItem key={item?.eventId ? item?.eventId : item?.url}>
+					<ListItem key={item?.matchId}>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`deviation_${item?.eventId ? item?.eventId : item?.url}`}
+								id={`deviation_${item?.matchId}`}
 								onChange={handleInput}
 								value={item?.deviation ?? 0}
 								size="small"
@@ -50,9 +50,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 							/>
 						</Box>
 						<Box sx={{ width: "12%" }}>
-							<Typography>
-								{item?.homeTeam?.teamChamp?.championshipName}
-							</Typography>
+							<Typography>{item?.homeTeam?.teamChamp?.name}</Typography>
 						</Box>
 						<Box sx={{ width: "14%" }}>
 							<Typography>{item?.homeTeam?.teamName}</Typography>
@@ -62,7 +60,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "7%" }}>
 							<InputBase
-								id={`total_${item?.eventId ? item?.eventId : item?.url}`}
+								id={`total_${item?.matchId}`}
 								onChange={handleInput}
 								value={item?.total ?? 0}
 								size="small"
@@ -75,7 +73,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`temp_${item?.eventId ? item?.eventId : item?.url}`}
+								id={`temp_${item?.matchId}`}
 								onChange={handleInput}
 								value={item?.temp ?? 0}
 								size="small"
@@ -88,9 +86,9 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`attackKEF_${item?.eventId ? item?.eventId : item?.url}`}
+								id={`attackKEF_${item?.matchId}`}
 								onChange={handleInput}
-								value={item?.attackKEF ?? 0}
+								value={item?.attackKef ?? 0}
 								size="small"
 								sx={{
 									"&.MuiInputBase-root > input": {
@@ -101,7 +99,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`calcTemp_${item?.eventId ? item?.eventId : item?.url}`}
+								id={`calcTemp_${item?.matchId}`}
 								onChange={handleInput}
 								value={item?.calcTemp ?? 0}
 								size="small"
@@ -114,9 +112,9 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`total2ndHALF_${item?.eventId ? item?.eventId : item?.url}`}
+								id={`total2ndHALF_${item?.matchId}`}
 								onChange={handleInput}
-								value={item?.total2ndHALF ?? 0}
+								value={item?.totalSecondHalf ?? 0}
 								size="small"
 								sx={{
 									"&.MuiInputBase-root > input": {
@@ -127,9 +125,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`totalInMoment_${
-									item?.eventId ? item?.eventId : item?.url
-								}`}
+								id={`totalInMoment_${item?.matchId}`}
 								onChange={handleInput}
 								value={item?.totalInMoment ?? 0}
 								size="small"
@@ -145,7 +141,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`predict_${item?.eventId ? item?.eventId : item?.url}`}
+								id={`predict_${item?.matchId}`}
 								onChange={handleInput}
 								value={item?.predict}
 								size="small"

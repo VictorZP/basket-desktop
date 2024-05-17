@@ -37,7 +37,7 @@ ipcMain.handle(CHANNELS.MANUAL_ADDING.GET_MANUAL_LIST, async (e, reqData) => {
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,
-			data: res?.data?.data,
+			data: res?.data,
 		};
 
 		return resData;
