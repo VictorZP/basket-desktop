@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import { enqueueSnackbar } from "notistack";
@@ -58,6 +58,7 @@ const ManualResults = () => {
 				return;
 			}
 			setGames(resData.data);
+			setUpdatedMatches([]);
 		} catch (err) {
 			enqueueSnackbar(err?.message ?? err, {
 				variant: "error",
@@ -99,6 +100,7 @@ const ManualResults = () => {
 			enqueueSnackbar(updateRes?.message ?? MANUAL_PAGE.SUCCESS.SAVE, {
 				variant: "success",
 			});
+			setUpdatedMatches([]);
 		} catch (err) {
 			enqueueSnackbar(err?.message ?? err, {
 				variant: "error",
@@ -107,6 +109,13 @@ const ManualResults = () => {
 			setLoadingSave(false);
 		}
 	};
+
+	useEffect(() => {
+		return () => {
+			setGames([]);
+			setUpdatedMatches([]);
+		};
+	}, []);
 
 	return (
 		<Box component="section">
