@@ -86,7 +86,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`attackKEF_${item?.matchId}`}
+								id={`attackKef_${item?.matchId}`}
 								onChange={handleInput}
 								value={item?.attackKef ?? 0}
 								size="small"
@@ -112,7 +112,7 @@ const ManualDetailsList = ({ handleInput, games, cyber }) => {
 						</Box>
 						<Box sx={{ width: "6%" }}>
 							<InputBase
-								id={`total2ndHALF_${item?.matchId}`}
+								id={`totalSecondHalf_${item?.matchId}`}
 								onChange={handleInput}
 								value={item?.totalSecondHalf ?? 0}
 								size="small"

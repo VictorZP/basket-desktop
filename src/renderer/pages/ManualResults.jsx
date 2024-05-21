@@ -16,6 +16,8 @@ import ManualGamesList from "../components/ManualPageComponents/ManualGamesList"
 import { handleOpenState } from "../redux/urlForm/urlFormSlice.js";
 import { getIsUrlFormOpen } from "../redux/urlForm/urlFormSelector.js";
 
+import { handleDataChange } from "../helpers/functions/addManualMatches";
+
 import { CHANNELS } from "../../common/constants/channels.js";
 import { MANUAL_PAGE } from "../constants/manualResultsPage.js";
 
@@ -24,6 +26,7 @@ const ManualResults = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [loadingSave, setLoadingSave] = useState(false);
 	const [games, setGames] = useState([]);
+	const [updatedMatches, setUpdatedMatches] = useState([]);
 	const containerRef = useRef(null);
 
 	const isFormOpen = useSelector(getIsUrlFormOpen);
@@ -68,29 +71,21 @@ const ManualResults = () => {
 		dispatch(handleOpenState(!isFormOpen));
 	};
 
+	const handleInput = (e) => {
+		const results = handleDataChange(e, games, updatedMatches);
+
+		setGames([...results.updatedDataList]);
+		setUpdatedMatches([...results.updatedMatches]);
+	};
+
 	const handleSave = async () => {
 		setLoadingSave(true);
-
-		const updatedGames = games?.map((game) => {
-			game.deviation = Number.parseFloat(game.deviation ?? 0);
-			game.total = Number.parseFloat(game.total ?? 0);
-			game.temp = Number.parseFloat(game.temp ?? 0);
-			game.attackKEF = Number.parseFloat(game.attackKEF ?? 0);
-			game.calcTemp = Number.parseFloat(game.calcTemp ?? 0);
-			game.total2ndHALF = Number.parseFloat(game.total2ndHALF ?? 0);
-			game.totalInMoment = Number.parseFloat(game.totalInMoment ?? 0);
-			game.predict = Number.parseFloat(game.predict ?? 0);
-			return game;
-		});
-
-		const data = { date: dateValue.format("DD.MM.YY"), games: updatedGames };
 
 		try {
 			const updateRes = await ipcRenderer.invoke(
 				CHANNELS.MANUAL_ADDING.SAVE_MANUAL_LIST,
-				data
+				{ games: updatedMatches }
 			);
-
 			if (updateRes.statusText !== "OK") {
 				enqueueSnackbar(
 					updateRes?.message ?? MANUAL_PAGE.WARNING.ON_SAVE_LIST,
@@ -101,12 +96,9 @@ const ManualResults = () => {
 				setLoadingSave(false);
 				return;
 			}
-
 			enqueueSnackbar(updateRes?.message ?? MANUAL_PAGE.SUCCESS.SAVE, {
 				variant: "success",
 			});
-
-			setGames(updateRes.data);
 		} catch (err) {
 			enqueueSnackbar(err?.message ?? err, {
 				variant: "error",
@@ -148,7 +140,11 @@ const ManualResults = () => {
 				</Slide>
 			</Box>
 			<Divider />
-			<ManualGamesList games={games} setGames={setGames} />
+			<ManualGamesList
+				games={games}
+				setGames={setGames}
+				handleInput={handleInput}
+			/>
 			<Box sx={{ px: 3, py: 1 }}>
 				<LoadingButton
 					variant="outlined"

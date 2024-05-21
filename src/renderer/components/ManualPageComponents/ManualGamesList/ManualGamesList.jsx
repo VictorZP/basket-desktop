@@ -12,59 +12,7 @@ import ManualDetailsList from "../ManualDetailsList";
 import { TEXT } from "./text.js";
 import { CYBER_LIST } from "../../../constants/cyberList.js";
 
-const ManualGamesList = ({ games, setGames }) => {
-	const handleInput = (e) => {
-		const elemID = e.target.id;
-		const id = elemID?.split("_")[1];
-		const name = elemID?.split("_")[0];
-		const value = e?.target?.value;
-
-		let index = null;
-
-		switch (true) {
-			case id.includes("http"):
-				index = games?.findIndex((game) => game?.url === id);
-				break;
-			default:
-				index = games?.findIndex((game) => game?.eventId === id);
-				break;
-		}
-
-		const updatedDataList = [...games];
-
-		switch (name) {
-			case "deviation":
-				updatedDataList[index].deviation = value;
-				break;
-			case "total":
-				updatedDataList[index].total = value;
-				break;
-			case "temp":
-				updatedDataList[index].temp = value;
-				break;
-			case "attackKEF":
-				updatedDataList[index].attackKEF = value;
-				break;
-			case "calcTemp":
-				updatedDataList[index].calcTemp = value;
-				break;
-			case "total2ndHALF":
-				updatedDataList[index].total2ndHALF = value;
-				break;
-			case "totalInMoment":
-				updatedDataList[index].totalInMoment = value;
-				break;
-			case "predict":
-				updatedDataList[index].predict = value;
-				break;
-
-			default:
-				break;
-		}
-
-		setGames([...updatedDataList]);
-	};
-
+const ManualGamesList = ({ games, handleInput }) => {
 	return (
 		<Box component="section" sx={{ px: 3, py: 1 }}>
 			<Box mb={1}>
@@ -111,7 +59,7 @@ const ManualGamesList = ({ games, setGames }) => {
 
 ManualGamesList.propTypes = {
 	games: PropTypes.array,
-	setGames: PropTypes.func,
+	handleInput: PropTypes.func,
 };
 
 export default ManualGamesList;
