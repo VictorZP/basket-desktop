@@ -45,18 +45,7 @@ const ActiveGames = () => {
 		const listener = (event, game) => {
 			const matchesData = [...matches];
 
-			let ndx = null;
-
-			switch (true) {
-				case !game?.eventId:
-					ndx = matchesData.findIndex((match) => match?.url === game?.url);
-					break;
-				default:
-					ndx = matchesData.findIndex(
-						(match) => match?.eventId === game?.eventId
-					);
-					break;
-			}
+			const ndx = matchesData.findIndex((match) => match?.Id === game?.id);
 
 			// Checking for the presence of a match in the array, as well as checking the status of the match (whether to display it or not)
 			if (ndx < 0) {
@@ -105,7 +94,7 @@ const ActiveGames = () => {
 			match?.statusFront !== ACTIVE_PAGE.STATUS &&
 			!match?.noBets &&
 			match?.total !== 0 &&
-			match?.kickOFF !== 0
+			match?.kickOff !== 0
 		);
 	});
 
@@ -114,7 +103,7 @@ const ActiveGames = () => {
 		return (
 			match?.statusFront !== ACTIVE_PAGE.STATUS &&
 			(match?.noBets ||
-				match?.kickOFF === 0 ||
+				match?.kickOff === 0 ||
 				(!match?.noBets && match?.total === 0))
 		);
 	});
