@@ -22,28 +22,28 @@ const ListItemWithBets = ({ match, openBrowser, hideMatch }) => {
 				</Typography>
 				<Typography variant="span" width={50}></Typography>
 				<Typography variant="span" width={130} overflow={"hidden"}>
-					{match.champ}
+					{match.homeTeam.teamChamp.name}
 				</Typography>
 				<Typography variant="span" width={140}>
-					{match.teamHome}
+					{match.homeTeam.teamName}
 				</Typography>
 				<Typography variant="span" width={140}>
-					{match.teamAway}
+					{match.awayTeam.teamName}
 				</Typography>
 				<Typography variant="span" width={80}>
-					{match.kickOFF}
+					{match.kickOff}
 				</Typography>
 				<Typography variant="span" width={70}>
 					{match.temp}
 				</Typography>
 				<Typography variant="span" width={80}>
-					{match.attackKEF}
+					{match.attackKef}
 				</Typography>
 				<Typography variant="span" width={80}>
 					{match.calcTemp}
 				</Typography>
 				<Typography variant="span" width={80}>
-					{match.total2ndHALF}
+					{match.totalSecondHalf}
 				</Typography>
 				<Typography variant="span" width={80}>
 					<Tooltip
@@ -85,7 +85,7 @@ const ListItemWithBets = ({ match, openBrowser, hideMatch }) => {
 					{match.predict}
 				</Typography>
 				<ListItemButtons
-					matchId={match?.eventId ? match?.eventId : match?.url}
+					matchId={match?.matchId}
 					matchUrl={match.url}
 					openBrowser={openBrowser}
 					hideMatch={hideMatch}

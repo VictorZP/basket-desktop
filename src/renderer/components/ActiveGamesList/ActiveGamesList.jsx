@@ -12,7 +12,7 @@ import { CYBER_LIST } from "../../constants/cyberList.js";
 const ActiveGamesList = ({ matches, hideMatch, isBets }) => {
 	const gamesByCyber = (cyber) => {
 		return matches?.filter((item) => {
-			return item?.cyber === cyber;
+			return item?.homeTeam?.teamCyber?.name === cyber;
 		});
 	};
 
@@ -39,14 +39,14 @@ const ActiveGamesList = ({ matches, hideMatch, isBets }) => {
 								{gamesByCyber(cyber).map((match) => {
 									return isBets === true ? (
 										<ListItemWithBets
-											key={match?.eventId ? match?.eventId : match?.url}
+											key={match?.matchId}
 											match={match}
 											openBrowser={openBrowser}
 											hideMatch={hideMatch}
 										/>
 									) : (
 										<ListItemNoBets
-											key={match?.eventId ? match?.eventId : match?.url}
+											key={match?.matchId}
 											match={match}
 											openBrowser={openBrowser}
 											hideMatch={hideMatch}
