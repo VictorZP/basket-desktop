@@ -79,24 +79,23 @@ ipcMain.handle(CHANNELS.ANALYZE.CONNECT, async (event, arg) => {
 ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
 	try {
 		const {
-			champ,
-			teamHome,
-			teamAway,
+			homeTeam,
+			awayTeam,
 			difRes,
 			betLimit,
 			deviation,
-			total2ndHALF,
+			totalSecondHALF,
 			noBets,
 			statusFront,
 			total,
-			kickOFF,
+			kickOff,
 		} = arg;
 
 		if (
 			statusFront === ACTIVE_PAGE.STATUS &&
 			!noBets &&
 			total !== 0 &&
-			kickOFF !== 0
+			kickOff !== 0
 		) {
 			return;
 		}
@@ -121,8 +120,8 @@ ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
 					: ACTIVE_PAGE_NOTIFICATION.TITLE_WITHOUT_BETS,
 			body:
 				betPrediction !== "-"
-					? `${champ}\n${teamHome} - ${teamAway} ${betPrediction} ${betLimit}\n${deviation}`
-					: `${champ}\n${teamHome} - ${teamAway} ${total2ndHALF}\n${deviation}`,
+					? `${homeTeam?.teamChamp?.name}\n${homeTeam?.teamName} - ${awayTeam?.teamName} ${betPrediction} ${betLimit}\n${deviation}`
+					: `${homeTeam?.teamChamp?.name}\n${homeTeam?.teamName} - ${awayTeam?.teamName} ${totalSecondHALF}\n${deviation}`,
 		};
 
 		const notification = new Notification(notificationObj);
