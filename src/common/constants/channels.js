@@ -38,6 +38,7 @@ export const CHANNELS = {
 		ACTIVE: "active",
 		CONNECT: "connect",
 		SHOW_NOTIFICATION: "show-notification",
+		DISCONNECT: "disconnect",
 	},
 	LINES: {
 		GET_LINES: "lines-get",

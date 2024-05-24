@@ -8,4 +8,9 @@ export const ACTIVE_PAGE = {
 	},
 	CLOSE: "скрыть",
 	STATUS: "checked",
+	MESSAGES: {
+		NO_CONNECTION: "Отсутствует соединение с сервером анализа.",
+		CONNECTION_ERROR: "Ошибка соединения",
+		DISCONNECTED: "Соединение разорвано",
+	},
 };

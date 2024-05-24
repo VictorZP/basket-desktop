@@ -10,7 +10,7 @@ const {
 	webContents,
 } = require("electron");
 
-const { STORAGE_KEYS } = require("../../common/constants/index.js");
+const { STORAGE_KEYS, STATUS } = require("../../common/constants/index.js");
 
 const { CHANNELS } = require("../../common/constants/channels.js");
 const { ACTIVE_PAGE_NOTIFICATION } = require("../../common/constants/index.js");
@@ -35,18 +35,15 @@ const socket = io(
 	}
 );
 
-socket.on("connect", () => {
-	console.log("Connected to the server");
-});
-
-socket.on("connect_error", (err) => {
-	console.error("Connection failed", err.message);
-	console.error("Error code", err.data);
-});
-
 socket.on("message", (message) => {
 	webContents.getAllWebContents().forEach((content) => {
 		content.send(CHANNELS.ANALYZE.ACTIVE, message);
+	});
+});
+
+socket.on("disconnect", () => {
+	webContents.getAllWebContents().forEach((content) => {
+		content.send(CHANNELS.ANALYZE.DISCONNECT);
 	});
 });
 
@@ -54,6 +51,10 @@ ipcMain.handle(CHANNELS.ANALYZE.CONNECT, async (event, arg) => {
 	const { isConnected } = arg;
 
 	try {
+		if (!socket.connected) {
+			return { status: STATUS.NOT_CONNECTED };
+		}
+
 		if (!isConnected) {
 			socket.emit("join_room", "analyze-room");
 		} else {

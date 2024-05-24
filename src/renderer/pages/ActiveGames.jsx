@@ -3,9 +3,12 @@ import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { Box, Button, Divider } from "@mui/material";
+import { Box, Divider } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import ActiveGamesList from "../components/ActiveGamesList/ActiveGamesList.jsx";
+
+import { handleConnectionBtn } from "../helpers/functions/activeGames";
 
 import { CHANNELS } from "../../common/constants/channels.js";
 import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
@@ -13,16 +16,15 @@ import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
 const ActiveGames = () => {
 	const [matches, setMatches] = useState([]); // matches that have passed the check
 	const [isConnected, setIsConnected] = useState(false);
+	const [connectionLoadingStatus, setConnectionLoadingStatus] = useState(false);
 
 	//  -- Handling connection/disconnection to room by button --
 	const handleStart = async () => {
-		await ipcRenderer.invoke(CHANNELS.ANALYZE.CONNECT, {
+		await handleConnectionBtn(
 			isConnected,
-		});
-
-		ipcRenderer.removeAllListeners();
-
-		setIsConnected((prevState) => !prevState);
+			setIsConnected,
+			setConnectionLoadingStatus
+		);
 	};
 
 	//  -- Handling unmounting --
@@ -40,6 +42,26 @@ const ActiveGames = () => {
 			ipcRenderer.removeAllListeners();
 		};
 	}, []);
+
+	//  -- Handling disconnecting from analyze server  --
+	useEffect(() => {
+		const disconnectListener = (event, data) => {
+			setIsConnected(false);
+
+			enqueueSnackbar(ACTIVE_PAGE.MESSAGES.DISCONNECTED, {
+				variant: "warning",
+			});
+		};
+
+		ipcRenderer.on(CHANNELS.ANALYZE.DISCONNECT, disconnectListener);
+
+		return () => {
+			ipcRenderer.removeListener(
+				CHANNELS.ANALYZE.DISCONNECT,
+				disconnectListener
+			);
+		};
+	});
 
 	useEffect(() => {
 		const listener = (event, game) => {
@@ -111,13 +133,14 @@ const ActiveGames = () => {
 	return (
 		<Box component="section">
 			<Box px={3} mb={2} height={40}>
-				<Button
+				<LoadingButton
 					variant="contained"
 					onClick={handleStart}
 					color={`${isConnected ? "error" : "success"}`}
+					loading={connectionLoadingStatus}
 				>
 					{isConnected ? ACTIVE_PAGE.BTN.END : ACTIVE_PAGE.BTN.START}
-				</Button>
+				</LoadingButton>
 			</Box>
 			<Divider />
 			<ActiveGamesList

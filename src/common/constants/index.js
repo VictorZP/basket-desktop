@@ -131,3 +131,7 @@ export const ACTIVE_PAGE_NOTIFICATION = {
 	TITLE_ERROR: "Ошибка в уведомлениях",
 	BODY_ERROR: "Ошибка при фрмировании уведомления о ставке.",
 };
+
+export const STATUS = {
+	NOT_CONNECTED: "not connected",
+};
