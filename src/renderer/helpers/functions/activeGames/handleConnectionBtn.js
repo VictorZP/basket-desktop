@@ -20,8 +20,6 @@ const handleConnectionBtn = async (
 			}
 		);
 
-		await new Promise((r) => setTimeout(r, 2000));
-
 		if (connectionResult.status === STATUS.NOT_CONNECTED) {
 			enqueueSnackbar(ACTIVE_PAGE.MESSAGES.NO_CONNECTION, {
 				variant: "info",
