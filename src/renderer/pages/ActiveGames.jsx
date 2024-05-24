@@ -8,7 +8,10 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import ActiveGamesList from "../components/ActiveGamesList/ActiveGamesList.jsx";
 
-import { handleConnectionBtn } from "../helpers/functions/activeGames";
+import {
+	handleConnectionBtn,
+	handleGamesCheckFromResponse,
+} from "../helpers/functions/activeGames";
 
 import { CHANNELS } from "../../common/constants/channels.js";
 import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
@@ -65,25 +68,7 @@ const ActiveGames = () => {
 
 	useEffect(() => {
 		const listener = (event, game) => {
-			const matchesData = [...matches];
-
-			const ndx = matchesData.findIndex((match) => match?.Id === game?.id);
-
-			// Checking for the presence of a match in the array, as well as checking the status of the match (whether to display it or not)
-			if (ndx < 0) {
-				matchesData.push(game);
-				ipcRenderer.send(CHANNELS.ANALYZE.SHOW_NOTIFICATION, game); // Sends a notification when a bid first appears
-			}
-
-			if (matches[ndx]?.statusFront === ACTIVE_PAGE.STATUS) {
-				return;
-			}
-
-			if (matches[ndx]?.statusFront !== ACTIVE_PAGE.STATUS) {
-				matchesData.splice(ndx, 1, game);
-			}
-
-			setMatches(matchesData);
+			handleGamesCheckFromResponse(matches, game, setMatches);
 		};
 
 		ipcRenderer.on(CHANNELS.ANALYZE.ACTIVE, listener);
