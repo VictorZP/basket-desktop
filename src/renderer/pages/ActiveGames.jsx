@@ -10,6 +10,7 @@ import ActiveGamesList from "../components/ActiveGamesList/ActiveGamesList.jsx";
 
 import {
 	handleConnectionBtn,
+	makeMatchesFilteredList,
 	handleGamesCheckFromResponse,
 } from "../helpers/functions/activeGames";
 
@@ -86,24 +87,8 @@ const ActiveGames = () => {
 		ipcRenderer.send(CHANNELS.ANALYZE.MATCH_CHECK, id);
 	};
 
-	const filteredMatches = matches.filter((match) => {
-		return (
-			match?.statusFront !== ACTIVE_PAGE.STATUS &&
-			!match?.noBets &&
-			match?.total !== 0 &&
-			match?.kickOff !== 0
-		);
-	});
-
-	//  -- List of matches where there is no KickOff or Bets ID --
-	const filteredMatchesManual = matches.filter((match) => {
-		return (
-			match?.statusFront !== ACTIVE_PAGE.STATUS &&
-			(match?.noBets ||
-				match?.kickOff === 0 ||
-				(!match?.noBets && match?.total === 0))
-		);
-	});
+	const filteredMatches = makeMatchesFilteredList(matches, false);
+	const filteredMatchesManual = makeMatchesFilteredList(matches, true);
 
 	return (
 		<Box component="section">
