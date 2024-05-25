@@ -66,6 +66,7 @@ const ActiveGames = () => {
 		};
 	});
 
+	// -- Handling the appearance of a new match in the list --
 	useEffect(() => {
 		const listener = (event, game) => {
 			handleGamesCheckFromResponse(matches, game, setMatches);
@@ -79,21 +80,13 @@ const ActiveGames = () => {
 	});
 
 	const hideMatch = (id) => {
-		let ndx = null;
-
-		switch (true) {
-			case id.includes("http"):
-				ndx = matches.findIndex((match) => match?.url === id);
-				break;
-			default:
-				ndx = matches.findIndex((match) => match?.eventId === id);
-				break;
-		}
+		let ndx = matches.findIndex((match) => match?.matchId === id);
 
 		const matchesArr = [...matches];
 		matchesArr[ndx].statusFront = ACTIVE_PAGE.STATUS;
-
 		setMatches(matchesArr);
+
+		ipcRenderer.send(CHANNELS.ANALYZE.MATCH_CHECK, id);
 	};
 
 	const filteredMatches = matches.filter((match) => {

@@ -69,3 +69,24 @@ ipcMain.handle(CHANNELS.ANALYZE.UPD_TEMP, async (event, data) => {
 		return res;
 	}
 });
+
+ipcMain.on(CHANNELS.ANALYZE.MATCH_CHECK, async (e, id) => {
+	try {
+		const res = await axios.patch(`${endPoint}/set_status/${id}`);
+
+		const resData = {
+			status: res?.status,
+			statusText: res?.statusText,
+		};
+
+		e.sender.send(CHANNELS.ANALYZE.MATCH_CHECK, resData);
+	} catch (err) {
+		const res = {
+			statusCode: err?.response?.status,
+			statusText: err?.response?.statusText,
+			message: err?.response?.data?.message,
+		};
+
+		e.sender.send(CHANNELS.ANALYZE.MATCH_CHECK, res);
+	}
+});
