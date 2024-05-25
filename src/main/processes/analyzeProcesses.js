@@ -47,15 +47,13 @@ socket.on("disconnect", () => {
 	});
 });
 
-ipcMain.handle(CHANNELS.ANALYZE.CONNECT, async (event, arg) => {
-	const { isConnected } = arg;
-
+ipcMain.handle(CHANNELS.ANALYZE.CONNECT, async (event, connectedStatus) => {
 	try {
 		if (!socket.connected) {
 			return { status: STATUS.NOT_CONNECTED };
 		}
 
-		if (!isConnected) {
+		if (!connectedStatus) {
 			socket.emit("join_room", "analyze-room");
 		} else {
 			socket.emit("leave_room", "analyze-room");

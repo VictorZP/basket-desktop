@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { enqueueSnackbar } from "notistack";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
@@ -18,13 +18,15 @@ import { ACTIVE_PAGE } from "../constants/activeGamesPage.js";
 
 const ActiveGames = () => {
 	const [matches, setMatches] = useState([]); // matches that have passed the check
-	const [isConnected, setIsConnected] = useState(false);
+	const [isConnected, setIsConnected] = useState(false); // for button styles
 	const [connectionLoadingStatus, setConnectionLoadingStatus] = useState(false);
+	const connectedStatus = useRef(false); // for connection handling
 
 	//  -- Handling connection/disconnection to room by button --
 	const handleStart = async () => {
 		await handleConnectionBtn(
 			isConnected,
+			connectedStatus,
 			setIsConnected,
 			setConnectionLoadingStatus
 		);
@@ -34,22 +36,17 @@ const ActiveGames = () => {
 	useEffect(() => {
 		return () => {
 			//  Leave the room when the component is unmounted
-			if (isConnected) {
-				ipcRenderer.invoke(CHANNELS.ANALYZE.CONNECT, {
-					isConnected,
-				});
-
-				setIsConnected(false);
+			if (connectedStatus.current) {
+				ipcRenderer.invoke(CHANNELS.ANALYZE.CONNECT, connectedStatus.current);
 			}
-
-			ipcRenderer.removeAllListeners();
 		};
 	}, []);
 
 	//  -- Handling disconnecting from analyze server  --
 	useEffect(() => {
-		const disconnectListener = (event, data) => {
+		const disconnectListener = () => {
 			setIsConnected(false);
+			connectedStatus.current = false;
 
 			enqueueSnackbar(ACTIVE_PAGE.MESSAGES.DISCONNECTED, {
 				variant: "warning",

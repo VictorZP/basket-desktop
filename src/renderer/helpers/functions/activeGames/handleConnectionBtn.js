@@ -8,6 +8,7 @@ import { ACTIVE_PAGE } from "../../../constants/activeGamesPage.js";
 
 const handleConnectionBtn = async (
 	isConnected,
+	connectedStatus,
 	setIsConnected,
 	setConnectionLoadingStatus
 ) => {
@@ -15,9 +16,7 @@ const handleConnectionBtn = async (
 	try {
 		const connectionResult = await ipcRenderer.invoke(
 			CHANNELS.ANALYZE.CONNECT,
-			{
-				isConnected,
-			}
+			connectedStatus.current
 		);
 
 		if (connectionResult.status === STATUS.NOT_CONNECTED) {
@@ -26,14 +25,14 @@ const handleConnectionBtn = async (
 			});
 
 			if (isConnected) {
-				setIsConnected(false);
+				setIsConnected(false); // only changes isConnected state for button styles
 			}
 
 			return;
 		}
 
-		ipcRenderer.removeAllListeners();
-
+		// change both state and ref
+		connectedStatus.current = !connectedStatus.current;
 		setIsConnected((prevState) => !prevState);
 	} catch (err) {
 		enqueueSnackbar(err?.message ?? ACTIVE_PAGE.MESSAGES.CONNECTION_ERROR, {
