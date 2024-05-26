@@ -83,7 +83,7 @@ ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
 			difRes,
 			betLimit,
 			deviation,
-			totalSecondHALF,
+			totalSecondHalf,
 			noBets,
 			statusFront,
 			total,
@@ -120,7 +120,7 @@ ipcMain.on(CHANNELS.ANALYZE.SHOW_NOTIFICATION, async (event, arg) => {
 			body:
 				betPrediction !== "-"
 					? `${homeTeam?.teamChamp?.name}\n${homeTeam?.teamName} - ${awayTeam?.teamName} ${betPrediction} ${betLimit}\n${deviation}`
-					: `${homeTeam?.teamChamp?.name}\n${homeTeam?.teamName} - ${awayTeam?.teamName} ${totalSecondHALF}\n${deviation}`,
+					: `${homeTeam?.teamChamp?.name}\n${homeTeam?.teamName} - ${awayTeam?.teamName} ${totalSecondHalf}\n${deviation}`,
 		};
 
 		const notification = new Notification(notificationObj);
