@@ -22,7 +22,7 @@ const handleGamesCheckFromResponse = (
 		return;
 	}
 
-	if (matches[ndx]?.status === ACTIVE_PAGE.MOMENT_CHECKED) {
+	if (gameFromResponse?.status === ACTIVE_PAGE.MOMENT_CHECKED) {
 		matchesData.splice(ndx, 1);
 		setMatches(matchesData);
 		return;
