@@ -8,6 +8,7 @@ export const ACTIVE_PAGE = {
 	},
 	CLOSE: "скрыть",
 	STATUS: "checked",
+	NO_BET_DIFFERENCE: "not",
 	MOMENT_CHECKED: "momentChecked",
 	MESSAGES: {
 		NO_CONNECTION: "Отсутствует соединение с сервером анализа.",
