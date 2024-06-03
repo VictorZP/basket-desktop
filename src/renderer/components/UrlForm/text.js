@@ -1,6 +1,7 @@
 export const TEXT = {
 	PLACEHOLDER_URL: "Добавте ссылки",
 	PLACEHOLDER_FILE: "Файл EXEL",
+	TEMP_FILE_PLACEHOLDER: "Файл TEMP",
 	BTN_SET_MATCHES: "Сформировать матчи",
 	CLEAR_LIST: "очистить лист",
 	WARNING: {
@@ -13,4 +14,8 @@ export const TEXT = {
 		ON_SUBMIT_DATA: "Что-то пошло не так при обработке таблицы!",
 	},
 	SUCCESS: "Матчи добавлены! Можно приступить к отслеживанию матчей.",
+	ID: {
+		FILE: "excelLoadFile",
+		TEMP: "tempFile",
+	},
 };
