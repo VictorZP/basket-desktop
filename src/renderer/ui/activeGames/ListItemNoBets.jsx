@@ -13,7 +13,9 @@ const ListItemNoBets = ({ match, openBrowser, hideMatch }) => {
 				<Typography variant="span" width={80}>
 					{match.deviation}
 				</Typography>
-				<Typography variant="span" width={50}></Typography>
+				<Typography variant="span" width={80}>{`${match?.homeScore || 0} - ${
+					match?.awayScore || 0
+				}`}</Typography>
 				<Typography variant="span" width={130} overflow={"hidden"}>
 					{match.homeTeam.teamChamp.name}
 				</Typography>
