@@ -21,8 +21,8 @@ const handleTempFile = async (file) => {
 				awayTeam: row[4],
 				temp: row[9],
 				total: row[6] || 0,
-				colO: row[14],
-				colP: row[15],
+				colO: row[14] || "-",
+				colP: row[15] || "-",
 			};
 
 			result.push(obj);
