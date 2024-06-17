@@ -134,4 +134,6 @@ export const ACTIVE_PAGE_NOTIFICATION = {
 
 export const STATUS = {
 	NOT_CONNECTED: "not connected",
+	ERROR: "error",
+	SUCCESS: "success",
 };

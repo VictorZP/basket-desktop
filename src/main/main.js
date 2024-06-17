@@ -5,6 +5,8 @@ require("dotenv").config();
 const updateApp = require("update-electron-app");
 
 const createWindow = require("./functions/handleWindow.js");
+const handleAuthProvider = require("./functions/handleAuthProvider.js");
+const authHandlers = require("./processes/authProcesses.js");
 const trayHandler = require("./functions/trayHandler.js");
 
 const handleAppMenu = require("./menu.js");
@@ -17,6 +19,7 @@ if (require("electron-squirrel-startup")) {
 
 let tray;
 let window;
+let authProvider;
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -37,6 +40,9 @@ if (!gotTheLock) {
 
 	app.on("ready", () => {
 		window = createWindow();
+		authProvider = handleAuthProvider();
+
+		authHandlers(authProvider, window); //add window
 		handleAppMenu(window);
 
 		tray = new Tray(trayIcon);
@@ -62,6 +68,8 @@ if (!gotTheLock) {
 	});
 }
 
+// export { authProvider };
+
 //  Processes for the main window
 import "./processes/storeProcesses.js";
 import "./processes/loginProcesses.js";
@@ -76,3 +84,4 @@ import "./processes/saveFileProcesses.js";
 import "./processes/parcerDataProcesses.js";
 import "./processes/manualResultsProcesses.js";
 import "./processes/bettingResultsProcesses.js";
+// import "./processes/authProcesses.js";

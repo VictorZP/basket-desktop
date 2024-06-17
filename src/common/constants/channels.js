@@ -3,6 +3,12 @@ export const CHANNELS = {
 		LOGIN: "login",
 		CHECK_TOKEN: "check-token",
 	},
+	MICROSOFT: {
+		IS_USER_AUTHENTICATED: "is-user-authenticated",
+		LOGIN: "login",
+		LOGOUT: "logout",
+		GET_ONEDRIVE_DOCS: "onedrive docs",
+	},
 	STORAGE: {
 		GET_TOKEN: "get-token",
 		SET_TOKEN: "set-token",
