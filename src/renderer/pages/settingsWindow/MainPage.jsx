@@ -22,6 +22,7 @@ const MainPage = () => {
 			<AddressSettings />
 			<Divider />
 			<FilesSettings />
+			<Divider />
 		</Box>
 	);
 };

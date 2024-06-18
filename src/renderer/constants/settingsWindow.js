@@ -7,11 +7,11 @@ const SETTINGS_TEXT = {
 	FILENAMES: {
 		TITLE: "Установка названий файлов",
 		HALVES_TITLE: "Половины",
+		CYBER_TITLE: "Cyber",
 		LABELS: {
 			HALVES_COMMON: "Общий",
 			HALVES_USA: "USA",
 		},
-
 		FILENAME_SET_SUCCESS: "Имя файла успешно установлено",
 	},
 };

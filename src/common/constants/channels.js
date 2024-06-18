@@ -89,5 +89,7 @@ export const CHANNELS = {
 		SET_ADDRESS: "settings-set-address",
 		GET_HALVES_FILES_NAMES: "settings-get-halves-files-names",
 		SET_FILES_NAMES: "settings-set-files-names",
+		GET_CYBER_FILE_NAME: "settings-get-cyber-file-name",
+		SET_CYBER_FILE_NAME: "settings-set-cyber-file-name",
 	},
 };

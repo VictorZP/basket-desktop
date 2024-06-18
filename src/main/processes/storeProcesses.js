@@ -9,6 +9,7 @@ const {
 	STORAGE_KEYS,
 	SETTINGS_PAGE,
 } = require("../../common/constants");
+const { CYBER_LIST } = require("../../renderer/constants");
 
 let store = new Store();
 
@@ -91,6 +92,40 @@ ipcMain.handle(CHANNELS.SETTINGS.SET_FILES_NAMES, (e, data) => {
 			default:
 				break;
 		}
+
+		return { status: STATUS.SUCCESS };
+	} catch (err) {
+		return {
+			status: STATUS.ERROR,
+			message: err.message,
+		};
+	}
+});
+
+ipcMain.handle(CHANNELS.SETTINGS.GET_CYBER_FILE_NAME, () => {
+	try {
+		const filesNames = {};
+		for (const cyber of CYBER_LIST) {
+			const storageKey = cyber.replaceAll(" ", "");
+			const fileName = store.get(storageKey);
+			filesNames[cyber] = fileName || "";
+		}
+		return { status: STATUS.SUCCESS, filesNames };
+	} catch (err) {
+		return {
+			status: STATUS.ERROR,
+			message: err.message,
+		};
+	}
+});
+
+ipcMain.handle(CHANNELS.SETTINGS.SET_CYBER_FILE_NAME, (e, data) => {
+	const { id, filesNamesObj } = data;
+	try {
+		const storageKey = id.replaceAll("-", "");
+		const fileNameKey = id.replaceAll("-", " ");
+
+		store.set(storageKey, filesNamesObj[fileNameKey]);
 
 		return { status: STATUS.SUCCESS };
 	} catch (err) {
