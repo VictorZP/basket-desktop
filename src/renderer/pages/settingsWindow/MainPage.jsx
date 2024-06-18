@@ -5,7 +5,7 @@ import { Box, Typography, Divider } from "@mui/material";
 import AddressSettings from "../../components/SettingsWindow/AddressSettings";
 import FilesSettings from "../../components/SettingsWindow/FilesSettings";
 
-import { SETTINGS_TEXT } from "../../constants/settingsWindow.js";
+import { SETTINGS_TEXT } from "../../constants";
 
 const MainPage = () => {
 	return (

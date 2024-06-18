@@ -1,4 +1,4 @@
-export const SETTINGS_TEXT = {
+const SETTINGS_TEXT = {
 	TITLE: "Настройки",
 	VPS_TITLE: "Удаленный рабочий стол",
 	VPS_ADDRESS: "Адрес:",
@@ -15,3 +15,5 @@ export const SETTINGS_TEXT = {
 		FILENAME_SET_SUCCESS: "Имя файла успешно установлено",
 	},
 };
+
+export default SETTINGS_TEXT;

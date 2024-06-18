@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { enqueueSnackbar } from "notistack";
+import { Box, Typography } from "@mui/material";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { Box, Typography, TextField, Button, FormControl } from "@mui/material";
+import { InputComponent } from "../../../ui/settingsPage";
 
 import { CHANNELS } from "../../../../common/constants/channels.js";
-import { SETTINGS_TEXT } from "../../../constants/settingsWindow.js";
+import { SETTINGS_TEXT } from "../../../constants";
 
 const AddressSettings = () => {
 	const [address, setAddress] = useState("");
@@ -36,27 +37,13 @@ const AddressSettings = () => {
 			<Typography variant="h6" mb={1}>
 				{SETTINGS_TEXT.VPS_TITLE}
 			</Typography>
-			<Box
-				component={"form"}
-				display="flex"
-				alignItems="center"
-				gap={2}
-				onSubmit={handleSubmit}
-			>
-				<Typography component="span">{SETTINGS_TEXT.VPS_ADDRESS}</Typography>
-				<FormControl>
-					<TextField
-						variant="outlined"
-						size="small"
-						value={address}
-						onChange={handleChange}
-					/>
-				</FormControl>
-
-				<Button variant="contained" color="primary" size="small" type="submit">
-					{SETTINGS_TEXT.SET_BTN}
-				</Button>
-			</Box>
+			<InputComponent
+				label={SETTINGS_TEXT.VPS_ADDRESS}
+				inputValue={address}
+				id={"someId"}
+				handleInputValueChange={handleChange}
+				handleBtnClick={handleSubmit}
+			/>
 			<Typography component="span" fontSize={14}>
 				{SETTINGS_TEXT.WARNING}
 			</Typography>

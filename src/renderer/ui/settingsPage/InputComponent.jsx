@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { TextField, FormControl, Button, FormLabel } from "@mui/material";
 
-import { BTN_TEXT } from "../../constants";
+import { SETTINGS_TEXT } from "../../constants";
 
 const InputComponent = ({
 	label,
@@ -40,7 +40,7 @@ const InputComponent = ({
 				onClick={handleBtnClick}
 				id={`${id}-btn`}
 			>
-				{BTN_TEXT.SETTINGS_SET}
+				{SETTINGS_TEXT.SET_BTN}
 			</Button>
 		</FormControl>
 	);

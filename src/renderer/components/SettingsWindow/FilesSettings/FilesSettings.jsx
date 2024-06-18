@@ -8,7 +8,7 @@ import { InputComponent } from "../../../ui/settingsPage";
 import { useGetHalvesFilesNames } from "../../../hooks/settingsPageHooks";
 
 import { STATUS, SETTINGS_PAGE, CHANNELS } from "../../../../common/constants";
-import { SETTINGS_TEXT } from "../../../constants/settingsWindow";
+import { SETTINGS_TEXT } from "../../../constants";
 
 const FilesSettings = () => {
 	const [halvesFileName, setHalvesFileName] = useState({
