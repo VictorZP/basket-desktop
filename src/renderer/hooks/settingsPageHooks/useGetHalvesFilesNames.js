@@ -11,12 +11,13 @@ const useGetHalvesFilesNames = (setFilesNames) => {
 			.then((res) => {
 				if (res?.status === STATUS.ERROR) {
 					enqueueSnackbar(res.message, { variant: STATUS.ERROR });
+					return;
 				}
 
 				setFilesNames({ ...res?.filesNames });
 			})
 			.catch((err) => {
-				return err;
+				enqueueSnackbar(err.message, { variant: STATUS.ERROR });
 			});
 	}, []);
 };
