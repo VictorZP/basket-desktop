@@ -6,11 +6,12 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { InputComponent } from "../../../ui/settingsPage";
 
-import { CHANNELS } from "../../../../common/constants/channels.js";
+import { CHANNELS, SETTINGS_PAGE } from "../../../../common/constants";
 import { SETTINGS_TEXT } from "../../../constants";
 
 const AddressSettings = () => {
 	const [address, setAddress] = useState("");
+	const { COMPONENTS_IDS } = SETTINGS_PAGE;
 
 	useEffect(() => {
 		ipcRenderer.invoke(CHANNELS.SETTINGS.GET_ADDRESS).then((res) => {
@@ -40,7 +41,7 @@ const AddressSettings = () => {
 			<InputComponent
 				label={SETTINGS_TEXT.VPS_ADDRESS}
 				inputValue={address}
-				id={"someId"}
+				id={COMPONENTS_IDS.VPS_ADDRESS}
 				handleInputValueChange={handleChange}
 				handleBtnClick={handleSubmit}
 			/>

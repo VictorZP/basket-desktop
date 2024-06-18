@@ -141,7 +141,11 @@ export const STATUS = {
 };
 
 export const SETTINGS_PAGE = {
-	COMPONENTS_IDS: { COMMON_HALVES: "common-halves", USA_HALVES: "usa-halves" },
+	COMPONENTS_IDS: {
+		VPS_ADDRESS: "vps-address",
+		COMMON_HALVES: "common-halves",
+		USA_HALVES: "usa-halves",
+	},
 };
 
 export { CHANNELS } from "./channels";
