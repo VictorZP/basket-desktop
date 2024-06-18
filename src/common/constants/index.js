@@ -123,6 +123,8 @@ export const TOOLTIPS = {
 export const STORAGE_KEYS = {
 	TOKEN: "token",
 	ADDRESS: "address",
+	HALVES_FILE_COMMON: "commonHalvesFile",
+	HALVES_FILE_USA: "usaHalvesFile",
 };
 
 export const ACTIVE_PAGE_NOTIFICATION = {
@@ -137,3 +139,9 @@ export const STATUS = {
 	ERROR: "error",
 	SUCCESS: "success",
 };
+
+export const SETTINGS_PAGE = {
+	COMPONENTS_IDS: { COMMON_HALVES: "common-halves", USA_HALVES: "usa-halves" },
+};
+
+export { CHANNELS } from "./channels";

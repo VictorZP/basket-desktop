@@ -3,8 +3,12 @@ const Store = require("electron-store");
 
 const { handleToken } = require("../helpers/handleToken.js");
 
-const { CHANNELS } = require("../../common/constants/channels.js");
-const { STORAGE_KEYS } = require("../../common/constants/index.js");
+const {
+	STATUS,
+	CHANNELS,
+	STORAGE_KEYS,
+	SETTINGS_PAGE,
+} = require("../../common/constants");
 
 let store = new Store();
 
@@ -46,6 +50,52 @@ ipcMain.handle(CHANNELS.SETTINGS.SET_ADDRESS, (event, address) => {
 	} catch (err) {
 		return {
 			status: "error",
+			message: err.message,
+		};
+	}
+});
+
+ipcMain.handle(CHANNELS.SETTINGS.GET_HALVES_FILES_NAMES, (event) => {
+	try {
+		const commonHalvesFile = store.get(STORAGE_KEYS.HALVES_FILE_COMMON);
+		const usaHalvesFile = store.get(STORAGE_KEYS.HALVES_FILE_USA);
+		const filesNames = {
+			commonHalvesFile: commonHalvesFile ?? "",
+			usaHalvesFile: usaHalvesFile ?? "",
+		};
+
+		return { status: STATUS.SUCCESS, filesNames };
+	} catch (err) {
+		return {
+			status: STATUS.ERROR,
+			message: err.message,
+		};
+	}
+});
+
+ipcMain.handle(CHANNELS.SETTINGS.SET_FILES_NAMES, (e, data) => {
+	const { id, filesNamesObj } = data;
+	const { COMPONENTS_IDS } = SETTINGS_PAGE;
+	try {
+		switch (id) {
+			case COMPONENTS_IDS.COMMON_HALVES:
+				store.set(
+					STORAGE_KEYS.HALVES_FILE_COMMON,
+					filesNamesObj.commonHalvesFile
+				);
+				break;
+			case COMPONENTS_IDS.USA_HALVES:
+				store.set(STORAGE_KEYS.HALVES_FILE_USA, filesNamesObj.usaHalvesFile);
+				break;
+
+			default:
+				break;
+		}
+
+		return { status: STATUS.SUCCESS };
+	} catch (err) {
+		return {
+			status: STATUS.ERROR,
 			message: err.message,
 		};
 	}

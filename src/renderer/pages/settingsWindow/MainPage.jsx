@@ -3,6 +3,7 @@ import React from "react";
 import { Box, Typography, Divider } from "@mui/material";
 
 import AddressSettings from "../../components/SettingsWindow/AddressSettings";
+import FilesSettings from "../../components/SettingsWindow/FilesSettings";
 
 import { SETTINGS_TEXT } from "../../constants/settingsWindow.js";
 
@@ -20,6 +21,7 @@ const MainPage = () => {
 			</Typography>
 			<AddressSettings />
 			<Divider />
+			<FilesSettings />
 		</Box>
 	);
 };

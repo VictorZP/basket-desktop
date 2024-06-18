@@ -87,5 +87,7 @@ export const CHANNELS = {
 	SETTINGS: {
 		GET_ADDRESS: "settings-get-address",
 		SET_ADDRESS: "settings-set-address",
+		GET_HALVES_FILES_NAMES: "settings-get-halves-files-names",
+		SET_FILES_NAMES: "settings-set-files-names",
 	},
 };
