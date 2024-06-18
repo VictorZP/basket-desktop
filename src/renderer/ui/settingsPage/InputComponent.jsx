@@ -46,4 +46,12 @@ const InputComponent = ({
 	);
 };
 
+InputComponent.propTypes = {
+	label: PropTypes.string.isRequired,
+	inputValue: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
+	handleInputValueChange: PropTypes.func.isRequired,
+	handleBtnClick: PropTypes.func.isRequired,
+};
+
 export default InputComponent;
