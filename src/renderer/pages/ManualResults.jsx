@@ -19,7 +19,7 @@ import { getIsUrlFormOpen } from "../redux/urlForm/urlFormSelector.js";
 import { handleDataChange } from "../helpers/functions/addManualMatches";
 
 import { CHANNELS } from "../../common/constants/channels.js";
-import { MANUAL_PAGE } from "../constants/manualResultsPage.js";
+import { MANUAL_PAGE } from "../constants";
 
 const ManualResults = () => {
 	const [dateValue, setDateValue] = useState(null);

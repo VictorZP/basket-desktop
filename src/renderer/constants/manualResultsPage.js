@@ -13,3 +13,5 @@ export const MANUAL_PAGE = {
 		SAVE: "Данные сохранены!",
 	},
 };
+
+export default MANUAL_PAGE;

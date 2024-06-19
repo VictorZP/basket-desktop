@@ -7,7 +7,7 @@ import { CHANNELS } from "../../../../common/constants/channels.js";
 
 //  Создает файл формата txt, который содержит сообщения о предупреждениях/ошибках
 //  придобавлении матчей для анализа.
-export const createWarnDetailsFile = async (data) => {
+const createWarnDetailsFile = async (data) => {
 	const workbook = utils.book_new();
 
 	const dataForWs = data?.map((row) => {
@@ -73,3 +73,5 @@ export const createWarnDetailsFile = async (data) => {
 		return err;
 	}
 };
+
+export default createWarnDetailsFile;

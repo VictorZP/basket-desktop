@@ -9,12 +9,12 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import { getIsUrlFormOpen } from "../../../redux/urlForm/urlFormSelector.js";
 
-import { createWarnDetailsFile } from "../../../helpers/functions/addMatches/createWarnDetailsFile.js";
+import { createWarnDetailsFile } from "../../../helpers/functions/addMatches";
 
 import { styles } from "./styles.js";
 import { TEXT } from "./text.js";
-import { CHANNELS } from "../../../../common/constants/channels.js";
-import { MANUAL_PAGE } from "../../../constants/manualResultsPage.js";
+import { CHANNELS } from "../../../../common/constants";
+import { MANUAL_PAGE } from "../../../constants";
 
 const ManualPageUrlForm = forwardRef(({ dateValue, setGames }, ref) => {
 	const [urlList, setUrlList] = useState([]);
