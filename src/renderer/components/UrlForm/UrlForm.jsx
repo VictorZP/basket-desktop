@@ -5,7 +5,6 @@ import { enqueueSnackbar } from "notistack";
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { Box, TextField, Button } from "@mui/material";
-import { MuiFileInput } from "mui-file-input";
 
 import FileModal from "../FileModal";
 
@@ -17,9 +16,8 @@ import { styles } from "./styles.js";
 import { TEXT } from "./text.js";
 import {
 	handleHalvesFile,
-	handleTempFile,
+	createWarnDetailsFile,
 } from "../../helpers/functions/addMatches";
-import { createWarnDetailsFile } from "../../helpers/functions/addMatches/createWarnDetailsFile.js";
 
 import { CHANNELS } from "../../../common/constants/channels.js";
 import { CONSTANTS } from "../../constants/matchesPage.js";
@@ -27,8 +25,6 @@ import { STATUS } from "../../constants";
 
 const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const [urlList, setUrlList] = useState([]);
-	const [file, setFile] = useState(null);
-	const [tempFile, setTempFile] = useState(null);
 
 	const isShown = useSelector(getIsUrlFormOpen);
 	const dispatch = useDispatch();
@@ -38,29 +34,6 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 		setUrlList(value);
 	};
 
-	const onFileAdd = (file, id) => {
-		switch (id) {
-			case TEXT.ID.FILE:
-				setFile(file);
-				break;
-			case TEXT.ID.TEMP:
-				setTempFile(file);
-				break;
-			default:
-				break;
-		}
-	};
-
-	const isBtnDisabled = () => {
-		if (
-			(urlList?.length === 0 && !file?.name) ||
-			(urlList?.length !== 0 && !file?.name) ||
-			(urlList?.length === 0 && file?.name)
-		) {
-			return true;
-		}
-	};
-
 	const clearUrlList = () => {
 		setUrlList([]);
 	};
@@ -68,20 +41,10 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const submitData = async () => {
 		try {
 			dispatch(handleFileModalOpen(true));
-			//  Files handlers
-			const fileData = await handleHalvesFile(file);
-			const tempFileData = await handleTempFile(tempFile);
+			const fileData = await handleHalvesFile();
 
 			if (fileData?.status === STATUS.ERROR) {
 				enqueueSnackbar(fileData?.message, {
-					variant: "error",
-				});
-				dispatch(handleFileModalOpen(false));
-				return;
-			}
-
-			if (tempFileData?.status === STATUS.ERROR) {
-				enqueueSnackbar(tempFileData?.message, {
 					variant: "error",
 				});
 				dispatch(handleFileModalOpen(false));
@@ -94,7 +57,6 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 			const reqData = {
 				urlArray,
 				fileData: fileData?.data,
-				tempFileData: tempFileData?.data,
 				dateObj,
 			};
 
@@ -162,31 +124,9 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 					value={urlList}
 				/>
 				<Box sx={styles.formInnerBox}>
-					<Box>
-						<MuiFileInput
-							id={TEXT.ID.FILE}
-							placeholder={TEXT.PLACEHOLDER_FILE}
-							value={file}
-							onChange={(file) => onFileAdd(file, TEXT.ID.FILE)}
-							size="small"
-							sx={styles.fileInput}
-						/>
-						<MuiFileInput
-							id={TEXT.ID.TEMP}
-							placeholder={TEXT.TEMP_FILE_PLACEHOLDER}
-							value={tempFile}
-							onChange={(file) => onFileAdd(file, TEXT.ID.TEMP)}
-							size="small"
-							sx={styles.fileInput}
-						/>
-
-						<Button
-							disabled={isBtnDisabled(urlList, file)}
-							onClick={submitData}
-						>
-							{TEXT.BTN_SET_MATCHES}
-						</Button>
-					</Box>
+					<Button disabled={urlList?.length === 0} onClick={submitData}>
+						{TEXT.BTN_SET_MATCHES}
+					</Button>
 					<Button
 						sx={styles.button}
 						size="small"

@@ -1,7 +1,5 @@
 const { ipcMain } = require("electron");
 
-const getGraphClient = require("../../graph");
-const { protectedResources } = require("../../authConfig");
 const { CHANNELS } = require("../../common/constants/channels");
 const { STATUS } = require("../../common/constants/index");
 
@@ -48,24 +46,6 @@ const authHandlers = (authProvider) => {
 				status: STATUS.ERROR,
 				message: err.message,
 			};
-		}
-	});
-
-	ipcMain.handle(CHANNELS.MICROSOFT.GET_ONEDRIVE_DOCS, async () => {
-		try {
-			const tokenRequest = {
-				scopes: protectedResources.graphDocs.scopes,
-			};
-
-			const tokenResponse = await authProvider.getToken(tokenRequest);
-
-			const graphResponse = await getGraphClient(tokenResponse.accessToken)
-				.api(`${protectedResources.graphDocs.endpoint}`)
-				.get();
-
-			return { tokenResponse, graphResponse };
-		} catch (err) {
-			return err;
 		}
 	});
 };

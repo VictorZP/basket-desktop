@@ -11,8 +11,6 @@ const formInnerBox = {
 	ml: 2,
 };
 
-const fileInput = { mb: 1, width: "280px" };
-
 const button = { alignSelf: "start" };
 
-export const styles = { mainBox, formBox, formInnerBox, fileInput, button };
+export const styles = { mainBox, formBox, formInnerBox, button };

@@ -7,6 +7,7 @@ const updateApp = require("update-electron-app");
 const createWindow = require("./functions/handleWindow.js");
 const handleAuthProvider = require("./functions/handleAuthProvider.js");
 const authHandlers = require("./processes/authProcesses.js");
+const filesHandlers = require("./processes/filesProcesses");
 const trayHandler = require("./functions/trayHandler.js");
 
 const handleAppMenu = require("./menu.js");
@@ -42,7 +43,8 @@ if (!gotTheLock) {
 		window = createWindow();
 		authProvider = handleAuthProvider();
 
-		authHandlers(authProvider, window); //add window
+		authHandlers(authProvider);
+		filesHandlers(authProvider);
 		handleAppMenu(window);
 
 		tray = new Tray(trayIcon);

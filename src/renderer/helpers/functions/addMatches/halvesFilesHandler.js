@@ -1,46 +1,48 @@
-import { read, utils } from "xlsx";
+const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { STATUS, FILES_HANDLERS } from "../../../constants";
+import handleFile from "./handleFile";
+import { STATUS } from "../../../constants";
+import { CHANNELS } from "../../../../common/constants";
 
-const handleHalvesFile = async (file) => {
+const handleHalvesFile = async () => {
+	let checkObj = {};
+
 	try {
-		const fileBuffer = await file.arrayBuffer();
-		const wb = read(fileBuffer, FILES_HANDLERS.READ_OPTIONS);
-		const col_index = utils.decode_col(
-			FILES_HANDLERS.FILE_CHECK_TEXT.COLUMN_NAME
+		const halvesFilesNamesResponse = await ipcRenderer.invoke(
+			CHANNELS.SETTINGS.GET_HALVES_FILES_NAMES
 		);
-		let checkObj = {};
 
-		for (const [key, value] of Object.entries(wb.Sheets)) {
-			const data = utils.sheet_to_json(value, FILES_HANDLERS.JSON_OPTIONS);
-			let stIndx = 0;
-			let fnIndx = 0;
-			let checkArr = [];
-
-			data?.find((row, index) => {
-				if (row[col_index] === FILES_HANDLERS.FILE_CHECK_TEXT.START_VAL) {
-					stIndx = index;
-				}
-				if (row[col_index] === FILES_HANDLERS.FILE_CHECK_TEXT.END_VAL) {
-					fnIndx = index;
-				}
-			});
-
-			const slicedData = data?.slice(stIndx + 1, fnIndx);
-
-			slicedData?.forEach((row) => {
-				if (!row[29]) {
-					return;
-				}
-				const dataObj = {
-					teamName: row[29],
-					val: row[32]?.toFixed(1),
-				};
-				checkArr.push(dataObj);
-			});
-
-			checkObj[key] = checkArr;
+		if (halvesFilesNamesResponse.status === STATUS.ERROR) {
+			throw new Error(halvesFilesNamesResponse.message);
 		}
+
+		const halvesFilesResponse = await ipcRenderer.invoke(
+			CHANNELS.FILES.GET_HALVES,
+			halvesFilesNamesResponse.filesNames
+		);
+
+		if (halvesFilesResponse.status === STATUS.ERROR) {
+			throw new Error(halvesFilesResponse.message);
+		}
+
+		const commonHalvesFileHandlerResult = handleFile(
+			halvesFilesResponse.commonFileData
+		);
+		const usaHalvesFileHandlerResult = handleFile(
+			halvesFilesResponse.usaFileData
+		);
+
+		if (commonHalvesFileHandlerResult.status === STATUS.ERROR) {
+			throw new Error(commonHalvesFileHandlerResult.message);
+		}
+		if (usaHalvesFileHandlerResult.status === STATUS.ERROR) {
+			throw new Error(usaHalvesFileHandlerResult.message);
+		}
+
+		checkObj = {
+			...commonHalvesFileHandlerResult.data,
+			...usaHalvesFileHandlerResult.data,
+		};
 
 		return { status: STATUS.FINISHED, data: checkObj };
 	} catch (err) {

@@ -7,7 +7,6 @@ export const CHANNELS = {
 		IS_USER_AUTHENTICATED: "is-user-authenticated",
 		LOGIN: "login",
 		LOGOUT: "logout",
-		GET_ONEDRIVE_DOCS: "onedrive docs",
 	},
 	STORAGE: {
 		GET_TOKEN: "get-token",
@@ -91,5 +90,8 @@ export const CHANNELS = {
 		SET_FILES_NAMES: "settings-set-files-names",
 		GET_CYBER_FILE_NAME: "settings-get-cyber-file-name",
 		SET_CYBER_FILE_NAME: "settings-set-cyber-file-name",
+	},
+	FILES: {
+		GET_HALVES: "files-get-halves",
 	},
 };

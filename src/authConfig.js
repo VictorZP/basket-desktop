@@ -1,10 +1,17 @@
+const fs = require("fs");
+const path = require("path");
 const { LogLevel } = require("@azure/msal-node");
+
+const rawConfigData = fs.readFileSync(
+	path.join(__dirname, "./data/config.json")
+);
+const config = JSON.parse(rawConfigData);
 
 const AAD_ENDPOINT_HOST = "https://login.microsoftonline.com/";
 
 const msalConfig = {
 	auth: {
-		clientId: "fb53c7b4-5996-452c-9684-f4a8bbb247d6",
+		clientId: config.CLIENT_ID,
 		authority: `${AAD_ENDPOINT_HOST}common`,
 	},
 	system: {
@@ -20,7 +27,11 @@ const GRAPH_ENDPOINT_HOST = "https://graph.microsoft.com/";
 
 const protectedResources = {
 	graphDocs: {
-		endpoint: `${GRAPH_ENDPOINT_HOST}v1.0/me/drive/root/children`,
+		endpoint: `${GRAPH_ENDPOINT_HOST}v1.0/me/drive/root/`,
+		scopes: ["Files.ReadWrite"],
+	},
+	downloadFile: {
+		endpoint: `${GRAPH_ENDPOINT_HOST}v1.0/me/drive/items/`,
 		scopes: ["Files.ReadWrite"],
 	},
 };
