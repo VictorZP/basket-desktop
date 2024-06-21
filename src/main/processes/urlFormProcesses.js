@@ -3,7 +3,7 @@ const { ipcMain } = require("electron");
 
 const endPoint = "/desktop/data/games";
 
-const { CHANNELS } = require("../../common/constants/channels.js");
+const { CHANNELS, STATUS } = require("../../common/constants");
 
 ipcMain.handle(CHANNELS.ANALYZE.ADD_URL, async (event, reqData) => {
 	try {
@@ -90,3 +90,23 @@ ipcMain.on(CHANNELS.ANALYZE.MATCH_CHECK, async (e, id) => {
 		e.sender.send(CHANNELS.ANALYZE.MATCH_CHECK, res);
 	}
 });
+
+ipcMain.handle(
+	CHANNELS.ANALYZE.SET_EMP_AND_PREDICT_FROM_FILE,
+	async (e, data) => {
+		try {
+			const res = await axios.patch(`${endPoint}/data/set_temp_predict`, data);
+
+			const resData = {
+				status: res?.data?.status,
+				message: res?.data?.message,
+			};
+			return resData;
+		} catch (err) {
+			return {
+				status: STATUS.ERROR,
+				message: err?.response?.data?.message || err.message,
+			};
+		}
+	}
+);

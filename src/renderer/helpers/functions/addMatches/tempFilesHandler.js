@@ -1,11 +1,13 @@
 import { read, utils } from "xlsx";
 
-import { STATUS, FILES_HANDLERS } from "../../../constants";
+import { STATUS, FILES_HANDLERS, WARNING_MESSAGE } from "../../../constants";
 
-const handleTempFile = async (file) => {
+const handleTempFile = (file) => {
+	if (!file) {
+		return { status: STATUS.WARNING, message: WARNING_MESSAGE.NO_TEMP_FILE };
+	}
 	try {
-		const fileBuffer = await file.arrayBuffer();
-		const wb = read(fileBuffer, FILES_HANDLERS.TEMP_READ_OPTIONS);
+		const wb = read(file, FILES_HANDLERS.TEMP_READ_OPTIONS);
 		const worksheet = wb.Sheets["Line"];
 		const data = utils.sheet_to_json(worksheet, FILES_HANDLERS.JSON_OPTIONS);
 		let result = [];

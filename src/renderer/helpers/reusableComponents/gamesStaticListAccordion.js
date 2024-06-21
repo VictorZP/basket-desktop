@@ -41,6 +41,8 @@ const AccordionSummary = styled((props) => (
 	},
 	"& .MuiAccordionSummary-content": {
 		marginLeft: theme.spacing(1),
+		alignItems: "center",
+		justifyContent: "space-between",
 	},
 }));
 

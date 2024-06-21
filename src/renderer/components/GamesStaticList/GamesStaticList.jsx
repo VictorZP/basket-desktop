@@ -12,30 +12,35 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 
 import {
 	Accordion,
-	AccordionSummary,
 	AccordionDetails,
 } from "../../helpers/reusableComponents/gamesStaticListAccordion.js";
 import GamesStaticDetailsList from "../GamesStaticDetailsList";
+import { AccordionSummaryComponent } from "../../ui/addGamesPage";
 
 import { handleUrlAdded } from "../../redux/urlForm/urlFormSlice.js";
 import { getIsUrlAdded } from "../../redux/urlForm/urlFormSelector.js";
 
+import {
+	generateStateObject,
+	getCyberIDForAccordion,
+	handleSetTempAndPredictFromFile,
+} from "../../helpers/functions/addMatches";
 import { createLinesXlsxFileNoBets } from "../../helpers/functions/lines/createLinesXlsxFileNoBets.js";
 
-import { CHANNELS } from "../../../common/constants/channels.js";
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { CHANNELS, MATCHES_SETTINGS } from "../../../common/constants";
 import { TEXT } from "./text.js";
-import { CYBER_LIST } from "../../constants/cyberList.js";
+import { CYBER_LIST, STATUS } from "../../constants";
 import { CONSTANTS } from "../../constants/matchesPage.js";
 
 const GamesStaticList = ({ paramsObj }) => {
 	const [games, setGames] = useState([]);
 	const [loadingTemp, setLoadingTemp] = useState(false);
+	const [loadingTempFromFileBtnId, setLoadingTempFromFileBtnId] = useState("");
 	const [loadingLines, setLoadingLines] = useState(false);
+	const [expanded, setExpanded] = useState(generateStateObject(CYBER_LIST));
+	const [updatedMatches, setUpdatedMatches] = useState([]);
 	const isUrlAdded = useSelector(getIsUrlAdded);
 	const dispatch = useDispatch();
-
-	const [updatedMatches, setUpdatedMatches] = useState([]);
 
 	useEffect(() => {
 		ipcRenderer.send(CHANNELS.ANALYZE.GET_STATIC_LIST, paramsObj);
@@ -97,6 +102,35 @@ const GamesStaticList = ({ paramsObj }) => {
 		setUpdatedMatches([...matchesToSave]);
 	};
 
+	const setTempAndPredictFromFile = async (e) => {
+		try {
+			const btnId = e.currentTarget.id;
+			setLoadingTempFromFileBtnId(btnId);
+
+			const handlerResult = await handleSetTempAndPredictFromFile(btnId, games);
+			if (
+				handlerResult.status === STATUS.ERROR ||
+				handlerResult.status === STATUS.WARNING
+			) {
+				enqueueSnackbar(handlerResult?.message, {
+					variant: handlerResult.status || STATUS.ERROR,
+				});
+				return;
+			} else {
+				enqueueSnackbar(handlerResult?.message, {
+					variant: "success",
+				});
+			}
+		} catch (err) {
+			enqueueSnackbar(err?.message, {
+				variant: STATUS.ERROR,
+			});
+		} finally {
+			dispatch(handleUrlAdded(true));
+			setLoadingTempFromFileBtnId("");
+		}
+	};
+
 	const handleSaveTemp = async () => {
 		const data = { games: updatedMatches };
 
@@ -143,6 +177,15 @@ const GamesStaticList = ({ paramsObj }) => {
 		setLoadingLines(false);
 	};
 
+	const handleAccordionExpandedStatus = (panel) => (e, isExpanded) => {
+		if (e.target.nodeName !== "BUTTON") {
+			setExpanded((prev) => ({
+				...prev,
+				[getCyberIDForAccordion(panel)]: isExpanded,
+			}));
+		}
+	};
+
 	return (
 		<Box component="section" sx={{ px: 3, py: 1 }}>
 			<Box mb={1}>
@@ -152,10 +195,19 @@ const GamesStaticList = ({ paramsObj }) => {
 				{CYBER_LIST
 					? CYBER_LIST.map((cyber) => {
 							return (
-								<Accordion key={cyber}>
-									<AccordionSummary>
-										<Typography variant="subtitle1">{cyber}</Typography>
-									</AccordionSummary>
+								<Accordion
+									key={cyber}
+									expanded={expanded[getCyberIDForAccordion(cyber)]}
+									id={getCyberIDForAccordion(cyber)}
+									onChange={handleAccordionExpandedStatus(cyber)}
+								>
+									<AccordionSummaryComponent
+										cyber={cyber}
+										games={games}
+										expanded={expanded}
+										setTempAndPredictFromFile={setTempAndPredictFromFile}
+										loadingTempFromFileBtnId={loadingTempFromFileBtnId}
+									/>
 									<AccordionDetails>
 										<GamesStaticDetailsList
 											handleTemp={handleInput}

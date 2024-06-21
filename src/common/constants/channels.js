@@ -40,6 +40,7 @@ export const CHANNELS = {
 		ADD_URL: "add-url",
 		GET_STATIC_LIST: "get-static-list",
 		UPD_TEMP: "update-temp",
+		SET_EMP_AND_PREDICT_FROM_FILE: "set-temp-and-predict-from-file",
 		ACTIVE: "active",
 		MATCH_CHECK: "match-check",
 		CONNECT: "connect",
@@ -93,5 +94,6 @@ export const CHANNELS = {
 	},
 	FILES: {
 		GET_HALVES: "files-get-halves",
+		GET_TEMP_AND_PREDICT: "files-get-temp-and-predict",
 	},
 };
