@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-import { AccordionSummary } from "../../helpers/reusableComponents/gamesStaticListAccordion.js";
+import { AccordionSummary } from "../../helpers/reusableComponents/gamesStaticListAccordion";
 import {
 	generateBtnId,
 	getGamesByCyber,
 	getCyberIDForAccordion,
-} from "../../helpers/functions/addMatches/index.js";
+} from "../../helpers/functions/addMatches";
 
 const AccordionSummaryComponent = ({
 	cyber,

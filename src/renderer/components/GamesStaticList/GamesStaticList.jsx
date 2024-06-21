@@ -13,24 +13,24 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import {
 	Accordion,
 	AccordionDetails,
-} from "../../helpers/reusableComponents/gamesStaticListAccordion.js";
+} from "../../helpers/reusableComponents/gamesStaticListAccordion";
 import GamesStaticDetailsList from "../GamesStaticDetailsList";
 import { AccordionSummaryComponent } from "../../ui/addGamesPage";
 
-import { handleUrlAdded } from "../../redux/urlForm/urlFormSlice.js";
-import { getIsUrlAdded } from "../../redux/urlForm/urlFormSelector.js";
+import { handleUrlAdded } from "../../redux/urlForm/urlFormSlice";
+import { getIsUrlAdded } from "../../redux/urlForm/urlFormSelector";
 
 import {
 	generateStateObject,
 	getCyberIDForAccordion,
 	handleSetTempAndPredictFromFile,
 } from "../../helpers/functions/addMatches";
-import { createLinesXlsxFileNoBets } from "../../helpers/functions/lines/createLinesXlsxFileNoBets.js";
+import { createLinesXlsxFileNoBets } from "../../helpers/functions/lines/createLinesXlsxFileNoBets";
 
 import { CHANNELS, MATCHES_SETTINGS } from "../../../common/constants";
-import { TEXT } from "./text.js";
+import { TEXT } from "./text";
 import { CYBER_LIST, STATUS } from "../../constants";
-import { CONSTANTS } from "../../constants/matchesPage.js";
+import { CONSTANTS } from "../../constants/matchesPage";
 
 const GamesStaticList = ({ paramsObj }) => {
 	const [games, setGames] = useState([]);
