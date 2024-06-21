@@ -96,7 +96,7 @@ const FilesSettings = () => {
 
 			if (setFileNameResponse.status === STATUS.SUCCESS) {
 				enqueueSnackbar(FILENAMES.FILENAME_SET_SUCCESS, {
-					variant: STATUS.SUCCESS,
+					variant: "success",
 				});
 			}
 		} catch (err) {
