@@ -27,6 +27,10 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 		return 0;
 	});
 
+	const deviation = (deviation) => {
+		return deviation?.toFixed(1);
+	};
+
 	return (
 		<List sx={{ py: 0 }}>
 			{sortedList?.map((item) => {
@@ -40,7 +44,7 @@ const GamesStaticDetailsList = ({ handleTemp, games, cyber }) => {
 						}}
 					>
 						<Box sx={{ width: "6%" }}>
-							<Typography>{item?.deviation}</Typography>
+							<Typography>{deviation(item?.deviation)}</Typography>
 						</Box>
 						<Box sx={{ width: "12%" }}>
 							<Typography>{item?.homeTeam?.teamChamp?.name}</Typography>
