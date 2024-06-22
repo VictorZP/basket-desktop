@@ -3,7 +3,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const LoadingSpinner = ({ height }) => {
+const LoadingSpinner = ({ height, size }) => {
 	return (
 		<Box
 			sx={{
@@ -13,7 +13,7 @@ const LoadingSpinner = ({ height }) => {
 				height,
 			}}
 		>
-			<CircularProgress />
+			<CircularProgress size={size} />
 		</Box>
 	);
 };
