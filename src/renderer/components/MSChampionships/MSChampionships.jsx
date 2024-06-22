@@ -3,30 +3,34 @@ import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import {
+	Box,
+	Paper,
 	Accordion,
+	Typography,
+	TableContainer,
+	TablePagination,
 	AccordionSummary,
 	AccordionDetails,
-	Box,
-	TablePagination,
-	TableContainer,
-	Paper,
-	Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 import { grey } from "@mui/material/colors";
 
-import MSChampionshipsTable from "../MSChampionshipsTable";
 import SearchInput from "../SearchInput";
-import LoadingSpinner from "../LoadingSpinner";
+import MSChampionshipsTable from "../MSChampionshipsTable";
 
-import { setExpanded } from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
 	getExpandedVal,
+	getChampEditStatus,
 	getChampionshipsLoadingStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
+import { setExpanded } from "../../redux/matchSettings/matchSettingsSlice.js";
+import {
+	formSearchQuery,
+	handleChampFilter,
+	handleVisibleFilteredList,
+} from "../../helpers/functions/matchesSettings";
 
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { MATCHES_SETTINGS } from "../../../common/constants";
 
 const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 	const [page, setPage] = useState(0);
@@ -34,13 +38,13 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 	const [filteredList, setFilteredList] = useState([]);
 	const [searchValue, setSearchValue] = useState("");
 	const [visibleFilteredValues, setVisibleFilteredValues] = useState([]);
-	const [searchTimeOut, setSearchTimeOut] = useState(null);
 
 	const expanded = useSelector(getExpandedVal);
 	const isLoading = useSelector(getChampionshipsLoadingStatus);
+	const onChampionshipEditStatus = useSelector(getChampEditStatus);
 
 	const dispatch = useDispatch();
-	const { CHAMPIONSHIP_TABLE, REGEX } = MATCHES_SETTINGS;
+	const { CHAMPIONSHIP_TABLE } = MATCHES_SETTINGS;
 
 	const visibleRows = useMemo(
 		() => champList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
@@ -60,41 +64,28 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 	};
 
 	const handleSearchFilter = (e) => {
-		const searchQuery = e.target.value
-			.replaceAll(REGEX.ONE, "")
-			.replaceAll(REGEX.TWO, "\\(")
-			.replaceAll(REGEX.THREE, "\\)");
+		const searchValue = e.target.value;
+		setSearchValue(searchValue);
 
-		const regex = new RegExp(searchQuery, "i");
+		const searchQuery = formSearchQuery(searchValue);
+		const filterRes = handleChampFilter(champList, searchQuery);
 
-		clearTimeout(searchTimeOut);
-
-		setSearchTimeOut(
-			setTimeout(() => {
-				setSearchValue(searchQuery);
-
-				const filterRes = champList.filter(
-					(champ) =>
-						regex.test(champ.cyber.name) ||
-						regex.test(champ.championshipName) ||
-						regex.test(champ.fibaliveName) ||
-						regex.test(champ.betsapiName) ||
-						regex.test(champ.otherSiteName)
-				);
-
-				setPage(0);
-				setFilteredList(filterRes);
-			}, 500)
-		);
+		setPage(0);
+		setFilteredList(filterRes);
 	};
 
 	useEffect(() => {
-		if (searchValue.length !== 0) {
-			const list = filteredList.slice(
-				page * rowsPerPage,
-				page * rowsPerPage + rowsPerPage
-			);
+		if (searchValue.length !== 0 && !onChampionshipEditStatus) {
+			const filterRes = handleChampFilter(champList, searchValue);
+			const list = handleVisibleFilteredList(filterRes, page, rowsPerPage);
 
+			setVisibleFilteredValues(list);
+		}
+	}, [onChampionshipEditStatus, champList]);
+
+	useEffect(() => {
+		if (searchValue.length !== 0) {
+			const list = handleVisibleFilteredList(filteredList, page, rowsPerPage);
 			setVisibleFilteredValues(list);
 		}
 	}, [filteredList, searchValue, page, rowsPerPage]);
@@ -106,25 +97,15 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 		delBtnName: CHAMPIONSHIP_TABLE.DEL_BTN_NAME,
 	};
 
-	const tableHeadRowsName = [
-		CHAMPIONSHIP_TABLE.CELL_CYBER,
-		CHAMPIONSHIP_TABLE.CELL_CHAMP_NAME,
-		CHAMPIONSHIP_TABLE.CELL_FIBALIVE_NAME,
-		CHAMPIONSHIP_TABLE.CELL_BETSAPI_NAME,
-		CHAMPIONSHIP_TABLE.CELL_OTHER_NAME,
-		CHAMPIONSHIP_TABLE.CELL_NO_BETS_LIST,
-		"",
-	];
-
 	const tableProps = {
-		headerList: tableHeadRowsName,
 		dataList: searchValue.length === 0 ? visibleRows : visibleFilteredValues,
-
 		btnStackProps,
+		isLoading,
 	};
 
 	const searchInputProps = {
 		idType: "champ",
+		value: searchValue,
 		handleSearchFilter,
 	};
 
@@ -144,14 +125,8 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 				</AccordionSummary>
 				<AccordionDetails sx={{ p: 0 }}>
 					<TableContainer component={Paper} sx={{ borderRadius: 0 }}>
-						{isLoading ? (
-							<LoadingSpinner height={"500px"} />
-						) : (
-							<>
-								<SearchInput {...searchInputProps} />
-								<MSChampionshipsTable {...tableProps} />
-							</>
-						)}
+						<SearchInput {...searchInputProps} />
+						<MSChampionshipsTable {...tableProps} />
 					</TableContainer>
 					<TablePagination
 						rowsPerPageOptions={[10, 15, 25]}
