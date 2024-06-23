@@ -13,9 +13,8 @@ import {
 	getExpandedVal,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
-import { CYBER_LIST } from "../../constants/cyberList.js";
-import { CHANNELS } from "../../../common/constants/channels.js";
+import { CYBER_LIST } from "../../constants";
+import { CHANNELS, MATCHES_SETTINGS } from "../../../common/constants";
 
 export const useGetChampionships = (setList) => {
 	const isChampAdd = useSelector(getChampAddStatus);
