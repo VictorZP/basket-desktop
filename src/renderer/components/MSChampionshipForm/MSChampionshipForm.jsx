@@ -4,14 +4,14 @@ import { enqueueSnackbar } from "notistack";
 
 import {
 	Box,
+	Select,
+	Checkbox,
+	MenuItem,
+	TextField,
+	InputLabel,
 	Typography,
 	FormControl,
 	FormControlLabel,
-	InputLabel,
-	Select,
-	MenuItem,
-	TextField,
-	Checkbox,
 } from "@mui/material";
 
 import SaveBtn from "../../ui/SaveBtn.jsx";
@@ -24,6 +24,7 @@ import {
 	handleAddChamp,
 	handleEditChamp,
 	refreshChampData,
+	setTeamLoadingStatus,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
 	getChampEditStatus,
@@ -32,8 +33,7 @@ import {
 } from "../../redux/matchSettings/matchSettingSelector.js";
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
 
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
-import { CHANNELS } from "../../../common/constants/channels.js";
+import { MATCHES_SETTINGS, CHANNELS } from "../../../common/constants";
 
 const initialData = {
 	championshipName: "",
@@ -111,6 +111,7 @@ const MSChampionshipForm = () => {
 			}
 			dispatch(handleAddChamp(true));
 			dispatch(handleEditChamp(false));
+			dispatch(setTeamLoadingStatus(true));
 			dispatch(refreshChampData());
 
 			enqueueSnackbar(CHAMPIONSHIP_FORM.CHAMP_UPDATED, { variant: "success" });

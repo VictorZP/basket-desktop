@@ -15,8 +15,7 @@ import {
 
 import ModalHandler from "../../helpers/classes/modal.js";
 
-import { CHANNELS } from "../../../common/constants/channels.js";
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { CHANNELS, MATCHES_SETTINGS } from "../../../common/constants";
 
 // Handler for after editing team
 export const useHandleAfterTeamEdit = () => {
@@ -56,5 +55,9 @@ export const useHandleAfterTeamEdit = () => {
 			dispatch(refreshTeamNames());
 			dispatch(setTeamLoadingStatus(false));
 		});
+
+		return () => {
+			ipcRenderer.removeAllListeners(CHANNELS.TEAM_NAME.EDIT_NAME);
+		};
 	}, []);
 };

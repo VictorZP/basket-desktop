@@ -3,29 +3,38 @@ import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import {
+	Box,
+	Paper,
 	Accordion,
+	Typography,
+	TableContainer,
+	TablePagination,
 	AccordionSummary,
 	AccordionDetails,
-	Box,
-	TablePagination,
-	TableContainer,
-	Paper,
-	Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { grey } from "@mui/material/colors";
 
-import MSTeamNamesTable from "../MSTeamNamesTable";
 import SearchInput from "../SearchInput";
-import LoadingSpinner from "../LoadingSpinner";
+import MSTeamNamesTable from "../MSTeamNamesTable";
 
-import { setTeamExpanded } from "../../redux/matchSettings/matchSettingsSlice.js";
+import {
+	setTeamExpanded,
+	setTeamLoadingStatus,
+} from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
 	getTeamExpandedVal,
 	getTeamLoadingStatus,
+	getTeamEditStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import {
+	formSearchQuery,
+	handleTeamNamesFilter,
+	handleVisibleFilteredList,
+} from "../../helpers/functions/matchesSettings";
+
+import { MATCHES_SETTINGS } from "../../../common/constants";
 
 const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 	const [page, setPage] = useState(0);
@@ -33,13 +42,13 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 	const [filteredList, setFilteredList] = useState([]);
 	const [searchValue, setSearchValue] = useState("");
 	const [visibleFilteredValues, setVisibleFilteredValues] = useState([]);
-	const [searchTimeOut, setSearchTimeOut] = useState(null);
 
 	const expanded = useSelector(getTeamExpandedVal);
 	const isLoading = useSelector(getTeamLoadingStatus);
+	const onTeamNameEditStatus = useSelector(getTeamEditStatus);
 
 	const dispatch = useDispatch();
-	const { TEAM_NAMES_TABLE, REGEX } = MATCHES_SETTINGS;
+	const { TEAM_NAMES_TABLE } = MATCHES_SETTINGS;
 
 	const visibleRows = useMemo(
 		() =>
@@ -60,46 +69,32 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 	};
 
 	const handleSearchFilter = (e) => {
-		const searchQuery = e.target.value
-			.replaceAll(REGEX.ONE, "")
-			.replaceAll(REGEX.TWO, "\\(")
-			.replaceAll(REGEX.THREE, "\\)");
+		const searchValue = e.target.value;
+		setSearchValue(searchValue);
 
-		const regex = new RegExp(searchQuery, "i");
+		const searchQuery = formSearchQuery(searchValue);
+		const filterRes = handleTeamNamesFilter(teamNamesList, searchQuery);
 
-		clearTimeout(searchTimeOut);
-
-		setSearchTimeOut(
-			setTimeout(() => {
-				setSearchValue(searchQuery);
-
-				const filterRes = teamNamesList.filter(
-					(team) =>
-						regex.test(team.teamChamp.championshipName) ||
-						regex.test(team.teamCyber.cyberName) ||
-						regex.test(team.teamName) ||
-						regex.test(team.fibaliveTeamName1) ||
-						regex.test(team.fibaliveTeamName2) ||
-						regex.test(team.fibaliveTeamName3) ||
-						regex.test(team.betsapiTeamName) ||
-						regex.test(team.otherSiteTeamName)
-				);
-				setPage(0);
-				setFilteredList(filterRes);
-			}, 500)
-		);
+		setPage(0);
+		setFilteredList(filterRes);
 	};
 
 	useEffect(() => {
 		if (searchValue.length !== 0) {
-			const list = filteredList.slice(
-				page * rowsPerPage,
-				page * rowsPerPage + rowsPerPage
-			);
-
+			const list = handleVisibleFilteredList(filteredList, page, rowsPerPage);
 			setVisibleFilteredValues(list);
 		}
 	}, [filteredList, searchValue, page, rowsPerPage]);
+
+	useEffect(() => {
+		if (searchValue.length !== 0 && !onTeamNameEditStatus) {
+			const filterRes = handleTeamNamesFilter(teamNamesList, searchValue);
+			const list = handleVisibleFilteredList(filterRes, page, rowsPerPage);
+
+			setVisibleFilteredValues(list);
+			isLoading && dispatch(setTeamLoadingStatus(false));
+		}
+	}, [onTeamNameEditStatus, teamNamesList]);
 
 	const btnStackProps = {
 		onEdit: handleEdit,
@@ -107,24 +102,16 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 		editBtnName: TEAM_NAMES_TABLE.EDIT_TEAM_NAME,
 		delBtnName: TEAM_NAMES_TABLE.DEL_TEAM_NAME,
 	};
-	const tableHeadRowsName = [
-		TEAM_NAMES_TABLE.CELL_CYBER,
-		TEAM_NAMES_TABLE.CELL_CHAMP_NAME,
-		TEAM_NAMES_TABLE.CELL_TEAM_NAME,
-		TEAM_NAMES_TABLE.CELL_FIBALIVE_NAME,
-		TEAM_NAMES_TABLE.CELL_BETSAPI_NAME,
-		TEAM_NAMES_TABLE.CELL_OTHER_NAME,
-		"",
-	];
 
 	const tableProps = {
-		headerList: tableHeadRowsName,
 		dataList: searchValue.length === 0 ? visibleRows : visibleFilteredValues,
 		btnStackProps,
+		isLoading,
 	};
 	const searchInputProps = {
 		idType: "team",
 		handleSearchFilter,
+		value: searchValue,
 	};
 
 	return (
@@ -143,14 +130,8 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 				</AccordionSummary>
 				<AccordionDetails sx={{ p: 0 }}>
 					<TableContainer component={Paper} sx={{ borderRadius: 0 }}>
-						{isLoading ? (
-							<LoadingSpinner height={"500px"} />
-						) : (
-							<>
-								<SearchInput {...searchInputProps} />
-								<MSTeamNamesTable {...tableProps} />
-							</>
-						)}
+						<SearchInput {...searchInputProps} />
+						<MSTeamNamesTable {...tableProps} />
 					</TableContainer>
 					<TablePagination
 						rowsPerPageOptions={[10, 15, 25]}

@@ -1,65 +1,92 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Table, TableBody, TableHead, TableRow, List } from "@mui/material";
+import {
+	List,
+	Table,
+	TableRow,
+	TableBody,
+	TableHead,
+	TableCell,
+} from "@mui/material";
 
 import TableBtnStack from "../TableBtnStack";
+import LoadingSpinner from "../LoadingSpinner";
 import TeamNameListItem from "../../ui/teamNames/TeamNameListItem.jsx";
 import {
 	StyledTableCell,
 	StyledTableRow,
-} from "../../helpers/reusableComponents/tableComponents.js";
+} from "../../helpers/reusableComponents/tableComponents";
 
-const MSTeamNamesTable = ({
-	headerList = [],
-	dataList = [],
-	btnStackProps,
-}) => {
+import { MATCHES_SETTINGS } from "../../../common/constants";
+
+const MSTeamNamesTable = ({ dataList = [], btnStackProps, isLoading }) => {
+	const { TEAM_NAMES_TABLE } = MATCHES_SETTINGS;
+
+	const tableHeadRowsName = [
+		TEAM_NAMES_TABLE.CELL_CYBER,
+		TEAM_NAMES_TABLE.CELL_CHAMP_NAME,
+		TEAM_NAMES_TABLE.CELL_TEAM_NAME,
+		TEAM_NAMES_TABLE.CELL_FIBALIVE_NAME,
+		TEAM_NAMES_TABLE.CELL_BETSAPI_NAME,
+		TEAM_NAMES_TABLE.CELL_OTHER_NAME,
+		"",
+	];
+
 	return (
 		<Table aria-label="teams name table">
 			<TableHead>
 				<TableRow>
-					{headerList.map((name) => (
+					{tableHeadRowsName.map((name) => (
 						<StyledTableCell key={name}>{name}</StyledTableCell>
 					))}
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{dataList?.map((row) => (
-					<StyledTableRow key={row?.teamId}>
-						<StyledTableCell>{row?.teamCyber?.cyberName ?? ""}</StyledTableCell>
-						<StyledTableCell>
-							{row?.teamChamp?.championshipName ?? ""}
-						</StyledTableCell>
-						<StyledTableCell>{row?.teamName ?? ""}</StyledTableCell>
-						<StyledTableCell>
-							<List disablePadding>
-								{row?.fibaliveTeamName1 && (
-									<TeamNameListItem teamName={row?.fibaliveTeamName1} />
-								)}
-								{row?.fibaliveTeamName2 && (
-									<TeamNameListItem teamName={row?.fibaliveTeamName2} />
-								)}
-								{row?.fibaliveTeamName3 && (
-									<TeamNameListItem teamName={row?.fibaliveTeamName3} />
-								)}
-							</List>
-						</StyledTableCell>
+				{isLoading ? (
+					<TableRow>
+						<TableCell padding="none" colSpan={7}>
+							<LoadingSpinner height={"50px"} size={20} />
+						</TableCell>
+					</TableRow>
+				) : (
+					dataList?.map((row) => (
+						<StyledTableRow key={row?.teamId}>
+							<StyledTableCell>
+								{row?.teamCyber?.cyberName ?? ""}
+							</StyledTableCell>
+							<StyledTableCell>
+								{row?.teamChamp?.championshipName ?? ""}
+							</StyledTableCell>
+							<StyledTableCell>{row?.teamName ?? ""}</StyledTableCell>
+							<StyledTableCell>
+								<List disablePadding>
+									{row?.fibaliveTeamName1 && (
+										<TeamNameListItem teamName={row?.fibaliveTeamName1} />
+									)}
+									{row?.fibaliveTeamName2 && (
+										<TeamNameListItem teamName={row?.fibaliveTeamName2} />
+									)}
+									{row?.fibaliveTeamName3 && (
+										<TeamNameListItem teamName={row?.fibaliveTeamName3} />
+									)}
+								</List>
+							</StyledTableCell>
 
-						<StyledTableCell>{row?.betsapiTeamName ?? ""}</StyledTableCell>
-						<StyledTableCell>{row?.otherSiteTeamName ?? ""}</StyledTableCell>
-						<StyledTableCell>
-							<TableBtnStack {...btnStackProps} btnId={row?.teamId} />
-						</StyledTableCell>
-					</StyledTableRow>
-				))}
+							<StyledTableCell>{row?.betsapiTeamName ?? ""}</StyledTableCell>
+							<StyledTableCell>{row?.otherSiteTeamName ?? ""}</StyledTableCell>
+							<StyledTableCell>
+								<TableBtnStack {...btnStackProps} btnId={row?.teamId} />
+							</StyledTableCell>
+						</StyledTableRow>
+					))
+				)}
 			</TableBody>
 		</Table>
 	);
 };
 
 MSTeamNamesTable.propTypes = {
-	headerList: PropTypes.arrayOf(PropTypes.string).isRequired,
 	dataList: PropTypes.arrayOf(PropTypes.object),
 	btnStackProps: PropTypes.shape({
 		onEdit: PropTypes.func.isRequired,
@@ -67,6 +94,7 @@ MSTeamNamesTable.propTypes = {
 		editBtnName: PropTypes.string.isRequired,
 		delBtnName: PropTypes.string.isRequired,
 	}),
+	isLoading: PropTypes.bool.isRequired,
 };
 
 export default MSTeamNamesTable;

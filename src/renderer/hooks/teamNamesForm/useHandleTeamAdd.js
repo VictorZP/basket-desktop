@@ -10,8 +10,7 @@ import {
 	setTeamLoadingStatus,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 
-import { CHANNELS } from "../../../common/constants/channels.js";
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { CHANNELS, MATCHES_SETTINGS } from "../../../common/constants";
 
 // Hook for handle team add response
 export const useHandleTeamAdd = () => {
@@ -37,5 +36,9 @@ export const useHandleTeamAdd = () => {
 			dispatch(refreshTeamNames());
 			dispatch(setTeamLoadingStatus(false));
 		});
+
+		return () => {
+			ipcRenderer.removeAllListeners(CHANNELS.TEAM_NAME.ADD_NAME);
+		};
 	}, []);
 };
