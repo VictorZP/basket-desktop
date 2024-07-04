@@ -195,7 +195,9 @@ const MatchesSettings = () => {
 					betsapiTeamName1: team?.betsapiTeamName1 ?? "",
 					betsapiTeamName2: team?.betsapiTeamName2 ?? "",
 					betsapiTeamName3: team?.betsapiTeamName3 ?? "",
-					otherSiteTeamName: team?.otherSiteTeamName ?? "",
+					otherSiteTeamName1: team?.otherSiteTeamName1 ?? "",
+					otherSiteTeamName2: team?.otherSiteTeamName2 ?? "",
+					otherSiteTeamName3: team?.otherSiteTeamName3 ?? "",
 				};
 
 				dispatch(setTeamData(payload));

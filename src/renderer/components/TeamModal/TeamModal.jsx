@@ -145,7 +145,9 @@ const TeamModal = () => {
 			case CONSTANTS.BETSAPI_NAME_INP_1:
 			case CONSTANTS.BETSAPI_NAME_INP_2:
 			case CONSTANTS.BETSAPI_NAME_INP_3:
-			case CONSTANTS.OTHER_SITE_INP:
+			case CONSTANTS.OTHER_SITE_INP_1:
+			case CONSTANTS.OTHER_SITE_INP_2:
+			case CONSTANTS.OTHER_SITE_INP_3:
 				dispatch(setTeamName({ name, value: inputValue }));
 				break;
 			default:
@@ -173,7 +175,9 @@ const TeamModal = () => {
 				betsapiTeamName1: teamData?.betsapiTeamName1,
 				betsapiTeamName2: teamData?.betsapiTeamName2,
 				betsapiTeamName3: teamData?.betsapiTeamName3,
-				otherSiteTeamName: teamData?.otherSiteTeamName,
+				otherSiteTeamName1: teamData?.otherSiteTeamName1,
+				otherSiteTeamName2: teamData?.otherSiteTeamName2,
+				otherSiteTeamName3: teamData?.otherSiteTeamName3,
 			};
 
 			if (onEdit) {
@@ -202,7 +206,9 @@ const TeamModal = () => {
 		teamData.betsapiTeamName1?.length > 0 ||
 		teamData.betsapiTeamName2?.length > 0 ||
 		teamData.betsapiTeamName3?.length > 0 ||
-		teamData.otherSiteTeamName?.length > 0;
+		teamData.otherSiteTeamName1?.length > 0 ||
+		teamData.otherSiteTeamName2?.length > 0 ||
+		teamData.otherSiteTeamName3?.length > 0;
 
 	return (
 		<TeamModalContainer>

@@ -39,7 +39,9 @@ export const useEditTeam = (champShortList, generateChampOptions) => {
 				betsapiTeamName1: teamData?.betsapiTeamName1,
 				betsapiTeamName2: teamData?.betsapiTeamName2,
 				betsapiTeamName3: teamData?.betsapiTeamName3,
-				otherSiteTeamName: teamData?.otherSiteTeamName,
+				otherSiteTeamName1: teamData?.otherSiteTeamName1,
+				otherSiteTeamName2: teamData?.otherSiteTeamName2,
+				otherSiteTeamName3: teamData?.otherSiteTeamName3,
 			};
 
 			generateChampOptions();

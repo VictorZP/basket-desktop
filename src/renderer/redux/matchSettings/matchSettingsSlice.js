@@ -36,7 +36,9 @@ const initialState = {
 		betsapiTeamName1: "",
 		betsapiTeamName2: "",
 		betsapiTeamName3: "",
-		otherSiteTeamName: "",
+		otherSiteTeamName1: "",
+		otherSiteTeamName2: "",
+		otherSiteTeamName3: "",
 		cyberId: "",
 		championshipId: "",
 	},
@@ -94,7 +96,9 @@ const matchSettingsSlice = createSlice({
 			state.teamData.betsapiTeamName1 = payload.betsapiTeamName1 ?? "";
 			state.teamData.betsapiTeamName2 = payload.betsapiTeamName2 ?? "";
 			state.teamData.betsapiTeamName3 = payload.betsapiTeamName3 ?? "";
-			state.teamData.otherSiteTeamName = payload.otherSiteTeamName ?? "";
+			state.teamData.otherSiteTeamName1 = payload.otherSiteTeamName1 ?? "";
+			state.teamData.otherSiteTeamName2 = payload.otherSiteTeamName2 ?? "";
+			state.teamData.otherSiteTeamName3 = payload.otherSiteTeamName3 ?? "";
 			state.teamData.cyberId = payload.cyberId ?? "";
 			state.teamData.championshipId = payload.championshipId ?? "";
 		},
@@ -115,7 +119,9 @@ const matchSettingsSlice = createSlice({
 			state.teamData.betsapiTeamName1 = payload.betsapiTeamName1;
 			state.teamData.betsapiTeamName2 = payload.betsapiTeamName2;
 			state.teamData.betsapiTeamName3 = payload.betsapiTeamName3;
-			state.teamData.otherSiteTeamName = payload.otherSiteTeamName;
+			state.teamData.otherSiteTeamName1 = payload.otherSiteTeamName1;
+			state.teamData.otherSiteTeamName2 = payload.otherSiteTeamName2;
+			state.teamData.otherSiteTeamName3 = payload.otherSiteTeamName3;
 		},
 		setSelectedChamp(state, { payload }) {
 			state.selectedChamp.id = payload.id;
@@ -165,8 +171,12 @@ const matchSettingsSlice = createSlice({
 			state.teamData.betsapiTeamName1 = initialState.teamData.betsapiTeamName1;
 			state.teamData.betsapiTeamName2 = initialState.teamData.betsapiTeamName2;
 			state.teamData.betsapiTeamName3 = initialState.teamData.betsapiTeamName3;
-			state.teamData.otherSiteTeamName =
-				initialState.teamData.otherSiteTeamName;
+			state.teamData.otherSiteTeamName1 =
+				initialState.teamData.otherSiteTeamName1;
+			state.teamData.otherSiteTeamName2 =
+				initialState.teamData.otherSiteTeamName2;
+			state.teamData.otherSiteTeamName3 =
+				initialState.teamData.otherSiteTeamName3;
 		},
 		refreshSelectedChamp(state) {
 			state.selectedChamp = initialState.selectedChamp;

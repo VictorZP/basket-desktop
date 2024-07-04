@@ -112,15 +112,41 @@ const TeamFormInputStack = ({ handleTeamNames }) => {
 			<Typography variant="p">
 				{TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_TITLE}
 			</Typography>
-			<NameTextField
-				name={CONSTANTS.OTHER_SITE_INP}
-				label={TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_LABEL}
-				value={teamData?.otherSiteTeamName}
-				variant="outlined"
-				size="small"
-				onChange={handleTeamNames}
-				disabled={!isInputDisabled && !onEdit}
-			/>
+			<Box
+				sx={{
+					display: "grid",
+					gridTemplateColumns: "repeat(3, minmax(150px, 210px)) ",
+					gap: 2,
+				}}
+			>
+				<NameTextField
+					name={CONSTANTS.OTHER_SITE_INP_1}
+					label={`${TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_LABEL} 1`}
+					value={teamData?.otherSiteTeamName1}
+					variant="outlined"
+					size="small"
+					onChange={handleTeamNames}
+					disabled={!isInputDisabled && !onEdit}
+				/>
+				<NameTextField
+					name={CONSTANTS.OTHER_SITE_INP_2}
+					label={`${TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_LABEL} 2`}
+					value={teamData?.otherSiteTeamName2}
+					variant="outlined"
+					size="small"
+					onChange={handleTeamNames}
+					disabled={!isInputDisabled && !onEdit}
+				/>
+				<NameTextField
+					name={CONSTANTS.OTHER_SITE_INP_3}
+					label={`${TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_LABEL} 3`}
+					value={teamData?.otherSiteTeamName3}
+					variant="outlined"
+					size="small"
+					onChange={handleTeamNames}
+					disabled={!isInputDisabled && !onEdit}
+				/>
+			</Box>
 		</Box>
 	);
 };

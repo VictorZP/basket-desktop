@@ -12,7 +12,9 @@ export const CONSTANTS = {
 	BETSAPI_NAME_INP_1: "betsapiTeamName1",
 	BETSAPI_NAME_INP_2: "betsapiTeamName2",
 	BETSAPI_NAME_INP_3: "betsapiTeamName3",
-	OTHER_SITE_INP: "otherSiteTeamName",
+	OTHER_SITE_INP_1: "otherSiteTeamName1",
+	OTHER_SITE_INP_2: "otherSiteTeamName2",
+	OTHER_SITE_INP_3: "otherSiteTeamName3",
 	PAGE_TYPE: {
 		MS: "MS_PAGE",
 		FP: "FILTER_PAGE",
