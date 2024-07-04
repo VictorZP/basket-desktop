@@ -72,8 +72,19 @@ const MSTeamNamesTable = ({ dataList = [], btnStackProps, isLoading }) => {
 									)}
 								</List>
 							</StyledTableCell>
-
-							<StyledTableCell>{row?.betsapiTeamName ?? ""}</StyledTableCell>
+							<StyledTableCell>
+								<List disablePadding>
+									{row?.betsapiTeamName1 && (
+										<TeamNameListItem teamName={row?.betsapiTeamName1} />
+									)}
+									{row?.betsapiTeamName2 && (
+										<TeamNameListItem teamName={row?.betsapiTeamName2} />
+									)}
+									{row?.betsapiTeamName3 && (
+										<TeamNameListItem teamName={row?.betsapiTeamName3} />
+									)}
+								</List>
+							</StyledTableCell>
 							<StyledTableCell>{row?.otherSiteTeamName ?? ""}</StyledTableCell>
 							<StyledTableCell>
 								<TableBtnStack {...btnStackProps} btnId={row?.teamId} />

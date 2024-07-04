@@ -36,7 +36,9 @@ export const useEditTeam = (champShortList, generateChampOptions) => {
 				fibaliveTeamName1: teamData?.fibaliveTeamName1,
 				fibaliveTeamName2: teamData?.fibaliveTeamName2,
 				fibaliveTeamName3: teamData?.fibaliveTeamName3,
-				betsapiTeamName: teamData?.betsapiTeamName,
+				betsapiTeamName1: teamData?.betsapiTeamName1,
+				betsapiTeamName2: teamData?.betsapiTeamName2,
+				betsapiTeamName3: teamData?.betsapiTeamName3,
 				otherSiteTeamName: teamData?.otherSiteTeamName,
 			};
 

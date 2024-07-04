@@ -33,7 +33,9 @@ const initialState = {
 		fibaliveTeamName1: "",
 		fibaliveTeamName2: "",
 		fibaliveTeamName3: "",
-		betsapiTeamName: "",
+		betsapiTeamName1: "",
+		betsapiTeamName2: "",
+		betsapiTeamName3: "",
 		otherSiteTeamName: "",
 		cyberId: "",
 		championshipId: "",
@@ -89,7 +91,9 @@ const matchSettingsSlice = createSlice({
 			state.teamData.fibaliveTeamName1 = payload.fibaliveTeamName1 ?? "";
 			state.teamData.fibaliveTeamName2 = payload.fibaliveTeamName2 ?? "";
 			state.teamData.fibaliveTeamName3 = payload.fibaliveTeamName3 ?? "";
-			state.teamData.betsapiTeamName = payload.betsapiTeamName ?? "";
+			state.teamData.betsapiTeamName1 = payload.betsapiTeamName1 ?? "";
+			state.teamData.betsapiTeamName2 = payload.betsapiTeamName2 ?? "";
+			state.teamData.betsapiTeamName3 = payload.betsapiTeamName3 ?? "";
 			state.teamData.otherSiteTeamName = payload.otherSiteTeamName ?? "";
 			state.teamData.cyberId = payload.cyberId ?? "";
 			state.teamData.championshipId = payload.championshipId ?? "";
@@ -108,7 +112,9 @@ const matchSettingsSlice = createSlice({
 			state.teamData.fibaliveTeamName1 = payload.fibaliveTeamName1;
 			state.teamData.fibaliveTeamName2 = payload.fibaliveTeamName2;
 			state.teamData.fibaliveTeamName3 = payload.fibaliveTeamName3;
-			state.teamData.betsapiTeamName = payload.betsapiTeamName;
+			state.teamData.betsapiTeamName1 = payload.betsapiTeamName1;
+			state.teamData.betsapiTeamName2 = payload.betsapiTeamName2;
+			state.teamData.betsapiTeamName3 = payload.betsapiTeamName3;
 			state.teamData.otherSiteTeamName = payload.otherSiteTeamName;
 		},
 		setSelectedChamp(state, { payload }) {
@@ -156,7 +162,9 @@ const matchSettingsSlice = createSlice({
 				initialState.teamData.fibaliveTeamName2;
 			state.teamData.fibaliveTeamName3 =
 				initialState.teamData.fibaliveTeamName3;
-			state.teamData.betsapiTeamName = initialState.teamData.betsapiTeamName;
+			state.teamData.betsapiTeamName1 = initialState.teamData.betsapiTeamName1;
+			state.teamData.betsapiTeamName2 = initialState.teamData.betsapiTeamName2;
+			state.teamData.betsapiTeamName3 = initialState.teamData.betsapiTeamName3;
 			state.teamData.otherSiteTeamName =
 				initialState.teamData.otherSiteTeamName;
 		},

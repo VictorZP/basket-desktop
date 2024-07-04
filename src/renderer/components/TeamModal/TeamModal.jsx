@@ -142,7 +142,9 @@ const TeamModal = () => {
 			case CONSTANTS.FIBALIVE_NAME_INP_1:
 			case CONSTANTS.FIBALIVE_NAME_INP_2:
 			case CONSTANTS.FIBALIVE_NAME_INP_3:
-			case CONSTANTS.BETSAPI_NAME_INP:
+			case CONSTANTS.BETSAPI_NAME_INP_1:
+			case CONSTANTS.BETSAPI_NAME_INP_2:
+			case CONSTANTS.BETSAPI_NAME_INP_3:
 			case CONSTANTS.OTHER_SITE_INP:
 				dispatch(setTeamName({ name, value: inputValue }));
 				break;
@@ -168,7 +170,9 @@ const TeamModal = () => {
 				fibaliveTeamName1: teamData?.fibaliveTeamName1,
 				fibaliveTeamName2: teamData?.fibaliveTeamName2,
 				fibaliveTeamName3: teamData?.fibaliveTeamName3,
-				betsapiTeamName: teamData?.betsapiTeamName,
+				betsapiTeamName1: teamData?.betsapiTeamName1,
+				betsapiTeamName2: teamData?.betsapiTeamName2,
+				betsapiTeamName3: teamData?.betsapiTeamName3,
 				otherSiteTeamName: teamData?.otherSiteTeamName,
 			};
 
@@ -195,7 +199,9 @@ const TeamModal = () => {
 		teamData.fibaliveTeamName1?.length > 0 ||
 		teamData.fibaliveTeamName2?.length > 0 ||
 		teamData.fibaliveTeamName3?.length > 0 ||
-		teamData.betsapiTeamName?.length > 0 ||
+		teamData.betsapiTeamName1?.length > 0 ||
+		teamData.betsapiTeamName2?.length > 0 ||
+		teamData.betsapiTeamName3?.length > 0 ||
 		teamData.otherSiteTeamName?.length > 0;
 
 	return (

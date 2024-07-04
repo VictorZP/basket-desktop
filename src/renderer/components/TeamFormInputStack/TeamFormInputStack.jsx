@@ -80,13 +80,35 @@ const TeamFormInputStack = ({ handleTeamNames }) => {
 			<Typography variant="p">
 				{TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_TITLE}
 			</Typography>
-			<NameTextField
-				name={CONSTANTS.BETSAPI_NAME_INP}
-				label={TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_LABEL}
-				value={teamData?.betsapiTeamName}
-				onChange={handleTeamNames}
-				disabled={!isInputDisabled && !onEdit}
-			/>
+			<Box
+				sx={{
+					display: "grid",
+					gridTemplateColumns: "repeat(3, minmax(150px, 210px)) ",
+					gap: 2,
+				}}
+			>
+				<NameTextField
+					name={CONSTANTS.BETSAPI_NAME_INP_1}
+					label={`${TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_LABEL} 1`}
+					value={teamData?.betsapiTeamName1}
+					onChange={handleTeamNames}
+					disabled={!isInputDisabled && !onEdit}
+				/>
+				<NameTextField
+					name={CONSTANTS.BETSAPI_NAME_INP_2}
+					label={`${TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_LABEL} 2`}
+					value={teamData?.betsapiTeamName2}
+					onChange={handleTeamNames}
+					disabled={!isInputDisabled && !onEdit}
+				/>
+				<NameTextField
+					name={CONSTANTS.BETSAPI_NAME_INP_3}
+					label={`${TEAM_NAMES_FORM.BETSAPI_TEAM_NAME_LABEL} 3`}
+					value={teamData?.betsapiTeamName3}
+					onChange={handleTeamNames}
+					disabled={!isInputDisabled && !onEdit}
+				/>
+			</Box>
 			<Typography variant="p">
 				{TEAM_NAMES_FORM.OTHER_SITE_TEAM_NAME_TITLE}
 			</Typography>

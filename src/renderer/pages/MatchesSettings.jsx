@@ -192,7 +192,9 @@ const MatchesSettings = () => {
 					fibaliveTeamName1: team?.fibaliveTeamName1 ?? "",
 					fibaliveTeamName2: team?.fibaliveTeamName2 ?? "",
 					fibaliveTeamName3: team?.fibaliveTeamName3 ?? "",
-					betsapiTeamName: team?.betsapiTeamName ?? "",
+					betsapiTeamName1: team?.betsapiTeamName1 ?? "",
+					betsapiTeamName2: team?.betsapiTeamName2 ?? "",
+					betsapiTeamName3: team?.betsapiTeamName3 ?? "",
 					otherSiteTeamName: team?.otherSiteTeamName ?? "",
 				};
 
