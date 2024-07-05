@@ -36,8 +36,12 @@ const TeamNamesModalBtn = () => {
 		(teamData.fibaliveTeamName1?.length > 0 ||
 			teamData.fibaliveTeamName2?.length > 0 ||
 			teamData.fibaliveTeamName3?.length > 0 ||
-			teamData.betsapiTeamName?.length > 0 ||
-			teamData.otherSiteTeamName?.length > 0);
+			teamData.betsapiTeamName1?.length > 0 ||
+			teamData.betsapiTeamName2?.length > 0 ||
+			teamData.betsapiTeamName3?.length > 0 ||
+			teamData.otherSiteTeamName1?.length > 0 ||
+			teamData.otherSiteTeamName2?.length > 0 ||
+			teamData.otherSiteTeamName3?.length > 0);
 
 	return (
 		<Box display={"flex"} justifyContent={"center"} gap={2}>
