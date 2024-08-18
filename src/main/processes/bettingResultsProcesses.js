@@ -5,7 +5,7 @@ const endPoint = "/desktop/data/games";
 
 const { CHANNELS } = require("../../common/constants/channels.js");
 
-ipcMain.on(CHANNELS.BETTING_RESULTS.GET_RESULTS, async (e, data) => {
+ipcMain.handle(CHANNELS.BETTING_RESULTS.GET_RESULTS, async (e, data) => {
 	try {
 		const params = new URLSearchParams(data);
 
@@ -16,7 +16,7 @@ ipcMain.on(CHANNELS.BETTING_RESULTS.GET_RESULTS, async (e, data) => {
 			data: res?.data,
 		};
 
-		e.sender.send(CHANNELS.BETTING_RESULTS.GET_RESULTS, resData);
+		return resData;
 	} catch (err) {
 		const res = {
 			statusCode: err?.response?.status,
@@ -24,6 +24,6 @@ ipcMain.on(CHANNELS.BETTING_RESULTS.GET_RESULTS, async (e, data) => {
 			message: err?.response?.data?.message,
 		};
 
-		e.sender.send(CHANNELS.BETTING_RESULTS.GET_RESULTS, res);
+		return res;
 	}
 });
