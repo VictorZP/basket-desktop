@@ -4,3 +4,4 @@ export { CYBER_LIST, CYBER_LIST_LINES } from "./cyberList";
 export { default as SETTINGS_TEXT } from "./settingsWindow";
 export { default as MANUAL_PAGE } from "./manualResultsPage";
 export { default as WARNING_MESSAGE } from "./warningMessages";
+export { default as BETTING_RESULTS_CONSTANTS } from "./bettingResults";

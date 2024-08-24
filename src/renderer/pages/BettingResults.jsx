@@ -4,17 +4,19 @@ import dayjs from "dayjs";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { Box } from "@mui/material";
 
-import { Box, Button } from "@mui/material";
+import BettingResultsTop from "../components/BettingResultsComponents/BettingResultsTop";
 
-import { CHANNELS } from "../../common/constants/channels.js";
+import { CHANNELS } from "../../common/constants";
+import { BETTING_RESULTS_CONSTANTS } from "../constants";
 
 const BettingResults = () => {
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 
+	//  Initiating forming of betting results
 	const initiateBetsResultsHandler = async () => {
 		try {
 			setIsLoading(true);
@@ -22,10 +24,10 @@ const BettingResults = () => {
 			const paramsObj = {
 				start_day: startDate ? dayjs(startDate).format("DD") : "",
 				start_month: startDate ? dayjs(startDate).format("MM") : "",
-				start_year: startDate ? dayjs(startDate).format("YY") : "",
+				start_year: startDate ? dayjs(startDate).format("YYYY") : "",
 				end_day: endDate ? dayjs(endDate).format("DD") : "",
 				end_month: endDate ? dayjs(endDate).format("MM") : "",
-				end_year: endDate ? dayjs(endDate).format("YY") : "",
+				end_year: endDate ? dayjs(endDate).format("YYYY") : "",
 			};
 
 			const initiateBetsResultsHandlerResponseFromMain =
@@ -35,61 +37,37 @@ const BettingResults = () => {
 				);
 
 			if (initiateBetsResultsHandlerResponseFromMain?.statusCode !== 200) {
-				throw new Error(
+				enqueueSnackbar(
 					initiateBetsResultsHandlerResponseFromMain?.message ??
-						"Error for results initialization response"
+						BETTING_RESULTS_CONSTANTS.MESSAGES.ON_WARNING_START,
+					{
+						variant: "warning",
+					}
 				);
 			}
 		} catch (err) {
-			enqueueSnackbar(err?.message ?? "Error for results initialization", {
-				variant: "error",
-			});
+			enqueueSnackbar(
+				err?.message ?? BETTING_RESULTS_CONSTANTS.MESSAGES.ON_ERROR_START,
+				{
+					variant: "error",
+				}
+			);
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
+	const bettingResultsTopProps = {
+		initiateBetsResultsHandler,
+		setStartDate,
+		setEndDate,
+		startDate,
+		isLoading,
+	};
+
 	return (
 		<Box component="section" sx={{ pt: 1, pb: 2 }}>
-			<Box>
-				<Box sx={{ px: 3, display: "flex", gap: 2 }}>
-					<DatePicker
-						label="Начальная дата"
-						onChange={(startDate) => setStartDate(startDate)}
-						sx={{
-							alignItems: "flex-start",
-							m: 0,
-						}}
-						slotProps={{
-							actionBar: {
-								actions: ["clear", "today"],
-							},
-						}}
-						disabled={isLoading}
-					/>
-					<DatePicker
-						label="Конечная дата"
-						onChange={(endDate) => setEndDate(endDate)}
-						sx={{
-							alignItems: "flex-start",
-							m: 0,
-						}}
-						slotProps={{
-							actionBar: {
-								actions: ["clear", "today"],
-							},
-						}}
-						disabled={isLoading}
-					/>
-					<Button
-						variant="contained"
-						disabled={isLoading}
-						onClick={initiateBetsResultsHandler}
-					>
-						Получить результаты
-					</Button>
-				</Box>
-			</Box>
+			<BettingResultsTop {...bettingResultsTopProps} />
 		</Box>
 	);
 };
