@@ -154,6 +154,9 @@ export const BETTING_RESULTS = {
 	NOTIFICATION_TITLE: "Результаты ставок",
 	DEFAULT_MESSAGE_GENERATE:
 		'Результаты ставок готовы. Перейдите в раздел "Результат ставок"',
+	ON_ERROR_DELETE: "Ошибка при удалении данных.",
+	ON_ERROR_DOWNLOAD: "Ошибка при загрузке данных.",
+	ON_SUCCESS_DELETE: "Данные успешно удалены.",
 };
 
 export { CHANNELS } from "./channels";

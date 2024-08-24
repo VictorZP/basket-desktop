@@ -4,9 +4,10 @@ import dayjs from "dayjs";
 
 const ipcRenderer = window.require("electron").ipcRenderer;
 
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 
 import BettingResultsTop from "../components/BettingResultsComponents/BettingResultsTop";
+import BettingResultsData from "../components/BettingResultsComponents/BettingResultsData";
 
 import { CHANNELS } from "../../common/constants";
 import { BETTING_RESULTS_CONSTANTS } from "../constants";
@@ -68,6 +69,8 @@ const BettingResults = () => {
 	return (
 		<Box component="section" sx={{ pt: 1, pb: 2 }}>
 			<BettingResultsTop {...bettingResultsTopProps} />
+			<Divider />
+			<BettingResultsData />
 		</Box>
 	);
 };

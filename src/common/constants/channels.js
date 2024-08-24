@@ -77,7 +77,10 @@ export const CHANNELS = {
 		UPDATE: "update-restart",
 	},
 	BETTING_RESULTS: {
-		GET_RESULTS: "betting-get-results",
+		GET_RESULTS: "betting-results-get-data",
+		GET_RESULTS_LIST: "betting-results-get-list",
+		DOWNLOAD_RESULTS: "betting-results-download",
+		DELETE_RESULTS: "betting-results-delete",
 	},
 	MANUAL_ADDING: {
 		GET_MANUAL_LIST: "manual-list-get",

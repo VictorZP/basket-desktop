@@ -7,6 +7,7 @@ import { urlFormReducer } from "./urlForm/urlFormSlice.js";
 import { modalReducer } from "./modal/modalSlice.js";
 import { parcerDataReducer } from "./parcerData/parcerDataSlice.js";
 import { linesDataReducer } from "./linesData/linesDataSlice.js";
+import { bettingResultsReducer } from "./bettingResultsData/bettingResultsDataSlice.js";
 import { teamTransferReducer } from "./teamTransfer/teamTransferSlice.js";
 
 const store = configureStore({
@@ -19,6 +20,7 @@ const store = configureStore({
 		parcerData: parcerDataReducer,
 		linesData: linesDataReducer,
 		teamTransfer: teamTransferReducer,
+		bettingResultsData: bettingResultsReducer,
 	},
 });
 
