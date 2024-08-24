@@ -37,7 +37,7 @@ const BettingResults = () => {
 					paramsObj
 				);
 
-			if (initiateBetsResultsHandlerResponseFromMain?.statusCode !== 200) {
+			if (initiateBetsResultsHandlerResponseFromMain?.status !== 200) {
 				enqueueSnackbar(
 					initiateBetsResultsHandlerResponseFromMain?.message ??
 						BETTING_RESULTS_CONSTANTS.MESSAGES.ON_WARNING_START,
