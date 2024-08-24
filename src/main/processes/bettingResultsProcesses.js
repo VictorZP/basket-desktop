@@ -1,20 +1,28 @@
 const axios = require("axios");
-const { ipcMain } = require("electron");
+const { ipcMain, Notification } = require("electron");
 
-const endPoint = "/desktop/data/games";
+const endPoint = "/desktop/betting_results";
 
-const { CHANNELS } = require("../../common/constants/channels.js");
+const { CHANNELS, BETTING_RESULTS } = require("../../common/constants");
 
 ipcMain.handle(CHANNELS.BETTING_RESULTS.GET_RESULTS, async (e, data) => {
 	try {
 		const params = new URLSearchParams(data);
 
-		const res = await axios.get(`${endPoint}/betting_results`, { params });
+		const res = await axios.get(`${endPoint}/generate`, {
+			params,
+		});
+
 		const resData = {
 			status: res?.status,
 			statusText: res?.statusText,
-			data: res?.data,
+			message: res?.data?.message,
 		};
+
+		new Notification({
+			title: BETTING_RESULTS.NOTIFICATION_TITLE,
+			body: res?.data?.message ?? BETTING_RESULTS.DEFAULT_MESSAGE_GENERATE,
+		}).show();
 
 		return resData;
 	} catch (err) {

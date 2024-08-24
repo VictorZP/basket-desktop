@@ -150,4 +150,10 @@ export const SETTINGS_PAGE = {
 	},
 };
 
+export const BETTING_RESULTS = {
+	NOTIFICATION_TITLE: "Результаты ставок",
+	DEFAULT_MESSAGE_GENERATE:
+		'Результаты ставок готовы. Перейдите в раздел "Результат ставок"',
+};
+
 export { CHANNELS } from "./channels";
