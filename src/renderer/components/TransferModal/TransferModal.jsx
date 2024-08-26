@@ -20,14 +20,15 @@ import {
 import ButtonStack from "../../ui/ButtonStack.jsx";
 
 import {
-	getOutCyberId,
-	getOutChampId,
-	getOutChampOptions,
-	getTargetCyberId,
-	getTargetChampId,
-	getTargetChampOptions,
+	getLeftCyberId,
+	getLeftChampId,
+	getLeftChampOptions,
+	getRightCyberId,
+	getRightChampId,
+	getRightChampOptions,
 	getTransferType,
-	getTeamsIdsArray,
+	getLeftListOfTeamsIds,
+	getRightListOfTeamsIds,
 } from "../../redux/teamTransfer/teamTransferSelector.js";
 import { refreshTransferModal } from "../../redux/teamTransfer/teamTransferSlice.js";
 import { getCyberList } from "../../redux/matchSettings/matchSettingSelector.js";
@@ -38,14 +39,15 @@ import { TRANSFER_TYPE, TEXT } from "../../constants/teamsTransferConstants.js";
 const TransferModal = () => {
 	const [champShortList, setChampShortList] = useState([]);
 
-	const outCyberId = useSelector(getOutCyberId);
-	const outChampId = useSelector(getOutChampId);
-	const outChampOptions = useSelector(getOutChampOptions);
-	const targetCyberId = useSelector(getTargetCyberId);
-	const targetChampId = useSelector(getTargetChampId);
-	const targetChampOptions = useSelector(getTargetChampOptions);
+	const leftCyberId = useSelector(getLeftCyberId);
+	const leftChampId = useSelector(getLeftChampId);
+	const leftChampOptions = useSelector(getLeftChampOptions);
+	const rightCyberId = useSelector(getRightCyberId);
+	const rightChampId = useSelector(getRightChampId);
+	const rightLeftOptions = useSelector(getRightChampOptions);
 	const transferType = useSelector(getTransferType);
-	const teamIdsArray = useSelector(getTeamsIdsArray);
+	const leftListOfTeamsIds = useSelector(getLeftListOfTeamsIds);
+	const rightListOfTeamsIds = useSelector(getRightListOfTeamsIds);
 	const cyberList = useSelector(getCyberList);
 
 	const dispatch = useDispatch();
@@ -68,17 +70,19 @@ const TransferModal = () => {
 	const options = CommonHandler.getCyberSelectOptions(cyberList);
 	const isBtnDisabled = transferHandler.handleBtnDisabled(
 		transferType,
-		teamIdsArray
+		leftListOfTeamsIds,
+		rightListOfTeamsIds
 	);
 
 	const handleTeamTransfer = async () => {
 		const reqDataObj = {
-			outCyberId,
-			targetCyberId,
-			outChampId,
-			targetChampId,
+			leftCyberId,
+			leftChampId,
+			rightCyberId,
+			rightChampId,
 			transferType,
-			teamIdsArray,
+			leftListOfTeamsIds,
+			rightListOfTeamsIds,
 		};
 		const res = await transferHandler.handleTransfer(reqDataObj);
 
@@ -116,31 +120,31 @@ const TransferModal = () => {
 			>
 				<Box>
 					<Typography variant="h5" sx={{ mb: 2 }}>
-						{TEXT.OUT_GROUP_TITLE}
+						{TEXT.LEFT_GROUP_TITLE}
 					</Typography>
 					<TeamFormSelectStack
-						cyberId={outCyberId}
-						selectedChamp={outChampId}
+						cyberId={leftCyberId}
+						selectedChamp={leftChampId}
 						pageType={CONSTANTS.PAGE_TYPE.MS}
 						cyberOptions={options}
-						champOptions={outChampOptions}
+						champOptions={leftChampOptions}
 						handleChange={(e) => {
-							transferHandler.handleIdsChange(e, TRANSFER_TYPE.OUT);
+							transferHandler.handleIdsChange(e, TRANSFER_TYPE.LEFT);
 						}}
 					/>
 				</Box>
 				<Box>
 					<Typography variant="h5" sx={{ mb: 2 }}>
-						{TEXT.TARGET_GROUP_TITLE}
+						{TEXT.RIGHT_GROUP_TITLE}
 					</Typography>
 					<TeamFormSelectStack
-						cyberId={targetCyberId}
-						selectedChamp={targetChampId}
+						cyberId={rightCyberId}
+						selectedChamp={rightChampId}
 						pageType={CONSTANTS.PAGE_TYPE.MS}
 						cyberOptions={options}
-						champOptions={targetChampOptions}
+						champOptions={rightLeftOptions}
 						handleChange={(e) => {
-							transferHandler.handleIdsChange(e, TRANSFER_TYPE.TARGET);
+							transferHandler.handleIdsChange(e, TRANSFER_TYPE.RIGHT);
 						}}
 					/>
 				</Box>

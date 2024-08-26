@@ -11,19 +11,15 @@ import {
 	CardHeader,
 	Divider,
 	TextField,
-	Box,
 } from "@mui/material";
-
-import { TRANSFER_TYPE } from "../../constants/teamsTransferConstants.js";
 
 const TeamList = (
 	items,
 	checked,
 	searchIdType,
-	disabledIds = [],
 	handleClick,
 	handleSearch,
-	outChampId
+	champId
 ) => {
 	const checkedIds = checked.map((team) => team.teamId);
 
@@ -32,40 +28,31 @@ const TeamList = (
 			<CardHeader
 				sx={{ px: 2, py: 1, width: "100%" }}
 				avatar={
-					searchIdType === TRANSFER_TYPE.OUT ? (
-						<TextField
-							key={outChampId}
-							id={`${searchIdType}-search`}
-							name={`${searchIdType}-search`}
-							label={"Поиск"}
-							size="small"
-							onChange={handleSearch}
-							sx={{ width: "100%" }}
-						/>
-					) : (
-						<Box sx={{ height: "40px" }} />
-					)
+					<TextField
+						key={champId}
+						id={`${searchIdType}-search`}
+						name={`${searchIdType}-search`}
+						label={"Поиск"}
+						size="small"
+						onChange={(e) => handleSearch(e, searchIdType)}
+						sx={{ width: "100%" }}
+					/>
 				}
 			/>
 			<Divider />
 			<List dense component="div" role="list">
 				{items.map((team) => {
-					const isDisabled = disabledIds.find((id) => id === team.teamId)
-						? true
-						: false;
-
 					return (
 						<ListItemButton
 							key={team.teamId}
 							role="listitem"
-							onClick={handleClick(team, isDisabled)}
+							onClick={handleClick(team)}
 						>
 							<ListItemIcon>
 								<Checkbox
 									checked={checkedIds.indexOf(team.teamId) !== -1}
 									tabIndex={-1}
 									disableRipple
-									disabled={isDisabled}
 								/>
 							</ListItemIcon>
 							<ListItemText id={team.teamId} primary={team.teamName} />
@@ -81,10 +68,9 @@ TeamList.propTypes = {
 	items: PropTypes.array.isRequired,
 	checked: PropTypes.array.isRequired,
 	searchIdType: PropTypes.string.isRequired,
-	disabledIds: PropTypes.array,
 	handleClick: PropTypes.func.isRequired,
 	handleSearch: PropTypes.func.isRequired,
-	outChampId: PropTypes.string,
+	champId: PropTypes.string,
 };
 
 export default TeamList;

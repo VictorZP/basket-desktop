@@ -1,16 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	outCyberId: "",
-	outChampId: "",
-	targetCyberId: "",
-	targetChampId: "",
+	leftCyberId: "",
+	leftChampId: "",
+	rightCyberId: "",
+	rightChampId: "",
 	transferType: "",
-	searchQuery: "",
+	leftSearchQuery: "",
+	rightSearchQuery: "",
 	isTeamsUpdated: false,
-	teamsIds: [],
-	outChampOptions: [],
-	targetChampOptions: [],
+	leftListOfTeamsIds: [],
+	rightListOfTeamsIds: [],
+	leftChampOptions: [],
+	rightChampOptions: [],
 };
 
 const teamTransferSlice = createSlice({
@@ -23,8 +25,8 @@ const teamTransferSlice = createSlice({
 		setTransferChampOptions(state, { payload }) {
 			state[payload.key] = payload.options;
 		},
-		setTransferTeamsIds(state, { payload }) {
-			state.teamsIds = payload;
+		setTeamsIdList(state, { payload }) {
+			state[payload.key] = payload.idsArray;
 		},
 		setTransferType(state, { payload }) {
 			state.transferType = payload;
@@ -33,7 +35,7 @@ const teamTransferSlice = createSlice({
 			state.isTeamsUpdated = !state.isTeamsUpdated;
 		},
 		handleSearchQuery(state, { payload }) {
-			state.searchQuery = payload;
+			state[payload.key] = payload.value;
 		},
 		refreshTransferData(state, { payload }) {
 			state[payload.key] = initialState[payload.key];
@@ -48,16 +50,18 @@ const teamTransferSlice = createSlice({
 			state.transferType = initialState.transferType;
 		},
 		refreshTransferModal(state) {
-			state.outCyberId = initialState.outCyberId;
-			state.outChampId = initialState.outChampId;
-			state.targetCyberId = initialState.targetCyberId;
-			state.targetChampId = initialState.targetChampId;
+			state.leftCyberId = initialState.leftCyberId;
+			state.leftChampId = initialState.leftChampId;
+			state.rightCyberId = initialState.rightCyberId;
+			state.rightChampId = initialState.rightChampId;
 			state.transferType = initialState.transferType;
-			state.searchQuery = initialState.searchQuery;
+			state.leftSearchQuery = initialState.leftSearchQuery;
+			state.rightSearchQuery = initialState.rightSearchQuery;
 			state.isTeamsUpdated = initialState.isTeamsUpdated;
-			state.teamsIds = initialState.teamsIds;
-			state.outChampOptions = initialState.outChampOptions;
-			state.targetChampOptions = initialState.targetChampOptions;
+			state.leftListOfTeamsIds = initialState.leftListOfTeamsIds;
+			state.rightListOfTeamsIds = initialState.rightListOfTeamsIds;
+			state.leftChampOptions = initialState.leftChampOptions;
+			state.rightChampOptions = initialState.rightChampOptions;
 		},
 	},
 });
@@ -65,7 +69,7 @@ const teamTransferSlice = createSlice({
 export const {
 	setTransferData,
 	setTransferChampOptions,
-	setTransferTeamsIds,
+	setTeamsIdList,
 	setTransferType,
 	handleTeamsUpdated,
 	handleSearchQuery,

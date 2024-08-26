@@ -7,8 +7,7 @@ import {
 } from "../../redux/teamTransfer/teamTransferSlice.js";
 import { CONSTANTS } from "../../constants/teamNameFormConstants.js";
 import { TRANSFER_TYPE } from "../../constants/teamsTransferConstants.js";
-import { CHANNELS } from "../../../common/constants/channels";
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { CHANNELS, MATCHES_SETTINGS } from "../../../common/constants";
 
 // Class for handle operations in teams transfer modal
 export class TeamsTransfer {
@@ -25,10 +24,16 @@ export class TeamsTransfer {
 
 		switch (name) {
 			case CONSTANTS.CYBER_SELECT_NAME:
-				key = type === TRANSFER_TYPE.OUT ? "outCyberId" : "targetCyberId";
+				key =
+					type === TRANSFER_TYPE.LEFT
+						? TRANSFER_TYPE.LEFT_CYBER_ID
+						: TRANSFER_TYPE.RIGHT_CYBER_ID;
 				break;
 			case CONSTANTS.CHAMP_SELECT_NAME:
-				key = type === TRANSFER_TYPE.OUT ? "outChampId" : "targetChampId";
+				key =
+					type === TRANSFER_TYPE.LEFT
+						? TRANSFER_TYPE.LEFT_CHAMP_ID
+						: TRANSFER_TYPE.RIGHT_CHAMP_ID;
 				break;
 
 			default:
@@ -39,10 +44,11 @@ export class TeamsTransfer {
 	};
 
 	// Handle bool value for loading button
-	handleBtnDisabled = (transferType, teamIdsArray) => {
+	handleBtnDisabled = (transferType, leftTeamIdsArray, rightTeamsIdsArray) => {
 		return (
 			transferType === TRANSFER_TYPE.VALUE_FULL ||
-			(transferType === TRANSFER_TYPE.VALUE_CUSTOM && teamIdsArray.length > 0)
+			(transferType === TRANSFER_TYPE.VALUE_CUSTOM &&
+				(leftTeamIdsArray.length > 0 || rightTeamsIdsArray.length > 0))
 		);
 	};
 
@@ -63,10 +69,13 @@ export class TeamsTransfer {
 	// Handler for teams name search input
 	handleInputSearch = (
 		e,
-		teamNamesList,
+		searchSide,
+		leftList,
+		rightList,
 		searchTimeOut,
 		setSearchTimeOut,
-		setVisibleList
+		setLeftVisibleList,
+		setRightVisibleList
 	) => {
 		const searchQuery = e.target.value
 			.replaceAll(MATCHES_SETTINGS.REGEX.ONE, "")
@@ -77,15 +86,37 @@ export class TeamsTransfer {
 
 		clearTimeout(searchTimeOut);
 
+		const getFilteredList = (teamList) =>
+			teamList.filter((team) => regex.test(team.teamName));
+
 		setSearchTimeOut(
 			setTimeout(() => {
-				this.dispatch(handleSearchQuery(searchQuery));
-
-				const filterRes = teamNamesList.filter((team) =>
-					regex.test(team.teamName)
-				);
-
-				setVisibleList(filterRes);
+				switch (searchSide) {
+					case TRANSFER_TYPE.LEFT: {
+						const filterRes = getFilteredList(leftList);
+						this.dispatch(
+							handleSearchQuery({
+								key: TRANSFER_TYPE.LEFT_SEARCH_QUERY_KEY,
+								value: searchQuery,
+							})
+						);
+						setLeftVisibleList(filterRes);
+						break;
+					}
+					case TRANSFER_TYPE.RIGHT: {
+						const filterRes = getFilteredList(rightList);
+						this.dispatch(
+							handleSearchQuery({
+								key: TRANSFER_TYPE.RIGHT_SEARCH_QUERY_KEY,
+								value: searchQuery,
+							})
+						);
+						setRightVisibleList(filterRes);
+						break;
+					}
+					default:
+						break;
+				}
 			}, 500)
 		);
 	};

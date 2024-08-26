@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTransferType } from "../../redux/teamTransfer/teamTransferSlice.js";
 import {
 	getTransferType,
-	getOutChampId,
-	getTargetChampId,
+	getLeftChampId,
+	getRightChampId,
 } from "../../redux/teamTransfer/teamTransferSelector.js";
 
 import {
@@ -21,8 +21,8 @@ import { TRANSFER_TYPE, TEXT } from "../../constants/teamsTransferConstants.js";
 
 const TransferTypeSelect = () => {
 	const transferType = useSelector(getTransferType);
-	const outChampId = useSelector(getOutChampId);
-	const targetChampId = useSelector(getTargetChampId);
+	const leftChampId = useSelector(getLeftChampId);
+	const rightChampId = useSelector(getRightChampId);
 
 	const dispatch = useDispatch();
 
@@ -41,13 +41,13 @@ const TransferTypeSelect = () => {
 						value={TRANSFER_TYPE.VALUE_FULL}
 						control={<Radio />}
 						label={TEXT.TRANSFER_TYPE_FULL}
-						disabled={!outChampId || !targetChampId}
+						disabled={!leftChampId || !rightChampId}
 					/>
 					<FormControlLabel
 						value={TRANSFER_TYPE.VALUE_CUSTOM}
 						control={<Radio />}
 						label={TEXT.TRANSFER_TYPE_CUSTOM}
-						disabled={!outChampId || !targetChampId}
+						disabled={!leftChampId || !rightChampId}
 					/>
 				</RadioGroup>
 			</FormControl>

@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
-	getOutCyberId,
-	getTargetCyberId,
+	getLeftCyberId,
+	getRightCyberId,
 } from "../../redux/teamTransfer/teamTransferSelector.js";
 import {
 	setTransferChampOptions,
@@ -11,11 +11,12 @@ import {
 	refreshTransferType,
 	handleSearchQuery,
 } from "../../redux/teamTransfer/teamTransferSlice.js";
+import { TRANSFER_TYPE } from "../../constants/teamsTransferConstants.js";
 
 // Hook for setting championship options
 export const useSetChampOptions = (champShortList) => {
-	const outCyberId = useSelector(getOutCyberId);
-	const targetCyberId = useSelector(getTargetCyberId);
+	const leftCyberId = useSelector(getLeftCyberId);
+	const rightCyberId = useSelector(getRightCyberId);
 	const dispatch = useDispatch();
 
 	const generateChampOptions = (id) => {
@@ -34,21 +35,31 @@ export const useSetChampOptions = (champShortList) => {
 
 	// Forming options for championship select
 	useEffect(() => {
-		if (outCyberId) {
-			const options = generateChampOptions(outCyberId);
+		if (leftCyberId) {
+			const options = generateChampOptions(leftCyberId);
 			dispatch(refreshTransferType());
 			dispatch(handleSearchQuery(""));
-			dispatch(refreshTransferData({ key: "outChampId" }));
-			dispatch(setTransferChampOptions({ key: "outChampOptions", options }));
+			dispatch(refreshTransferData({ key: TRANSFER_TYPE.LEFT_CHAMP_ID }));
+			dispatch(
+				setTransferChampOptions({
+					key: TRANSFER_TYPE.LEFT_CHAMP_OPTIONS,
+					options,
+				})
+			);
 		}
-	}, [outCyberId]);
+	}, [leftCyberId]);
 
 	useEffect(() => {
-		if (targetCyberId) {
-			const options = generateChampOptions(targetCyberId);
+		if (rightCyberId) {
+			const options = generateChampOptions(rightCyberId);
 			dispatch(refreshTransferType());
-			dispatch(refreshTransferData({ key: "targetChampId" }));
-			dispatch(setTransferChampOptions({ key: "targetChampOptions", options }));
+			dispatch(refreshTransferData({ key: TRANSFER_TYPE.RIGHT_CHAMP_ID }));
+			dispatch(
+				setTransferChampOptions({
+					key: TRANSFER_TYPE.RIGHT_CHAMP_OPTIONS,
+					options,
+				})
+			);
 		}
-	}, [targetCyberId]);
+	}, [rightCyberId]);
 };
