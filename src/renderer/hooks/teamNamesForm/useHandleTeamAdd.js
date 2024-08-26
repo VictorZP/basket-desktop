@@ -28,13 +28,14 @@ export const useHandleTeamAdd = () => {
 				dispatch(setTeamLoadingStatus(false));
 				return;
 			}
+
+			dispatch(setTeamLoadingStatus(false));
 			dispatch(handleAddTeam(true));
 			enqueueSnackbar(arg?.message ?? TEAM_NAMES_FORM.ADDED, {
 				variant: "success",
 			});
 
 			dispatch(refreshTeamNames());
-			dispatch(setTeamLoadingStatus(false));
 		});
 
 		return () => {
