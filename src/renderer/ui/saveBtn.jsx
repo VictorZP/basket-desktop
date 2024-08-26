@@ -14,7 +14,7 @@ const SaveBtn = ({ isDisabled, isLoading, onEdit }) => {
 			variant="outlined"
 			disabled={isDisabled}
 		>
-			{!onEdit ? BUTTON.ADD : BUTTON.EDIT}
+			<span>{!onEdit ? BUTTON.ADD : BUTTON.EDIT}</span>
 		</LoadingButton>
 	);
 };
