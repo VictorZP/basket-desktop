@@ -96,6 +96,13 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 		}
 	}, [onTeamNameEditStatus, teamNamesList]);
 
+	useEffect(() => {
+		return () => {
+			setSearchValue("");
+			setVisibleFilteredValues([]);
+		};
+	}, [expanded]);
+
 	const btnStackProps = {
 		onEdit: handleEdit,
 		onDelete: handleDelete,
