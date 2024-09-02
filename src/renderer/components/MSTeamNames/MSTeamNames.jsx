@@ -29,7 +29,6 @@ import {
 } from "../../redux/matchSettings/matchSettingSelector.js";
 
 import {
-	formSearchQuery,
 	handleTeamNamesFilter,
 	handleVisibleFilteredList,
 } from "../../helpers/functions/matchesSettings";
@@ -72,8 +71,7 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 		const searchValue = e.target.value;
 		setSearchValue(searchValue);
 
-		const searchQuery = formSearchQuery(searchValue);
-		const filterRes = handleTeamNamesFilter(teamNamesList, searchQuery);
+		const filterRes = handleTeamNamesFilter(teamNamesList, searchValue);
 
 		setPage(0);
 		setFilteredList(filterRes);
@@ -95,13 +93,6 @@ const MSTeamNames = ({ teamNamesList = [], handleDelete, handleEdit }) => {
 			isLoading && dispatch(setTeamLoadingStatus(false));
 		}
 	}, [onTeamNameEditStatus, teamNamesList]);
-
-	useEffect(() => {
-		return () => {
-			setSearchValue("");
-			setVisibleFilteredValues([]);
-		};
-	}, [expanded]);
 
 	const btnStackProps = {
 		onEdit: handleEdit,

@@ -25,7 +25,6 @@ import {
 } from "../../redux/matchSettings/matchSettingSelector.js";
 import { setExpanded } from "../../redux/matchSettings/matchSettingsSlice.js";
 import {
-	formSearchQuery,
 	handleChampFilter,
 	handleVisibleFilteredList,
 } from "../../helpers/functions/matchesSettings";
@@ -67,8 +66,7 @@ const MSChampionships = ({ champList = [], handleDelete, handleEdit }) => {
 		const searchValue = e.target.value;
 		setSearchValue(searchValue);
 
-		const searchQuery = formSearchQuery(searchValue);
-		const filterRes = handleChampFilter(champList, searchQuery);
+		const filterRes = handleChampFilter(champList, searchValue);
 
 		setPage(0);
 		setFilteredList(filterRes);

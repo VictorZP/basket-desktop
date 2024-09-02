@@ -1,6 +1,6 @@
 export {
-	formSearchQuery,
+	handleChampFilter,
+	handleTeamNamesFilter,
+	handleParenthesesChars,
 	handleVisibleFilteredList,
 } from "./commonForMatchesSettingsFunctions";
-export { handleChampFilter } from "./championshipsFunctions";
-export { handleTeamNamesFilter } from "./teamNamesFunctions";
