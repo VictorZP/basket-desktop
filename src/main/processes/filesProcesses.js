@@ -75,7 +75,7 @@ const filesHandlers = (authProvider) => {
 					tokenResponse.accessToken
 				)
 					.api(
-						`${protectedResources.graphDocs.endpoint}search(q='{${cyberFileName}}')`
+						`${protectedResources.graphDocs.endpoint}search(q='${cyberFileName}')`
 					)
 					.get();
 
