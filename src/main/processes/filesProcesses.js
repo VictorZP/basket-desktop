@@ -21,14 +21,14 @@ const filesHandlers = (authProvider) => {
 					tokenResponse.accessToken
 				)
 					.api(
-						`${protectedResources.graphDocs.endpoint}search(q='{${commonHalvesFile}}')`
+						`${protectedResources.graphDocs.endpoint}search(q='${commonHalvesFile}')`
 					)
 					.get();
 				const graphResponseUSAFile = await getGraphClient(
 					tokenResponse.accessToken
 				)
 					.api(
-						`${protectedResources.graphDocs.endpoint}search(q='{${usaHalvesFile}}')`
+						`${protectedResources.graphDocs.endpoint}search(q='${usaHalvesFile}')`
 					)
 					.get();
 
