@@ -8,6 +8,7 @@ const formInnerBox = {
 	display: "flex",
 	flexDirection: "column",
 	justifyContent: "space-between",
+	maxWidth: "280px",
 	ml: 2,
 };
 

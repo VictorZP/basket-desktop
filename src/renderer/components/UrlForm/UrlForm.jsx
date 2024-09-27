@@ -7,6 +7,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { Box, TextField, Button } from "@mui/material";
 
 import FileModal from "../FileModal";
+import { AddFileForm } from "../../ui/addGamesPage";
 
 import { handleFileModalOpen } from "../../redux/modal/modalSlice.js";
 import { handleUrlAdded } from "../../redux/urlForm/urlFormSlice.js";
@@ -16,6 +17,8 @@ import { styles } from "./styles.js";
 import { TEXT } from "./text.js";
 import {
 	handleHalvesFile,
+	handleManualHalvesFile,
+	handleManualTempFile,
 	createWarnDetailsFile,
 } from "../../helpers/functions/addMatches";
 
@@ -25,6 +28,9 @@ import { STATUS } from "../../constants";
 
 const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const [urlList, setUrlList] = useState([]);
+	const [fileCommon, setFileCommon] = useState(null);
+	const [fileUsa, setFileUsa] = useState(null);
+	const [tempFile, setTempFile] = useState(null);
 
 	const isShown = useSelector(getIsUrlFormOpen);
 	const dispatch = useDispatch();
@@ -36,6 +42,22 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 
 	const clearUrlList = () => {
 		setUrlList([]);
+	};
+
+	const onFileAdd = (file, id) => {
+		switch (id) {
+			case TEXT.ID.FILE_COMMON:
+				setFileCommon(file);
+				break;
+			case TEXT.ID.FILE_USA:
+				setFileUsa(file);
+				break;
+			case TEXT.ID.TEMP:
+				setTempFile(file);
+				break;
+			default:
+				break;
+		}
 	};
 
 	const submitData = async () => {
@@ -51,12 +73,53 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 				return;
 			}
 
+			let requestFileData;
+			let tempFileData;
+			//  If there are no files, then we need to handle them manually
+			//  This could be the case when the microsoft graph api is not available or the files are not found
+			if (Object.keys(fileData?.data)?.length === 0) {
+				console.log("here in the if statement");
+				const commonFileData = await handleManualHalvesFile(fileCommon);
+				const usaFileData = await handleManualHalvesFile(fileUsa);
+
+				tempFileData = await handleManualTempFile(tempFile);
+
+				if (
+					fileData?.status === STATUS.ERROR ||
+					usaFileData?.status === STATUS.ERROR
+				) {
+					enqueueSnackbar(fileData?.message, {
+						variant: "error",
+					});
+					dispatch(handleFileModalOpen(false));
+					return;
+				}
+
+				if (tempFileData?.status === STATUS.ERROR) {
+					enqueueSnackbar(tempFileData?.message, {
+						variant: "error",
+					});
+					dispatch(handleFileModalOpen(false));
+					return;
+				}
+
+				requestFileData = {
+					...commonFileData?.data,
+					...usaFileData?.data,
+				};
+			} else {
+				requestFileData = {
+					...fileData?.data,
+				};
+			}
+
 			const urlArray = urlList
 				.split("\n")
 				?.filter((string) => string?.length > 0);
 			const reqData = {
 				urlArray,
-				fileData: fileData?.data,
+				fileData: requestFileData,
+				tempFileData,
 				dateObj,
 			};
 
@@ -124,9 +187,18 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 					value={urlList}
 				/>
 				<Box sx={styles.formInnerBox}>
-					<Button disabled={urlList?.length === 0} onClick={submitData}>
-						{TEXT.BTN_SET_MATCHES}
-					</Button>
+					<Box display="flex" flexDirection="column" alignItems="center">
+						<AddFileForm
+							text={TEXT}
+							fileCommon={fileCommon}
+							fileUsa={fileUsa}
+							tempFile={tempFile}
+							onFileAdd={onFileAdd}
+						/>
+						<Button disabled={urlList?.length === 0} onClick={submitData}>
+							{TEXT.BTN_SET_MATCHES}
+						</Button>
+					</Box>
 					<Button
 						sx={styles.button}
 						size="small"
