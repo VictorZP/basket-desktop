@@ -7,7 +7,6 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { Box, TextField, Button } from "@mui/material";
 
 import FileModal from "../FileModal";
-import { AddFileForm } from "../../ui/addGamesPage";
 
 import { handleFileModalOpen } from "../../redux/modal/modalSlice.js";
 import { handleUrlAdded } from "../../redux/urlForm/urlFormSlice.js";
@@ -26,9 +25,6 @@ import { STATUS } from "../../constants";
 
 const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const [urlList, setUrlList] = useState([]);
-	const [fileCommon, setFileCommon] = useState(null);
-	const [fileUsa, setFileUsa] = useState(null);
-	const [tempFile, setTempFile] = useState(null);
 
 	const isShown = useSelector(getIsUrlFormOpen);
 	const dispatch = useDispatch();
@@ -40,22 +36,6 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 
 	const clearUrlList = () => {
 		setUrlList([]);
-	};
-
-	const onFileAdd = (file, id) => {
-		switch (id) {
-			case TEXT.ID.FILE_COMMON:
-				setFileCommon(file);
-				break;
-			case TEXT.ID.FILE_USA:
-				setFileUsa(file);
-				break;
-			case TEXT.ID.TEMP:
-				setTempFile(file);
-				break;
-			default:
-				break;
-		}
 	};
 
 	const submitData = async () => {
@@ -144,18 +124,10 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 					value={urlList}
 				/>
 				<Box sx={styles.formInnerBox}>
-					<Box display="flex" flexDirection="column" alignItems="center">
-						<AddFileForm
-							text={TEXT}
-							fileCommon={fileCommon}
-							fileUsa={fileUsa}
-							tempFile={tempFile}
-							onFileAdd={onFileAdd}
-						/>
-						<Button disabled={urlList?.length === 0} onClick={submitData}>
-							{TEXT.BTN_SET_MATCHES}
-						</Button>
-					</Box>
+					<Button disabled={urlList?.length === 0} onClick={submitData}>
+						{TEXT.BTN_SET_MATCHES}
+					</Button>
+
 					<Button
 						sx={styles.button}
 						size="small"
