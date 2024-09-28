@@ -6,6 +6,8 @@ import { CHANNELS } from "../../../../common/constants";
 
 const handleHalvesFile = async () => {
 	let checkObj = {};
+	let commonHalvesFileData;
+	let usaHalvesFileData;
 
 	try {
 		const halvesFilesNamesResponse = await ipcRenderer.invoke(
@@ -25,12 +27,43 @@ const handleHalvesFile = async () => {
 			throw new Error(halvesFilesResponse.message);
 		}
 
-		const commonHalvesFileHandlerResult = handleFile(
-			halvesFilesResponse.commonFileData
-		);
-		const usaHalvesFileHandlerResult = handleFile(
-			halvesFilesResponse.usaFileData
-		);
+		//  Check if the common halves file is in the OneDrive response.
+		//  If it is, use the data from the response. If it is not, get the file from the system.
+		if (halvesFilesResponse.commonFileData) {
+			commonHalvesFileData = halvesFilesResponse.commonFileData;
+		} else {
+			const commonHalvesFileFromSystemResult = await ipcRenderer.invoke(
+				CHANNELS.FILES.GET_FILES_FROM_SYSTEM,
+				halvesFilesNamesResponse.filesNames.commonHalvesFile
+			);
+
+			if (commonHalvesFileFromSystemResult.status === STATUS.ERROR) {
+				throw new Error(commonHalvesFileFromSystemResult.message);
+			}
+
+			commonHalvesFileData = commonHalvesFileFromSystemResult.fileData;
+		}
+
+		// Check if the USA halves file is in the OneDrive response.
+		// If it is, use the data from the response.If it is not, get the file from the system.
+		if (halvesFilesResponse.usaFileData) {
+			usaHalvesFileData = halvesFilesResponse.usaFileData;
+		} else {
+			const usaHalvesFileFromSystemResult = await ipcRenderer.invoke(
+				CHANNELS.FILES.GET_FILES_FROM_SYSTEM,
+				halvesFilesNamesResponse.filesNames.usaHalvesFile
+			);
+
+			if (usaHalvesFileFromSystemResult.status === STATUS.ERROR) {
+				throw new Error(usaHalvesFileFromSystemResult.message);
+			}
+
+			usaHalvesFileData = usaHalvesFileFromSystemResult.fileData;
+		}
+
+		// Handle the files for backend format
+		const commonHalvesFileHandlerResult = handleFile(commonHalvesFileData);
+		const usaHalvesFileHandlerResult = handleFile(usaHalvesFileData);
 
 		if (commonHalvesFileHandlerResult.status === STATUS.ERROR) {
 			throw new Error(commonHalvesFileHandlerResult.message);

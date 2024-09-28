@@ -17,8 +17,6 @@ import { styles } from "./styles.js";
 import { TEXT } from "./text.js";
 import {
 	handleHalvesFile,
-	handleManualHalvesFile,
-	handleManualTempFile,
 	createWarnDetailsFile,
 } from "../../helpers/functions/addMatches";
 
@@ -73,53 +71,12 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 				return;
 			}
 
-			let requestFileData;
-			let tempFileData;
-			//  If there are no files, then we need to handle them manually
-			//  This could be the case when the microsoft graph api is not available or the files are not found
-			if (Object.keys(fileData?.data)?.length === 0) {
-				console.log("here in the if statement");
-				const commonFileData = await handleManualHalvesFile(fileCommon);
-				const usaFileData = await handleManualHalvesFile(fileUsa);
-
-				tempFileData = await handleManualTempFile(tempFile);
-
-				if (
-					fileData?.status === STATUS.ERROR ||
-					usaFileData?.status === STATUS.ERROR
-				) {
-					enqueueSnackbar(fileData?.message, {
-						variant: "error",
-					});
-					dispatch(handleFileModalOpen(false));
-					return;
-				}
-
-				if (tempFileData?.status === STATUS.ERROR) {
-					enqueueSnackbar(tempFileData?.message, {
-						variant: "error",
-					});
-					dispatch(handleFileModalOpen(false));
-					return;
-				}
-
-				requestFileData = {
-					...commonFileData?.data,
-					...usaFileData?.data,
-				};
-			} else {
-				requestFileData = {
-					...fileData?.data,
-				};
-			}
-
 			const urlArray = urlList
 				.split("\n")
 				?.filter((string) => string?.length > 0);
 			const reqData = {
 				urlArray,
-				fileData: requestFileData,
-				tempFileData,
+				fileData: fileData?.data,
 				dateObj,
 			};
 

@@ -97,6 +97,7 @@ export const CHANNELS = {
 	},
 	FILES: {
 		GET_HALVES: "files-get-halves",
+		GET_FILES_FROM_SYSTEM: "files-get-from-system",
 		GET_TEMP_AND_PREDICT: "files-get-temp-and-predict",
 	},
 };

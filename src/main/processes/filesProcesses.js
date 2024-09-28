@@ -4,6 +4,7 @@ const { ipcMain } = require("electron");
 
 const getGraphClient = require("../../graph");
 const { protectedResources } = require("../../authConfig");
+const { getFilesFromSystem } = require("../functions/getFilesFromSystem");
 const { STATUS, CHANNELS } = require("../../common/constants");
 
 const filesHandlers = (authProvider) => {
@@ -99,6 +100,25 @@ const filesHandlers = (authProvider) => {
 			}
 		}
 	);
+
+	//  If there are no files, then we need to handle them from file system
+	//  This could be the case when the microsoft graph api is not available or the files are not found
+	ipcMain.handle(CHANNELS.FILES.GET_FILES_FROM_SYSTEM, async (e, fileName) => {
+		try {
+			const filesResults = await getFilesFromSystem(fileName);
+
+			if (filesResults.status === STATUS.ERROR) {
+				throw new Error(filesResults.message);
+			}
+
+			return { status: STATUS.SUCCESS, fileData: filesResults.fileContent };
+		} catch (err) {
+			return {
+				status: STATUS.ERROR,
+				message: err?.message,
+			};
+		}
+	});
 };
 
 module.exports = filesHandlers;
