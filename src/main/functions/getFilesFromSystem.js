@@ -7,7 +7,7 @@ const { STATUS } = require("../../common/constants");
 const getFilesFromSystem = async (fileName) => {
 	try {
 		// Access the Documents folder
-		const documentsFolder = path.join(os.homedir(), "Documents");
+		const documentsFolder = path.join(os.homedir(), "Documents", "BasketApp");
 
 		// Construct full paths to the files
 		const filePath = path.join(documentsFolder, `${fileName}.xlsx`);
