@@ -1,8 +1,7 @@
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import handleFile from "./handleFile";
-import { STATUS } from "../../../constants";
-import { CHANNELS } from "../../../../common/constants";
+import { CHANNELS, STATUS } from "../../../../common/constants";
 
 const handleHalvesFile = async () => {
 	let checkObj = {};
@@ -23,13 +22,12 @@ const handleHalvesFile = async () => {
 			halvesFilesNamesResponse.filesNames
 		);
 
-		if (halvesFilesResponse.status === STATUS.ERROR) {
-			throw new Error(halvesFilesResponse.message);
-		}
-
 		//  Check if the common halves file is in the OneDrive response.
 		//  If it is, use the data from the response. If it is not, get the file from the system.
-		if (halvesFilesResponse.commonFileData) {
+		if (
+			halvesFilesResponse?.status === STATUS.SUCCESS &&
+			halvesFilesResponse?.commonFileData
+		) {
 			commonHalvesFileData = halvesFilesResponse.commonFileData;
 		} else {
 			const commonHalvesFileFromSystemResult = await ipcRenderer.invoke(
@@ -46,7 +44,10 @@ const handleHalvesFile = async () => {
 
 		// Check if the USA halves file is in the OneDrive response.
 		// If it is, use the data from the response.If it is not, get the file from the system.
-		if (halvesFilesResponse.usaFileData) {
+		if (
+			halvesFilesResponse?.status === STATUS.SUCCESS &&
+			halvesFilesResponse?.usaFileData
+		) {
 			usaHalvesFileData = halvesFilesResponse.usaFileData;
 		} else {
 			const usaHalvesFileFromSystemResult = await ipcRenderer.invoke(
