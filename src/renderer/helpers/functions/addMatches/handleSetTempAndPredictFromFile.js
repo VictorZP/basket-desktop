@@ -28,13 +28,12 @@ export const handleSetTempAndPredictFromFile = async (btnId, games) => {
 			cyberFilesNames.filesNames[cyberFromId]
 		);
 
-		if (tempAndPredictDataByCyberResponse.status === STATUS.ERROR) {
-			return tempAndPredictDataByCyberResponse;
-		}
-
 		// Check if the temp and predict file is in the OneDrive response.
 		// If it is, use the data from the response. If it is not, get the file from the system.
-		if (tempAndPredictDataByCyberResponse.cyberFileData) {
+		if (
+			tempAndPredictDataByCyberResponse?.status === STATUS.SUCCESS &&
+			tempAndPredictDataByCyberResponse.cyberFileData
+		) {
 			tempAndPredictFileData = tempAndPredictDataByCyberResponse.cyberFileData;
 		} else {
 			const tempAndPredictFileFromSystemResult = await ipcRenderer.invoke(
