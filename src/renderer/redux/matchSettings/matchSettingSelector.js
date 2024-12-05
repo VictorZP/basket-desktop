@@ -8,6 +8,7 @@ const getChampEditStatus = (state) => state.matchSettings.editChamp;
 const getChampionshipsLoadingStatus = (state) =>
 	state.matchSettings.isChampLoading;
 const getChampData = (state) => state.matchSettings.champData;
+const getChampCyberId = (state) => state.matchSettings.champData.cyberId;
 const getEditModalLoadingStatus = (state) =>
 	state.matchSettings.isEditModalLoading;
 
@@ -33,6 +34,7 @@ export {
 	getCyberList,
 	getCyberData,
 	getChampData,
+	getChampCyberId,
 	getTeamData,
 	getExpandedVal,
 	getTeamExpandedVal,

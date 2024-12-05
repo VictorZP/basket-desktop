@@ -20,10 +20,15 @@ const initialState = {
 	champData: {
 		champId: "",
 		championshipName: "",
-		fibaliveName: "",
-		betsapiName: "",
-		otherSiteName: "",
-		cyberName: "",
+		fibaliveChampName1: "",
+		fibaliveChampName2: "",
+		fibaliveChampName3: "",
+		betsapiChampName1: "",
+		betsapiChampName2: "",
+		betsapiChampName3: "",
+		otherSiteChampName1: "",
+		otherSiteChampName2: "",
+		otherSiteChampName3: "",
 		cyberId: "",
 		noBetsList: "",
 	},
@@ -42,6 +47,7 @@ const initialState = {
 		cyberId: "",
 		championshipId: "",
 	},
+	selectedCyber: { id: "", value: "", label: "" },
 	selectedChamp: { id: "", value: "", label: "" },
 };
 
@@ -80,12 +86,23 @@ const matchSettingsSlice = createSlice({
 		setChampData(state, { payload }) {
 			state.champData.champId = payload.champId ?? "";
 			state.champData.championshipName = payload.championshipName ?? "";
-			state.champData.fibaliveName = payload.fibaliveName ?? "";
-			state.champData.betsapiName = payload.betsapiName ?? "";
-			state.champData.otherSiteName = payload.otherSiteName ?? "";
-			state.champData.cyberName = payload.cyberName ?? "";
+			state.champData.fibaliveChampName1 = payload.fibaliveChampName1 ?? "";
+			state.champData.fibaliveChampName2 = payload.fibaliveChampName2 ?? "";
+			state.champData.fibaliveChampName3 = payload.fibaliveChampName3 ?? "";
+			state.champData.betsapiChampName1 = payload.betsapiChampName1 ?? "";
+			state.champData.betsapiChampName2 = payload.betsapiChampName2 ?? "";
+			state.champData.betsapiChampName3 = payload.betsapiChampName3 ?? "";
+			state.champData.otherSiteChampName1 = payload.otherSiteChampName1 ?? "";
+			state.champData.otherSiteChampName2 = payload.otherSiteChampName2 ?? "";
+			state.champData.otherSiteChampName3 = payload.otherSiteChampName3 ?? "";
 			state.champData.cyberId = payload.cyberId ?? "";
 			state.champData.noBetsList = payload.noBetsList ?? false;
+		},
+		setChampCyberId(state, { payload }) {
+			state.champData.cyberId = payload ?? "";
+		},
+		setChampName(state, { payload }) {
+			state.champData[payload.name] = payload.value;
 		},
 		setTeamData(state, { payload }) {
 			state.teamData.teamId = payload.teamId ?? "";
@@ -101,6 +118,7 @@ const matchSettingsSlice = createSlice({
 			state.teamData.otherSiteTeamName3 = payload.otherSiteTeamName3 ?? "";
 			state.teamData.cyberId = payload.cyberId ?? "";
 			state.teamData.championshipId = payload.championshipId ?? "";
+			state.teamData.noBetsList = payload.noBetsList ?? false;
 		},
 		setTeamCyberId(state, { payload }) {
 			state.teamData.cyberId = payload ?? "";
@@ -151,11 +169,26 @@ const matchSettingsSlice = createSlice({
 			state.champData.champId = initialState.champData.id;
 			state.champData.championshipName =
 				initialState.champData.championshipName;
-			state.champData.fibaliveName = initialState.champData.fibaliveName;
-			state.champData.betsapiName = initialState.champData.betsapiName;
-			state.champData.otherSiteName = initialState.champData.otherSiteName;
-			state.champData.cyberName = initialState.champData.cyberName;
+			state.champData.fibaliveChampName1 =
+				initialState.champData.fibaliveChampName1;
+			state.champData.fibaliveChampName2 =
+				initialState.champData.fibaliveChampName2;
+			state.champData.fibaliveChampName3 =
+				initialState.champData.fibaliveChampName3;
+			state.champData.betsapiChampName1 =
+				initialState.champData.betsapiChampName1;
+			state.champData.betsapiChampName2 =
+				initialState.champData.betsapiChampName2;
+			state.champData.betsapiChampName3 =
+				initialState.champData.betsapiChampName3;
+			state.champData.otherSiteChampName1 =
+				initialState.champData.otherSiteChampName1;
+			state.champData.otherSiteChampName2 =
+				initialState.champData.otherSiteChampName2;
+			state.champData.otherSiteChampName3 =
+				initialState.champData.otherSiteChampName3;
 			state.champData.cyberId = initialState.champData.cyberId;
+			state.champData.noBetsList = initialState.champData.noBetsList;
 		},
 		refreshTeamData(state) {
 			state.teamData = initialState.teamData;
@@ -196,6 +229,8 @@ export const {
 	setCyberList,
 	setCyberData,
 	setChampData,
+	setChampCyberId,
+	setChampName,
 	setTeamData,
 	setTeamCyberId,
 	setTeamChampionshipId,

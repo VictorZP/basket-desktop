@@ -22,6 +22,9 @@ class ModalHandler {
 		dispatch(handleModalOpen(false));
 		dispatch(refreshModalState());
 
+		// Refresh championship data after closing championship modal
+		// TODO
+
 		// Refresh team data and selected champ after closing team names modal
 		if (type === MODAL_TYPES.TEAM_ADD) {
 			dispatch(refreshTeamData());
