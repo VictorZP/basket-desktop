@@ -5,19 +5,20 @@ import { enqueueSnackbar } from "notistack";
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import {
-	handleAddTeam,
-	refreshTeamNames,
-	setTeamLoadingStatus,
+	handleAddChamp,
+	refreshChampData,
+	setChampLoadingStatus,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
 
 import { CHANNELS, MATCHES_SETTINGS } from "../../../common/constants";
 
-// Hook for handle team add response
-export const useHandleTeamAdd = () => {
+// Hook for handle champ add response
+export const useHandleChampAdd = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		ipcRenderer.on(CHANNELS.TEAM_NAME.ADD_NAME, (e, arg) => {
+		ipcRenderer.on(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, (e, arg) => {
+			console.log(arg);
 			if (arg?.statusText !== "Created") {
 				enqueueSnackbar(
 					arg?.message ?? MATCHES_SETTINGS.ERR_MESSAGES.ON_ERROR,
@@ -25,22 +26,24 @@ export const useHandleTeamAdd = () => {
 						variant: "error",
 					}
 				);
-				dispatch(setTeamLoadingStatus(false));
+				dispatch(setChampLoadingStatus(false));
 				return;
 			}
 
-			dispatch(setTeamLoadingStatus(false));
-			dispatch(handleAddTeam(true));
-			enqueueSnackbar(arg?.message ?? MATCHES_SETTINGS.TEAM_NAMES_FORM.ADDED, {
-				variant: "success",
-			});
+			dispatch(setChampLoadingStatus(false));
+			dispatch(handleAddChamp(true));
+			enqueueSnackbar(
+				arg?.message ?? MATCHES_SETTINGS.CHAMPIONSHIP_FORM.CHAMP_ADDED,
+				{
+					variant: "success",
+				}
+			);
 
-			dispatch(refreshTeamNames());
+			dispatch(refreshChampData());
 		});
 
 		return () => {
-			ipcRenderer.removeAllListeners(CHANNELS.TEAM_NAME.ADD_NAME);
+			ipcRenderer.removeAllListeners(CHANNELS.APP_CHAMP.APP_CHAMP_ADD);
 		};
-		// Change the dependency array
-	}, []);
+	});
 };

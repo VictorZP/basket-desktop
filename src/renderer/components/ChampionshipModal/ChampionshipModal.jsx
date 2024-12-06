@@ -23,6 +23,7 @@ import {
 	getChampCyberId,
 	getChampData,
 } from "../../redux/matchSettings/matchSettingSelector.js";
+import { useHandleChampAdd } from "../../hooks/championshipNamesForm";
 
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
 
@@ -32,7 +33,7 @@ import {
 } from "../../helpers/reusableComponents/championshipsModal.js";
 
 import { CONSTANTS, TEXT } from "../../constants/champNameFormConstants.js";
-import { MATCHES_SETTINGS } from "../../../common/constants/index.js";
+import { MATCHES_SETTINGS, CHANNELS } from "../../../common/constants";
 
 const ChampionshipModal = () => {
 	const cyberId = useSelector(getChampCyberId);
@@ -46,6 +47,9 @@ const ChampionshipModal = () => {
 	const dispatch = useDispatch();
 
 	const { CHAMPIONSHIP_FORM } = MATCHES_SETTINGS;
+
+	//  Handle champ add response
+	useHandleChampAdd();
 
 	const options = CommonHandler.getCyberSelectOptions(cyberList);
 
@@ -89,7 +93,7 @@ const ChampionshipModal = () => {
 				...champData,
 			};
 
-			// TODO: Add ipcRenderer.send logic here
+			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, reqData);
 
 			dispatch(setChampLoadingStatus(false));
 		} catch (err) {
