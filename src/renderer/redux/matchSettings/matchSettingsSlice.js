@@ -98,6 +98,20 @@ const matchSettingsSlice = createSlice({
 			state.champData.cyberId = payload.cyberId ?? "";
 			state.champData.noBetsList = payload.noBetsList ?? false;
 		},
+		setChampNames(state, { payload }) {
+			state.champData.championshipName = payload.championshipName;
+			state.champData.fibaliveChampName1 = payload.fibaliveChampName1;
+			state.champData.fibaliveChampName2 = payload.fibaliveChampName2;
+			state.champData.fibaliveChampName3 = payload.fibaliveChampName3;
+			state.champData.betsapiChampName1 = payload.betsapiChampName1;
+			state.champData.betsapiChampName2 = payload.betsapiChampName2;
+			state.champData.betsapiChampName3 = payload.betsapiChampName3;
+			state.champData.otherSiteChampName1 = payload.otherSiteChampName1;
+			state.champData.otherSiteChampName2 = payload.otherSiteChampName2;
+			state.champData.otherSiteChampName3 = payload.otherSiteChampName3;
+			state.champData.cyberId = payload.cyberId;
+			state.champData.noBetsList = payload.noBetsList;
+		},
 		setChampCyberId(state, { payload }) {
 			state.champData.cyberId = payload ?? "";
 		},
@@ -190,6 +204,30 @@ const matchSettingsSlice = createSlice({
 			state.champData.cyberId = initialState.champData.cyberId;
 			state.champData.noBetsList = initialState.champData.noBetsList;
 		},
+		refreshChampNames(state) {
+			state.champData.championshipName =
+				initialState.champData.championshipName;
+			state.champData.fibaliveChampName1 =
+				initialState.champData.fibaliveChampName1;
+			state.champData.fibaliveChampName2 =
+				initialState.champData.fibaliveChampName2;
+			state.champData.fibaliveChampName3 =
+				initialState.champData.fibaliveChampName3;
+			state.champData.betsapiChampName1 =
+				initialState.champData.betsapiChampName1;
+			state.champData.betsapiChampName2 =
+				initialState.champData.betsapiChampName2;
+			state.champData.betsapiChampName3 =
+				initialState.champData.betsapiChampName3;
+			state.champData.otherSiteChampName1 =
+				initialState.champData.otherSiteChampName1;
+			state.champData.otherSiteChampName2 =
+				initialState.champData.otherSiteChampName2;
+			state.champData.otherSiteChampName3 =
+				initialState.champData.otherSiteChampName3;
+			state.champData.cyberId = initialState.champData.cyberId;
+			state.champData.noBetsList = initialState.champData.noBetsList;
+		},
 		refreshTeamData(state) {
 			state.teamData = initialState.teamData;
 		},
@@ -229,6 +267,7 @@ export const {
 	setCyberList,
 	setCyberData,
 	setChampData,
+	setChampNames,
 	setChampCyberId,
 	setChampName,
 	setTeamData,
@@ -244,6 +283,7 @@ export const {
 	refreshCyberList,
 	refreshCyberData,
 	refreshChampData,
+	refreshChampNames,
 	refreshTeamData,
 	refreshTeamNames,
 	refreshMS,

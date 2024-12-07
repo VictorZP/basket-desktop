@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
@@ -22,8 +22,14 @@ import {
 	getCyberList,
 	getChampCyberId,
 	getChampData,
+	getChampEditStatus,
+	getEditModalLoadingStatus,
 } from "../../redux/matchSettings/matchSettingSelector.js";
-import { useHandleChampAdd } from "../../hooks/championshipNamesForm";
+import {
+	useHandleChampAdd,
+	useEditChampionship,
+	useHandleAfterChampionshipEdit,
+} from "../../hooks/championshipNamesForm";
 
 import CommonHandler from "../../helpers/classes/CommonHandler.js";
 
@@ -39,10 +45,8 @@ const ChampionshipModal = () => {
 	const cyberId = useSelector(getChampCyberId);
 	const cyberList = useSelector(getCyberList);
 	const champData = useSelector(getChampData);
-	// const onEdit = useSelector(getChampEditStatus);
-	// const isEditLoading = useSelector(getEditModalLoadingStatus);
-	const onEdit = false;
-	const isEditLoading = false;
+	const onEdit = useSelector(getChampEditStatus);
+	const isEditLoading = useSelector(getEditModalLoadingStatus);
 
 	const dispatch = useDispatch();
 
@@ -51,7 +55,21 @@ const ChampionshipModal = () => {
 	//  Handle champ add response
 	useHandleChampAdd();
 
+	// Edit championship data
+	useEditChampionship();
+
+	// After edit championship handler
+	useHandleAfterChampionshipEdit();
+
 	const options = CommonHandler.getCyberSelectOptions(cyberList);
+
+	//  Handle loading status when editing team
+	//  Waiting while cyber options are set
+	useEffect(() => {
+		if (options?.length > 0 && onEdit) {
+			dispatch(handleEditModalLoadingStatus(false));
+		}
+	}, [options]);
 
 	const handleChange = (e) => {
 		const name = e?.target?.name;
@@ -106,7 +124,15 @@ const ChampionshipModal = () => {
 				},
 			};
 
-			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, reqData);
+			if (onEdit) {
+				const updateData = {
+					id: champData?.champId,
+					...reqData,
+				};
+				ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_EDIT, updateData);
+			} else {
+				ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, reqData);
+			}
 
 			dispatch(setChampLoadingStatus(false));
 		} catch (err) {

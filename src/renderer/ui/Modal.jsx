@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Modal as MuiModal, Box } from "@mui/material";
 
+import ChampionshipModal from "../components/ChampionshipModal";
 import TransferModal from "../components/TransferModal";
 import TeamModal from "../components/TeamModal";
 
@@ -27,7 +28,9 @@ const Modal = () => {
 		<MuiModal
 			open={
 				isOpen &&
-				(type === MODAL_TYPES.TRANSFER_TEAMS || type === MODAL_TYPES.TEAM_ADD)
+				(type === MODAL_TYPES.CHAMPIONSHIP_ADD ||
+					type === MODAL_TYPES.TRANSFER_TEAMS ||
+					type === MODAL_TYPES.TEAM_ADD)
 			}
 			onClose={handleClose}
 			sx={{
@@ -40,6 +43,7 @@ const Modal = () => {
 			<Box sx={{ width: "100%", height: "100%" }}>
 				{type === MODAL_TYPES.TEAM_ADD && <TeamModal />}
 				{type === MODAL_TYPES.TRANSFER_TEAMS && <TransferModal />}
+				{type === MODAL_TYPES.CHAMPIONSHIP_ADD && <ChampionshipModal />}
 			</Box>
 		</MuiModal>
 	);

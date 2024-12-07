@@ -168,15 +168,24 @@ const MatchesSettings = () => {
 				const champPayload = {
 					champId: id,
 					championshipName: championship?.championshipName ?? "",
-					fibaliveName: championship?.fibaliveName ?? "",
-					betsapiName: championship?.betsapiName ?? "",
-					otherSiteName: championship?.otherSiteName ?? "",
+					fibaliveChampName1: championship?.fibaliveChampName1 ?? "",
+					fibaliveChampName2: championship?.fibaliveChampName2 ?? "",
+					fibaliveChampName3: championship?.fibaliveChampName3 ?? "",
+					betsapiChampName1: championship?.betsapiChampName1 ?? "",
+					betsapiChampName2: championship?.betsapiChampName2 ?? "",
+					betsapiChampName3: championship?.betsapiChampName3 ?? "",
+					otherSiteChampName1: championship?.otherSiteChampName1 ?? "",
+					otherSiteChampName2: championship?.otherSiteChampName2 ?? "",
+					otherSiteChampName3: championship?.otherSiteChampName3 ?? "",
 					cyberName: championship?.cyber?.name ?? "",
 					cyberId: championship?.cyberId ?? "",
 					noBetsList: championship?.noBetsList ?? false,
 				};
 				dispatch(setChampData(champPayload));
 				dispatch(handleEditChamp(true));
+
+				dispatch(handleEditModalLoadingStatus(true));
+				ModalHandler.openModal(dispatch, MODAL_TYPES.CHAMPIONSHIP_ADD);
 				break;
 
 			case MATCHES_SETTINGS.TEAM_NAMES_TABLE.EDIT_TEAM_NAME:
