@@ -90,7 +90,20 @@ const ChampionshipModal = () => {
 		try {
 			dispatch(setChampLoadingStatus(true));
 			const reqData = {
-				...champData,
+				champ: {
+					championshipName: champData.championshipName,
+					fibaliveChampName1: champData.fibaliveChampName1,
+					fibaliveChampName2: champData.fibaliveChampName2,
+					fibaliveChampName3: champData.fibaliveChampName3,
+					betsapiChampName1: champData.betsapiChampName1,
+					betsapiChampName2: champData.betsapiChampName2,
+					betsapiChampName3: champData.betsapiChampName3,
+					otherSiteChampName1: champData.otherSiteChampName1,
+					otherSiteChampName2: champData.otherSiteChampName2,
+					otherSiteChampName3: champData.otherSiteChampName3,
+					cyberId: champData.cyberId,
+					noBetsList: champData.noBetsList,
+				},
 			};
 
 			ipcRenderer.send(CHANNELS.APP_CHAMP.APP_CHAMP_ADD, reqData);
