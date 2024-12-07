@@ -41,6 +41,5 @@ export const useHandleTeamAdd = () => {
 		return () => {
 			ipcRenderer.removeAllListeners(CHANNELS.TEAM_NAME.ADD_NAME);
 		};
-		// Change the dependency array
-	}, []);
+	});
 };

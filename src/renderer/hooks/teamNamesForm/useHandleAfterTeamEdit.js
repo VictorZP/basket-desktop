@@ -59,5 +59,5 @@ export const useHandleAfterTeamEdit = () => {
 		return () => {
 			ipcRenderer.removeAllListeners(CHANNELS.TEAM_NAME.EDIT_NAME);
 		};
-	}, []);
+	});
 };
