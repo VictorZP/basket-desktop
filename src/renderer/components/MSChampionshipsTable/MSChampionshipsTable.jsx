@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import {
 	Box,
+	List,
 	Table,
 	TableBody,
 	TableHead,
@@ -12,6 +13,7 @@ import {
 import CheckIcon from "@mui/icons-material/Check";
 
 import TableBtnStack from "../TableBtnStack";
+import ChampionshipNameListItem from "../../ui/championshipNames/ChampionshipNameListItem.jsx";
 import {
 	StyledTableCell,
 	StyledTableRow,
@@ -64,9 +66,63 @@ const MSChampionshipsTable = ({ dataList = [], btnStackProps, isLoading }) => {
 						<StyledTableRow key={row?.championshipId}>
 							<StyledTableCell>{row?.cyber?.name ?? ""}</StyledTableCell>
 							<StyledTableCell>{row?.championshipName ?? ""}</StyledTableCell>
-							<StyledTableCell>{row?.fibaliveName ?? ""}</StyledTableCell>
-							<StyledTableCell>{row?.betsapiName ?? ""}</StyledTableCell>
-							<StyledTableCell>{row?.otherSiteName ?? ""}</StyledTableCell>
+							<StyledTableCell>
+								<List disablePadding>
+									{row?.fibaliveChampName1 && (
+										<ChampionshipNameListItem
+											champName={row?.fibaliveChampName1}
+										/>
+									)}
+									{row?.fibaliveChampName2 && (
+										<ChampionshipNameListItem
+											champName={row?.fibaliveChampName2}
+										/>
+									)}
+									{row?.fibaliveChampName3 && (
+										<ChampionshipNameListItem
+											champName={row?.fibaliveChampName3}
+										/>
+									)}
+								</List>
+							</StyledTableCell>
+							<StyledTableCell>
+								<List disablePadding>
+									{row?.betsapiChampName1 && (
+										<ChampionshipNameListItem
+											champName={row?.betsapiChampName1}
+										/>
+									)}
+									{row?.betsapiChampName2 && (
+										<ChampionshipNameListItem
+											champName={row?.betsapiChampName2}
+										/>
+									)}
+									{row?.betsapiChampName3 && (
+										<ChampionshipNameListItem
+											champName={row?.betsapiChampName3}
+										/>
+									)}
+								</List>
+							</StyledTableCell>
+							<StyledTableCell>
+								<List disablePadding>
+									{row?.otherSiteChampName1 && (
+										<ChampionshipNameListItem
+											champName={row?.otherSiteChampName1}
+										/>
+									)}
+									{row?.otherSiteChampName2 && (
+										<ChampionshipNameListItem
+											champName={row?.otherSiteChampName2}
+										/>
+									)}
+									{row?.otherSiteChampName3 && (
+										<ChampionshipNameListItem
+											champName={row?.otherSiteChampName3}
+										/>
+									)}
+								</List>
+							</StyledTableCell>
 							<StyledTableCell>
 								<Box
 									sx={{
