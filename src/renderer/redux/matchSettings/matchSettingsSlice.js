@@ -30,7 +30,7 @@ const initialState = {
 		otherSiteChampName2: "",
 		otherSiteChampName3: "",
 		cyberId: "",
-		noBetsList: "",
+		noBetsList: false,
 	},
 	teamData: {
 		teamId: "",
