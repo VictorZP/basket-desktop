@@ -1,12 +1,13 @@
 import {
-	handleModalOpen,
 	setModalType,
+	handleModalOpen,
 	refreshModalState,
 } from "../../redux/modal/modalSlice.js";
 
 import {
-	handleEditTeam,
+	handleEditChamp,
 	refreshChampData,
+	handleEditTeam,
 	refreshTeamData,
 	refreshSelectedChamp,
 } from "../../redux/matchSettings/matchSettingsSlice.js";
@@ -27,6 +28,7 @@ class ModalHandler {
 		if (type === MODAL_TYPES.CHAMPIONSHIP_ADD) {
 			dispatch(refreshChampData());
 			dispatch(refreshSelectedChamp());
+			dispatch(handleEditChamp(false));
 		}
 
 		// Refresh team data and selected champ after closing team names modal
