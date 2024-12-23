@@ -67,6 +67,7 @@ export const createLinesXlsxFile = async (linesData) => {
 				};
 				const handicapCell = { v: event.handicap, t: "s" };
 				const OUCell = { v: event.OU, t: "s" };
+				const totalPointsHalfCell = { v: event.totalPointsHalf, t: "s" };
 
 				const startCellRef = utils.encode_cell({
 					r: orderedIndex,
@@ -92,6 +93,10 @@ export const createLinesXlsxFile = async (linesData) => {
 					r: orderedIndex,
 					c: columnNumber + 5,
 				});
+				const totalPointsHalfCellRef = utils.encode_cell({
+					r: orderedIndex,
+					c: columnNumber + 6,
+				});
 
 				worksheet[startCellRef] = startCell;
 				worksheet[champCellRef] = champCell;
@@ -99,12 +104,13 @@ export const createLinesXlsxFile = async (linesData) => {
 				worksheet[awayTeamCellRef] = awayTeamCell;
 				worksheet[OUCellRef] = OUCell;
 				worksheet[handicapCellRef] = handicapCell;
+				worksheet[totalPointsHalfCellRef] = totalPointsHalfCell;
 
 				rowsCounter += 1;
 				orderedIndex += 1;
 			});
 
-			columnNumber += 7;
+			columnNumber += 8;
 			if (maxRows < item.events.length) {
 				maxRows = item.events.length + 1;
 			}

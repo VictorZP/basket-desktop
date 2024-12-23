@@ -80,6 +80,7 @@ export const createLinesXlsxFileNoBets = async (
 			};
 			const handicapCell = { v: "-", t: "s" };
 			const OUCell = { v: "-", t: "s" };
+			const totalPointsHalfCell = { v: "-", t: "s" };
 
 			const champCellRef = utils.encode_cell({
 				r: orderedIndex,
@@ -101,18 +102,23 @@ export const createLinesXlsxFileNoBets = async (
 				r: orderedIndex,
 				c: columnNumber + 4,
 			});
+			const totalPointsHalfCellRef = utils.encode_cell({
+				r: orderedIndex,
+				c: columnNumber + 5,
+			});
 
 			worksheet[champCellRef] = champCell;
 			worksheet[homeTeamCellRef] = homeTeamCell;
 			worksheet[awayTeamCellRef] = awayTeamCell;
 			worksheet[handicapCellRef] = handicapCell;
 			worksheet[OUCellRef] = OUCell;
+			worksheet[totalPointsHalfCellRef] = totalPointsHalfCell;
 
 			rowsCounter += 1;
 			orderedIndex += 1;
 		});
 
-		columnNumber += 6;
+		columnNumber += 7;
 		if (maxRows < item.events.length) {
 			maxRows = item.events.length;
 		}
