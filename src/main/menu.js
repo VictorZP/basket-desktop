@@ -46,7 +46,7 @@ const handleAppMenu = (window) => {
 				{ label: "Уменьшить зум", role: "zoomOut" },
 				{ label: "Инструменты разработчика", role: "toggleDevTools" },
 				{ type: "separator" },
-				{ label: "Полноекранный/Оконный режим", role: "togglefullscreen" },
+				{ label: "Полноэкранный режим", role: "togglefullscreen" },
 				{ type: "separator" },
 				{ label: "Свернуть", role: "minimize" },
 			],

@@ -11,7 +11,7 @@ const filesHandlers = require("./processes/filesProcesses");
 const trayHandler = require("./functions/trayHandler.js");
 
 const handleAppMenu = require("./menu.js");
-const contextMenu = require("./helpers/trayContextMenu.js");
+const trayContextMenu = require("./helpers/trayContextMenu.js");
 const { trayIcon } = require("./helpers/icons.js");
 
 if (require("electron-squirrel-startup")) {
@@ -49,7 +49,7 @@ if (!gotTheLock) {
 
 		tray = new Tray(trayIcon);
 
-		tray.setContextMenu(contextMenu);
+		tray.setContextMenu(trayContextMenu);
 
 		trayHandler(tray);
 
@@ -87,3 +87,6 @@ import "./processes/parcerDataProcesses.js";
 import "./processes/manualResultsProcesses.js";
 import "./processes/bettingResultsProcesses.js";
 // import "./processes/authProcesses.js";
+
+// Context menu
+import "./helpers/contextMenu.js";
