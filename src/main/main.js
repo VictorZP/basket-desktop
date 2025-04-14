@@ -32,7 +32,7 @@ if (!gotTheLock) {
 			createWindow();
 		}
 
-		if (BrowserWindow.getAllWindows().length === 1) {
+		if (BrowserWindow.getAllWindows().length >= 1) {
 			BrowserWindow.getAllWindows().forEach((win) => {
 				win.show();
 			});
@@ -87,6 +87,7 @@ import "./processes/parcerDataProcesses.js";
 import "./processes/manualResultsProcesses.js";
 import "./processes/bettingResultsProcesses.js";
 // import "./processes/authProcesses.js";
+import "./processes/matchStatsWindow.js";
 
 // Context menu
 import "./helpers/contextMenu.js";

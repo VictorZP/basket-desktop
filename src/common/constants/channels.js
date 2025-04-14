@@ -100,4 +100,8 @@ export const CHANNELS = {
 		GET_FILES_FROM_SYSTEM: "files-get-from-system",
 		GET_TEMP_AND_PREDICT: "files-get-temp-and-predict",
 	},
+	MATCHES_STATS: {
+		OPEN_STATS_WINDOW: "open-stats-window",
+		GET_MATCHES_DATA: "get-matches-data",
+	},
 };
