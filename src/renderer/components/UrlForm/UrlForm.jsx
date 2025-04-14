@@ -41,22 +41,23 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const submitData = async () => {
 		try {
 			dispatch(handleFileModalOpen(true));
-			const fileData = await handleHalvesFile();
+			// const fileData = await handleHalvesFile();
 
-			if (fileData?.status === STATUS.ERROR) {
-				enqueueSnackbar(fileData?.message, {
-					variant: "error",
-				});
-				dispatch(handleFileModalOpen(false));
-				return;
-			}
+			// if (fileData?.status === STATUS.ERROR) {
+			// 	enqueueSnackbar(fileData?.message, {
+			// 		variant: "error",
+			// 	});
+			// 	dispatch(handleFileModalOpen(false));
+			// 	return;
+			// }
 
 			const urlArray = urlList
 				.split("\n")
 				?.filter((string) => string?.length > 0);
 			const reqData = {
 				urlArray,
-				fileData: fileData?.data,
+				// fileData: fileData?.data,
+				fileData: [],
 				dateObj,
 			};
 

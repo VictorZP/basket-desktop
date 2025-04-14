@@ -2,6 +2,9 @@ import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { enqueueSnackbar } from "notistack";
+
+const ipcRenderer = window.require("electron").ipcRenderer;
 
 import { Box, Typography, Button, Divider, Slide } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -13,11 +16,16 @@ import { handleOpenState } from "../redux/urlForm/urlFormSlice.js";
 import { getIsUrlFormOpen } from "../redux/urlForm/urlFormSelector.js";
 
 import { CONSTANTS } from "../constants/matchesPage.js";
+const { CHANNELS } = require("../../common/constants/channels.js");
 
 const TEXT = {
 	NEXT_BTN: "Отслеживание матчей",
 	ACTIVE_BTN_ID: "active games",
 	PATH: "active_games",
+	MATCH_INFO: {
+		TITLE: "Статистика игр",
+		ID: "geams_stats",
+	},
 	MANUAL_BTN: "Ручное добавление",
 	MANUAL_BTN_ID: "manual handler",
 	MANUAL_PATH: "manual_results",
@@ -39,12 +47,32 @@ const GamesSettings = () => {
 		dispatch(handleOpenState(!isFormOpen));
 	};
 
-	const handleNavigate = (e) => {
+	const handleNavigate = async (e) => {
 		const id = e.target.id;
-		if (id === TEXT.ACTIVE_BTN_ID) {
-			navigate(`/${TEXT.PATH}`);
-		} else {
-			navigate(`/${TEXT.MANUAL_PATH}`);
+
+		switch (id) {
+			case TEXT.ACTIVE_BTN_ID:
+				navigate(`/${TEXT.PATH}`);
+				break;
+
+			case TEXT.MANUAL_BTN_ID:
+				navigate(`/${TEXT.MANUAL_PATH}`);
+				break;
+
+			case TEXT.MATCH_INFO.ID: {
+				const res = await ipcRenderer.invoke(
+					CHANNELS.MATCHES_STATS.OPEN_STATS_WINDOW
+				);
+				if (res?.status === 500) {
+					enqueueSnackbar(res?.message, {
+						variant: "error",
+					});
+				}
+				break;
+			}
+
+			default:
+				break;
 		}
 	};
 	const dateObj = {
@@ -103,7 +131,7 @@ const GamesSettings = () => {
 			<Divider />
 			<GamesStaticList paramsObj={paramsObj} />
 			<Divider />
-			<Box sx={{ px: 3, py: 3, overflow: "hidden" }}>
+			<Box sx={{ px: 3, py: 3, overflow: "hidden", display: "flex", gap: 5 }}>
 				<Button
 					variant="outlined"
 					size="small"
@@ -111,6 +139,14 @@ const GamesSettings = () => {
 					onClick={handleNavigate}
 				>
 					{TEXT.NEXT_BTN}
+				</Button>
+				<Button
+					variant="outlined"
+					size="small"
+					id={TEXT.MATCH_INFO.ID}
+					onClick={handleNavigate}
+				>
+					{TEXT.MATCH_INFO.TITLE}
 				</Button>
 			</Box>
 			<Divider />
