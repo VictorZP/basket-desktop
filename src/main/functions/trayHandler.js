@@ -6,13 +6,25 @@ const trayHandler = (tray) => {
 	tray.setToolTip("Who wins");
 
 	tray.on("click", () => {
-		if (BrowserWindow.getAllWindows().length === 0) {
+		const windows = BrowserWindow.getAllWindows();
+
+		if (windows.length === 0) {
 			createWindow();
 		}
 
-		if (BrowserWindow.getAllWindows().length === 1) {
-			BrowserWindow.getAllWindows().forEach((win) => {
-				win.show();
+		if (windows.length > 0) {
+			const mainWindow = windows.find((win) => win.title === "Who wins");
+
+			if (mainWindow) {
+				mainWindow.show();
+			} else {
+				createWindow();
+			}
+
+			windows.forEach((win) => {
+				if (win.title !== "Who wins") {
+					win.show();
+				}
 			});
 		}
 	});

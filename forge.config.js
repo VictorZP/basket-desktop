@@ -63,6 +63,14 @@ module.exports = {
 								js: "./src/preload/preload.js",
 							},
 						},
+						{
+							html: "./src/matchesStats.html",
+							js: "./src/renderer/matchesStats.js",
+							name: "matches_stats_window",
+							preload: {
+								js: "./src/preload/preload.js",
+							},
+						},
 					],
 				},
 			},
