@@ -9,10 +9,13 @@ const handleTempFile = (file) => {
 	try {
 		const wb = read(file, FILES_HANDLERS.TEMP_READ_OPTIONS);
 		const worksheet = wb.Sheets["Line"];
-		const data = utils.sheet_to_json(worksheet, FILES_HANDLERS.JSON_OPTIONS);
-		let result = [];
+		const lineData = utils.sheet_to_json(
+			worksheet,
+			FILES_HANDLERS.JSON_OPTIONS
+		);
+		let lineResult = [];
 
-		data?.forEach((row) => {
+		lineData?.forEach((row) => {
 			if (!row[2]) {
 				return;
 			}
@@ -27,10 +30,35 @@ const handleTempFile = (file) => {
 				colP: row[15] || "-",
 			};
 
-			result.push(obj);
+			lineResult.push(obj);
 		});
 
-		return { status: STATUS.FINISHED, data: result };
+		const predictWS = wb.Sheets["Predict"];
+		const predictData = utils.sheet_to_json(
+			predictWS,
+			FILES_HANDLERS.JSON_OPTIONS
+		);
+		let predictResult = [];
+
+		predictData?.forEach((row) => {
+			if (!row[1]) {
+				return;
+			}
+
+			let obj = {
+				championship: row[1],
+				homeTeam: row[2],
+				awayTeam: row[3],
+				predict: row[7],
+			};
+
+			predictResult.push(obj);
+		});
+
+		return {
+			status: STATUS.FINISHED,
+			data: { lines: lineResult, predict: predictResult },
+		};
 	} catch (err) {
 		return { status: STATUS.ERROR, message: err?.message };
 	}
