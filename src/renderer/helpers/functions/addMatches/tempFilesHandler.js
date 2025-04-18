@@ -46,10 +46,10 @@ const handleTempFile = (file) => {
 			}
 
 			let obj = {
-				championship: row[1],
-				homeTeam: row[2],
-				awayTeam: row[3],
-				predict: row[7],
+				championship: row[2],
+				homeTeam: row[3],
+				awayTeam: row[4],
+				predict: row[8],
 			};
 
 			predictResult.push(obj);
