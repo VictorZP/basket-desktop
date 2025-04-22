@@ -110,3 +110,21 @@ ipcMain.handle(
 		}
 	}
 );
+
+ipcMain.handle(CHANNELS.ANALYZE.DELETE_MATCH, async (e, data) => {
+	try {
+		const res = await axios.delete(`${endPoint}/delete/game/${data.id}`);
+
+		return {
+			status: res?.data?.status,
+			message: res?.data?.message,
+			statusCode: 200,
+		};
+	} catch (err) {
+		return {
+			status: STATUS.ERROR,
+			statusCode: err?.response?.status || 500,
+			message: err?.response?.data?.message || err.message,
+		};
+	}
+});

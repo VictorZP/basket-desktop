@@ -46,6 +46,7 @@ export const CHANNELS = {
 		CONNECT: "connect",
 		SHOW_NOTIFICATION: "show-notification",
 		DISCONNECT: "disconnect",
+		DELETE_MATCH: "delete-match",
 	},
 	LINES: {
 		GET_LINES: "lines-get",
