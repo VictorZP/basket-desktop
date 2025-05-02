@@ -48,6 +48,12 @@ export const CHANNELS = {
 		DISCONNECT: "disconnect",
 		DELETE_MATCH: "delete-match",
 	},
+	HALVES_STATISTICS: {
+		GET_HALVES_STATISTICS: "get-halves-statistics",
+		GET_HALVES_STATISTICS_LIST: "get-halves-statistics-list",
+		DOWNLOAD_HALVES_STATISTICS: "download-halves-statistics",
+		DELETE_HALVES_STATISTICS: "delete-halves-statistics",
+	},
 	LINES: {
 		GET_LINES: "lines-get",
 		GET_LINES_LIST: "lines-get-list",

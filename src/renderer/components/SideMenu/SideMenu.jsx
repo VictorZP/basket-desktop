@@ -16,6 +16,7 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ViewTimelineIcon from "@mui/icons-material/ViewTimeline";
 import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
@@ -38,6 +39,7 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 		<HomeIcon />,
 		<BarChartIcon />,
 		<ViewTimelineIcon />,
+		<QueryStatsIcon />,
 		<DataThresholdingOutlinedIcon />,
 		<EditNoteIcon />,
 	];
@@ -55,7 +57,11 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 			<Divider />
 			<List>
 				{SIDE_MENU.MATCH_LIST.map(({ TITLE, PAGE_NAME }, index) => {
-					if (PAGE_NAME !== "active_games" && PAGE_NAME !== "manual_results")
+					if (
+						PAGE_NAME !== "active_games" &&
+						PAGE_NAME !== "manual_results" &&
+						PAGE_NAME !== "form_halves_statistics"
+					)
 						return (
 							<ListItem
 								key={PAGE_NAME}

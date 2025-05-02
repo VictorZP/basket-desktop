@@ -88,6 +88,7 @@ import "./processes/manualResultsProcesses.js";
 import "./processes/bettingResultsProcesses.js";
 // import "./processes/authProcesses.js";
 import "./processes/matchStatsWindow.js";
+import "./processes/halvesStatisticsProcesses.js";
 
 // Context menu
 import "./helpers/contextMenu.js";

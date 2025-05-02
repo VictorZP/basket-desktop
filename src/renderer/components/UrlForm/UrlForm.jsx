@@ -41,7 +41,7 @@ const UrlForm = forwardRef(({ dateObj }, ref) => {
 	const submitData = async () => {
 		try {
 			dispatch(handleFileModalOpen(true));
-			const fileData = await handleHalvesFile();
+			const fileData = await handleHalvesFile("adding");
 
 			if (fileData?.status === STATUS.ERROR) {
 				enqueueSnackbar(fileData?.message, {

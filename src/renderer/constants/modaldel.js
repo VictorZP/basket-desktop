@@ -13,4 +13,5 @@ export const MODAL_DEL = {
 	PAGE_TYPE_LINES_DATA: "delLinesData",
 	PAGE_TYPE_PARCER_DATA: "delParcerData",
 	PAGE_TYPE_FILTER_CHAMP: "delParcerChamp",
+	PAGE_TYPE_HALVES_STATISTICS_DATA: "delHalvesStatisticsData",
 };

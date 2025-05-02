@@ -18,7 +18,11 @@ const GamesSettings = lazy(() => import("../pages/GamesSettings.jsx"));
 const ManualResults = lazy(() => import("../pages/ManualResults.jsx"));
 const ParserSettings = lazy(() => import("../pages/ParcerSettings.jsx"));
 const BettingResults = lazy(() => import("../pages/BettingResults.jsx"));
+const StatisticsPage = lazy(() => import("../pages/StatisticsPage.jsx"));
 const MatchesSettings = lazy(() => import("../pages/MatchesSettings.jsx"));
+const FormHalvesStatistics = lazy(() =>
+	import("../pages/FormHalvesStatistics.jsx")
+);
 
 const appRouter = createHashRouter(
 	createRoutesFromElements(
@@ -31,6 +35,11 @@ const appRouter = createHashRouter(
 					<Route path="manual_results" element={<ManualResults />} />
 					<Route path="betting_results" element={<BettingResults />} />
 					<Route path="active_games" element={<ActiveGames />} />
+					<Route path="statistics_page" element={<StatisticsPage />} />
+					<Route
+						path="form_halves_statistics"
+						element={<FormHalvesStatistics />}
+					/>
 					<Route path="parcer" element={<ParserPage />} />
 					<Route path="parcer_settings" element={<ParserSettings />} />
 				</Route>

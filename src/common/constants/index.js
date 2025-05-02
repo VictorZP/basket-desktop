@@ -4,10 +4,15 @@ export const SIDE_MENU = {
 		{ TITLE: "Начальная страница", PAGE_NAME: "" },
 		{ TITLE: "Матчи", PAGE_NAME: "matches" },
 		{ TITLE: "Линии", PAGE_NAME: "lines_page" },
+		{ TITLE: "Статистика", PAGE_NAME: "statistics_page" },
 		{ TITLE: "Результат ставок", PAGE_NAME: "betting_results" },
 		{ TITLE: "Настройка матчей", PAGE_NAME: "matches_setting" },
 		{ TITLE: "Отслеживание матчей", PAGE_NAME: "active_games" },
 		{ TITLE: "Ручной ввод", PAGE_NAME: "manual_results" },
+		{
+			TITLE: "Выкачка статистики из половин",
+			PAGE_NAME: "form_halves_statistics",
+		},
 	],
 	PARSER_LIST: [
 		{ TITLE: "Парсинг данных", PAGE_NAME: "parcer" },
