@@ -7,6 +7,7 @@ import { CHANNELS } from "../../../../common/constants/channels.js";
 export const createHalvesCompareXlsxFile = async (responseData) => {
 	const { data, title } = responseData;
 	const workbook = utils.book_new();
+	const date = title.split("_")?.at(0);
 
 	let worksheet = utils.aoa_to_sheet([]);
 
@@ -35,6 +36,7 @@ export const createHalvesCompareXlsxFile = async (responseData) => {
 			}
 
 			return {
+				Date: date,
 				Championship: item.championship,
 				"Home Team": item.homeTeam,
 				"Away Team": item.awayTeam,
