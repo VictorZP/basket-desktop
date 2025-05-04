@@ -19,18 +19,15 @@ const handleHalvesForStatistics = (fileData) => {
 			}
 
 			const data = utils.sheet_to_json(value, FILES_HANDLERS.JSON_OPTIONS);
-
 			let stIndx = 0;
-			let fnIndx = 1;
+			let fnIndx = 0;
 			let checkArr = [];
 
 			data?.find((row, index) => {
-				if (
-					(row[col_index_ae - 1] === null ||
-						row[col_index_ae - 1] === undefined) &&
-					fnIndx === 1 &&
-					index !== 0
-				) {
+				if (row[col_index_ae] === FILES_HANDLERS.FILE_CHECK_TEXT.START_VAL) {
+					stIndx = index;
+				}
+				if (row[col_index_ae] === FILES_HANDLERS.FILE_CHECK_TEXT.END_VAL) {
 					fnIndx = index;
 				}
 			});
