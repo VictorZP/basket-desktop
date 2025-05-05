@@ -60,7 +60,8 @@ const SideMenu = ({ isOpen, theme, handleSMClose }) => {
 					if (
 						PAGE_NAME !== "active_games" &&
 						PAGE_NAME !== "manual_results" &&
-						PAGE_NAME !== "form_halves_statistics"
+						PAGE_NAME !== "form_halves_statistics" &&
+						PAGE_NAME !== "matches_results_by_season"
 					)
 						return (
 							<ListItem

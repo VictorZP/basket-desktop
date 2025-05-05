@@ -13,6 +13,10 @@ export const SIDE_MENU = {
 			TITLE: "Выкачка статистики из половин",
 			PAGE_NAME: "form_halves_statistics",
 		},
+		{
+			TITLE: "Статистика матчей за сезон",
+			PAGE_NAME: "matches_results_by_season",
+		},
 	],
 	PARSER_LIST: [
 		{ TITLE: "Парсинг данных", PAGE_NAME: "parcer" },
