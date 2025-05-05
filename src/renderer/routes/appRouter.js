@@ -23,6 +23,9 @@ const MatchesSettings = lazy(() => import("../pages/MatchesSettings.jsx"));
 const FormHalvesStatistics = lazy(() =>
 	import("../pages/FormHalvesStatistics.jsx")
 );
+const MatchesResultsBySeasonPage = lazy(() =>
+	import("../pages/MatchesResultsBySeasonPage.jsx")
+);
 
 const appRouter = createHashRouter(
 	createRoutesFromElements(
@@ -39,6 +42,10 @@ const appRouter = createHashRouter(
 					<Route
 						path="form_halves_statistics"
 						element={<FormHalvesStatistics />}
+					/>
+					<Route
+						path="matches_results_by_season"
+						element={<MatchesResultsBySeasonPage />}
 					/>
 					<Route path="parcer" element={<ParserPage />} />
 					<Route path="parcer_settings" element={<ParserSettings />} />

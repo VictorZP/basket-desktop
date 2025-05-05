@@ -9,6 +9,9 @@ const ChoseStatisticsType = () => {
 	const onStatisticsFromHalvesClick = () => {
 		navigate("/form_halves_statistics");
 	};
+	const onStatisticsFromSeasonClick = () => {
+		navigate("/matches_results_by_season");
+	};
 
 	return (
 		<Box>
@@ -19,7 +22,9 @@ const ChoseStatisticsType = () => {
 					mb: 2,
 					display: "flex",
 					alignItems: "center",
+					justifyContent: "space-between",
 					gap: 2,
+					maxWidth: "500px",
 				}}
 			>
 				<Typography variant="p">Выкачка статистики из половин</Typography>
@@ -28,6 +33,23 @@ const ChoseStatisticsType = () => {
 				</Button>
 			</Box>
 			<Divider />
+			<Box
+				sx={{
+					px: 3,
+					py: 1,
+					my: 2,
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "space-between",
+					gap: 2,
+					maxWidth: "500px",
+				}}
+			>
+				<Typography variant="p">Результаты матчей за сезон</Typography>
+				<Button variant="contained" onClick={onStatisticsFromSeasonClick}>
+					Перейти
+				</Button>
+			</Box>
 		</Box>
 	);
 };
