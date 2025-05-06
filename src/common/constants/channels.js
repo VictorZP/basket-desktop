@@ -54,6 +54,12 @@ export const CHANNELS = {
 		DOWNLOAD_HALVES_STATISTICS: "download-halves-statistics",
 		DELETE_HALVES_STATISTICS: "delete-halves-statistics",
 	},
+	MATCHES_STATS_BY_SEASON: {
+		FORM_MATCHES_STATS_BY_SEASON: "form-matches-stats-by-season",
+		GET_MATCHES_STATS_BY_SEASON_LIST: "get-matches-stats-by-season-list",
+		DOWNLOAD_MATCHES_STATS_BY_SEASON: "download-matches-stats-by-season",
+		DELETE_MATCHES_STATS_BY_SEASON: "delete-matches-stats-by-season",
+	},
 	LINES: {
 		GET_LINES: "lines-get",
 		GET_LINES_LIST: "lines-get-list",
