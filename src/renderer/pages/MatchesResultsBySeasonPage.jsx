@@ -7,6 +7,7 @@ const ipcRenderer = window.require("electron").ipcRenderer;
 import { Box, Divider } from "@mui/material";
 
 import SeasonDateSelect from "../components/MatchesResultsBySeason/SeasonDateSelect";
+import SeasonData from "../components/MatchesResultsBySeason/SeasonData";
 
 import { CHANNELS } from "../../common/constants";
 import { MESSAGES } from "../constants/statistics.js";
@@ -58,6 +59,7 @@ const MatchesResultsBySeasonPage = () => {
 		<Box component="section" sx={{ pt: 1, pb: 2 }}>
 			<SeasonDateSelect {...dateSelectProps} />
 			<Divider />
+			<SeasonData />
 		</Box>
 	);
 };

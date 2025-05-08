@@ -31,6 +31,7 @@ const DelModal = ({ handleClose, handleDelete }) => {
 			case MODAL_DEL.PAGE_TYPE_LINES_DATA:
 			case MODAL_DEL.PAGE_TYPE_HALVES_STATISTICS_DATA:
 			case MODAL_DEL.PAGE_TYPE_MATCHES:
+			case MODAL_DEL.PAGE_TYPE_RESULTS_BY_SEASON:
 				descriptionText = `${MODAL_DEL.CONFIRM_TEXT} ${descExtend}? `;
 				break;
 			case MODAL_DEL.PAGE_TYPE_CHAMP:

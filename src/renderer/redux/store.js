@@ -10,6 +10,7 @@ import { linesDataReducer } from "./linesData/linesDataSlice.js";
 import { bettingResultsReducer } from "./bettingResultsData/bettingResultsDataSlice.js";
 import { teamTransferReducer } from "./teamTransfer/teamTransferSlice.js";
 import { halvesStatsDataReducer } from "./halvesStatsData/halvesStatsDataSlice.js";
+import { resultsBySeasonReducer } from "./resultsBySeason/resultsBySeasonSlice.js";
 
 const store = configureStore({
 	reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
 		teamTransfer: teamTransferReducer,
 		bettingResultsData: bettingResultsReducer,
 		halvesStatsData: halvesStatsDataReducer,
+		resultsBySeasonData: resultsBySeasonReducer,
 	},
 });
 
