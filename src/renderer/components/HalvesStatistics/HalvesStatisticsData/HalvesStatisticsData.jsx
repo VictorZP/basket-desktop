@@ -87,7 +87,7 @@ const HalvesStatisticsData = () => {
 		);
 
 		if (res?.statusText !== "OK") {
-			enqueueSnackbar(res?.message ?? MESSAGES.ON_DOWNLOAD_LINES_ERR, {
+			enqueueSnackbar(res?.message ?? MESSAGES.ON_DOWNLOAD_DATA_ERR, {
 				variant: "error",
 			});
 			return;
