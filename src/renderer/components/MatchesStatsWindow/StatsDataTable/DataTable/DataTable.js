@@ -36,6 +36,25 @@ const DataTable = ({ data = [], countNumber }) => {
 		shell.openExternal(url);
 	};
 
+	const calculateFromFirmVal = (tim, hs, aw) => {
+		if (tim === 0 || hs === 0 || aw === 0) return "-";
+		const res = tim - hs - aw;
+		return isNaN(res) ? 0 : res;
+	};
+
+	const roundToTenth = (value) => {
+		const res = Math.round(value * 10) / 10;
+		return isNaN(res) ? 0 : res;
+	};
+
+	const calculateSecondHalfReserve = (t2h, tim, hs, aw) => {
+		if (t2h === 0 || tim === 0 || hs === 0 || aw === 0) return "-";
+
+		const firmVal = calculateFromFirmVal(tim, hs, aw);
+		const res = t2h - firmVal;
+		return isNaN(res) ? 0 : roundToTenth(res);
+	};
+
 	return (
 		<Paper
 			sx={{
@@ -50,6 +69,7 @@ const DataTable = ({ data = [], countNumber }) => {
 							"& th": {
 								backgroundColor: "#3f51b5 !important",
 								color: "white",
+								fontSize: 12,
 							},
 						}}
 					>
@@ -77,7 +97,19 @@ const DataTable = ({ data = [], countNumber }) => {
 								Total In Moment
 							</TableCell>
 							<TableCell sx={{ color: "white" }} align="center">
+								Temp
+							</TableCell>
+							<TableCell sx={{ color: "white" }} align="center">
 								Calc Temp
+							</TableCell>
+							<TableCell sx={{ color: "white" }} align="center">
+								Контора
+							</TableCell>
+							<TableCell sx={{ color: "white" }} align="center">
+								Total Second Half
+							</TableCell>
+							<TableCell sx={{ color: "white" }} align="center">
+								Запас
 							</TableCell>
 							<TableCell sx={{ color: "white" }} align="center">
 								Счет хозяев
@@ -125,7 +157,26 @@ const DataTable = ({ data = [], countNumber }) => {
 								<TableCell align="center">
 									{match?.totalInMoment || 0}
 								</TableCell>
+								<TableCell align="center">{match?.temp || 0}</TableCell>
 								<TableCell align="center">{match?.calcTemp || 0}</TableCell>
+								<TableCell align="center">
+									{calculateFromFirmVal(
+										match?.totalInMoment,
+										match?.homeScore,
+										match?.awayScore
+									)}
+								</TableCell>
+								<TableCell align="center">
+									{roundToTenth(match?.totalSecondHalf)}
+								</TableCell>
+								<TableCell align="center">
+									{calculateSecondHalfReserve(
+										match?.totalSecondHalf,
+										match?.totalInMoment,
+										match?.homeScore,
+										match?.awayScore
+									)}
+								</TableCell>
 								<TableCell align="center">{match?.homeScore || 0}</TableCell>
 								<TableCell align="center">{match?.awayScore || 0}</TableCell>
 								<TableCell align="center" sx={{ width: 100 }}>
