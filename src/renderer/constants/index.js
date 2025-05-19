@@ -5,7 +5,6 @@ export { CYBER_LIST, CYBER_LIST_LINES } from "./cyberList";
 export { default as SETTINGS_TEXT } from "./settingsWindow";
 export { default as MANUAL_PAGE } from "./manualResultsPage";
 export { default as WARNING_MESSAGE } from "./warningMessages";
-export { default as BETTING_RESULTS_CONSTANTS } from "./bettingResults";
 export { CONSTANTS as MATCHES_CONSTANTS } from "./matchesPage";
 export { default as MATCHES_STATS_TEXT } from "./matchesStatsPage";
 export { default as MATCHES_RESULTS_BY_SEASON_CONSTANTS } from "./matchesResultsBySeason";

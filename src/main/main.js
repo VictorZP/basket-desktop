@@ -70,8 +70,6 @@ if (!gotTheLock) {
 	});
 }
 
-// export { authProvider };
-
 //  Processes for the main window
 import "./processes/storeProcesses.js";
 import "./processes/loginProcesses.js";
@@ -86,7 +84,6 @@ import "./processes/saveFileProcesses.js";
 import "./processes/parcerDataProcesses.js";
 import "./processes/manualResultsProcesses.js";
 import "./processes/matchesResultsBySeason.js";
-import "./processes/bettingResultsProcesses.js";
 // import "./processes/authProcesses.js";
 import "./processes/matchStatsWindow.js";
 import "./processes/halvesStatisticsProcesses.js";

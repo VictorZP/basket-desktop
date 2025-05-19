@@ -7,7 +7,6 @@ import { urlFormReducer } from "./urlForm/urlFormSlice.js";
 import { modalReducer } from "./modal/modalSlice.js";
 import { parcerDataReducer } from "./parcerData/parcerDataSlice.js";
 import { linesDataReducer } from "./linesData/linesDataSlice.js";
-import { bettingResultsReducer } from "./bettingResultsData/bettingResultsDataSlice.js";
 import { teamTransferReducer } from "./teamTransfer/teamTransferSlice.js";
 import { halvesStatsDataReducer } from "./halvesStatsData/halvesStatsDataSlice.js";
 import { resultsBySeasonReducer } from "./resultsBySeason/resultsBySeasonSlice.js";
@@ -22,7 +21,6 @@ const store = configureStore({
 		parcerData: parcerDataReducer,
 		linesData: linesDataReducer,
 		teamTransfer: teamTransferReducer,
-		bettingResultsData: bettingResultsReducer,
 		halvesStatsData: halvesStatsDataReducer,
 		resultsBySeasonData: resultsBySeasonReducer,
 	},

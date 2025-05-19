@@ -5,7 +5,6 @@ export const SIDE_MENU = {
 		{ TITLE: "Матчи", PAGE_NAME: "matches" },
 		{ TITLE: "Линии", PAGE_NAME: "lines_page" },
 		{ TITLE: "Статистика", PAGE_NAME: "statistics_page" },
-		{ TITLE: "Результат ставок", PAGE_NAME: "betting_results" },
 		{ TITLE: "Настройка матчей", PAGE_NAME: "matches_setting" },
 		{ TITLE: "Отслеживание матчей", PAGE_NAME: "active_games" },
 		{ TITLE: "Ручной ввод", PAGE_NAME: "manual_results" },
@@ -166,15 +165,6 @@ export const SETTINGS_PAGE = {
 		COMMON_HALVES: "common-halves",
 		USA_HALVES: "usa-halves",
 	},
-};
-
-export const BETTING_RESULTS = {
-	NOTIFICATION_TITLE: "Результаты ставок",
-	DEFAULT_MESSAGE_GENERATE:
-		'Результаты ставок готовы. Перейдите в раздел "Результат ставок"',
-	ON_ERROR_DELETE: "Ошибка при удалении данных.",
-	ON_ERROR_DOWNLOAD: "Ошибка при загрузке данных.",
-	ON_SUCCESS_DELETE: "Данные успешно удалены.",
 };
 
 export { CHANNELS } from "./channels";
