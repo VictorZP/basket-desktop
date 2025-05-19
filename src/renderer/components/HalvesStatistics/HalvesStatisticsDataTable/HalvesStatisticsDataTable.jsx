@@ -17,7 +17,14 @@ import { StyledTableRow } from "../../../helpers/reusableComponents/tableCompone
 const TABLE_PROPS = {
 	BTN_DOWNLOAD: "Скачать",
 	BTN_DELETE: "Удалить",
-	HEADER_NAMES: ["№", "Дата", "Кол-во матчей", "Когда сформировано", "", ""],
+	HEADER_NAMES: [
+		"№",
+		"Дата формирования",
+		"Начальная дата",
+		"Конечная дата",
+		"",
+		"",
+	],
 };
 
 const HalvesStatisticsDataTable = ({
@@ -42,16 +49,16 @@ const HalvesStatisticsDataTable = ({
 					<TableCell sx={{ color: "white", width: 170 }} align="center">
 						{TABLE_PROPS.HEADER_NAMES.at(1)}
 					</TableCell>
-					<TableCell sx={{ color: "white", width: 70 }} align="center">
+					<TableCell sx={{ color: "white", width: 150 }} align="center">
 						{TABLE_PROPS.HEADER_NAMES.at(2)}
 					</TableCell>
-					<TableCell sx={{ color: "white", width: 200 }} align="center">
+					<TableCell sx={{ color: "white", width: 150 }} align="center">
 						{TABLE_PROPS.HEADER_NAMES.at(3)}
 					</TableCell>
-					<TableCell sx={{ color: "white", minWidth: 137 }}>
+					<TableCell sx={{ color: "white", minWidth: 140 }}>
 						{TABLE_PROPS.HEADER_NAMES.at(4)}
 					</TableCell>
-					<TableCell sx={{ color: "white", minWidth: 137 }}>
+					<TableCell sx={{ color: "white", minWidth: 140 }}>
 						{TABLE_PROPS.HEADER_NAMES.at(6)}
 					</TableCell>
 				</TableRow>
@@ -67,22 +74,16 @@ const HalvesStatisticsDataTable = ({
 						<StyledTableRow key={row.compareId}>
 							<TableCell>{index + countNumber}</TableCell>
 							<TableCell align="center">
-								{row?.title?.split("_")?.at(0) ?? ""}
+								{Intl.DateTimeFormat("ru-RU", {
+									day: "2-digit",
+									month: "2-digit",
+									year: "2-digit",
+									hour: "2-digit",
+									minute: "2-digit",
+								}).format(new Date(row.createdAt)) ?? ""}
 							</TableCell>
-							<TableCell align="center">
-								{row?.title?.split("_")?.at(1) ?? ""}
-							</TableCell>
-							<TableCell align="center">
-								{row?.createdAt
-									? new Date(row?.createdAt).toLocaleString("ru-RU", {
-											year: "numeric",
-											month: "2-digit",
-											day: "2-digit",
-											hour: "2-digit",
-											minute: "2-digit",
-									  })
-									: ""}
-							</TableCell>
+							<TableCell align="center">{row?.start ?? ""}</TableCell>
+							<TableCell align="center">{row?.end ?? ""}</TableCell>
 							<TableCell align="center">
 								<LoadingButton
 									id={`download_${row.compareId}`}

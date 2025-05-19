@@ -9,9 +9,10 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const HalvesStatisticsTop = ({
 	isLoading,
-	dateValue,
+	startDate,
+	setStartDate,
+	setEndDate,
 	formStatistics,
-	handleDateChange,
 }) => {
 	return (
 		<Box sx={{ px: 3, py: 1, mb: 2 }}>
@@ -26,9 +27,21 @@ const HalvesStatisticsTop = ({
 				}}
 			>
 				<DatePicker
-					label="Дата матчей"
-					value={dateValue}
-					onChange={handleDateChange}
+					label="Начальная дата"
+					onChange={(startDate) => setStartDate(startDate)}
+					sx={{
+						alignItems: "flex-start",
+						m: 0,
+					}}
+					slotProps={{
+						actionBar: {
+							actions: ["clear", "today"],
+						},
+					}}
+				/>
+				<DatePicker
+					label="Конечная дата"
+					onChange={(endDate) => setEndDate(endDate)}
 					sx={{
 						alignItems: "flex-start",
 						m: 0,
@@ -53,10 +66,11 @@ const HalvesStatisticsTop = ({
 };
 
 HalvesStatisticsTop.propTypes = {
-	isLoading: PropTypes.bool.isRequired,
-	dateValue: PropTypes.object.isRequired,
-	formStatistics: PropTypes.func.isRequired,
-	handleDateChange: PropTypes.func.isRequired,
+	isLoading: PropTypes.bool,
+	startDate: PropTypes.object,
+	setStartDate: PropTypes.func,
+	setEndDate: PropTypes.func,
+	formStatistics: PropTypes.func,
 };
 
 export default HalvesStatisticsTop;

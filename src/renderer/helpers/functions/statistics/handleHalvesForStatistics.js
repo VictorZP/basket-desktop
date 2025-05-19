@@ -41,7 +41,6 @@ const handleHalvesForStatistics = (fileData) => {
 				const dataObj = {
 					teamName: row[29],
 					firstHalf: row[30]?.toFixed(1),
-					dev: row[32]?.toFixed(1),
 				};
 				checkArr.push(dataObj);
 			});

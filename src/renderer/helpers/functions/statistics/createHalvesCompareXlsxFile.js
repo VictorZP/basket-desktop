@@ -45,14 +45,15 @@ export const createHalvesCompareXlsxFile = async (responseData) => {
 				"Total In Moment": item.totalInMoment,
 				"Bet Result": formattedBetResult,
 				"Percent Av": item.percentAv,
-				"Total Second Half New": item.totalSecondHalfNew,
-				"New Bet Result": item.newBetResult,
+				"Match Result": item.matchResult,
 			};
 		});
 
 	worksheet = utils.json_to_sheet(orderedData);
 
-	const fileName = `Статистика_из_половин_${title}.xlsx`;
+	const formattedTitle = title.replaceAll(" ", "_")?.replaceAll("/", "-");
+	const fileName = `${formattedTitle}.xlsx`;
+
 	utils.book_append_sheet(workbook, worksheet, "Статистика из половин");
 
 	// Write the workbook to a file

@@ -15,8 +15,9 @@ import { MESSAGES } from "../constants/statistics.js";
 import { STATUS, CHANNELS } from "../../common/constants";
 
 const FormHalvesStatistics = () => {
+	const [startDate, setStartDate] = useState(null);
+	const [endDate, setEndDate] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
-	const [dateValue, setDateValue] = useState(dayjs());
 
 	useEffect(() => {
 		return () => {
@@ -24,13 +25,16 @@ const FormHalvesStatistics = () => {
 		};
 	}, []);
 
-	const handleDateChange = async (e) => {
-		setDateValue(e);
-	};
-
 	const formStatistics = async () => {
 		try {
 			setIsLoading(true);
+
+			if (!startDate) {
+				enqueueSnackbar(MESSAGES.EMPTY_DATE, {
+					variant: "warning",
+				});
+				return;
+			}
 
 			const fileData = await handleHalvesFile("statistics");
 
@@ -42,9 +46,14 @@ const FormHalvesStatistics = () => {
 			}
 
 			const paramsObj = {
-				day: dayjs(dateValue).format("DD"),
-				month: dayjs(dateValue).format("MM"),
-				year: dayjs(dateValue).format("YY"),
+				dates: {
+					startDay: startDate ? dayjs(startDate).format("DD") : "",
+					startMonth: startDate ? dayjs(startDate).format("MM") : "",
+					startYear: startDate ? dayjs(startDate).format("YYYY") : "",
+					endDay: endDate ? dayjs(endDate).format("DD") : "",
+					endMonth: endDate ? dayjs(endDate).format("MM") : "",
+					endYear: endDate ? dayjs(endDate).format("YYYY") : "",
+				},
 				fileData: fileData?.data,
 			};
 
@@ -69,9 +78,10 @@ const FormHalvesStatistics = () => {
 		<Box component="section">
 			<HalvesStatisticsTop
 				isLoading={isLoading}
-				dateValue={dateValue}
+				startDate={startDate}
+				setStartDate={setStartDate}
+				setEndDate={setEndDate}
 				formStatistics={formStatistics}
-				handleDateChange={handleDateChange}
 			/>
 			<Divider />
 			<HalvesStatisticsData />
