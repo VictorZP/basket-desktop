@@ -7,7 +7,6 @@ import { CHANNELS } from "../../../../common/constants/channels.js";
 export const createHalvesCompareXlsxFile = async (responseData) => {
 	const { data, title } = responseData;
 	const workbook = utils.book_new();
-	const date = title.split("_")?.at(0);
 
 	let worksheet = utils.aoa_to_sheet([]);
 
@@ -19,32 +18,15 @@ export const createHalvesCompareXlsxFile = async (responseData) => {
 			return 0;
 		})
 		.map((item) => {
-			let formattedBetResult;
-
-			switch (item.currentBetResult) {
-				case "less":
-					formattedBetResult = "UNDER";
-					break;
-				case "more":
-					formattedBetResult = "OVER";
-					break;
-				case "not":
-					formattedBetResult = "No Bet";
-					break;
-				default:
-					formattedBetResult = item.currentBetResult;
-			}
-
 			return {
-				Date: date,
+				Date: item.matchDate,
 				Championship: item.championship,
 				"Home Team": item.homeTeam,
 				"Away Team": item.awayTeam,
 				"Result 1Half": item.firstHalf,
 				"Total Second Half": item.totalSecondHalf,
 				"Total In Moment": item.totalInMoment,
-				"Bet Result": formattedBetResult,
-				"Percent Av": item.percentAv,
+				Deviation: item.deviation,
 				"Match Result": item.matchResult,
 			};
 		});

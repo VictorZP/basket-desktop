@@ -1,11 +1,10 @@
 const ipcRenderer = window.require("electron").ipcRenderer;
 
 import handleFile from "./handleFile";
-import { handleHalvesForStatistics } from "../statistics";
 
 import { CHANNELS, STATUS } from "../../../../common/constants";
 
-const handleHalvesFile = async (type) => {
+const handleHalvesFile = async () => {
 	let checkObj = {};
 	let commonHalvesFileData;
 	let usaHalvesFileData;
@@ -65,19 +64,8 @@ const handleHalvesFile = async (type) => {
 		}
 
 		// Handle the files for backend format
-		// const commonHalvesFileHandlerResult = handleFile(commonHalvesFileData);
-		// const usaHalvesFileHandlerResult = handleFile(usaHalvesFileData);
-		let commonHalvesFileHandlerResult;
-		let usaHalvesFileHandlerResult;
-
-		if (type === "adding") {
-			commonHalvesFileHandlerResult = handleFile(commonHalvesFileData);
-			usaHalvesFileHandlerResult = handleFile(usaHalvesFileData);
-		} else if (type === "statistics") {
-			commonHalvesFileHandlerResult =
-				handleHalvesForStatistics(commonHalvesFileData);
-			usaHalvesFileHandlerResult = handleHalvesForStatistics(usaHalvesFileData);
-		}
+		const commonHalvesFileHandlerResult = handleFile(commonHalvesFileData);
+		const usaHalvesFileHandlerResult = handleFile(usaHalvesFileData);
 
 		if (commonHalvesFileHandlerResult.status === STATUS.ERROR) {
 			throw new Error(commonHalvesFileHandlerResult.message);

@@ -9,10 +9,8 @@ import { Box, Divider } from "@mui/material";
 import HalvesStatisticsTop from "../components/HalvesStatistics/HalvesStatisticsTop";
 import HalvesStatisticsData from "../components/HalvesStatistics/HalvesStatisticsData";
 
-import handleHalvesFile from "../helpers/functions/addMatches/halvesFilesHandler.js";
-
 import { MESSAGES } from "../constants/statistics.js";
-import { STATUS, CHANNELS } from "../../common/constants";
+import { CHANNELS } from "../../common/constants";
 
 const FormHalvesStatistics = () => {
 	const [startDate, setStartDate] = useState(null);
@@ -36,25 +34,13 @@ const FormHalvesStatistics = () => {
 				return;
 			}
 
-			const fileData = await handleHalvesFile("statistics");
-
-			if (fileData?.status === STATUS.ERROR) {
-				enqueueSnackbar(fileData?.message, {
-					variant: "error",
-				});
-				return;
-			}
-
 			const paramsObj = {
-				dates: {
-					startDay: startDate ? dayjs(startDate).format("DD") : "",
-					startMonth: startDate ? dayjs(startDate).format("MM") : "",
-					startYear: startDate ? dayjs(startDate).format("YYYY") : "",
-					endDay: endDate ? dayjs(endDate).format("DD") : "",
-					endMonth: endDate ? dayjs(endDate).format("MM") : "",
-					endYear: endDate ? dayjs(endDate).format("YYYY") : "",
-				},
-				fileData: fileData?.data,
+				startDay: startDate ? dayjs(startDate).format("DD") : "",
+				startMonth: startDate ? dayjs(startDate).format("MM") : "",
+				startYear: startDate ? dayjs(startDate).format("YYYY") : "",
+				endDay: endDate ? dayjs(endDate).format("DD") : "",
+				endMonth: endDate ? dayjs(endDate).format("MM") : "",
+				endYear: endDate ? dayjs(endDate).format("YYYY") : "",
 			};
 
 			ipcRenderer.send(
