@@ -13,9 +13,8 @@ const createSeasonStatisticsFile = async (data, title) => {
 			"Away Team": item.awayTeamName,
 			Res: item.matchResScores,
 			Predict: item.predict,
-			TOTAL: item.lastVal,
 			KickOff: item.kickOff,
-			Diff: item.predictLastDiff,
+			Diff: item.predictKickOffDiff,
 			Conclusion: item.betConclusionResult,
 			"": item.message,
 		};
