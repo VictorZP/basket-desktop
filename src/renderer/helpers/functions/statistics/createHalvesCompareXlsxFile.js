@@ -27,6 +27,7 @@ export const createHalvesCompareXlsxFile = async (responseData) => {
 				"Total Second Half": item.totalSecondHalf,
 				"Total In Moment": item.totalInMoment,
 				Deviation: item.deviation,
+				Predict: item.predict,
 				"Match Result": item.matchResult,
 			};
 		});
