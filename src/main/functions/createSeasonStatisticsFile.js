@@ -15,7 +15,6 @@ const createSeasonStatisticsFile = async (data, title) => {
 			Predict: item.predict,
 			KickOff: item.kickOff,
 			Diff: item.predictKickOffDiff,
-			Conclusion: item.betConclusionResult,
 			"": item.message,
 		};
 	});
