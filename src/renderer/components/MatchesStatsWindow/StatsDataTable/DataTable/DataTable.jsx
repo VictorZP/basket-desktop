@@ -51,7 +51,7 @@ const DataTable = ({ data = [], countNumber }) => {
 		if (t2h === 0 || tim === 0 || hs === 0 || aw === 0) return "-";
 
 		const firmVal = calculateFromFirmVal(tim, hs, aw);
-		const res = t2h - firmVal;
+		const res = t2h //- firmVal;
 		return isNaN(res) ? 0 : roundToTenth(res);
 	};
 
